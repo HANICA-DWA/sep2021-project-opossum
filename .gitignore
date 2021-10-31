@@ -102,3 +102,17 @@ dist
 
 # TernJS port file
 .tern-port
+
+#############
+
+# macOS hidden file
+.DS_Store
+
+# JetBrains IDE 
+.idea
+
+# MSOffice temp files
+~$*
+
+# vscode workspace
+.vscode
