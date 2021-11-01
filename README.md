@@ -4,7 +4,7 @@
 
 ## Opdracht
 
-TBD
+De A11y Annotatie-tool
 
 ## Leden
 
