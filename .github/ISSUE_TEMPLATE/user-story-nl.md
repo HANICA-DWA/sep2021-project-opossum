@@ -16,4 +16,5 @@ assignees: ''
 
 ## DoD Items
 
-- [ ] Item 1
+- [ ] Hij voldoet aan alle regels uit de DoD
+- [ ] Hij voldoet aan alle Acceptatie Criteria voor die User Story
