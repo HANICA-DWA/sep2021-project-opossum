@@ -11,6 +11,7 @@ De A11y Annotatie-tool
 - Ruben Eppink
 - Mark Jansen
 - Iliass ElKaddouri
+- Stefan Oude Lohuis
 
 ## Product Owner
 
