@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.10.13",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
