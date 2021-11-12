@@ -60,20 +60,22 @@ A typical chrome extension exists of the following three files:
 │   ├── content.js
 │   ├── *.js
 │   └── store.js
-├── package.json
+└── package.json
 ```
 
 - `build`: ...
 - `public`: contains [manifest.json](#high-level-overview) and HTML templates for every React view. E.g. index.html and options.html are the templates for the extensions' popup and options pages respectively.
-- `src/hooks`: holds all React hooks.
+- `src/hooks`: as the folder name implies, holds all React hooks.
 - `src/services`: contains all Redux slices.
 - `src/views`: this folder holds all React components and corresponding assests such as css and test files.
 - `src/background.js`: is the chrome extensions' [background script](#high-level-overview).
 - `src/content.js`: is the chrome extensions' [content script](#high-level-overview).
 - `src/store.js`: in this file the redux store is defined. The store can be used in any script, even in non react script, see [Redux](#redux)
-- `src/*.js`: all other javascripts files are entry points for each React view.
+- `src/*.js`: the remaining javascript files are entry points for each React view.
 
 ## Message passing
+
+> TODO
 
 ## Redux
 
