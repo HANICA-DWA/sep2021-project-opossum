@@ -4,6 +4,7 @@
 - [ ] Fix hot reloading: [this guide might help](https://smellycode.com/chrome-extension-live-reloading-with-react/)
 - [ ] Add sidebar [this guide might help](https://flurryhead.medium.com/building-chrome-extenstion-with-multiple-frames-using-reactjs-redux-ead51cc5ded)
 - [ ] Research prevention of css conflicts
+- [ ] Rename `public/index.html` and `src/index.js` to `public/popup.html` and `src/popup.js` respectively.
 
 # Spike Chrome extension Development
 
