@@ -1,10 +1,10 @@
 # TODO
 
 - [x] Make redux work with persistence!
-- [ ] Fix hot reloading: [this guide might help](https://smellycode.com/chrome-extension-live-reloading-with-react/)
+- [ ] Add hot reloading: [this guide might help](https://smellycode.com/chrome-extension-live-reloading-with-react/)
 - [ ] Add sidebar [this guide might help](https://flurryhead.medium.com/building-chrome-extenstion-with-multiple-frames-using-reactjs-redux-ead51cc5ded)
 - [ ] Research prevention of css conflicts
-- [ ] Rename `public/index.html` and `src/index.js` to `public/popup.html` and `src/popup.js` respectively.
+- [ ] Optionally (but not necessary) rename `public/index.html` and `src/index.js` to `public/popup.html` and `src/popup.js` respectively.
 
 # Spike Chrome extension Development
 
@@ -81,8 +81,7 @@ A typical chrome extension exists of the following three files:
 
 Unfortunenately there is no way to persist the Redux state within a chrome extension out of the box (i.e. the Redux state resets when the extensions' popup/options screen closes/on refresh). Fortunenately however, there is a package that will persist the state with very little effort: [Reduxed Chrome Storage](https://www.npmjs.com/package/reduxed-chrome-storage), which uses [chrome.storage API](https://developer.chrome.com/docs/extensions/reference/storage/) to save the state.
 
-> The only downside of using this package is that it does not support the [`configureStore`](https://redux-toolkit.js.org/api/configureStore) function from Redux Toolkit. Instead we can use [`createStore`](https://redux.js.org/api/createstore) and [`combineReducers`](https://redux.js.org/api/combinereducers) from _traditional_ Redux to setu
-> Redux can be used in non React components.p the store.
+> The only downside of using Reduxed Chrome Storage is that it does not support the [`configureStore`](https://redux-toolkit.js.org/api/configureStore) method from Redux Toolkit. Instead we can use [`createStore`](https://redux.js.org/api/createstore) and [`combineReducers`](https://redux.js.org/api/combinereducers) from _traditional_ Redux to setup the store.
 
 The [chrome.storage API](https://developer.chrome.com/docs/extensions/reference/storage/) is asynchronous. Therefore the store which is created by [Reduxed Chrome Storages](https://www.npmjs.com/package/reduxed-chrome-storage) function `storeCreatorFactory` needs to be imported asynschoniously.
 
