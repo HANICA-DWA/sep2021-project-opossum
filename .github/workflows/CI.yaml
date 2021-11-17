@@ -22,6 +22,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
+          
+      - uses: a-b-r-o-w-n/eslint-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ./wcag-tool/chrome-extension
 
       #install dependencies, build and test server
       - name: Build and test backend
