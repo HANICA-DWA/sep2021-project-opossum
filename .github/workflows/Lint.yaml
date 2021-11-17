@@ -28,13 +28,11 @@ jobs:
         working-directory: ./wcag-tool/backend
         run: npm ci
         
-      - name: ESLint Action eslintrc         
-        uses: mrdivyansh/eslint-action@v1.0.3
+      - name: ESLint Plus
+        uses: bradennapier/eslint-plus-action@v3
         with:
-            # GitHub repository token for publishing inline lint annotations. Should be secrets.GITHUB_TOKEN.
-            repo-token: ${{ secrets.GITHUB_TOKEN }}
-            eslint-rc: ./wcag-tool/backend/.eslintrc.json        
-            execute-on-files: ./wcag-tool/backend         
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          configFile: ./wcag-tool/backend/.eslintrc.json  
     
       #install dependencies client
       - name: Install dependencies for client
