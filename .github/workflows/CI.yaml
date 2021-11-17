@@ -23,9 +23,6 @@ jobs:
         with:
           node-version: '16'
           
-      - name: Lint
-      - uses: bradennapier/eslint-plus-action@v3.4.2
-      
       #install dependencies, build and test server
       - name: Build and test backend
         working-directory: ./wcag-tool/backend
