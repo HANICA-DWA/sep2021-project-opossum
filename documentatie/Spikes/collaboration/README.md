@@ -1,6 +1,6 @@
 # Spike: Near real-time collaboration
 
-Met behulp van dit onderzoek moet duidelijk worden hoe men een collaboratieve web app kan ontwikkelen met behulp van Javascript. Hiervoor zal er een Prototype ontwikkeld worden en er zullen verschillende packages vergeleken worden.
+This project is in need of a collaborative
 
 # CRDT vs OT
 
@@ -60,3 +60,5 @@ In the use case of this project, which needs shared editing on text, **Yjs** is 
 > 1. https://github.com/yjs/yjs/issues/93
 > 2. https://github.com/dmonad/crdt-benchmarks
 > 3. https://github.com/yjs/yjs/issues/145
+
+# Prototyping
