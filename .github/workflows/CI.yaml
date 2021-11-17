@@ -32,10 +32,12 @@ jobs:
           npm run build --if-present
           npm test
           
-      - uses: rpkak/ESLint-PR-review@latest
+      - name: Lint
+        uses: Krizzu/eslint-check-action@v1.1.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          project-root: ./wcag-tool/backend
+         ghToken: ${{ secrets.GITHUB_TOKEN }}
+         eslintConfig: ./wcag-tool/backend/.eslintrc.json
+
 
       #install dependencies, build and test client
       - name: Build and test client
