@@ -31,12 +31,11 @@ jobs:
           npm run build --if-present
           npm test
           
-      - name: Lint
-        uses: mrdivyansh/eslint-action@v1.0.7
+      - name: Run eslint on changed files
+        uses: tj-actions/eslint-changed-files@v8
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}        
-          eslint-rc: ./wcag-tool/backend/.eslintrc.json
-          execute-on-files: ./wcag-tool/backend/    
+          config_path: ./wcag-tool/backend.eslintrc.json
+          extensions: ts,tsx,js,jsx
 
       #install dependencies, build and test client
       - name: Build and test client
