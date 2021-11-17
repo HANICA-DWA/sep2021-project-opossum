@@ -31,11 +31,11 @@ jobs:
           npm run build --if-present
           npm test
           
-      - name: Run eslint on changed files
-        uses: tj-actions/eslint-changed-files@v8
+      - uses: rpkak/ESLint-PR-review@latest
         with:
-          config_path: ./wcag-tool/backend.eslintrc.json
-          extensions: ts,tsx,js,jsx
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          project-root: ./wcag-tool/backend
+          approve-mode: 2
 
       #install dependencies, build and test client
       - name: Build and test client
