@@ -4,11 +4,12 @@ const exampleSlice = createSlice({
   name: 'example',
   initialState: {
     loading: false,
-    error: '',
-    data: '',
+    error: null,
+    data: null,
   },
   reducers: {
     setData: (state, action) => {
+      // eslint-disable-next-line no-param-reassign
       state.data = action.payload
     },
   },
