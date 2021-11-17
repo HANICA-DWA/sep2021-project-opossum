@@ -23,10 +23,11 @@ jobs:
         with:
           node-version: '16'
           
-      - uses: a-b-r-o-w-n/eslint-action@v2
+      - name: Lint
+        uses: Krizzu/eslint-check-action@v1.1.0
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ./wcag-tool/chrome-extension
+          ghToken: ${{ secrets.GITHUB_TOKEN }}
+          eslintConfig: wcag-tool/chrome-extension/.eslintrc.json
 
       #install dependencies, build and test server
       - name: Build and test backend
