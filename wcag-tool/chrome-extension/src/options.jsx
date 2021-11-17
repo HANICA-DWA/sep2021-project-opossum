@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Options = function () {
+    //test pipeline shit
     const x = 0
+    const z = 0;
     const [color, setColor] = useState('')
     const [status, setStatus] = useState('')
     const [like, setLike] = useState(false)
