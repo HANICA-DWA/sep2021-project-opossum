@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { setupStore } from '../services/store'
+import '../styles.css'
 
 const Popup = function () {
-  return <h1>Popup</h1>
+  return <h1 className={'text-xl font-bold'}>Popup</h1>
 }
 
 ;(async () => {
