@@ -32,12 +32,14 @@ jobs:
           npm run build --if-present
           npm test
           
-      - name: Lint
-        uses: Krizzu/eslint-check-action@v1.1.0
+      - name: ESLint checker
+          # You may pin to the exact commit or the version.
+          # uses: ninosaurus/eslint-check@30ce7263e3f4b0bebc3cc06897bdf4ab8524a424
+        uses: ninosaurus/eslint-check@v5.3.1
         with:
-         ghToken: ${{ secrets.GITHUB_TOKEN }}
-         eslintConfig: ./wcag-tool/backend/.eslintrc.json
-
+            repo-token: ${{ secrets.GITHUB_TOKEN }}           
+            custom-directory: ./wcag-tool/backend/
+            eslint-config-path: ./wcag-tool/backend/.eslintrc.json
 
       #install dependencies, build and test client
       - name: Build and test client
