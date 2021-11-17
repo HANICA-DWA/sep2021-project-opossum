@@ -33,7 +33,7 @@ jobs:
         # uses: tj-actions/eslint-changed-files@2373b6d4d792b59076a1c3d5adeb6cb0e0e9476f
         uses: tj-actions/eslint-changed-files@v8
         with:
-          token:  ${{ secrets.GITHUB_TOKEN orn }}
+          token:  ${{ secrets.GITHUB_TOKEN }}
           config_path: ./wcag-tool/backend/.eslintrc.json
     
       #install dependencies client
