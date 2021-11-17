@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies for backend
         working-directory: ./wcag-tool/backend
         run: npm ci
+        
+      - name: Lint
+        uses: a-b-r-o-w-n/eslint-action@v2.1.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ./wcag-tool/backend 
 
       #install dependencies client
       - name: Install dependencies for client
