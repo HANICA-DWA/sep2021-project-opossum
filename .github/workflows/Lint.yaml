@@ -28,11 +28,12 @@ jobs:
         working-directory: ./wcag-tool/backend
         run: npm ci
         
-      - name: ESLint Plus
-        uses: bradennapier/eslint-plus-action@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          configFile: ./wcag-tool/backend/.eslintrc.json  
+      - name: Eslint check   
+        uses: Krizzu/eslint-check-action@v1.1.0
+        with:         
+          ghToken: ${{ secrets.GITHUB_TOKEN }}     
+          eslintFiles: ./wcag-tool/backend         
+          eslintConfig: ./wcag-tool/backend/.eslintrc.json        
     
       #install dependencies client
       - name: Install dependencies for client
