@@ -1,4 +1,6 @@
-[![CI pipeline](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/CI.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/CI.yaml)
+[![Build](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml)
+[![SonarCloud](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml)
+[![Lint](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml)
 
 ## Branchnaam strategie
 
