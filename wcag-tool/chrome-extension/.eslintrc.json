@@ -14,6 +14,9 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
+    "import/named": "warn",
+    "import/export": "warn",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-param-reassign": "warn",
     "import/prefer-default-export": "warn",
     "prettier/prettier": [
