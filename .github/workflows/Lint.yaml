@@ -28,12 +28,13 @@ jobs:
         working-directory: ./wcag-tool/backend
         run: npm ci
         
-      - name: ESLint checker    
-        uses: ninosaurus/eslint-check@v5.3.1
-        with:        
-          repo-token: ${{ secrets.GITHUB_TOKEN }} 
-          custom-directory: ./wcag-tool/backend         
-          eslint-config-path: ./wcag-tool/backend/.eslintrc.json  
+      - name: Run eslint on changed files
+        # You may pin to the exact commit or the version.
+        # uses: tj-actions/eslint-changed-files@2373b6d4d792b59076a1c3d5adeb6cb0e0e9476f
+        uses: tj-actions/eslint-changed-files@v8
+        with:
+          token:  ${{ secrets.GITHUB_TOKEN orn }}
+          config_path: ./wcag-tool/backend/.eslintrc.json
     
       #install dependencies client
       - name: Install dependencies for client
