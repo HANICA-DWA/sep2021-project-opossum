@@ -1,0 +1,34 @@
+name: Build and test
+
+on:
+  #to manually trigger pipeline
+  workflow_dispatch:
+
+  #trigger pipeline on pull request
+  pull_request:
+    types: [assigned, opened, synchronize, reopened]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      #checkout repo
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      #setup node env on the container
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      #install dependencies server
+      - name: Install dependencies for backend
+        working-directory: ./wcag-tool/backend
+        run: npm ci
+
+      #install dependencies client
+      - name: Install dependencies for client
+        working-directory: ./wcag-tool/chrome-extension
+        run: npm ci
