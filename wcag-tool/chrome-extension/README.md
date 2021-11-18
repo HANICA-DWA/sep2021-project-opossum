@@ -83,9 +83,10 @@ To install a chrome extension which isn't published in the Chrome Web Store you 
 4. C'est ca! The extension should be installed.
 
 ## Setup Redux devtools
+Because we use reduxified chrome storage, the in browser redux devtools aren't able to connect to the redux store. To resolve this you'll have to install the remote redux devtools.
 To setup redux devtools do the following:
 1. Install : `npm install --save-dev remotedev-server`
-2. Add to `Package.json`
+2. Add the following lines to `Package.json`
  ```
  "scripts": {
   "remotedev": "remotedev --hostname=localhost --port=8000"
