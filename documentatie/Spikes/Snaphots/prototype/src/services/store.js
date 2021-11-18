@@ -1,11 +1,10 @@
 import { combineReducers, createStore } from 'redux'
 import storeCreatorFactory from 'reduxed-chrome-storage'
-import { exampleReducer } from './exampleSlice'
+import mainReducer from './mainSlice'
+import { composeWithDevTools } from 'remote-redux-devtools'
 
-const reducer = combineReducers({
-  example: exampleReducer,
+const reducers = combineReducers({
+  main: mainReducer,
 })
 
-const setupStore = () => storeCreatorFactory({ createStore })(reducer)
-
-export { setupStore }
+export const store = ()=> storeCreatorFactory({createStore})(reducers, composeWithDevTools({realtime: true, port: 8000})())
