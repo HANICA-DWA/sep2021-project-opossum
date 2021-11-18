@@ -6,10 +6,10 @@ const fetchMessage = createAsyncThunk('/message', async ({ rejectWithValue }) =>
     const res = await axios.get(`http://localhost:3001/message`)
     // console.log(res.data)
     return res.data
-  } catch (error) {
-    if (!error.response) {
-      throw error
-    }
+  }
+  catch (error) {
+    if (!error.response) throw error
+    
     return rejectWithValue(error.response.data)
   }
 })
