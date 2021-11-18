@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const logger = require('./middleware');
+const { logger, errorHandler } = require('./middleware');
+const snapshotRouter = require('./routers/snapshotRouter');
+const wcagRuleRouter = require('./routers/wcagRuleRouter');
 
 const app = express();
 const port = 3000;
@@ -16,6 +18,11 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+app.use('/snapshot', snapshotRouter);
+app.use('/wcag-rule', wcagRuleRouter);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   mongoose.connect(

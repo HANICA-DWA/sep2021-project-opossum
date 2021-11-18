@@ -8,7 +8,7 @@ exports.logger = (req, res, next) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-exports.errorHanlder = (err, req, res, next) => {
+exports.errorHandler = (err, req, res, next) => {
   console.log('error: ', err);
   const code = err.code || 500;
   res.status(code).send(err);
