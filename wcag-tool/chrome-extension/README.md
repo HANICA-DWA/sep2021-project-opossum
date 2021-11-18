@@ -70,6 +70,9 @@ Use the following command to enable hot reloading
 
 `npm run build`
 
+## Remotedev
+`npm run remotedev`
+
 ## Installation
 
 To install a chrome extension which isn't published in the Chrome Web Store you need to following steps:
@@ -78,3 +81,20 @@ To install a chrome extension which isn't published in the Chrome Web Store you 
 2. Switch on `Developer mode` in the top right corner, this enables the ability to locally install chrome extensions.
 3. Click on `Load unpacked` and select the `build` folder of the chrome extension.
 4. C'est ca! The extension should be installed.
+
+## Setup Redux devtools
+To setup redux devtools do the following:
+1. Install : `npm install --save-dev remotedev-server`
+2. Add to `Package.json`
+ ```
+ "scripts": {
+  "remotedev": "remotedev --hostname=localhost --port=8000"
+}
+```
+3. Install `remote-redux-devtools`
+4. In redux store setup change the following lines:
+```javascript
+- storeCreatorFactory({createStore})(reducers)
++ storeCreatorFactory({createStore})(reducers, composeWithDevTools({realtime: true, port: 8000})())
+```
+5. run `npm run remotedev` and open redux remote devtools
