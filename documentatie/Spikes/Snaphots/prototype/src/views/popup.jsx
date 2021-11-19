@@ -2,9 +2,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { store } from '../services/store'
+import { setupStore } from '../services/store'
 import '../index.css'
 import { setData } from '../services/mainSlice'
+import { getPageData } from '../lib/single-file'
 
 const Popup = () => {
   const data = useSelector(state => state.main.data)
@@ -15,23 +16,29 @@ const Popup = () => {
     <div className={'p-4'}>
       <button onClick={async () => {
         const [{ id: index }] = await chrome.tabs.query({ active: true })
-        chrome.pageCapture.saveAsMHTML({ tabId: index }, blob => blob.text().then(text => dispatch(setData(text))))
+        const page = await getPageData(,,document, window)
 
       }} className={buttonClasses}>
         Save as mhtml
       </button>
-      <button className={buttonClasses} onClick={() => chrome.tabs.create({url: "/snapshot.html"})}>Open Snapshot</button>
+      <button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/snapshot.html' })}>Open Snapshot
+      </button>
       {data ? '' : <p className={'text-red-700'}>No snapshot saved</p>}
       <button className={buttonClasses} onClick={() => dispatch(setData(undefined))}>Remove snapshot</button>
+      <button className={buttonClasses} onClick={async () => chrome.fileSystemProvider.getAll(console.log)}>FileSystems</button>
     </div>
   )
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Popup />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-)
+(async () => {
+  const store = await setupStore()
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <Popup />
+      </Provider>
+    </React.StrictMode>,
+    document.getElementById('root'),
+  )
+})()

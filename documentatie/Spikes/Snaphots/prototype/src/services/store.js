@@ -7,4 +7,11 @@ const reducers = combineReducers({
   main: mainReducer,
 })
 
-export const store = ()=> storeCreatorFactory({createStore})(reducers, composeWithDevTools({realtime: true, port: 8000})())
+let store
+
+export const setupStore = () => {
+  if (store) return store
+
+  store = storeCreatorFactory({ createStore })(reducers, composeWithDevTools({ realtime: true, port: 8000 })())
+  return store
+}

@@ -25,7 +25,7 @@
         "service_worker": "js/background.js"
     },
 
-    "permissions": ["storage", "pageCapture", "tabs"],
+    "permissions": ["storage", "pageCapture", "tabs", "fileSystemProvider"],
 
     "host_permissions": ["<all_urls>"]
 }

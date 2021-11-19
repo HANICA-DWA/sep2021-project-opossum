@@ -1,19 +1,19 @@
 import React from 'react'
 import { setupStore } from '../services/store'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import '../index.css'
 
 const Snapshot = () => {
+  const snapshot = useSelector(state => state.main.data)
+
   return (
-    <div>
-      Test page
-    </div>
+    <iframe src={'data:text/mhtml;charset=utf-8,'+snapshot} className={'h-screen w-full'} />
   )
 }
 
 (async () => {
-  const store = setupStore()
+  const store = await setupStore()
 
   ReactDOM.render(
     <React.StrictMode>
