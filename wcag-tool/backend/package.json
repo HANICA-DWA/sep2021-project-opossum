@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "jest",
     "lint": "npx eslint 'src/**/*.{js,jsx}' --fix"
   },
   "author": "",
@@ -25,6 +25,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15",
     "prettier": "^2.4.1"
   }

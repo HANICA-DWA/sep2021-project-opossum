@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('./mongoose/models/snapshot');
+
 const Snapshot = mongoose.model('Snapshot');
 
 exports.logger = (req, res, next) => {
