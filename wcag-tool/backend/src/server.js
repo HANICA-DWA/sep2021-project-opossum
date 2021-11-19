@@ -24,7 +24,8 @@ app.use('/wcag-rule', wcagRuleRouter);
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
+  console.log(`wcag-tool server started on port ${process.env.PORT}`);
   mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, () => {
-    console.log(`wcag-tool server started on port ${process.env.PORT}`);
+    console.log('Connected to MongoDB');
   });
 });
