@@ -21,10 +21,18 @@ jobs:
         with:
           node-version: '16'
         
-      - name: Run eslint on changed files       
-        uses: tj-actions/eslint-changed-files@v8
-        with:
-          token:  ${{ secrets.GITHUB_TOKEN }}
-          config_path: ./wcag-tool/backend/.eslintrc.json
+      #install dependencies and lint backend
+      - name: Lint backend
+        working-directory: ./wcag-tool/backend
+        run: |
+          npm ci
+          npm run lint
+          
+      #install dependencies and lint chrome-extension
+      - name: Lint chrome-extension
+        working-directory: ./wcag-tool/chrome-extension
+        run: |
+          npm ci
+          npm run lint
     
    
