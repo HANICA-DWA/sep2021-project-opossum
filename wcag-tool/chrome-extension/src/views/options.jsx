@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 // eslint-disable-next-line import/named
 import { setupStore } from '../services/store'
+import '../styles.css'
 
 // eslint-disable-next-line func-names
 const Options = function () {
