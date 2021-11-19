@@ -27,3 +27,4 @@ const wcagRuleSchema = new mongoose.Schema({
 
 // eslint-disable-next-line no-unused-vars
 const WcagRule = mongoose.model('WcagRule', wcagRuleSchema);
+module.exports = { WcagRule, wcagRuleSchema };
