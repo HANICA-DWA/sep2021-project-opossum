@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-require('../mongoose/models/snapshot');
+require('../models/snapshot');
 const express = require('express');
 const annotationRouter = require('./annotationRouter');
-const { getSnapshot } = require('../middleware');
+const { getSnapshot } = require('../middleware/getSnapshot');
 
 const router = express.Router();
 const Snapshot = mongoose.model('Snapshot');

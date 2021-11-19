@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../mongoose/models/wcagRule');
+require('../models/wcagRule');
 const express = require('express');
 
 const router = express.Router();

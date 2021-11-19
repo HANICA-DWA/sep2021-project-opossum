@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../mongoose/models/snapshot');
+require('../models/snapshot');
 const express = require('express');
 
 const router = express.Router();
