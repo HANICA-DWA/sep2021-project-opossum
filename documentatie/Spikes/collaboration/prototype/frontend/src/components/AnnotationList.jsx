@@ -24,6 +24,7 @@ const AnnotationList = ({ setCurrentAnnotation, ...props }) => {
       <h2>Annotation List</h2>
 
       <button onClick={fetchAnnotations}>refetch</button>
+      <button onClick={() => setCurrentAnnotation(undefined)}>new</button>
 
       <ul>
         {annotations.map((annotation) => (
