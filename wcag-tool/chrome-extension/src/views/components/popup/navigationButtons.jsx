@@ -1,33 +1,46 @@
+/* eslint-disable import/named */
 import React from 'react'
-import { useDispatch } from 'react-redux'
-// eslint-disable-next-line import/named
-import { previous, next } from '../../../services/snapshot/snapshotSlice'
+import { previousHook, nextHook } from '../../../services/snapshot/hooks'
+import { Button } from '../common/Button'
 
 const NavigationButtons = function () {
-  const dispatch = useDispatch()
+  const previous = previousHook()
+  const next = nextHook()
 
   return (
     <div className="flex p-2 flex-col items-center">
       <p>Showing 0 Entries</p>
       <div className="flex p-2 text-xl">
-        <button
+        <Button
+          name="Prev"
+          action={previous()}
+          classNames="p-2 rounded-l bg-gray-400 text-white hover:bg-gray-600"
+        />
+
+        {/* <button
           type="button"
           className="p-2 px-4 rounded-l bg-gray-400 text-white hover:bg-gray-600"
           onClick={() => {
-            dispatch(previous())
+            previous()
           }}
         >
           Prev
-        </button>
-        <button
+        </button> */}
+
+        <Button
+          name="Next"
+          action={next()}
+          classNames="p-2 rounded-r bg-gray-400 text-white hover:bg-gray-600"
+        />
+        {/* <button
           type="button"
           className="p-2 px-4 rounded-r bg-gray-400 text-white hover:bg-gray-600"
           onClick={() => {
-            dispatch(next())
+            next()
           }}
         >
           Next
-        </button>
+        </button> */}
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ const Header = function () {
       <p>Site</p>
       <button
         type="button"
-        className="p-0.5 px-4 border rounded-full bg-gray-50 border-gray-400 hover:bg-gray-200"
+        className="p-1 px-4 border rounded-full bg-gray-50 border-gray-400 hover:bg-gray-200"
         onClick={() => {
           dispatch(createSnapshot())
         }}
