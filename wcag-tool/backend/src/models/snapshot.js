@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const annotation = new mongoose.Schema(
+const annotationSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -21,7 +21,7 @@ const annotation = new mongoose.Schema(
   { timestamps: true }
 );
 
-const snapshot = new mongoose.Schema(
+const snapshotSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -32,7 +32,7 @@ const snapshot = new mongoose.Schema(
       required: true,
     },
     annotations: {
-      type: [annotation],
+      type: [annotationSchema],
       required: true,
       default: [],
     },
@@ -41,4 +41,4 @@ const snapshot = new mongoose.Schema(
 );
 
 // eslint-disable-next-line no-unused-vars
-const Snapshot = mongoose.model('Snapshot', snapshot);
+const Snapshot = mongoose.model('Snapshot', snapshotSchema);
