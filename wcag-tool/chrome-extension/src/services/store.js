@@ -1,15 +1,25 @@
+/* eslint-disable import/named */
 import { combineReducers, createStore } from 'redux'
 import storeCreatorFactory from 'reduxed-chrome-storage'
-// eslint-disable-next-line import/named
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { composeWithDevTools } from 'remote-redux-devtools'
 import { exampleReducer } from './exampleSlice'
-// eslint-disable-next-line import/named
-import { snapshotReducer } from './snapshotSlice'
+import { snapshotReducer } from './snapshot/snapshotSlice'
 
-const reducer = combineReducers({
+const reducers = combineReducers({
   example: exampleReducer,
   snapshot: snapshotReducer,
 })
 
-const setupStore = () => storeCreatorFactory({ createStore })(reducer)
+let store
 
-export default { setupStore }
+// eslint-disable-next-line import/prefer-default-export
+export const setupStore = () => {
+  if (store) return store
+
+  store = storeCreatorFactory({ createStore })(
+    reducers,
+    composeWithDevTools({ realtime: true, port: 8000 })()
+  )
+  return store
+}

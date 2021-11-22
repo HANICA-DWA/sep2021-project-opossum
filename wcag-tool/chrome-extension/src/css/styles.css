@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Poppins';
+    src: url(./font/Poppins/Poppins-Regular.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./font/Poppins/Poppins-Bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Poppins-Semi;
+    src: url(./font/Poppins/Poppins-SemiBold.ttf);
+}
+
+@layer utilities {
+    
+    .searchIcon {
+        background-image: url(../img/icon/search-icon.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 25px;
+		width: 25px;
+    }
+
+    .folderIcon {
+        background-image: url(../img/icon/folder.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 100px;
+		width: 150px;
+    }
+
+}

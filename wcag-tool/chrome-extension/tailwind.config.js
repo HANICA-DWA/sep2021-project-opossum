@@ -5,7 +5,12 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'],
+        'poppins-semi': ['Poppins-Semi', 'sans-serif'],
+      }
+    },
   },
   variants: {
     extend: {},

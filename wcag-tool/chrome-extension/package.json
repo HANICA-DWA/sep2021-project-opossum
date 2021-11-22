@@ -9,7 +9,8 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "jest --passWithNoTests",
-    "lint": "npx eslint 'src/**/*.{js,jsx}' --fix"
+    "lint": "npx eslint \"src/**/*.{js,jsx}\" --fix",
+    "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
