@@ -1,7 +1,5 @@
-/* eslint-disable import/named */
 import { combineReducers, createStore } from 'redux'
 import storeCreatorFactory from 'reduxed-chrome-storage'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'remote-redux-devtools'
 import { exampleReducer } from './exampleSlice'
 import { snapshotReducer } from './snapshot/snapshotSlice'
