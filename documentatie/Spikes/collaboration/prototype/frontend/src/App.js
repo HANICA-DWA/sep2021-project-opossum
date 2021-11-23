@@ -1,35 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
-import { WebsocketProvider } from 'y-websocket'
+import { useEffect, useState } from 'react'
 import * as Y from 'yjs'
+import { WebsocketProvider } from 'y-websocket'
 
 import { AnnotationEditor } from './components/AnnotationEditor'
 import { AnnotationList } from './components/AnnotationList'
 import { Awareness } from './components/Awareness'
 
-function App() {
+// TODO: Vragen aan docent: wanneer ik websocket in useRef gebruikt wordt deze 2 maal initialiseerd.
+const yDoc = new Y.Doc()
+const provider = new WebsocketProvider('ws://localhost:5000', 'room', yDoc)
+
+const App = () => {
   const [currentAnnotation, setCurrentAnnotation] = useState(undefined)
 
-  // Setup Yjs
-  // I use useRef to persist these vars between renders.
-  const yDocRef = useRef(new Y.Doc())
-  const providerRef = useRef(new WebsocketProvider('ws://localhost:5000', '1', yDocRef.current))
-
+  // ComponentDidMount
   useEffect(() => {
-    console.log('App useEffect!')
-
-    // Cleanup after unmounting component
+    // ComponentWillUnmount
     return () => {
-      providerRef.current.destroy()
-      providerRef.current = undefined
-      yDocRef.current.destroy()
-      yDocRef.current = undefined
+      provider.current.destroy()
+      yDoc.current.destroy()
     }
   }, [])
 
   return (
     <>
       <div style={{ border: '2px solid blue', margin: '1rem', padding: '1rem' }}>
-        <Awareness provider={providerRef.current} clientId={yDocRef.current.clientID} />
+        <Awareness provider={provider} clientId={yDoc.clientID} />
       </div>
 
       <div style={{ border: '2px solid green', margin: '1rem', padding: '1rem' }}>
@@ -38,11 +34,11 @@ function App() {
       </div>
 
       <div style={{ border: '2px solid red', margin: '1rem', padding: '1rem' }}>
-        <AnnotationList setCurrentAnnotation={setCurrentAnnotation} />
+        <AnnotationList yDoc={yDoc} provider={provider} setCurrentAnnotation={setCurrentAnnotation} />
       </div>
 
       <div style={{ border: '2px solid blue', margin: '1rem', padding: '1rem' }}>
-        <AnnotationEditor yDoc={yDocRef.current} provider={providerRef.current} currentAnnotation={currentAnnotation} />
+        <AnnotationEditor yDoc={yDoc} provider={provider} currentAnnotation={currentAnnotation} />
       </div>
     </>
   )

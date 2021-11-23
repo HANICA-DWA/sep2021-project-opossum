@@ -165,6 +165,11 @@ app.put('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, nex
   }
 })
 
+app.use((err, req, res, next) => {
+  console.log(err)
+  return res.status(500).send(err)
+})
+
 // WEBSOCKET CODE
 wsServer.on('connection', (ws, req) => {
   setupWSConnection(ws, req)
@@ -188,7 +193,12 @@ httpServer.listen(process.env.PORT, async () => {
   console.log(`Example app listening at http://localhost:${process.env.PORT}`)
 
   // Connect to database
-  await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () =>
+  await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) {
+      console.log('Error connecting to database: ' + err)
+      console.log('Shutting down server...')
+      return httpServer.close()
+    }
     console.log('Connected to database')
-  )
+  })
 })

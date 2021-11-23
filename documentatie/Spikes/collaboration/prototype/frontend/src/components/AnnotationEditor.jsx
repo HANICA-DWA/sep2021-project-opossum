@@ -10,6 +10,8 @@ import axios from 'axios'
 //  Register Quill modules
 Quill.register('modules/cursors', QuillCursors, false)
 
+const snapshotId = '619cbbc19caecffdfbb25d0c'
+
 const AnnotationEditor = ({ yDoc, provider, currentAnnotation, ...props }) => {
   // States
   const [title, setTitle] = useState('')
@@ -53,7 +55,7 @@ const AnnotationEditor = ({ yDoc, provider, currentAnnotation, ...props }) => {
 
     // Initialize editor content if an anotation is chosen
     if (currentAnnotation) {
-      const initializeText = (yFields = []) => {
+      const initializeText = () => {
         if (yTitle.toString() === '') {
           setTitle(currentAnnotation.title)
         }
@@ -98,18 +100,18 @@ const AnnotationEditor = ({ yDoc, provider, currentAnnotation, ...props }) => {
       <button
         onClick={async () => {
           try {
-            let response
-            if (currentAnnotation) {
-              response = await axios.put('http://localhost:5000/annotations/' + currentAnnotation._id, {
+            const response = await axios({
+              method: currentAnnotation ? 'PUT' : 'POST',
+              url: `http://localhost:5000/snapshots/${snapshotId}/annotations/${
+                currentAnnotation ? currentAnnotation._id : ''
+              }`,
+              data: {
                 title,
                 description,
-              })
-            } else {
-              response = await axios.post('http://localhost:5000/annotations', {
-                title,
-                description,
-              })
-            }
+              },
+            })
+
+            yDoc.getArray(`${snapshotId}-annotations`).insert(0, [response.data])
 
             console.log('Annotation posted!', response.data)
           } catch (err) {
