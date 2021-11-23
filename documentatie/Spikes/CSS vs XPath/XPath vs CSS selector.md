@@ -1,6 +1,6 @@
 # XPath vs CSS selector
 
-Het probleem: Het programmatisch aanwijzen van specifieke elementen op een pagina (in het val van een 'snapshot' is de content statisch).
+Het probleem: Het programmatisch aanwijzen van specifieke elementen op een pagina (in het geval van een 'snapshot' is de content statisch).
 
 de mogelijke oplossing die we gaan bekijken:
 
