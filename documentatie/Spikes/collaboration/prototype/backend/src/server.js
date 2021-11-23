@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const http = require('http')
@@ -18,13 +19,6 @@ const annotationSchema = new mongoose.Schema({
 })
 const Annotation = mongoose.model('Annotation', annotationSchema)
 
-// EXPRESS CODE
-app.use(express.json())
-app.use(
-  cors({
-    origin: '*',
-  })
-)
 app.use((req, res, next) => {
   console.log(req.method + ' ' + req.url)
   next()
@@ -117,12 +111,11 @@ httpServer.on('upgrade', (req, socket, head) => {
   })
 })
 
-httpServer.listen(5000, async () => {
-  console.log(`Example app listening at http://localhost:3000`)
+httpServer.listen(process.env.PORT, async () => {
+  console.log(`Example app listening at http://localhost:${process.env.PORT}`)
 
   // Connect to database
-  const uri = 'mongodb+srv://username:ZitZitoen@cluster0.eqqbn.mongodb.net/testDB?retryWrites=true&w=majority'
-  await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, () =>
+  await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () =>
     console.log('Connected to database')
   )
 })

@@ -25,6 +25,7 @@ function App() {
       yDocRef.current = undefined
     }
   }, [])
+
   return (
     <>
       <div style={{ border: '2px solid blue', margin: '1rem', padding: '1rem' }}>
