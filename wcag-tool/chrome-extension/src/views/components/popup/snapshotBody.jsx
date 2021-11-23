@@ -3,11 +3,9 @@ import { useSelector } from 'react-redux'
 import NoSnapshotsFound from './noSnapshotsFound'
 
 const SnapshotBody = function () {
-  const snapshots = useSelector((state) => state.snapshots)
+  const snapshots = useSelector((state) => state.snapshot.snapshots)
 
-  if (snapshots.length === 0) {
-    return <div>{NoSnapshotsFound()}</div>
-  }
+  if (snapshots.length === 0) return <div>{NoSnapshotsFound()}</div>
   return (
     <div>
       <p>here we load in some snapshots!</p>
