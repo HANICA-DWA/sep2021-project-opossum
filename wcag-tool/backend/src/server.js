@@ -1,12 +1,35 @@
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const { logger } = require('./middleware/logger');
+const { errorHandler } = require('./middleware/errorHandler');
+const snapshotRouter = require('./routers/snapshotRouter');
+const wcagRuleRouter = require('./routers/wcagRuleRouter');
 
 const app = express();
-const port = 3000;
+
+app.use(cors({ origin: true, credentials: true }));
+app.options('*', cors({ origin: true, credentials: true }));
+app.use(logger);
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.use('/snapshot', snapshotRouter);
+app.use('/wcag-rules', wcagRuleRouter);
+
+app.use(errorHandler);
+
+app.listen(process.env.PORT, () => {
+  console.log(`wcag-tool server started on port ${process.env.PORT}`);
+  mongoose.connect(
+    process.env.MONGO_URL,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    () => {
+      console.log('Connected to mongodb!');
+    }
+  );
 });

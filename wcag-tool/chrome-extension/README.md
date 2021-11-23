@@ -89,6 +89,7 @@ To setup redux devtools do the following:
 2. Add the following lines to `Package.json`
  ```
  "scripts": {
+ ...
   "remotedev": "remotedev --hostname=localhost --port=8000"
 }
 ```
@@ -100,9 +101,7 @@ To setup redux devtools do the following:
 - storeCreatorFactory({createStore})(reducers)
 + storeCreatorFactory({createStore})(reducers, composeWithDevTools({realtime: true, port: 8000})())
 ```
-5. Install 'Redux DevTools' chrome extension 
-
-6. run `npm run remotedev`
-7. run `npm run dev`
-8. Open dev tools by right clicking on the extension body content and selecting  Redux DevTools
-9. You can inspect the extension html by also clicking the extension body content and selecting 'Inspect'
+5. run `npm run remotedev` and open redux remote devtools (together with `npm run dev` in a different terminal when developping)
+6. open redux remote devtools by right clicking on a webpage, 'Redux DevTools' -> 'Open Remote DevTools'
+7. Go to settings and check 'use custom (local) server'. Default settings should be correct (localhost:8000).
+8. Uncheck use secure connection.
