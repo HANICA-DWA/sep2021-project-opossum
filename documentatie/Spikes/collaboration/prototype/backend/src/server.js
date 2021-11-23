@@ -19,6 +19,37 @@ const annotationSchema = new mongoose.Schema({
 })
 const Annotation = mongoose.model('Annotation', annotationSchema)
 
+const snapshotSchema = new mongoose.Schema({
+  domain: String,
+  annotations: {
+    type: [annotationSchema],
+    default: [],
+  },
+})
+
+snapshotSchema.methods.addAnnotation = async function (title, description) {
+  const annotation = new Annotation({
+    title: title,
+    description: description,
+  })
+
+  console.log(annotation)
+
+  this.annotations.push(annotation)
+  const _snapshot = this.save()
+
+  return annotation
+}
+
+const Snapshot = mongoose.model('Snapshot', snapshotSchema)
+
+// EXPRESS CODE
+app.use(express.json())
+app.use(
+  cors({
+    origin: '*',
+  })
+)
 app.use((req, res, next) => {
   console.log(req.method + ' ' + req.url)
   next()
@@ -28,66 +59,108 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.post('/annotations', async (req, res, next) => {
+app.post('/snapshots', async (req, res, next) => {
   try {
+    const { domain } = req.body
+
+    const snapshot = new Snapshot({ domain: domain })
+    const _snapshot = await snapshot.save()
+    if (!_snapshot) return res.status(418).send('Error saving snapshot')
+
+    return res.json(_snapshot)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+app.get('/snapshots', async (req, res, next) => {
+  try {
+    const snapshots = await Snapshot.find({}).exec()
+    if (!snapshots || snapshots.length < 1) return res.status(404).send('No snapshots found')
+
+    return res.json(snapshots)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+app.get('/snapshots/:snapshotId', async (req, res, next) => {
+  try {
+    const { snapshotId } = req.params
+
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Snapshot not found')
+
+    return res.json(snapshot)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+app.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
+  try {
+    const { snapshotId } = req.params
     const { title, description } = req.body
 
-    const test = new Annotation({ title, description })
-    const _test = await test.save()
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Snapshot not found')
 
-    return res.status(201).json(_test)
+    const annotation = await snapshot.addAnnotation(title, description)
+    if (!annotation) return res.status(418).send('Error saving annotation')
+
+    return res.status(201).json(annotation)
   } catch (err) {
     return next(err)
   }
 })
 
-app.get('/annotations', async (req, res, next) => {
+app.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-    const tests = await Annotation.find({}).exec()
-    if (!tests || tests.length <= 0) return res.status(404).send('No annotation found')
+    const { snapshotId } = req.params
 
-    return res.json(tests)
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Snapshot not found')
+
+    return res.json(snapshot.annotations)
   } catch (err) {
     return next(err)
   }
 })
 
-app.get('/annotations/:id', async (req, res, next) => {
+app.get('/snapshots/:snapshotId/annotations/:annotationid', async (req, res, next) => {
   try {
-    const { id } = req.params
-    const test = await Annotation.findById(id)
+    const { snapshotId, annotationid } = req.params
 
-    return res.json(test)
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Annotation not found')
+
+    const annotation = snapshot.annotations.id(annotationid)
+    if (!annotation) return res.status(404).send('Annotation not found')
+
+    return res.json(annotation)
   } catch (err) {
     return next(err)
   }
 })
 
-app.put('/annotations/:id', async (req, res, next) => {
+// Edit single snapshot
+app.put('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
   try {
-    const { id } = req.params
+    const { snapshotId, annotationId } = req.params
     const { title, description } = req.body
 
-    const test = await Annotation.findById(id)
-    test.title = title
-    test.description = description
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Snapshot not found')
 
-    const _test = await test.save()
+    const annotation = await snapshot.annotations.id(annotationId)
+    if (!annotation) return res.status(404).send('Annotation not found')
 
-    return res.json(_test)
+    if (title) annotation.title = title
+    if (description) annotation.description = description
+    annotation.parent().save()
+
+    return res.json(annotation)
   } catch (err) {
-    return next(err)
-  }
-})
-
-app.delete('/annotations/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const test = await Annotation.findByIdAndDelete(id).exec()
-
-    return res.json(test)
-  } catch (err) {
-    if (err.response) return next(err.response)
     return next(err)
   }
 })
