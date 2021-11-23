@@ -5,14 +5,14 @@ import NoSnapshotsFound from './noSnapshotsFound'
 const SnapshotBody = function () {
   const snapshots = useSelector((state) => state.snapshots)
 
-  if (snapshots) {
-    return (
-      <div>
-        <p>hey we load in some snapshots here!</p>
-      </div>
-    )
+  if (snapshots.length === 0) {
+    return <div>{NoSnapshotsFound()}</div>
   }
-  return <div>{NoSnapshotsFound()}</div>
+  return (
+    <div>
+      <p>here we load in some snapshots!</p>
+    </div>
+  )
 }
 
 export default SnapshotBody

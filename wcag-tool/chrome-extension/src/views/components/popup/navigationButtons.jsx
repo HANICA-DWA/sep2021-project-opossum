@@ -8,10 +8,11 @@ const NavigationButtons = function () {
   const next = nextHook()
 
   const snapshots = useSelector((state) => state.snapshots)
-  const disabled = snapshots
-    ? ''
-    : 'disabled:bg-gray-400 cursor-not-allowed text-white'
-  const disable = !snapshots
+  const disabled =
+    snapshots.length === 0
+      ? 'disabled:bg-gray-400 cursor-not-allowed text-white'
+      : ''
+  const disable = snapshots.length === 0
 
   return (
     <>

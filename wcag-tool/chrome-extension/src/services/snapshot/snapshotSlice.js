@@ -5,9 +5,10 @@ const snapshotSlice = createSlice({
 
   initialState: {
     isLoading: false,
-    snapshots: undefined,
-    error: undefined,
-    filter: undefined,
+    snapshots: [],
+    error: false,
+    errorMessage: '',
+    filter: '',
   },
 
   reducers: {
