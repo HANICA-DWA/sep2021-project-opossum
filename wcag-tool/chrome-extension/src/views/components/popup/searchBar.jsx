@@ -1,9 +1,9 @@
 import React from 'react'
-import { filterhook } from '../../../services/snapshot/hooks'
+import { useFilter } from '../../../services/snapshot/hooks'
 import Button from '../common/Button'
 
 const SearchBar = function () {
-  const filter = filterhook()
+  const filter = useFilter()
 
   return (
     <div className="m-1.5">

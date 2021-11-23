@@ -1,9 +1,9 @@
 import React from 'react'
-import { createSnapshotHook } from '../../../services/snapshot/hooks'
+import { useCreateSnapshot } from '../../../services/snapshot/hooks'
 import Button from '../common/Button'
 
 const Header = function () {
-  const createSnapshot = createSnapshotHook()
+  const createSnapshot = useCreateSnapshot()
 
   return (
     <div className="flex mt-1 p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300">

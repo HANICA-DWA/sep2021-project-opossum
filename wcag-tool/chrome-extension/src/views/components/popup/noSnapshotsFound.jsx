@@ -1,9 +1,9 @@
 import React from 'react'
-import { createSnapshotHook } from '../../../services/snapshot/hooks'
+import { useCreateSnapshot } from '../../../services/snapshot/hooks'
 import Button from '../common/Button'
 
 const NoSnapshotsFound = function () {
-  const createSnapshot = createSnapshotHook()
+  const createSnapshot = useCreateSnapshot()
 
   return (
     <div className="p-1 text-black">

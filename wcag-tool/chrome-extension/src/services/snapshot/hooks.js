@@ -13,4 +13,4 @@ const hooks = () => [
   hookGenerator(filter),
 ]
 
-export const [previousHook, nextHook, createSnapshotHook, filterhook] = hooks()
+export const [usePrevious, useNext, useCreateSnapshot, useFilter] = hooks()

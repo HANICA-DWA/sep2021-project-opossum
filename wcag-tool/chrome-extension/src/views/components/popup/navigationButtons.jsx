@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { previousHook, nextHook } from '../../../services/snapshot/hooks'
+import { usePrevious, useNext } from '../../../services/snapshot/hooks'
 import Button from '../common/Button'
 
 const NavigationButtons = function () {
-  const previous = previousHook()
-  const next = nextHook()
+  const previous = usePrevious()
+  const next = useNext()
 
   const snapshots = useSelector((state) => state.snapshot.snapshots)
   const disabled =
