@@ -1,20 +1,35 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
-// import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 
 const Button = function (props) {
-//   const dispatch = useDispatch()
+  const { name, classNames, action, isDisabled } = props
 
   return (
     <button
+      disabled={isDisabled}
       type="button"
-      className={`${props.classNames} p-2 px-4 rounded-r bg-gray-400 text-white hover:bg-gray-600`}
+      className={`p-1 px-4 ${classNames}`}
       onClick={() => {
-        props.action()
+        action()
       }}
     >
-      {props.name}
+      {name}
     </button>
   )
 }
 
-export { Button }
+Button.propTypes = {
+  name: PropTypes.string,
+  classNames: PropTypes.string,
+  action: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
+}
+
+Button.defaultProps = {
+  name: '',
+  classNames: '',
+  isDisabled: false,
+}
+
+export default Button

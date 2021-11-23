@@ -1,31 +1,24 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-// eslint-disable-next-line import/named
-import { createSnapshot } from '../../../services/snapshot/snapshotSlice'
+import { createSnapshotHook } from '../../../services/snapshot/hooks'
+import Button from '../common/Button'
 
 const NoSnapshotsFound = function () {
-  const dispatch = useDispatch()
+  const createSnapshot = createSnapshotHook()
 
   return (
     <div className="p-1 text-black">
       <div className="flex p-4 flex-col items-center">
         <div className="folderIcon m-2" />
-        <p className="text-xl m-2">
-          <b>No snapshots</b>
-        </p>
+        <p className="text-xl m-2 font-poppins-semi">No snapshots</p>
         <p className="m-2">Create a snapshot and start analysis</p>
-        <button
-          type="button"
-          className="p-0.5 px-4 m-2 mb-4 shadow border rounded-full bg-gray-50 border-gray-400 hover:bg-gray-200"
-          onClick={() => {
-            dispatch(createSnapshot())
-          }}
-        >
-          Create Snapshot
-        </button>
+        <Button
+          name="Create Snapshot"
+          action={createSnapshot}
+          classNames="m-2 mb-4 shadow border border-gray-400 rounded-full bg-gray-50 hover:bg-gray-200"
+        />
       </div>
     </div>
   )
 }
 
-export { NoSnapshotsFound }
+export default NoSnapshotsFound

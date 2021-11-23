@@ -7,6 +7,7 @@ const snapshotSlice = createSlice({
     isLoading: false,
     snapshots: undefined,
     error: undefined,
+    filter: undefined,
   },
 
   reducers: {
@@ -19,12 +20,15 @@ const snapshotSlice = createSlice({
     createSnapshot: () => {
       console.log('Create snapshot button clicked')
     },
+    filter: () => {
+      console.log('Filter added')
+    },
   },
 })
 
 const {
   reducer: snapshotReducer,
-  actions: { previous, next, createSnapshot },
+  actions: { previous, next, createSnapshot, filter },
 } = snapshotSlice
 
-export { snapshotReducer, previous, next, createSnapshot }
+export { snapshotReducer, previous, next, createSnapshot, filter }

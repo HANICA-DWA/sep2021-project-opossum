@@ -14,7 +14,10 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "import/named": "warn",
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "func-names": 0,
+    "import/named": 0,
     "import/export": "warn",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-param-reassign": "warn",

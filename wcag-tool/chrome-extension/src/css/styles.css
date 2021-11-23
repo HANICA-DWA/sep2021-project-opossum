@@ -33,8 +33,13 @@
         background-image: url(../img/icon/folder.svg);
         background-size: contain;
 		background-repeat: no-repeat;
-		height: 100px;
-		width: 150px;
+		height: 150px;
+		width: 200px;
+    }
+
+    .customSize {
+        height: 37rem;
+        width: 30rem;
     }
 
 }

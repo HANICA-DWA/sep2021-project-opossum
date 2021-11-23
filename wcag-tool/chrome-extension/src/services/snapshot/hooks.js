@@ -1,23 +1,16 @@
 import { useDispatch } from 'react-redux'
-// eslint-disable-next-line import/named
-import { next, previous, createSnapshot } from './snapshotSlice'
+import { next, previous, createSnapshot, filter } from './snapshotSlice'
 
-const nextHook = () => {
+const hookGenerator = (action) => () => {
   const dispatch = useDispatch()
-
-  return () => dispatch(next())
+  return () => dispatch(action())
 }
 
-const previousHook = () => {
-  const dispatch = useDispatch()
+const hooks = () => [
+  hookGenerator(previous),
+  hookGenerator(next),
+  hookGenerator(createSnapshot),
+  hookGenerator(filter),
+]
 
-  return () => dispatch(previous())
-}
-
-const createSnapshotHook = () => {
-  const dispatch = useDispatch()
-
-  return () => dispatch(createSnapshot())
-}
-
-export { nextHook, previousHook, createSnapshotHook }
+export const [previousHook, nextHook, createSnapshotHook, filterhook] = hooks()
