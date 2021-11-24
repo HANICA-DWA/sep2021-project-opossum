@@ -29,6 +29,7 @@ app.use(errorHandler);
 // WEBSOCKET CODE
 // TODO
 
+// START SERVER
 app.listen(process.env.PORT, () => {
   console.log(`Server started listening on port ${process.env.PORT}`);
 
