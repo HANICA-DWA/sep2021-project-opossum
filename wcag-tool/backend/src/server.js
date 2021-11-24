@@ -14,11 +14,10 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(logger);
+app.use('/v1/snapshots/:snapshotId', loadSnapshot); // TODO: exclude delete method from this middleware
 
 // Routes
 app.get('/', (req, res) => res.send('Hello World!'));
-
-app.use('/v1/snapshots/:snapshotId', loadSnapshot); // TODO: exclude delete method from this middleware
 app.use('/v1/', annotationRouter);
 app.use('/v1/', snapshotRouter);
 app.use('/v1/', wcagRouter);
