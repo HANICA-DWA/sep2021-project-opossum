@@ -43,7 +43,7 @@ const AnnotationList = ({ yDoc, provider, setCurrentAnnotation, ...props }) => {
       })
     }
   }, [yDoc, provider])
-  let i = 0
+
   return (
     <div>
       <h2>Annotation List</h2>
@@ -61,8 +61,8 @@ const AnnotationList = ({ yDoc, provider, setCurrentAnnotation, ...props }) => {
 
       <ul>
         {annotations &&
-          annotations.map((annotation) => (
-            <li key={annotation._id + i++} onClick={() => setCurrentAnnotation(annotation)}>
+          annotations.map((annotation, index) => (
+            <li key={annotation._id + index} onClick={() => setCurrentAnnotation({ ...annotation, index })}>
               {annotation._id} | {annotation.title} | {annotation.description}{' '}
             </li>
           ))}

@@ -111,7 +111,14 @@ const AnnotationEditor = ({ yDoc, provider, currentAnnotation, ...props }) => {
               },
             })
 
-            yDoc.getArray(`${snapshotId}-annotations`).insert(0, [response.data])
+            if (currentAnnotation) {
+              // Replace
+              yDoc.getArray(`${snapshotId}-annotations`).delete(currentAnnotation.index, 1)
+              yDoc.getArray(`${snapshotId}-annotations`).insert(currentAnnotation.index, [response.data])
+            } else {
+              // Add
+              yDoc.getArray(`${snapshotId}-annotations`).insert(0, [response.data])
+            }
 
             console.log('Annotation posted!', response.data)
           } catch (err) {
