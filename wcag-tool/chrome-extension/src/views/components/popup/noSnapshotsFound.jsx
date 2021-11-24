@@ -13,7 +13,7 @@ const NoSnapshotsFound = function () {
         <p className="m-2">Create a snapshot and start analysis</p>
         <Button
           name="Create Snapshot"
-          action={createSnapshot}
+          onClick={() => createSnapshot()}
           classNames="m-2 mb-4 shadow border border-gray-400 rounded-full bg-gray-50 hover:bg-gray-200"
         />
       </div>

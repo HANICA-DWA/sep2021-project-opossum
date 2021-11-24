@@ -22,13 +22,13 @@ const NavigationButtons = function () {
         <div className="flex p-2 text-xl">
           <Button
             name="Prev"
-            action={previous}
+            onClick={() => previous()}
             isDisabled={disable}
             classNames={`p-2 rounded-l bg-gray-300 text-black hover:bg-gray-400 ${disabled}`}
           />
           <Button
             name="Next"
-            action={next}
+            onClick={() => next()}
             isDisabled={disable}
             classNames={`p-2 rounded-r bg-gray-300 text-black hover:bg-gray-400 ${disabled}`}
           />

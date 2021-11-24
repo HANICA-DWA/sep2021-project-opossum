@@ -2,16 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Button = function (props) {
-  const { name, classNames, action, isDisabled } = props
+  const { name, classNames, onClick, isDisabled } = props
 
   return (
     <button
       disabled={isDisabled}
       type="button"
       className={`p-1 px-4 ${classNames}`}
-      onClick={() => {
-        action()
-      }}
+      onClick={onClick}
     >
       {name}
     </button>
@@ -21,7 +19,7 @@ const Button = function (props) {
 Button.propTypes = {
   name: PropTypes.string,
   classNames: PropTypes.string,
-  action: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,
 }
 

@@ -11,7 +11,7 @@ const Header = function () {
       <p>Site</p>
       <Button
         name="Create"
-        action={createSnapshot}
+        onClick={() => createSnapshot()}
         classNames="border border-gray-400 rounded-full bg-gray-50 hover:bg-gray-200"
       />
     </div>
