@@ -19,6 +19,8 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "no-underscore-dangle": "warn",
+    "no-unused-vars": "warn"
   }
 }
