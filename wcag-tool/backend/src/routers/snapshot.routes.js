@@ -33,7 +33,7 @@ router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot));
 router.put('/snapshots/:snapshotId', async (req, res, next) => {
   try {
     const { name, domain } = req.body;
-    const snapshot = req.snapshot;
+    const { snapshot } = req;
 
     if (name) snapshot.name = name;
     if (domain) snapshot.domain = domain;
