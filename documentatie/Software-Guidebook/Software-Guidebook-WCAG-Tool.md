@@ -18,23 +18,27 @@
 
 ## Context
 
-Nowadays more and more information, utilities, companies and government digitalize themselves by having websites or apps that fulfill a purpose.
-For many of the younger generations this is an absolute blessing and happily go along with the trend.
-For some people however, older generations, handicapped or people with disabilities, understanding or even using such an app or website might be a difficult thing to do.
-That is because most websites today are still not properly programmed and therefore not accessible for these people.  
-How should a blind person navigate and use a website when the text-to-speech functionality isn't reading the content properly because CSS changed the layout.
-Is the website able to navigate a person when he/she cannot use mouse and keyboard and has to rely on voice control?
+Nowadays more and more information, utilities and services are offered online via websites and apps. 
+Companies, government instances and individuals start to utilize the digital world more and more due to the ease of use and broad audience they can reach. 
+For most people, like younger generations and people up to 40-60 years, this is a great trend and happily go along with it. 
+For some people however, like older generations, handicapped or people with disabilities, understanding or even using such an app or website might be a difficult thing to do. 
+Most websites today aren’t properly programmed/configured to be accessible for everyone. 
+A blind person for example, must rely on the text-to-speech functionality to know and understand what content a website contains. 
+If a website isn’t programmed correctly for the text-to-speech functionality to work (properly), a blind person simply wouldn’t be able to use the website. 
+If a person isn’t able to use mouse and keyboard due to circumstances, would the website be able to utilize voice control to help this person?
 
-Because of these issues that occur on most websites, accesibility analists evaluate and judge websites based on how accessible they are using the Web Content Accessibility Guidelines (WCAG) requirements.
-Afterwards they send the company a report with any issues they found and a score.
+These are accessibility issues that occur on a lot of websites and leave users frustrated. 
+In the past people with handicaps or disabilities had to adapt to the environment, but in today’s world the digital environment should adapt to these people.
 
+Accessibility analysts evaluate and judge websites based on how accessible they are using the Web Content Accessibility Guidelines (WCAG). 
+Using their own knowledge and automated scripts they check the content of pages and create a rapport with issues that were found during the inspection. 
+The format of this rapport is rather clunky and obscure making it difficult to use both for the analyst and the receiver.
 
-As of currently there isn't a tool available that allows analists to create annotations on a website.
-That's what we will be creating.
+For this reason, we were asked to create a tool that allows the user to create annotations on a given website/webpage. 
+These annotations should link/refer to an element on the website and comment on what’s wrong with it. 
+This creates a clear(er) image about the issues that are present on the website. 
+In the end the tool should generate a rapport that’s easy and comprehensible.
 
-We are going to create a chrome plug-in that allows analists to create annotations directly onto a website.
-When an analist sees something on the website that doens't follow the WCAG standards, they can select that element on the website
-and create an annotation attached to that element. That way it's easy to see which elements on a page need improvement.
 
 
 <!--
