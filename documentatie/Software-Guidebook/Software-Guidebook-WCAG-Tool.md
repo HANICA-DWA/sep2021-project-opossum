@@ -81,7 +81,7 @@ This section is about summarising the key quality attributes and should answer t
 
 � Is there a clear understanding of the quality attributes that the architecture must satisfy?
 � Are the quality attributes SMART (specific, measurable, achievable, relevant and timely)?
-� Havequalityattributesthatareusuallytakenforgrantedbeenexplicitlymarkedasout of scope if they are not needed? 
+� Have quality attributes that are usually taken for granted been explicitly marked as out of scope if they are not needed? 
 (e.g. �user interface elements will only be presented in English� to indicate that multi-language support is not explicitly catered for)
 � Are any of the quality attributes unrealistic? (e.g. true 24x7 availability is typically very costly to implement inside many organisations)
 
@@ -231,7 +231,7 @@ This section should address the following types of questions:
 � How can operational staff diagnose problems?
 � Where are errors and information logged? (e.g. log files, Windows Event Log, SMNP, JMX, WMI, custom diagnostics, etc)
 � Do configuration changes require a restart?
-� Arethereanymanualhousekeepingtasksthatneedtobeperformedonaregularbasis?
+� Are there any manual housekeeping tasks that need to be performed on a regular basis?
 � Does old data need to be periodically archived?
 -->
 

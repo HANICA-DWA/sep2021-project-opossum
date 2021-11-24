@@ -93,9 +93,11 @@ To setup redux devtools do the following:
   "remotedev": "remotedev --hostname=localhost --port=8000"
 }
 ```
-3. Install `remote-redux-devtools`
+3. Install `npm install --save-dev remote-redux-devtools`
 4. In redux store setup change the following lines:
 ```javascript
++ import { composeWithDevTools } from 'remote-redux-devtools'
+
 - storeCreatorFactory({createStore})(reducers)
 + storeCreatorFactory({createStore})(reducers, composeWithDevTools({realtime: true, port: 8000})())
 ```
