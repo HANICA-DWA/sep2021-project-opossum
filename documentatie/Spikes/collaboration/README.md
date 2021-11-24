@@ -31,7 +31,7 @@ This project is in need of a collaborative snapshot and corresponding annotation
 
 # CRDT vs OT
 
-Developing near real-time collaborative applications require reliable data structures and algorithms to share this data structure to ensure consistency among all participating clients. There are two leading algorithms behind near real-time collaborative: the most recent is [CDRT](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type) (_Conflict-free replicated data types_) and the older and more tranditional [OT](https://en.wikipedia.org/wiki/Operational_transformation) (_Operational Transformation_). Both have their advantages and disadvantages.
+Developing near real-time collaborative applications require reliable data structures and algorithms to share this data structure to ensure consistency among all participating clients. There are two leading algorithms behind near real-time collaborative: the most recent is [CDRT](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type) (_Conflict-free replicated data types_) and the older and more traditional [OT](https://en.wikipedia.org/wiki/Operational_transformation) (_Operational Transformation_). Both have their advantages and disadvantages.
 
 ## Differences
 
@@ -41,17 +41,17 @@ I could write down a whole essay about the differences between the two algorithm
 
 There are many pros and cons behind these algorithms. However after a little bit of researching I found out that the implementation of CDRT and OT are more important as every framework does this differently, therefore the advantages and disadvantages will differ per framework even if they use the same technology.
 
-Now that the technology behind collaborative applications is clear we can now further elaborate on which implementation, read framekwork, fits in this project.
+Now that the technology behind collaborative applications is clear we can now further elaborate on which implementation, read framework, fits in this project.
 
 # Existing frameworks
 
-There are a few exisiting frameworks that the general internet and our teacher recommended.
+There are a few existing frameworks that the general internet and our teacher recommended.
 
 | Framework                                           | :star: | Issues | Technology | Remarks                                                                                                                                                                                                                                                                                                       |
 | --------------------------------------------------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Automerge](https://github.com/automerge/automerge) | 11.4k  | 56     | CRDT       | JSON document, offline editing, p2p support (WebRTC), WebSocket support, auto distributed. Little [documentation](https://github.com/automerge/automerge) with a few examples.                                                                                                                                |
 | [yjs](https://github.com/yjs/yjs)                   | 5.6k   | 24     | CRDT       | same as Automerge, scalable with unlimited users, integration with 8 different [RTE](https://docs.yjs.dev/ecosystem/editor-bindings)s, rich [documentation](https://docs.yjs.dev/), many [examples](https://github.com/yjs/yjs#example-observe-types) and many more [demos](https://github.com/yjs/yjs-demos) |
-| [ShareDB](https://github.com/share/sharedb)         | 4.7k   | 24     | OT         | Uses a db as single source of truth (MongoDB, Postgres and [more](https://share.github.io/sharedb/adapters/database)), JSON document, middlware, reasonable [documentation](https://share.github.io/sharedb/), horizontally scalable, offline editing, access to previous versions                            |
+| [ShareDB](https://github.com/share/sharedb)         | 4.7k   | 24     | OT         | Uses a db as single source of truth (MongoDB, Postgres and [more](https://share.github.io/sharedb/adapters/database)), JSON document, middleware, reasonable [documentation](https://share.github.io/sharedb/), horizontally scalable, offline editing, access to previous versions                            |
 
 ## Comparison
 
@@ -72,7 +72,7 @@ In a word, If you are _not_ working on a _shared editing application_ and you ar
 
 ### ShareDB vs Yjs
 
-Yjs is much easier to use, has offline support, and works peer-to-peer. However for the average developer there is in fact very little differenc, despite from the fact that Yjs is _easier_ to set-up.
+Yjs is much easier to use, has offline support, and works peer-to-peer. However, for the average developer there is in fact very little difference, despite from the fact that Yjs is _easier_ to set-up.
 
 Yjs and ShareDB are conceptually different. ShareDB is rather hard to use because users of this library, have to know about how the data is structured and has to apply transformations on the data. Yjs provides types that are _observable_, convenient to use, and have _bindings to several [rich text editors](https://docs.yjs.dev/ecosystem/editor-bindings)_.
 
@@ -80,11 +80,11 @@ There are a lot of things that you can do in Yjs, but you can't do in ShareDB. F
 
 ### Conclusion
 
-In the use case of this project, which needs shared editing on text, **Yjs** is the perfect solution as it was primarly built for this use case. It also is the developer friendliest framework as it has out of the box features that is needed in this project.
+In the use case of this project, which needs shared editing on text, **Yjs** is the perfect solution as it was primarily built for this use case. It also is the developer friendliest framework as it has out of the box features that is needed in this project.
 
 # Prototyping
 
-The purpose of this Spike is to find out how to use collaborative arrays, which holds all annotations, and text, the annotations, data types. We can divide this problem in two: collaborative arrays and collaborative text. The latter was the easiest to implement, because there are already packages to connect an exisiting text editor to Yjs. The only challenge was to find an editor that is compatible with _React_. The first was harder as there is no existing "array editing" framework that works with Yjs.
+The purpose of this Spike is to find out how to use collaborative arrays, which holds all annotations, and text, the annotations, data types. We can divide this problem in two: collaborative arrays and collaborative text. The latter was the easiest to implement, because there are already packages to connect an existing text editor to Yjs. The only challenge was to find an editor that is compatible with _React_. The first was harder as there is no existing "array editing" framework that works with Yjs.
 
 The big problem when developing this prototype was that there was little documentation and even littler examples on how to use this all in React. You will notice differences in the examples and documentation. That is because the documentation is not complete. I found out about several Yjs API's on the internet searching through the Yjs forums, GitHub issues and stackoverflow.
 
@@ -101,7 +101,7 @@ This chapter will explain how to implement Yjs with React. I recommend reading t
 
 ### Frontend
 
-In order to share a document we need to setup an ydoc and websocket provider. You can pass several [options](https://github.com/yjs/y-websocket#api) to the constructor of \*WebsocketProvider, such as websocket polyfill and a seperate awareness object.
+In order to share a document we need to setup an ydoc and websocket provider. You can pass several [options](https://github.com/yjs/y-websocket#api) to the constructor of \*WebsocketProvider, such as websocket polyfill and a separate awareness object.
 
 > > **App.js**
 
