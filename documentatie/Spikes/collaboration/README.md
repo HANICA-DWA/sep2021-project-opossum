@@ -1,6 +1,14 @@
 # Spike: Near real-time collaboration
 
-This project is in need of a collaborative
+This project is in need of a collaborative snapshot and corresponding annotations editor. This research will result in usable code to edit arrays and text fields collaboratively.
+
+## Requirements:
+
+- Should work with _React_
+- Should be able to display list of all collaborators
+- Should be able to collaboratively edit arrays 
+- Should be able to collaboratively edit multiple text fields.
+- Should be usable (performance wise)
 
 ## Table of contents
 
