@@ -1,9 +1,9 @@
-// logger for development
-exports.logger = (req, res, next) => {
-  const { method } = req.method;
-  const url = req.originalUrl;
-  const status = res.statusCode;
-  const log = `${method}:${url} ${status}`;
+const logger = (req, res, next) => {
+  const log = `${req.method} ${req.originalUrl} ${res.statusCode}`;
   console.log(log);
   next();
+};
+
+module.exports = {
+  logger,
 };
