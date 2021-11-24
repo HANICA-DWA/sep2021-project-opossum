@@ -5,7 +5,6 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 import { setupStore } from '../services/store'
 import '../index.css'
 import { setData } from '../services/mainSlice'
-import { getPageData } from '../lib/single-file'
 
 const Popup = () => {
   const data = useSelector(state => state.main.data)
@@ -15,17 +14,14 @@ const Popup = () => {
   return (
     <div className={'p-4'}>
       <button onClick={async () => {
-        const [{ id: index }] = await chrome.tabs.query({ active: true })
-        const page = await getPageData(,,document, window)
 
       }} className={buttonClasses}>
-        Save as mhtml
+        Make snapshot
       </button>
       <button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/snapshot.html' })}>Open Snapshot
       </button>
       {data ? '' : <p className={'text-red-700'}>No snapshot saved</p>}
       <button className={buttonClasses} onClick={() => dispatch(setData(undefined))}>Remove snapshot</button>
-      <button className={buttonClasses} onClick={async () => chrome.fileSystemProvider.getAll(console.log)}>FileSystems</button>
     </div>
   )
 }

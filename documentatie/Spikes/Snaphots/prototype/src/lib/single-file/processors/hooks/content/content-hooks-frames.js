@@ -73,7 +73,7 @@ if (document instanceof Document) {
 		(document.documentElement || document).appendChild(scriptElement);
 		scriptElement.remove();
 		scriptElement = document.createElement("script");
-		scriptElement.src = browser.runtime.getURL("/dist/web/hooks/hooks-frames-web.js");
+		scriptElement.src = browser.runtime.getURL("/js/lib/single-file/web/hooks/hooks-frames-web.js");
 		scriptElement.async = false;
 		(document.documentElement || document).appendChild(scriptElement);
 		scriptElement.remove();

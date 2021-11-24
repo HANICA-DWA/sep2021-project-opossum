@@ -9,7 +9,7 @@ module.exports = {
     options: path.join(srcDir, 'views', 'options.jsx'),
     snapshot: path.join(srcDir, 'views', 'snapshot.jsx'),
     background: path.join(srcDir, 'background.js'),
-    content_script: path.join(srcDir, 'content.jsx'),
+    content_script: path.join(srcDir, 'content.js'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),
@@ -43,7 +43,7 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: '.', to: '../', context: 'public' }],
+      patterns: [{ from: '.', to: '../', context: 'public' }, {from: '.', to: './lib', context: 'src/lib'}],
       options: {},
     }),
   ],

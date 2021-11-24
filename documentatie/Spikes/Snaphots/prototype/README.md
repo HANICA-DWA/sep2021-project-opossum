@@ -39,7 +39,7 @@ A typical chrome extension exists of the following three files:
 │   │   ├── Options
 │   │   └── Popup
 │   ├── background.js
-│   ├── content.jsx
+│   ├── content.js
 │   ├── *.js
 │   └── store.js
 └── package.json
