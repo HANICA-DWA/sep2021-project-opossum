@@ -9,7 +9,7 @@ router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
 
     return res.json(annotations);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 });
 

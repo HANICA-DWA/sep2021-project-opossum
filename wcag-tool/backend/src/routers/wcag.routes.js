@@ -9,7 +9,7 @@ router.get('/wcag', async (req, res, next) => {
 
     return res.json(wcag);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 });
 

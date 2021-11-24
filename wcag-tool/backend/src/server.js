@@ -31,6 +31,7 @@ app.use(errorHandler);
 
 // START SERVER
 app.listen(process.env.PORT, () => {
+  /* eslint-disable-next-line no-console */
   console.log(`Server started listening on port ${process.env.PORT}`);
 
   mongoose.connect(
@@ -38,6 +39,7 @@ app.listen(process.env.PORT, () => {
     { useNewUrlParser: true, useUnifiedTopology: true },
     (err) => {
       if (err) throw new Error('Could not connect to MongoDB!');
+      /* eslint-disable-next-line no-console */
       console.log('Connected to MongoDB!');
     }
   );
