@@ -2,15 +2,34 @@
 
 This project is in need of a collaborative
 
+## Table of contents
+
+- [CRDT vs OT](#CRDT-vs-OT)
+  - [Differences](#Differences)
+  - [Advantages and Disadvantages](#Advantages-and-Disadvantages)
+- [Existing frameworks](#Existing-frameworks)
+  - [Comparison](#comparison)
+    - [Automerge vs Yjs](#automerge-vs-yjs)
+    - [ShareDB vs Yjs](#sharedb-vs-yjs)
+    - [Conclusion](#conclusion)
+- [Prototype](#Prototype)
+  - [Setting up Yjs](#Setting-up-yjs)
+    - [Overview](#Overview)
+    - [Frontend](#Frontend)
+    - [Backend](#Backend)
+  - [Collaborative text](#Collaborative-text)
+  - [Collaborative array](#Collaborative-array)
+  - [Awareness](#awareness)
+
 # CRDT vs OT
 
 Developing near real-time collaborative applications require reliable data structures and algorithms to share this data structure to ensure consistency among all participating clients. There are two leading algorithms behind near real-time collaborative: the most recent is [CDRT](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type) (_Conflict-free replicated data types_) and the older and more tranditional [OT](https://en.wikipedia.org/wiki/Operational_transformation) (_Operational Transformation_). Both have their advantages and disadvantages.
 
-#### Differences
+## Differences
 
 I could write down a whole essay about the differences between the two algorithms. Fortunately, however someone already gave a clear answer to this question on [stackoverflow](https://stackoverflow.com/a/27494397).
 
-#### Advantages & Disadvantages
+## Advantages & Disadvantages
 
 There are many pros and cons behind these algorithms. However after a little bit of researching I found out that the implementation of CDRT and OT are more important as every framework does this differently, therefore the advantages and disadvantages will differ per framework even if they use the same technology.
 
@@ -26,11 +45,11 @@ There are a few exisiting frameworks that the general internet and our teacher r
 | [yjs](https://github.com/yjs/yjs)                   | 5.6k   | 24     | CRDT       | same as Automerge, scalable with unlimited users, integration with 8 different [RTE](https://docs.yjs.dev/ecosystem/editor-bindings)s, rich [documentation](https://docs.yjs.dev/), many [examples](https://github.com/yjs/yjs#example-observe-types) and many more [demos](https://github.com/yjs/yjs-demos) |
 | [ShareDB](https://github.com/share/sharedb)         | 4.7k   | 24     | OT         | Uses a db as single source of truth (MongoDB, Postgres and [more](https://share.github.io/sharedb/adapters/database)), JSON document, middlware, reasonable [documentation](https://share.github.io/sharedb/), horizontally scalable, offline editing, access to previous versions                            |
 
-# Comparison
+## Comparison
 
 Instead of researching (making prototypes (very time consuming) and comparing the pros and cons) every framework and comparing the results I decided to do literature research in order to find out which of these frameworks will be used in this project.
 
-## Automerge vs Yjs
+### Automerge vs Yjs
 
 Automerge was primarily build for sharing application state. The developers of automerge decided to make application state immutable, and therefore it nicely integrates into React/Redux applications.
 
@@ -43,7 +62,7 @@ Yjs is the better choice if you plan to share text documents, because
 
 In a word, If you are _not_ working on a _shared editing application_ and you are not hitting any performance problems, then you are probably fine with automerge. Otherwise Yjs would be a better choice
 
-## ShareDB vs Yjs
+### ShareDB vs Yjs
 
 Yjs is much easier to use, has offline support, and works peer-to-peer. However for the average developer there is in fact very little differenc, despite from the fact that Yjs is _easier_ to set-up.
 
@@ -51,7 +70,7 @@ Yjs and ShareDB are conceptually different. ShareDB is rather hard to use becaus
 
 There are a lot of things that you can do in Yjs, but you can't do in ShareDB. For example, you can design a completely distributed application with Yjs (see y-webrtc or y-ipfs). It is also possible to scale Yjs to serve millions of users. As a comparison, you can open a google docs document with at most 50 users. While ShareDB generally supports more users than that, it is hard to scale ShareDB, because there is only a **single source of truth** - **a single source of failure**. This is a limitation of the transformation approach that is used in ShareDB (OT).
 
-#### Conclusion
+### Conclusion
 
 In the use case of this project, which needs shared editing on text, **Yjs** is the perfect solution as it was primarly built for this use case. It also is the developer friendliest framework as it has out of the box features that is needed in this project.
 
@@ -61,18 +80,18 @@ The purpose of this Spike is to find out how to use collaborative arrays, which 
 
 The big problem when developing this prototype was that there was little documentation and even littler examples on how to use this all in React. You will notice differences in the examples and documentation. That is because the documentation is not complete. I found out about several Yjs API's on the internet searching through the Yjs forums, GitHub issues and stackoverflow.
 
-## Setup Yjs
+## Setting up Yjs
 
 This chapter will explain how to implement Yjs with React. I recommend reading through the Yjs [documentation on Y.Doc](https://github.com/yjs/yjs#YDoc), which is the shared document that holds all collaborative datatypes such as arrays and text. Also read the [y-websocket documentation](https://github.com/yjs/y-websocket), which shares the shared document via websocket connections. There are also other [providers](https://github.com/yjs/yjs#Providers) like WebRTC. However we might want to add persistence (works best with websocket provider). The other argument to choose websockets over WebRTC is that the developers learned about websockets in class and nothing about WebRTC.
 
-#### Overview
+### Overview
 
 - **ydoc**: An object, read document, that holds all shared datatypes such as arrays and text objects.
   - You can declare/get these datatypes by calling `getText(<fieldname>)`and `getArray(<arrayname>)`
 - **provider**: An object which holds and manages the websocket connection. It also contains an awareness object
 - **awareness**: Object that contains cursor positions and user information of each client. This can be a seperate object but we use the default on which can be found in the provider object.
 
-### frontend
+### Frontend
 
 In order to share a document we need to setup an ydoc and websocket provider. You can pass several [options](https://github.com/yjs/y-websocket#api) to the constructor of \*WebsocketProvider, such as websocket polyfill and a seperate awareness object.
 
@@ -102,9 +121,9 @@ const App = () => {
 }
 ```
 
-### backend
+### Backend
 
-The backend setup with _express_, _http_, _ws_ and _cors_ is exactly the same as we learned in class. Use However we need to call a function _setupWSConnection_ from the _y-websocket_ module.
+The backend setup with _express_, _http_, _ws_ and _cors_ is exactly the same as we learned in class. However we need to call a function _setupWSConnection_ from the _y-websocket_ module.
 
 > > **server.js**
 
@@ -115,7 +134,8 @@ const { setupWSConnection } = require('y-websocket/bin/utils')
 
 wsServer.on('connection', (ws, req) => {
   setupWSConnection(ws, req)
-  console.log('[WS] New connection!')
+
+console.log('[WS] New connection!')
 
   ws.on('open', () => console.log('[WS] Connection opened!'))
 
