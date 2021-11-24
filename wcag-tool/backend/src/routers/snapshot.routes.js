@@ -19,7 +19,10 @@ router.post('/snapshots', async (req, res, next) => {
 
 router.get('/snapshots', async (req, res, next) => {
   try {
-    const snapshots = await Snapshot.find({}).exec();
+    const { page, limit } = req.query;
+    const skip = page * (limit - 1) > 0 ? page * (limit - 1) : 0;
+
+    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec();
 
     return res.json(snapshots);
   } catch (err) {
