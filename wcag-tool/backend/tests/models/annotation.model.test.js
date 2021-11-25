@@ -15,20 +15,22 @@ afterAll(async () => {
 });
 
 describe('Annotation model', () => {
-  xtest('Create annotation without required field should fail', async () => {
+  test('Create annotation without required fields should fail', async () => {
     // Arrange
     const annotation = new Annotation({});
     let error;
 
     // Act
     try {
-      const _annotation = await annotation.save();
+      await annotation.save();
     } catch (_error) {
       error = _error;
     }
 
     // Assert
     expect(error).toBeInstanceOf(mongoose.Error.ValidationError);
-    // expect(error.errors.email).toBeDefined();
+    expect(error.errors.title).toBeDefined();
+    expect(error.errors.description).toBeDefined();
+    expect(error.errors.selector).toBeDefined();
   });
 });
