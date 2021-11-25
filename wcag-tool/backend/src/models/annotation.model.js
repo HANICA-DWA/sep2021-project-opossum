@@ -6,16 +6,13 @@ const annotationSchema = new Schema(
       type: String,
       required: true,
     },
-    selector: {
+    description: {
       type: String,
       required: true,
     },
-    severity: {
-      type: Number,
+    selector: {
+      type: String,
       required: true,
-      default: 1,
-      min: 1,
-      max: 3,
     },
   },
   { timestamps: true }
