@@ -56,8 +56,7 @@ const FONT_WEIGHTS = {
 	bolder: "700",
 	lighter: "100"
 };
-const COMMENT_HEADER = "Page saved with SingleFile";
-const COMMENT_HEADER_LEGACY = "Archive processed by SingleFile";
+const COMMENT_HEADER = "Snapshot WCAGTool";
 const SINGLE_FILE_UI_ELEMENT_CLASS = "single-file-ui-element";
 const addEventListener = (type, listener, options) => globalThis.addEventListener(type, listener, options);
 const dispatchEvent = event => globalThis.dispatchEvent(event);
@@ -91,7 +90,6 @@ export {
 	SELECTED_CONTENT_ATTRIBUTE_NAME,
 	ASYNC_SCRIPT_ATTRIBUTE_NAME,
 	COMMENT_HEADER,
-	COMMENT_HEADER_LEGACY,
 	SINGLE_FILE_UI_ELEMENT_CLASS
 };
 
@@ -161,7 +159,7 @@ function getElementsInfo(win, doc, element, options, data = { usedFonts: new Map
 	const elements = Array.from(element.childNodes).filter(node => (node instanceof win.HTMLElement) || (node instanceof win.SVGElement));
 	elements.forEach(element => {
 		let elementHidden, elementKept, computedStyle;
-		if (!options.autoSaveExternalSave && (options.removeHiddenElements || options.removeUnusedFonts || options.compressHTML)) {
+		if (options.removeHiddenElements || options.removeUnusedFonts || options.compressHTML) {
 			computedStyle = win.getComputedStyle(element);
 			if (element instanceof win.HTMLElement) {
 				if (options.removeHiddenElements) {
@@ -207,7 +205,7 @@ function getElementsInfo(win, doc, element, options, data = { usedFonts: new Map
 			}
 		}
 		getElementsInfo(win, doc, element, options, data, elementHidden);
-		if (!options.autoSaveExternalSave && options.removeHiddenElements && ascendantHidden) {
+		if (options.removeHiddenElements && ascendantHidden) {
 			if (elementKept || element.getAttribute(KEPT_CONTENT_ATTRIBUTE_NAME) == "") {
 				if (element.parentElement) {
 					element.parentElement.setAttribute(KEPT_CONTENT_ATTRIBUTE_NAME, "");

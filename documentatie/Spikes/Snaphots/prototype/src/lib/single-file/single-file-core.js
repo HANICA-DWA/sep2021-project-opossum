@@ -472,7 +472,7 @@ class Processor {
 		if (this.options.insertSingleFileComment) {
 			const firstComment = this.doc.documentElement.firstChild;
 			let infobarURL = this.options.saveUrl, infobarSaveDate = this.options.saveDate;
-			if (firstComment.nodeType == 8 && (firstComment.textContent.includes(util.COMMENT_HEADER_LEGACY) || firstComment.textContent.includes(util.COMMENT_HEADER))) {
+			if (firstComment.nodeType == 8 && (firstComment.textContent.includes("--") || firstComment.textContent.includes(util.COMMENT_HEADER))) {
 				const info = this.doc.documentElement.firstChild.textContent.split("\n");
 				const [, , url, saveDate] = info;
 				infobarURL = url.split("url: ")[1];
@@ -480,7 +480,7 @@ class Processor {
 				firstComment.remove();
 			}
 			const infobarContent = (this.options.infobarContent || "").replace(/\\n/g, "\n").replace(/\\t/g, "\t");
-			const commentNode = this.doc.createComment("\n " + (this.options.useLegacyCommentHeader ? util.COMMENT_HEADER_LEGACY : util.COMMENT_HEADER) +
+			const commentNode = this.doc.createComment("\n " + (this.options.useLegacyCommentHeader ? "" : util.COMMENT_HEADER) +
 				" \n url: " + infobarURL +
 				" \n saved date: " + infobarSaveDate +
 				(infobarContent ? " \n info: " + infobarContent : "") + "\n");
@@ -1485,9 +1485,7 @@ class ProcessorHelper {
 		template = await evalTemplateVariable(template, "url-hash", () => url.hash.substring(1) || "No hash", dontReplaceSlash, options.filenameReplacementCharacter);
 		template = await evalTemplateVariable(template, "url-host", () => url.host.replace(/\/$/, "") || "No host", dontReplaceSlash, options.filenameReplacementCharacter);
 		template = await evalTemplateVariable(template, "url-hostname", () => url.hostname.replace(/\/$/, "") || "No hostname", dontReplaceSlash, options.filenameReplacementCharacter);
-		const urlHref = decode(url.href);
-		template = await evalTemplateVariable(template, "url-href", () => urlHref || "No href", dontReplaceSlash === undefined ? true : dontReplaceSlash, options.filenameReplacementCharacter);
-		template = await evalTemplateVariable(template, "url-href-digest-sha-1", urlHref ? async () => util.digest("SHA-1", urlHref) : "No href", dontReplaceSlash, options.filenameReplacementCharacter);
+		template = await evalTemplateVariable(template, "url-href", () => decode(url.href) || "No href", dontReplaceSlash === undefined ? true : dontReplaceSlash, options.filenameReplacementCharacter);
 		template = await evalTemplateVariable(template, "url-href-flat", () => decode(url.href) || "No href", false, options.filenameReplacementCharacter);
 		template = await evalTemplateVariable(template, "url-referrer", () => decode(options.referrer) || "No referrer", dontReplaceSlash === undefined ? true : dontReplaceSlash, options.filenameReplacementCharacter);
 		template = await evalTemplateVariable(template, "url-referrer-flat", () => decode(options.referrer) || "No referrer", false, options.filenameReplacementCharacter);

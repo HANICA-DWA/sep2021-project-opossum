@@ -182,7 +182,6 @@ function getInstance(utilOptions) {
 		STYLESHEET_ATTRIBUTE_NAME: helper.STYLESHEET_ATTRIBUTE_NAME,
 		SELECTED_CONTENT_ATTRIBUTE_NAME: helper.SELECTED_CONTENT_ATTRIBUTE_NAME,
 		COMMENT_HEADER: helper.COMMENT_HEADER,
-		COMMENT_HEADER_LEGACY: helper.COMMENT_HEADER_LEGACY,
 		SINGLE_FILE_UI_ELEMENT_CLASS: helper.SINGLE_FILE_UI_ELEMENT_CLASS
 	};
 
@@ -200,12 +199,12 @@ function getInstance(utilOptions) {
 		try {
 			if (options.frameId) {
 				try {
-					response = await fetchFrameResource(resourceURL, { frameId: options.frameId, referrer: options.resourceReferrer });
+					response = await fetchFrameResource(resourceURL, { frameId: options.frameId });
 				} catch (error) {
 					response = await fetchResource(resourceURL);
 				}
 			} else {
-				response = await fetchResource(resourceURL, { referrer: options.resourceReferrer });
+				response = await fetchResource(resourceURL);
 			}
 		} catch (error) {
 			return { data: options.asBinary ? "data:null;base64," : "", resourceURL };

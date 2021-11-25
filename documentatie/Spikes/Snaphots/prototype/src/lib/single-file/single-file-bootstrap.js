@@ -2,7 +2,6 @@ import * as frameTree from "./processors/frame-tree/content/content-frame-tree.j
 import * as serializer from "./modules/html-serializer.js";
 import {
 	COMMENT_HEADER,
-	COMMENT_HEADER_LEGACY,
 	ON_BEFORE_CAPTURE_EVENT_NAME,
 	ON_AFTER_CAPTURE_EVENT_NAME,
 	initUserScriptHandler,
@@ -14,7 +13,6 @@ import {
 const processors = { frameTree };
 const helper = {
 	COMMENT_HEADER,
-	COMMENT_HEADER_LEGACY,
 	ON_BEFORE_CAPTURE_EVENT_NAME,
 	ON_AFTER_CAPTURE_EVENT_NAME,
 	preProcessDoc,

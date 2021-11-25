@@ -248,7 +248,7 @@
 
 	addEventListener(BLOCK_COOKIES_START_EVENT, () => {
 		try {
-			document.__defineGetter__("cookie", () => { throw new Error("document.cookie temporary blocked by SingleFile"); });
+			document.__defineGetter__("cookie", () => { throw new Error("document.cookie temporary blocked by SingleFile Lite"); });
 		} catch (error) {
 			// ignored
 		}
@@ -261,11 +261,11 @@
 	addEventListener(BLOCK_STORAGE_START_EVENT, () => {
 		if (!globalThis._singleFile_localStorage) {
 			globalThis._singleFile_localStorage = globalThis.localStorage;
-			globalThis.__defineGetter__("localStorage", () => { throw new Error("localStorage temporary blocked by SingleFile"); });
+			globalThis.__defineGetter__("localStorage", () => { throw new Error("localStorage temporary blocked by SingleFile Lite"); });
 		}
 		if (!globalThis._singleFile_indexedDB) {
 			globalThis._singleFile_indexedDB = globalThis.indexedDB;
-			globalThis.__defineGetter__("indexedDB", () => { throw new Error("indexedDB temporary blocked by SingleFile"); });
+			globalThis.__defineGetter__("indexedDB", () => { throw new Error("indexedDB temporary blocked by SingleFile Lite"); });
 		}
 	});
 
@@ -287,7 +287,7 @@
 		let warningFontFaceDisplayed;
 		globalThis.FontFace = function () {
 			if (!warningFontFaceDisplayed) {
-				warn("SingleFile is hooking the FontFace constructor, document.fonts.delete and document.fonts.clear to handle dynamically loaded fonts.");
+				warn("SingleFile Lite is hooking the FontFace constructor, document.fonts.delete and document.fonts.clear to handle dynamically loaded fonts.");
 				warningFontFaceDisplayed = true;
 			}
 			getDetailObject(...arguments).then(detail => dispatchEvent(new CustomEvent(NEW_FONT_FACE_EVENT, { detail })));
@@ -313,7 +313,7 @@
 		let warningIntersectionObserverDisplayed;
 		globalThis.IntersectionObserver = function () {
 			if (!warningIntersectionObserverDisplayed) {
-				warn("SingleFile is hooking the IntersectionObserver API to detect and load deferred images.");
+				warn("SingleFile Lite is hooking the IntersectionObserver API to detect and load deferred images.");
 				warningIntersectionObserverDisplayed = true;
 			}
 			const intersectionObserver = new IntersectionObserver(...arguments);

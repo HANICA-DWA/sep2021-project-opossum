@@ -1,4 +1,4 @@
-/*global chrome*/
+/* global chrome */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider, useDispatch, useSelector } from 'react-redux'
@@ -14,14 +14,14 @@ const Popup = () => {
   return (
     <div className={'p-4'}>
       <button onClick={async () => {
-
+        chrome.tabs.create({ url: '/snapshot.html' })
       }} className={buttonClasses}>
         Make snapshot
       </button>
-      <button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/snapshot.html' })}>Open Snapshot
-      </button>
-      {data ? '' : <p className={'text-red-700'}>No snapshot saved</p>}
-      <button className={buttonClasses} onClick={() => dispatch(setData(undefined))}>Remove snapshot</button>
+      {/*<button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/snapshot.html' })}>Open Snapshot*/}
+      {/*</button>*/}
+      {/*{data ? '' : <p className={'text-red-700'}>No snapshot saved</p>}*/}
+      {/*<button className={buttonClasses} onClick={() => dispatch(setData(undefined))}>Remove snapshot</button>*/}
     </div>
   )
 }

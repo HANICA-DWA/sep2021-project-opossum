@@ -1,0 +1,71 @@
+{
+    "manifest_version": 3,
+    "default_locale": "en",
+    "name": "Prototype Spike Snapshots",
+    "description": "A prototype for spike about snapshotting",
+    "version": "0.0.1",
+
+    "action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "single-file/chrome-browser-polyfill.js",
+                "single-file/single-file-frames.js",
+                "single-file/extension-frames.js"
+            ],
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "single-file/chrome-browser-polyfill.js",
+                "single-file/single-file-bootstrap.js",
+                "single-file/extension-bootstrap.js",
+                "single-file/web/infobar-web.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "single-file/extension-background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "single-file/web/hooks/hooks-web.js",
+                "single-file/web/hooks/hooks-frames-web.js",
+                "single-file/web/infobar-web.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "contextMenus",
+        "downloads",
+        "storage",
+        "tabs",
+        "activeTab",
+        "scripting"
+    ],
+    "optional_permissions": [
+        "clipboardWrite",
+        "identity",
+        "bookmarks"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ]
+}
