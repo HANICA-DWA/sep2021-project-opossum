@@ -882,97 +882,97 @@ table {
 		if (message.method == "init") {
 			await init(message.content);
 		}
-		if (message.method == "addNote") {
-			addNote(message);
-		}
-		if (message.method == "displayNotes") {
-			document.querySelectorAll(NOTE_TAGNAME).forEach(noteElement => noteElement.shadowRoot.querySelector("." + NOTE_CLASS).classList.remove(NOTE_HIDDEN_CLASS));
-		}
-		if (message.method == "hideNotes") {
-			document.querySelectorAll(NOTE_TAGNAME).forEach(noteElement => noteElement.shadowRoot.querySelector("." + NOTE_CLASS).classList.add(NOTE_HIDDEN_CLASS));
-		}
-		if (message.method == "enableHighlight") {
-			if (highlightColor) {
-				document.documentElement.classList.remove(highlightColor + "-mode");
-			}
-			highlightColor = message.color;
-			highlightSelectionMode = true;
-			document.documentElement.classList.add(message.color + "-mode");
-		}
-		if (message.method == "disableHighlight") {
-			if (highlightColor) {
-				document.documentElement.classList.remove(highlightColor + "-mode");
-			}
-			highlightSelectionMode = false;
-		}
-		if (message.method == "displayHighlights") {
-			document.querySelectorAll("." + HIGHLIGHT_CLASS).forEach(noteElement => noteElement.classList.remove(HIGHLIGHT_HIDDEN_CLASS));
-		}
-		if (message.method == "hideHighlights") {
-			document.querySelectorAll("." + HIGHLIGHT_CLASS).forEach(noteElement => noteElement.classList.add(HIGHLIGHT_HIDDEN_CLASS));
-		}
-		if (message.method == "enableRemoveHighlights") {
-			removeHighlightMode = true;
-			document.documentElement.classList.add("single-file-remove-highlights-mode");
-		}
-		if (message.method == "disableRemoveHighlights") {
-			removeHighlightMode = false;
-			document.documentElement.classList.remove("single-file-remove-highlights-mode");
-		}
-		if (message.method == "enableEditPage") {
-			document.body.contentEditable = true;
-			onUpdate(false);
-		}
-		if (message.method == "formatPage") {
-			formatPage(true);
-		}
-		if (message.method == "formatPageNoTheme") {
-			formatPage(false);
-		}
-		if (message.method == "cancelFormatPage") {
-			cancelFormatPage();
-		}
-		if (message.method == "disableEditPage") {
-			document.body.contentEditable = false;
-		}
-		if (message.method == "enableCutInnerPage") {
-			cuttingMode = true;
-			document.documentElement.classList.add("single-file-cut-mode");
-		}
-		if (message.method == "enableCutOuterPage") {
-			cuttingOuterMode = true;
-			document.documentElement.classList.add("single-file-cut-mode");
-		}
-		if (message.method == "disableCutInnerPage") {
-			cuttingMode = false;
-			document.documentElement.classList.remove("single-file-cut-mode");
-			resetSelectedElements();
-			if (cuttingPath) {
-				unhighlightCutElement();
-				cuttingPath = null;
-			}
-		}
-		if (message.method == "disableCutOuterPage") {
-			cuttingOuterMode = false;
-			document.documentElement.classList.remove("single-file-cut-mode");
-			resetSelectedElements();
-			if (cuttingPath) {
-				unhighlightCutElement();
-				cuttingPath = null;
-			}
-		}
-		if (message.method == "undoCutPage") {
-			undoCutPage();
-		}
-		if (message.method == "undoAllCutPage") {
-			while (removedElementIndex) {
-				removedElements[removedElementIndex - 1].forEach(element => element.classList.remove(REMOVED_CONTENT_CLASS));
-				removedElementIndex--;
-			}
-		}
-		if (message.method == "redoCutPage") {
-			redoCutPage();
-		}
+		// if (message.method == "addNote") {
+		// 	addNote(message);
+		// }
+		// if (message.method == "displayNotes") {
+		// 	document.querySelectorAll(NOTE_TAGNAME).forEach(noteElement => noteElement.shadowRoot.querySelector("." + NOTE_CLASS).classList.remove(NOTE_HIDDEN_CLASS));
+		// }
+		// if (message.method == "hideNotes") {
+		// 	document.querySelectorAll(NOTE_TAGNAME).forEach(noteElement => noteElement.shadowRoot.querySelector("." + NOTE_CLASS).classList.add(NOTE_HIDDEN_CLASS));
+		// }
+		// if (message.method == "enableHighlight") {
+		// 	if (highlightColor) {
+		// 		document.documentElement.classList.remove(highlightColor + "-mode");
+		// 	}
+		// 	highlightColor = message.color;
+		// 	highlightSelectionMode = true;
+		// 	document.documentElement.classList.add(message.color + "-mode");
+		// }
+		// if (message.method == "disableHighlight") {
+		// 	if (highlightColor) {
+		// 		document.documentElement.classList.remove(highlightColor + "-mode");
+		// 	}
+		// 	highlightSelectionMode = false;
+		// }
+		// if (message.method == "displayHighlights") {
+		// 	document.querySelectorAll("." + HIGHLIGHT_CLASS).forEach(noteElement => noteElement.classList.remove(HIGHLIGHT_HIDDEN_CLASS));
+		// }
+		// if (message.method == "hideHighlights") {
+		// 	document.querySelectorAll("." + HIGHLIGHT_CLASS).forEach(noteElement => noteElement.classList.add(HIGHLIGHT_HIDDEN_CLASS));
+		// }
+		// if (message.method == "enableRemoveHighlights") {
+		// 	removeHighlightMode = true;
+		// 	document.documentElement.classList.add("single-file-remove-highlights-mode");
+		// }
+		// if (message.method == "disableRemoveHighlights") {
+		// 	removeHighlightMode = false;
+		// 	document.documentElement.classList.remove("single-file-remove-highlights-mode");
+		// }
+		// if (message.method == "enableEditPage") {
+		// 	document.body.contentEditable = true;
+		// 	onUpdate(false);
+		// }
+		// if (message.method == "formatPage") {
+		// 	formatPage(true);
+		// }
+		// if (message.method == "formatPageNoTheme") {
+		// 	formatPage(false);
+		// }
+		// if (message.method == "cancelFormatPage") {
+		// 	cancelFormatPage();
+		// }
+		// if (message.method == "disableEditPage") {
+		// 	document.body.contentEditable = false;
+		// }
+		// if (message.method == "enableCutInnerPage") {
+		// 	cuttingMode = true;
+		// 	document.documentElement.classList.add("single-file-cut-mode");
+		// }
+		// if (message.method == "enableCutOuterPage") {
+		// 	cuttingOuterMode = true;
+		// 	document.documentElement.classList.add("single-file-cut-mode");
+		// }
+		// if (message.method == "disableCutInnerPage") {
+		// 	cuttingMode = false;
+		// 	document.documentElement.classList.remove("single-file-cut-mode");
+		// 	resetSelectedElements();
+		// 	if (cuttingPath) {
+		// 		unhighlightCutElement();
+		// 		cuttingPath = null;
+		// 	}
+		// }
+		// if (message.method == "disableCutOuterPage") {
+		// 	cuttingOuterMode = false;
+		// 	document.documentElement.classList.remove("single-file-cut-mode");
+		// 	resetSelectedElements();
+		// 	if (cuttingPath) {
+		// 		unhighlightCutElement();
+		// 		cuttingPath = null;
+		// 	}
+		// }
+		// if (message.method == "undoCutPage") {
+		// 	undoCutPage();
+		// }
+		// if (message.method == "undoAllCutPage") {
+		// 	while (removedElementIndex) {
+		// 		removedElements[removedElementIndex - 1].forEach(element => element.classList.remove(REMOVED_CONTENT_CLASS));
+		// 		removedElementIndex--;
+		// 	}
+		// }
+		// if (message.method == "redoCutPage") {
+		// 	redoCutPage();
+		// }
 		if (message.method == "getContent") {
 			onUpdate(true);
 			let content = getContent(message.compressHTML, message.updatedResources);
@@ -981,9 +981,9 @@ table {
 			}
 			window.parent.postMessage(JSON.stringify({ method: "setContent", content }), "*");
 		}
-		if (message.method == "printPage") {
-			printPage();
-		}
+		// if (message.method == "printPage") {
+		// 	printPage();
+		// }
 	};
 	window.onresize = reflowNotes;
 	document.ondragover = event => event.preventDefault();
@@ -1049,9 +1049,9 @@ table {
 
 	async function initConstants() {
 		[NOTES_WEB_STYLESHEET, MASK_WEB_STYLESHEET, HIGHLIGHTS_WEB_STYLESHEET] = await Promise.all([
-			minifyText(await ((await fetch("../pages/editor-note-web.css")).text())),
-			minifyText(await ((await fetch("../pages/editor-mask-web.css")).text())),
-			minifyText(await ((await fetch("../pages/editor-frame-web.css")).text()))
+			minifyText(await ((await fetch("/extension/ui/pages/editor-note-web.css")).text())),
+			minifyText(await ((await fetch("/extension/ui/pages/editor-mask-web.css")).text())),
+			minifyText(await ((await fetch("/extension/ui/pages/editor-frame-web.css")).text()))
 		]);
 	}
 
@@ -1675,6 +1675,7 @@ table {
 	function getParents(element) {
 		const path = [];
 		while (element) {
+			path.push(element);
 			path.push(element);
 			element = element.parentElement;
 		}

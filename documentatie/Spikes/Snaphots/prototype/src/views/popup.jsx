@@ -14,11 +14,11 @@ const Popup = () => {
   return (
     <div className={'p-4'}>
       <button onClick={async () => {
-        chrome.tabs.create({ url: '/snapshot.html' })
+        chrome.tabs.create({ url: '/editor.html' })
       }} className={buttonClasses}>
         Make snapshot
       </button>
-      {/*<button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/snapshot.html' })}>Open Snapshot*/}
+      {/*<button className={buttonClasses} onClick={() => chrome.tabs.create({ url: '/editor.html' })}>Open Snapshot*/}
       {/*</button>*/}
       {/*{data ? '' : <p className={'text-red-700'}>No snapshot saved</p>}*/}
       {/*<button className={buttonClasses} onClick={() => dispatch(setData(undefined))}>Remove snapshot</button>*/}

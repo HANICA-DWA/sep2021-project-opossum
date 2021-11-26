@@ -143,6 +143,7 @@ if (typeof globalThis == "undefined") {
 			runtime: {
 				connectNative: application => nativeAPI.runtime.connectNative(application),
 				getManifest: () => nativeAPI.runtime.getManifest(),
+				getBackground: ()=> nativeAPI.runtime.getBackground(),
 				onMessage: {
 					addListener: listener => nativeAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
 						const response = listener(message, sender);

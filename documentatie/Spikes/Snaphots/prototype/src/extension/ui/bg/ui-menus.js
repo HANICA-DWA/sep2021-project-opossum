@@ -153,191 +153,191 @@ async function createMenus(tab) {
 			contexts: defaultContexts,
 			title: MENU_EDIT_AND_SAVE_PAGE_MESSAGE
 		});
-		menus.create({
-			id: MENU_ID_SAVE_SELECTED_LINKS,
-			contexts: options.contextMenuEnabled ? defaultContextsDisabled.concat(["selection"]) : defaultContextsDisabled,
-			title: MENU_SAVE_SELECTED_LINKS
-		});
-		if (Object.keys(profiles).length > 1) {
-			menus.create({
-				id: MENU_ID_SAVE_WITH_PROFILE,
-				contexts: defaultContexts,
-				title: MENU_SAVE_WITH_PROFILE
-			});
-		}
-		if (options.contextMenuEnabled) {
-			menus.create({
-				id: "separator-1",
-				contexts: pageContextsEnabled,
-				type: "separator"
-			});
-		}
-		menus.create({
-			id: MENU_ID_SAVE_SELECTED,
-			contexts: defaultContexts,
-			title: MENU_SAVE_SELECTION_MESSAGE
-		});
-		if (options.contextMenuEnabled) {
-			menus.create({
-				id: MENU_ID_SAVE_FRAME,
-				contexts: ["frame"],
-				title: MENU_SAVE_FRAME_MESSAGE
-			});
-		}
-		menus.create({
-			id: MENU_ID_SAVE_TABS,
-			contexts: defaultContextsDisabled,
-			title: MENU_SAVE_TABS_MESSAGE
-		});
-		menus.create({
-			id: MENU_ID_BUTTON_SAVE_SELECTED_TABS,
-			contexts: defaultContextsDisabled,
-			title: MENU_SAVE_SELECTED_TABS_MESSAGE,
-			parentId: MENU_ID_SAVE_TABS
-		});
-		menus.create({
-			id: MENU_ID_BUTTON_SAVE_UNPINNED_TABS,
-			contexts: defaultContextsDisabled,
-			title: MENU_SAVE_UNPINNED_TABS_MESSAGE,
-			parentId: MENU_ID_SAVE_TABS
-		});
-		menus.create({
-			id: MENU_ID_BUTTON_SAVE_ALL_TABS,
-			contexts: defaultContextsDisabled,
-			title: MENU_SAVE_ALL_TABS_MESSAGE,
-			parentId: MENU_ID_SAVE_TABS
-		});
-		if (options.contextMenuEnabled) {
-			menus.create({
-				id: MENU_ID_SAVE_SELECTED_TABS,
-				contexts: pageContextsEnabled,
-				title: MENU_SAVE_SELECTED_TABS_MESSAGE
-			});
-			menus.create({
-				id: MENU_ID_SAVE_UNPINNED_TABS,
-				contexts: pageContextsEnabled,
-				title: MENU_SAVE_UNPINNED_TABS_MESSAGE
-			});
-			menus.create({
-				id: MENU_ID_SAVE_ALL_TABS,
-				contexts: pageContextsEnabled,
-				title: MENU_SAVE_ALL_TABS_MESSAGE
-			});
-			menus.create({
-				id: "separator-2",
-				contexts: pageContextsEnabled,
-				type: "separator"
-			});
-		}
-		if (Object.keys(profiles).length > 1) {
-			menus.create({
-				id: MENU_ID_SELECT_PROFILE,
-				title: MENU_SELECT_PROFILE_MESSAGE,
-				contexts: defaultContexts,
-			});
-			menus.create({
-				id: MENU_ID_SAVE_WITH_PROFILE_PREFIX + "default",
-				contexts: defaultContexts,
-				title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
-				parentId: MENU_ID_SAVE_WITH_PROFILE
-			});
-			const defaultProfileId = MENU_ID_SELECT_PROFILE_PREFIX + "default";
-			const defaultProfileChecked = !allTabsData.profileName || allTabsData.profileName == config.DEFAULT_PROFILE_NAME;
-			menus.create({
-				id: defaultProfileId,
-				type: "radio",
-				contexts: defaultContexts,
-				title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
-				checked: defaultProfileChecked,
-				parentId: MENU_ID_SELECT_PROFILE
-			});
-			menusCheckedState.set(defaultProfileId, defaultProfileChecked);
-			menus.create({
-				id: MENU_ID_ASSOCIATE_WITH_PROFILE,
-				title: MENU_CREATE_DOMAIN_RULE_MESSAGE,
-				contexts: defaultContexts,
-			});
-			menusTitleState.set(MENU_ID_ASSOCIATE_WITH_PROFILE, MENU_CREATE_DOMAIN_RULE_MESSAGE);
-			let rule;
-			if (tab && tab.url) {
-				rule = await config.getRule(tab.url, true);
-			}
-			const currentProfileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "current";
-			const currentProfileChecked = !rule || (rule.profile == config.CURRENT_PROFILE_NAME);
-			menus.create({
-				id: currentProfileId,
-				type: "radio",
-				contexts: defaultContexts,
-				title: config.CURRENT_PROFILE_NAME,
-				checked: currentProfileChecked,
-				parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
-			});
-			menusCheckedState.set(currentProfileId, currentProfileChecked);
-
-			const associatedDefaultProfileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default";
-			const associatedDefaultProfileChecked = Boolean(rule) && (rule.profile == config.DEFAULT_PROFILE_NAME);
-			menus.create({
-				id: associatedDefaultProfileId,
-				type: "radio",
-				contexts: defaultContexts,
-				title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
-				checked: associatedDefaultProfileChecked,
-				parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
-			});
-			menusCheckedState.set(associatedDefaultProfileId, associatedDefaultProfileChecked);
-			profileIndexes = new Map();
-			Object.keys(profiles).forEach((profileName, profileIndex) => {
-				if (profileName != config.DEFAULT_PROFILE_NAME) {
-					let profileId = MENU_ID_SAVE_WITH_PROFILE_PREFIX + profileIndex;
-					menus.create({
-						id: profileId,
-						contexts: defaultContexts,
-						title: profileName,
-						parentId: MENU_ID_SAVE_WITH_PROFILE
-					});
-					profileId = MENU_ID_SELECT_PROFILE_PREFIX + profileIndex;
-					let profileChecked = allTabsData.profileName == profileName;
-					menus.create({
-						id: profileId,
-						type: "radio",
-						contexts: defaultContexts,
-						title: profileName,
-						checked: profileChecked,
-						parentId: MENU_ID_SELECT_PROFILE
-					});
-					menusCheckedState.set(profileId, profileChecked);
-					profileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex;
-					profileChecked = Boolean(rule) && rule.profile == profileName;
-					menus.create({
-						id: profileId,
-						type: "radio",
-						contexts: defaultContexts,
-						title: profileName,
-						checked: profileChecked,
-						parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
-					});
-					menusCheckedState.set(profileId, profileChecked);
-					profileIndexes.set(profileName, profileIndex);
-				}
-			});
-			if (options.contextMenuEnabled) {
-				menus.create({
-					id: "separator-3",
-					contexts: pageContextsEnabled,
-					type: "separator"
-				});
-			}
-		}
-		menus.create({
-			id: "separator-4",
-			contexts: defaultContexts,
-			type: "separator"
-		});
-		menus.create({
-			id: MENU_ID_VIEW_PENDINGS,
-			contexts: defaultContexts,
-			title: MENU_VIEW_PENDINGS_MESSAGE
-		});
+	// 	menus.create({
+	// 		id: MENU_ID_SAVE_SELECTED_LINKS,
+	// 		contexts: options.contextMenuEnabled ? defaultContextsDisabled.concat(["selection"]) : defaultContextsDisabled,
+	// 		title: MENU_SAVE_SELECTED_LINKS
+	// 	});
+	// 	if (Object.keys(profiles).length > 1) {
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_WITH_PROFILE,
+	// 			contexts: defaultContexts,
+	// 			title: MENU_SAVE_WITH_PROFILE
+	// 		});
+	// 	}
+	// 	if (options.contextMenuEnabled) {
+	// 		menus.create({
+	// 			id: "separator-1",
+	// 			contexts: pageContextsEnabled,
+	// 			type: "separator"
+	// 		});
+	// 	}
+	// 	menus.create({
+	// 		id: MENU_ID_SAVE_SELECTED,
+	// 		contexts: defaultContexts,
+	// 		title: MENU_SAVE_SELECTION_MESSAGE
+	// 	});
+	// 	if (options.contextMenuEnabled) {
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_FRAME,
+	// 			contexts: ["frame"],
+	// 			title: MENU_SAVE_FRAME_MESSAGE
+	// 		});
+	// 	}
+	// 	menus.create({
+	// 		id: MENU_ID_SAVE_TABS,
+	// 		contexts: defaultContextsDisabled,
+	// 		title: MENU_SAVE_TABS_MESSAGE
+	// 	});
+	// 	menus.create({
+	// 		id: MENU_ID_BUTTON_SAVE_SELECTED_TABS,
+	// 		contexts: defaultContextsDisabled,
+	// 		title: MENU_SAVE_SELECTED_TABS_MESSAGE,
+	// 		parentId: MENU_ID_SAVE_TABS
+	// 	});
+	// 	menus.create({
+	// 		id: MENU_ID_BUTTON_SAVE_UNPINNED_TABS,
+	// 		contexts: defaultContextsDisabled,
+	// 		title: MENU_SAVE_UNPINNED_TABS_MESSAGE,
+	// 		parentId: MENU_ID_SAVE_TABS
+	// 	});
+	// 	menus.create({
+	// 		id: MENU_ID_BUTTON_SAVE_ALL_TABS,
+	// 		contexts: defaultContextsDisabled,
+	// 		title: MENU_SAVE_ALL_TABS_MESSAGE,
+	// 		parentId: MENU_ID_SAVE_TABS
+	// 	});
+	// 	if (options.contextMenuEnabled) {
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_SELECTED_TABS,
+	// 			contexts: pageContextsEnabled,
+	// 			title: MENU_SAVE_SELECTED_TABS_MESSAGE
+	// 		});
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_UNPINNED_TABS,
+	// 			contexts: pageContextsEnabled,
+	// 			title: MENU_SAVE_UNPINNED_TABS_MESSAGE
+	// 		});
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_ALL_TABS,
+	// 			contexts: pageContextsEnabled,
+	// 			title: MENU_SAVE_ALL_TABS_MESSAGE
+	// 		});
+	// 		menus.create({
+	// 			id: "separator-2",
+	// 			contexts: pageContextsEnabled,
+	// 			type: "separator"
+	// 		});
+	// 	}
+	// 	if (Object.keys(profiles).length > 1) {
+	// 		menus.create({
+	// 			id: MENU_ID_SELECT_PROFILE,
+	// 			title: MENU_SELECT_PROFILE_MESSAGE,
+	// 			contexts: defaultContexts,
+	// 		});
+	// 		menus.create({
+	// 			id: MENU_ID_SAVE_WITH_PROFILE_PREFIX + "default",
+	// 			contexts: defaultContexts,
+	// 			title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
+	// 			parentId: MENU_ID_SAVE_WITH_PROFILE
+	// 		});
+	// 		const defaultProfileId = MENU_ID_SELECT_PROFILE_PREFIX + "default";
+	// 		const defaultProfileChecked = !allTabsData.profileName || allTabsData.profileName == config.DEFAULT_PROFILE_NAME;
+	// 		menus.create({
+	// 			id: defaultProfileId,
+	// 			type: "radio",
+	// 			contexts: defaultContexts,
+	// 			title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
+	// 			checked: defaultProfileChecked,
+	// 			parentId: MENU_ID_SELECT_PROFILE
+	// 		});
+	// 		menusCheckedState.set(defaultProfileId, defaultProfileChecked);
+	// 		menus.create({
+	// 			id: MENU_ID_ASSOCIATE_WITH_PROFILE,
+	// 			title: MENU_CREATE_DOMAIN_RULE_MESSAGE,
+	// 			contexts: defaultContexts,
+	// 		});
+	// 		menusTitleState.set(MENU_ID_ASSOCIATE_WITH_PROFILE, MENU_CREATE_DOMAIN_RULE_MESSAGE);
+	// 		let rule;
+	// 		if (tab && tab.url) {
+	// 			rule = await config.getRule(tab.url, true);
+	// 		}
+	// 		const currentProfileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "current";
+	// 		const currentProfileChecked = !rule || (rule.profile == config.CURRENT_PROFILE_NAME);
+	// 		menus.create({
+	// 			id: currentProfileId,
+	// 			type: "radio",
+	// 			contexts: defaultContexts,
+	// 			title: config.CURRENT_PROFILE_NAME,
+	// 			checked: currentProfileChecked,
+	// 			parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
+	// 		});
+	// 		menusCheckedState.set(currentProfileId, currentProfileChecked);
+	//
+	// 		const associatedDefaultProfileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default";
+	// 		const associatedDefaultProfileChecked = Boolean(rule) && (rule.profile == config.DEFAULT_PROFILE_NAME);
+	// 		menus.create({
+	// 			id: associatedDefaultProfileId,
+	// 			type: "radio",
+	// 			contexts: defaultContexts,
+	// 			title: PROFILE_DEFAULT_SETTINGS_MESSAGE,
+	// 			checked: associatedDefaultProfileChecked,
+	// 			parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
+	// 		});
+	// 		menusCheckedState.set(associatedDefaultProfileId, associatedDefaultProfileChecked);
+	// 		profileIndexes = new Map();
+	// 		Object.keys(profiles).forEach((profileName, profileIndex) => {
+	// 			if (profileName != config.DEFAULT_PROFILE_NAME) {
+	// 				let profileId = MENU_ID_SAVE_WITH_PROFILE_PREFIX + profileIndex;
+	// 				menus.create({
+	// 					id: profileId,
+	// 					contexts: defaultContexts,
+	// 					title: profileName,
+	// 					parentId: MENU_ID_SAVE_WITH_PROFILE
+	// 				});
+	// 				profileId = MENU_ID_SELECT_PROFILE_PREFIX + profileIndex;
+	// 				let profileChecked = allTabsData.profileName == profileName;
+	// 				menus.create({
+	// 					id: profileId,
+	// 					type: "radio",
+	// 					contexts: defaultContexts,
+	// 					title: profileName,
+	// 					checked: profileChecked,
+	// 					parentId: MENU_ID_SELECT_PROFILE
+	// 				});
+	// 				menusCheckedState.set(profileId, profileChecked);
+	// 				profileId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex;
+	// 				profileChecked = Boolean(rule) && rule.profile == profileName;
+	// 				menus.create({
+	// 					id: profileId,
+	// 					type: "radio",
+	// 					contexts: defaultContexts,
+	// 					title: profileName,
+	// 					checked: profileChecked,
+	// 					parentId: MENU_ID_ASSOCIATE_WITH_PROFILE
+	// 				});
+	// 				menusCheckedState.set(profileId, profileChecked);
+	// 				profileIndexes.set(profileName, profileIndex);
+	// 			}
+	// 		});
+	// 		if (options.contextMenuEnabled) {
+	// 			menus.create({
+	// 				id: "separator-3",
+	// 				contexts: pageContextsEnabled,
+	// 				type: "separator"
+	// 			});
+	// 		}
+	// 	}
+	// 	menus.create({
+	// 		id: "separator-4",
+	// 		contexts: defaultContexts,
+	// 		type: "separator"
+	// 	});
+	// 	menus.create({
+	// 		id: MENU_ID_VIEW_PENDINGS,
+	// 		contexts: defaultContexts,
+	// 		title: MENU_VIEW_PENDINGS_MESSAGE
+	// 	});
 	}
 	menusCreated = true;
 	if (pendingRefresh) {
@@ -369,74 +369,74 @@ async function initialize() {
 					}
 				}
 			}
-			if (event.menuItemId == MENU_ID_SAVE_SELECTED_LINKS) {
-				business.saveSelectedLinks(tab);
-			}
-			if (event.menuItemId == MENU_ID_VIEW_PENDINGS) {
-				await browser.tabs.create({ active: true, url: "/extension/ui/pages/pendings.html" });
-			}
-			if (event.menuItemId == MENU_ID_SAVE_SELECTED) {
-				business.saveTabs([tab], { selected: true });
-			}
-			if (event.menuItemId == MENU_ID_SAVE_FRAME) {
-				business.saveTabs([tab], { frameId: event.frameId });
-			}
-			if (event.menuItemId == MENU_ID_SAVE_SELECTED_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_SELECTED_TABS) {
-				const tabs = await queryTabs({ currentWindow: true, highlighted: true });
-				business.saveTabs(tabs);
-			}
-			if (event.menuItemId == MENU_ID_SAVE_UNPINNED_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_UNPINNED_TABS) {
-				const tabs = await queryTabs({ currentWindow: true, pinned: false });
-				business.saveTabs(tabs);
-			}
-			if (event.menuItemId == MENU_ID_SAVE_ALL_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_ALL_TABS) {
-				const tabs = await queryTabs({ currentWindow: true });
-				business.saveTabs(tabs);
-			}
-			if (event.menuItemId.startsWith(MENU_ID_SAVE_WITH_PROFILE_PREFIX)) {
-				const profiles = await config.getProfiles();
-				const profileId = event.menuItemId.split(MENU_ID_SAVE_WITH_PROFILE_PREFIX)[1];
-				let profileName;
-				if (profileId == "default") {
-					profileName = config.DEFAULT_PROFILE_NAME;
-				} else {
-					const profileIndex = Number(profileId);
-					profileName = Object.keys(profiles)[profileIndex];
-				}
-				profiles[profileName].profileName = profileName;
-				business.saveTabs([tab], profiles[profileName]);
-			}
-			if (event.menuItemId.startsWith(MENU_ID_SELECT_PROFILE_PREFIX)) {
-				const [profiles, allTabsData] = await Promise.all([config.getProfiles(), tabsData.get()]);
-				const profileId = event.menuItemId.split(MENU_ID_SELECT_PROFILE_PREFIX)[1];
-				if (profileId == "default") {
-					allTabsData.profileName = config.DEFAULT_PROFILE_NAME;
-				} else {
-					const profileIndex = Number(profileId);
-					allTabsData.profileName = Object.keys(profiles)[profileIndex];
-				}
-				await tabsData.set(allTabsData);
-				refreshExternalComponents(tab);
-			}
-			if (event.menuItemId.startsWith(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX)) {
-				const [profiles, rule] = await Promise.all([config.getProfiles(), config.getRule(tab.url, true)]);
-				const profileId = event.menuItemId.split(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX)[1];
-				let profileName;
-				if (profileId == "default") {
-					profileName = config.DEFAULT_PROFILE_NAME;
-				} else if (profileId == "current") {
-					profileName = config.CURRENT_PROFILE_NAME;
-				} else {
-					const profileIndex = Number(profileId);
-					profileName = Object.keys(profiles)[profileIndex];
-				}
-				if (rule) {
-					await config.updateRule(rule.url, rule.url, profileName, profileName);
-				} else {
-					await updateTitleValue(MENU_ID_ASSOCIATE_WITH_PROFILE, MENU_UPDATE_RULE_MESSAGE);
-					await config.addRule(new URL(tab.url).hostname, profileName, profileName);
-				}
-			}
+			// if (event.menuItemId == MENU_ID_SAVE_SELECTED_LINKS) {
+			// 	business.saveSelectedLinks(tab);
+			// }
+			// if (event.menuItemId == MENU_ID_VIEW_PENDINGS) {
+			// 	await browser.tabs.create({ active: true, url: "/extension/ui/pages/pendings.html" });
+			// }
+			// if (event.menuItemId == MENU_ID_SAVE_SELECTED) {
+			// 	business.saveTabs([tab], { selected: true });
+			// }
+			// if (event.menuItemId == MENU_ID_SAVE_FRAME) {
+			// 	business.saveTabs([tab], { frameId: event.frameId });
+			// }
+			// if (event.menuItemId == MENU_ID_SAVE_SELECTED_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_SELECTED_TABS) {
+			// 	const tabs = await queryTabs({ currentWindow: true, highlighted: true });
+			// 	business.saveTabs(tabs);
+			// }
+			// if (event.menuItemId == MENU_ID_SAVE_UNPINNED_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_UNPINNED_TABS) {
+			// 	const tabs = await queryTabs({ currentWindow: true, pinned: false });
+			// 	business.saveTabs(tabs);
+			// }
+			// if (event.menuItemId == MENU_ID_SAVE_ALL_TABS || event.menuItemId == MENU_ID_BUTTON_SAVE_ALL_TABS) {
+			// 	const tabs = await queryTabs({ currentWindow: true });
+			// 	business.saveTabs(tabs);
+			// }
+			// if (event.menuItemId.startsWith(MENU_ID_SAVE_WITH_PROFILE_PREFIX)) {
+			// 	const profiles = await config.getProfiles();
+			// 	const profileId = event.menuItemId.split(MENU_ID_SAVE_WITH_PROFILE_PREFIX)[1];
+			// 	let profileName;
+			// 	if (profileId == "default") {
+			// 		profileName = config.DEFAULT_PROFILE_NAME;
+			// 	} else {
+			// 		const profileIndex = Number(profileId);
+			// 		profileName = Object.keys(profiles)[profileIndex];
+			// 	}
+			// 	profiles[profileName].profileName = profileName;
+			// 	business.saveTabs([tab], profiles[profileName]);
+			// }
+			// if (event.menuItemId.startsWith(MENU_ID_SELECT_PROFILE_PREFIX)) {
+			// 	const [profiles, allTabsData] = await Promise.all([config.getProfiles(), tabsData.get()]);
+			// 	const profileId = event.menuItemId.split(MENU_ID_SELECT_PROFILE_PREFIX)[1];
+			// 	if (profileId == "default") {
+			// 		allTabsData.profileName = config.DEFAULT_PROFILE_NAME;
+			// 	} else {
+			// 		const profileIndex = Number(profileId);
+			// 		allTabsData.profileName = Object.keys(profiles)[profileIndex];
+			// 	}
+			// 	await tabsData.set(allTabsData);
+			// 	refreshExternalComponents(tab);
+			// }
+			// if (event.menuItemId.startsWith(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX)) {
+			// 	const [profiles, rule] = await Promise.all([config.getProfiles(), config.getRule(tab.url, true)]);
+			// 	const profileId = event.menuItemId.split(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX)[1];
+			// 	let profileName;
+			// 	if (profileId == "default") {
+			// 		profileName = config.DEFAULT_PROFILE_NAME;
+			// 	} else if (profileId == "current") {
+			// 		profileName = config.CURRENT_PROFILE_NAME;
+			// 	} else {
+			// 		const profileIndex = Number(profileId);
+			// 		profileName = Object.keys(profiles)[profileIndex];
+			// 	}
+			// 	if (rule) {
+			// 		await config.updateRule(rule.url, rule.url, profileName, profileName);
+			// 	} else {
+			// 		await updateTitleValue(MENU_ID_ASSOCIATE_WITH_PROFILE, MENU_UPDATE_RULE_MESSAGE);
+			// 		await config.addRule(new URL(tab.url).hostname, profileName, profileName);
+			// 	}
+			// }
 		});
 		if (menusCreated) {
 			pendingRefresh = true;
@@ -468,28 +468,28 @@ async function refreshTab(tab) {
 				const options = await config.getOptions(tab.url);
 				promises.push(updateVisibleValue(tab, options.contextMenuEnabled));
 				promises.push(updateTitleValue(MENU_ID_EDIT_AND_SAVE_PAGE, allTabsData[tab.id].savedPageDetected ? MENU_EDIT_PAGE_MESSAGE : MENU_EDIT_AND_SAVE_PAGE_MESSAGE));
-				promises.push(menus.update(MENU_ID_SAVE_SELECTED, { visible: !options.saveRawPage }));
+				// promises.push(menus.update(MENU_ID_SAVE_SELECTED, { visible: !options.saveRawPage }));
 				promises.push(menus.update(MENU_ID_EDIT_AND_SAVE_PAGE, { visible: !options.openEditor || allTabsData[tab.id].savedPageDetected }));
 				let selectedEntryId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default";
 				let title = MENU_CREATE_DOMAIN_RULE_MESSAGE;
 				const [profiles, rule] = await Promise.all([config.getProfiles(), config.getRule(tab.url)]);
 				if (rule) {
 					const profileIndex = profileIndexes.get(rule.profile);
-					if (profileIndex) {
-						selectedEntryId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex;
-						title = MENU_UPDATE_RULE_MESSAGE;
-					}
+					// if (profileIndex) {
+					// 	selectedEntryId = MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex;
+					// 	title = MENU_UPDATE_RULE_MESSAGE;
+					// }
 				}
-				if (Object.keys(profiles).length > 1) {
-					Object.keys(profiles).forEach((profileName, profileIndex) => {
-						if (profileName == config.DEFAULT_PROFILE_NAME) {
-							promises.push(updateCheckedValue(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default", selectedEntryId == MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default"));
-						} else {
-							promises.push(updateCheckedValue(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex, selectedEntryId == MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex));
-						}
-					});
-					promises.push(updateTitleValue(MENU_ID_ASSOCIATE_WITH_PROFILE, title));
-				}
+				// if (Object.keys(profiles).length > 1) {
+				// 	Object.keys(profiles).forEach((profileName, profileIndex) => {
+				// 		if (profileName == config.DEFAULT_PROFILE_NAME) {
+				// 			promises.push(updateCheckedValue(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default", selectedEntryId == MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + "default"));
+				// 		} else {
+				// 			promises.push(updateCheckedValue(MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex, selectedEntryId == MENU_ID_ASSOCIATE_WITH_PROFILE_PREFIX + profileIndex));
+				// 		}
+				// 	});
+				//  promises.push(updateTitleValue(MENU_ID_ASSOCIATE_WITH_PROFILE, title));
+				// }
 			}
 		}
 		await Promise.all(promises);

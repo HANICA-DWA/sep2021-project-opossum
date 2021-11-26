@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     popup: path.join(srcDir, 'views', 'popup.jsx'),
     options: path.join(srcDir, 'views', 'options.jsx'),
-    snapshot: path.join(srcDir, 'views', 'snapshot.jsx'),
+    editor: path.join(srcDir, 'views', 'editor.jsx'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),

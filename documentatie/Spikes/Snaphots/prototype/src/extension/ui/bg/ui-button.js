@@ -27,7 +27,8 @@ import { queryTabs } from "./../../core/bg/tabs-util.js";
 import * as tabsData from "./../../core/bg/tabs-data.js";
 import { getMessages } from "./../../core/bg/i18n.js";
 
-const DEFAULT_ICON_PATH = "/extension/ui/resources/icon_128.png";
+// const DEFAULT_ICON_PATH = "/extension/ui/resources/icon_128.png";
+const DEFAULT_ICON_PATH = "icon.png";
 const WAIT_ICON_PATH_PREFIX = "/extension/ui/resources/icon_128_wait";
 const BUTTON_DEFAULT_BADGE_MESSAGE = "";
 let BUTTON_DEFAULT_TOOLTIP_MESSAGE;
@@ -167,7 +168,7 @@ function onMessage(message, sender) {
 function onStart(tabId, step) {
 	const state = step == INJECT_SCRIPTS_STEP ? getButtonState("inject") : getButtonState("execute");
 	state.setTitle = { title: BUTTON_INITIALIZING_TOOLTIP_MESSAGE + " (" + step + "/2)" };
-	state.setIcon = { path: WAIT_ICON_PATH_PREFIX + "0.png" };
+	// state.setIcon = { path: WAIT_ICON_PATH_PREFIX + "0.png" };
 	refresh(tabId, state);
 }
 
@@ -205,7 +206,7 @@ function onProgress(tabId, index, maxIndex, tooltipMessage) {
 	const path = WAIT_ICON_PATH_PREFIX + barProgress + ".png";
 	const state = getButtonState("progress");
 	state.setTitle = { title: tooltipMessage + (progress * 5) + "%" };
-	state.setIcon = { path };
+	// state.setIcon = { path };
 	refresh(tabId, state);
 }
 

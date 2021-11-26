@@ -12,16 +12,16 @@
 		"description": "Command (Ctrl+Shift+U): 'Save all tabs'"
 	},
 	"menuSavePage": {
-		"message": "Save page with SingleFile Lite",
-		"description": "Menu entry: 'Save page with SingleFile Lite'"
+		"message": "Save page and download",
+		"description": "Menu entry: 'Save page and download'"
 	},
 	"menuEditPage": {
 		"message": "Annotate the page...",
 		"description": "Menu entry: 'Annotate the page...'"
 	},
 	"menuEditAndSavePage": {
-		"message": "Annotate and save the page...",
-		"description": "Menu entry: 'Annotate and save the page...'"
+		"message": "Create snapshot from this page",
+		"description": "Menu entry: 'Create snapshot from this page'"
 	},
 	"menuSaveWithProfile": {
 		"message": "Save page with profile",
@@ -72,8 +72,8 @@
 		"description": "Menu entry: 'Save all tabs'"
 	},
 	"buttonDefaultTooltip": {
-		"message": "Save page with SingleFile Lite",
-		"description": "Button title: 'Save page with SingleFile Lite'"
+		"message": "WCAG Tool",
+		"description": "Button title: 'WCAG Tool'"
 	},
 	"buttonBlockedBadge": {
 		"message": "🚫",

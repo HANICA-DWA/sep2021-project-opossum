@@ -25,169 +25,168 @@
 
 import * as download from "../../core/common/download.js";
 import { onError } from "./../common/content-error.js";
-import { getMessages } from "./../../core/bg/i18n.js";
 
 const FS_SIZE = 100 * 1024 * 1024;
 
 const editorElement = document.querySelector(".editor");
-const toolbarElement = document.querySelector(".toolbar");
-const highlightYellowButton = document.querySelector(".highlight-yellow-button");
-const highlightPinkButton = document.querySelector(".highlight-pink-button");
-const highlightBlueButton = document.querySelector(".highlight-blue-button");
-const highlightGreenButton = document.querySelector(".highlight-green-button");
-const highlightButtons = Array.from(document.querySelectorAll(".highlight-button"));
-const toggleNotesButton = document.querySelector(".toggle-notes-button");
-const toggleHighlightsButton = document.querySelector(".toggle-highlights-button");
-const removeHighlightButton = document.querySelector(".remove-highlight-button");
-const addYellowNoteButton = document.querySelector(".add-note-yellow-button");
-const addPinkNoteButton = document.querySelector(".add-note-pink-button");
-const addBlueNoteButton = document.querySelector(".add-note-blue-button");
-const addGreenNoteButton = document.querySelector(".add-note-green-button");
-const editPageButton = document.querySelector(".edit-page-button");
-const formatPageButton = document.querySelector(".format-page-button");
-const cutInnerPageButton = document.querySelector(".cut-inner-page-button");
-const cutOuterPageButton = document.querySelector(".cut-outer-page-button");
-const undoCutPageButton = document.querySelector(".undo-cut-page-button");
-const undoAllCutPageButton = document.querySelector(".undo-all-cut-page-button");
-const redoCutPageButton = document.querySelector(".redo-cut-page-button");
-const savePageButton = document.querySelector(".save-page-button");
-const printPageButton = document.querySelector(".print-page-button");
-const lastButton = toolbarElement.querySelector(".buttons:last-of-type [type=button]:last-of-type");
+// const toolbarElement = document.querySelector(".toolbar");
+// const highlightYellowButton = document.querySelector(".highlight-yellow-button");
+// const highlightPinkButton = document.querySelector(".highlight-pink-button");
+// const highlightBlueButton = document.querySelector(".highlight-blue-button");
+// const highlightGreenButton = document.querySelector(".highlight-green-button");
+// const highlightButtons = Array.from(document.querySelectorAll(".highlight-button"));
+// const toggleNotesButton = document.querySelector(".toggle-notes-button");
+// const toggleHighlightsButton = document.querySelector(".toggle-highlights-button");
+// const removeHighlightButton = document.querySelector(".remove-highlight-button");
+// const addYellowNoteButton = document.querySelector(".add-note-yellow-button");
+// const addPinkNoteButton = document.querySelector(".add-note-pink-button");
+// const addBlueNoteButton = document.querySelector(".add-note-blue-button");
+// const addGreenNoteButton = document.querySelector(".add-note-green-button");
+// const editPageButton = document.querySelector(".edit-page-button");
+// const formatPageButton = document.querySelector(".format-page-button");
+// const cutInnerPageButton = document.querySelector(".cut-inner-page-button");
+// const cutOuterPageButton = document.querySelector(".cut-outer-page-button");
+// const undoCutPageButton = document.querySelector(".undo-cut-page-button");
+// const undoAllCutPageButton = document.querySelector(".undo-all-cut-page-button");
+// const redoCutPageButton = document.querySelector(".redo-cut-page-button");
+// const savePageButton = document.querySelector(".save-page-button");
+// const printPageButton = document.querySelector(".print-page-button");
+// const lastButton = toolbarElement.querySelector(".buttons:last-of-type [type=button]:last-of-type");
 
 let tabData, tabDataContents = [];
 
-init();
-addYellowNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-yellow" }), "*");
-addPinkNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-pink" }), "*");
-addBlueNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-blue" }), "*");
-addGreenNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-green" }), "*");
+// init();
+// addYellowNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-yellow" }), "*");
+// addPinkNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-pink" }), "*");
+// addBlueNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-blue" }), "*");
+// addGreenNoteButton.onmouseup = () => editorElement.contentWindow.postMessage(JSON.stringify({ method: "addNote", color: "note-green" }), "*");
 document.addEventListener("mouseup", event => {
 	editorElement.contentWindow.focus();
 	toolbarOnTouchEnd(event);
 }, true);
 document.onmousemove = toolbarOnTouchMove;
-highlightButtons.forEach(highlightButton => {
-	highlightButton.onmouseup = () => {
-		if (toolbarElement.classList.contains("cut-inner-mode")) {
-			disableCutInnerPage();
-		}
-		if (toolbarElement.classList.contains("cut-outer-mode")) {
-			disableCutOuterPage();
-		}
-		if (toolbarElement.classList.contains("remove-highlight-mode")) {
-			disableRemoveHighlights();
-		}
-		const disabled = highlightButton.classList.contains("highlight-disabled");
-		resetHighlightButtons();
-		if (disabled) {
-			highlightButton.classList.remove("highlight-disabled");
-			editorElement.contentWindow.postMessage(JSON.stringify({ method: "enableHighlight", color: "single-file-highlight-" + highlightButton.dataset.color }), "*");
-		} else {
-			highlightButton.classList.add("highlight-disabled");
-		}
-	};
-});
-toggleNotesButton.onmouseup = () => {
-	if (toggleNotesButton.getAttribute("src") == "/extension/ui/resources/button_note_visible.png") {
-		toggleNotesButton.src = "/extension/ui/resources/button_note_hidden.png";
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "hideNotes" }), "*");
-	} else {
-		toggleNotesButton.src = "/extension/ui/resources/button_note_visible.png";
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "displayNotes" }), "*");
-	}
-};
-toggleHighlightsButton.onmouseup = () => {
-	if (toggleHighlightsButton.getAttribute("src") == "/extension/ui/resources/button_highlighter_visible.png") {
-		toggleHighlightsButton.src = "/extension/ui/resources/button_highlighter_hidden.png";
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "hideHighlights" }), "*");
-	} else {
-		displayHighlights();
-	}
-};
-removeHighlightButton.onmouseup = () => {
-	if (toolbarElement.classList.contains("cut-inner-mode")) {
-		disableCutInnerPage();
-	}
-	if (toolbarElement.classList.contains("cut-outer-mode")) {
-		disableCutOuterPage();
-	}
-	if (removeHighlightButton.classList.contains("remove-highlight-disabled")) {
-		removeHighlightButton.classList.remove("remove-highlight-disabled");
-		toolbarElement.classList.add("remove-highlight-mode");
-		resetHighlightButtons();
-		displayHighlights();
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "enableRemoveHighlights" }), "*");
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "displayHighlights" }), "*");
-	} else {
-		disableRemoveHighlights();
-	}
-};
-editPageButton.onmouseup = () => {
-	if (toolbarElement.classList.contains("cut-inner-mode")) {
-		disableCutInnerPage();
-	}
-	if (toolbarElement.classList.contains("cut-outer-mode")) {
-		disableCutOuterPage();
-	}
-	if (editPageButton.classList.contains("edit-disabled")) {
-		enableEditPage();
-	} else {
-		disableEditPage();
-	}
-};
-formatPageButton.onmouseup = () => {
-	if (formatPageButton.classList.contains("format-disabled")) {
-		formatPage();
-	} else {
-		cancelFormatPage();
-	}
-};
-cutInnerPageButton.onmouseup = () => {
-	if (toolbarElement.classList.contains("edit-mode")) {
-		disableEditPage();
-	}
-	if (toolbarElement.classList.contains("cut-outer-mode")) {
-		disableCutOuterPage();
-	}
-	if (cutInnerPageButton.classList.contains("cut-disabled")) {
-		enableCutInnerPage();
-
-	} else {
-		disableCutInnerPage();
-	}
-};
-cutOuterPageButton.onmouseup = () => {
-	if (toolbarElement.classList.contains("edit-mode")) {
-		disableEditPage();
-	}
-	if (toolbarElement.classList.contains("cut-inner-mode")) {
-		disableCutInnerPage();
-	}
-	if (cutOuterPageButton.classList.contains("cut-disabled")) {
-		enableCutOuterPage();
-	} else {
-		disableCutOuterPage();
-	}
-};
-undoCutPageButton.onmouseup = () => {
-	editorElement.contentWindow.postMessage(JSON.stringify({ method: "undoCutPage" }), "*");
-};
-undoAllCutPageButton.onmouseup = () => {
-	editorElement.contentWindow.postMessage(JSON.stringify({ method: "undoAllCutPage" }), "*");
-};
-redoCutPageButton.onmouseup = () => {
-	editorElement.contentWindow.postMessage(JSON.stringify({ method: "redoCutPage" }), "*");
-};
-savePageButton.onmouseup = () => {
-	savePage();
-};
-if (typeof print == "function") {
-	printPageButton.onmouseup = () => {
-		editorElement.contentWindow.postMessage(JSON.stringify({ method: "printPage" }), "*");
-	};
-} else {
-	printPageButton.remove();
-}
+// highlightButtons.forEach(highlightButton => {
+// 	highlightButton.onmouseup = () => {
+// 		if (toolbarElement.classList.contains("cut-inner-mode")) {
+// 			disableCutInnerPage();
+// 		}
+// 		if (toolbarElement.classList.contains("cut-outer-mode")) {
+// 			disableCutOuterPage();
+// 		}
+// 		if (toolbarElement.classList.contains("remove-highlight-mode")) {
+// 			disableRemoveHighlights();
+// 		}
+// 		const disabled = highlightButton.classList.contains("highlight-disabled");
+// 		resetHighlightButtons();
+// 		if (disabled) {
+// 			highlightButton.classList.remove("highlight-disabled");
+// 			editorElement.contentWindow.postMessage(JSON.stringify({ method: "enableHighlight", color: "single-file-highlight-" + highlightButton.dataset.color }), "*");
+// 		} else {
+// 			highlightButton.classList.add("highlight-disabled");
+// 		}
+// 	};
+// });
+// toggleNotesButton.onmouseup = () => {
+// 	if (toggleNotesButton.getAttribute("src") == "/extension/ui/resources/button_note_visible.png") {
+// 		toggleNotesButton.src = "/extension/ui/resources/button_note_hidden.png";
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "hideNotes" }), "*");
+// 	} else {
+// 		toggleNotesButton.src = "/extension/ui/resources/button_note_visible.png";
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "displayNotes" }), "*");
+// 	}
+// };
+// toggleHighlightsButton.onmouseup = () => {
+// 	if (toggleHighlightsButton.getAttribute("src") == "/extension/ui/resources/button_highlighter_visible.png") {
+// 		toggleHighlightsButton.src = "/extension/ui/resources/button_highlighter_hidden.png";
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "hideHighlights" }), "*");
+// 	} else {
+// 		displayHighlights();
+// 	}
+// };
+// removeHighlightButton.onmouseup = () => {
+// 	if (toolbarElement.classList.contains("cut-inner-mode")) {
+// 		disableCutInnerPage();
+// 	}
+// 	if (toolbarElement.classList.contains("cut-outer-mode")) {
+// 		disableCutOuterPage();
+// 	}
+// 	if (removeHighlightButton.classList.contains("remove-highlight-disabled")) {
+// 		removeHighlightButton.classList.remove("remove-highlight-disabled");
+// 		toolbarElement.classList.add("remove-highlight-mode");
+// 		resetHighlightButtons();
+// 		displayHighlights();
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "enableRemoveHighlights" }), "*");
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "displayHighlights" }), "*");
+// 	} else {
+// 		disableRemoveHighlights();
+// 	}
+// };
+// editPageButton.onmouseup = () => {
+// 	if (toolbarElement.classList.contains("cut-inner-mode")) {
+// 		disableCutInnerPage();
+// 	}
+// 	if (toolbarElement.classList.contains("cut-outer-mode")) {
+// 		disableCutOuterPage();
+// 	}
+// 	if (editPageButton.classList.contains("edit-disabled")) {
+// 		enableEditPage();
+// 	} else {
+// 		disableEditPage();
+// 	}
+// };
+// formatPageButton.onmouseup = () => {
+// 	if (formatPageButton.classList.contains("format-disabled")) {
+// 		formatPage();
+// 	} else {
+// 		cancelFormatPage();
+// 	}
+// };
+// cutInnerPageButton.onmouseup = () => {
+// 	if (toolbarElement.classList.contains("edit-mode")) {
+// 		disableEditPage();
+// 	}
+// 	if (toolbarElement.classList.contains("cut-outer-mode")) {
+// 		disableCutOuterPage();
+// 	}
+// 	if (cutInnerPageButton.classList.contains("cut-disabled")) {
+// 		enableCutInnerPage();
+//
+// 	} else {
+// 		disableCutInnerPage();
+// 	}
+// };
+// cutOuterPageButton.onmouseup = () => {
+// 	if (toolbarElement.classList.contains("edit-mode")) {
+// 		disableEditPage();
+// 	}
+// 	if (toolbarElement.classList.contains("cut-inner-mode")) {
+// 		disableCutInnerPage();
+// 	}
+// 	if (cutOuterPageButton.classList.contains("cut-disabled")) {
+// 		enableCutOuterPage();
+// 	} else {
+// 		disableCutOuterPage();
+// 	}
+// };
+// undoCutPageButton.onmouseup = () => {
+// 	editorElement.contentWindow.postMessage(JSON.stringify({ method: "undoCutPage" }), "*");
+// };
+// undoAllCutPageButton.onmouseup = () => {
+// 	editorElement.contentWindow.postMessage(JSON.stringify({ method: "undoAllCutPage" }), "*");
+// };
+// redoCutPageButton.onmouseup = () => {
+// 	editorElement.contentWindow.postMessage(JSON.stringify({ method: "redoCutPage" }), "*");
+// };
+// savePageButton.onmouseup = () => {
+// 	savePage();
+// };
+// if (typeof print == "function") {
+// 	printPageButton.onmouseup = () => {
+// 		editorElement.contentWindow.postMessage(JSON.stringify({ method: "printPage" }), "*");
+// 	};
+// } else {
+// 	printPageButton.remove();
+// }
 
 let toolbarPositionPointer, toolbarMoving, toolbarTranslateMax;
 let orientationPortrait = matchMedia("(orientation: portrait)").matches;
@@ -198,29 +197,29 @@ toolbarElement.onmousedown = toolbarOnTouchStart;
 toolbarElement.ontouchmove = toolbarOnTouchMove;
 toolbarElement.ontouchend = toolbarOnTouchEnd;
 
-async function init() {
-	const messages = await getMessages();
-	addYellowNoteButton.title = messages.editorAddYellowNote.message;
-	addPinkNoteButton.title = messages.editorAddPinkNote.message;
-	addBlueNoteButton.title = messages.editorAddBlueNote.message;
-	addGreenNoteButton.title = messages.editorAddGreenNote.message;
-	highlightYellowButton.title = messages.editorHighlightYellow.message;
-	highlightPinkButton.title = messages.editorHighlightPink.message;
-	highlightBlueButton.title = messages.editorHighlightBlue.message;
-	highlightGreenButton.title = messages.editorHighlightGreen.message;
-	toggleNotesButton.title = messages.editorToggleNotes.message;
-	toggleHighlightsButton.title = messages.editorToggleHighlights.message;
-	removeHighlightButton.title = messages.editorRemoveHighlight.message;
-	editPageButton.title = messages.editorEditPage.message;
-	formatPageButton.title = messages.editorFormatPage.message;
-	cutInnerPageButton.title = messages.editorCutInnerPage.message;
-	cutOuterPageButton.title = messages.editorCutOuterPage.message;
-	undoCutPageButton.title = messages.editorUndoCutPage.message;
-	undoAllCutPageButton.title = messages.editorUndoAllCutPage.message;
-	redoCutPageButton.title = messages.editorRedoCutPage.message;
-	savePageButton.title = messages.editorSavePage.message;
-	printPageButton.title = messages.editorPrintPage.message;
-}
+// async function init() {
+// 	const messages = await getMessages();
+// 	addYellowNoteButton.title = messages.editorAddYellowNote.message;
+// 	addPinkNoteButton.title = messages.editorAddPinkNote.message;
+// 	addBlueNoteButton.title = messages.editorAddBlueNote.message;
+// 	addGreenNoteButton.title = messages.editorAddGreenNote.message;
+// 	highlightYellowButton.title = messages.editorHighlightYellow.message;
+// 	highlightPinkButton.title = messages.editorHighlightPink.message;
+// 	highlightBlueButton.title = messages.editorHighlightBlue.message;
+// 	highlightGreenButton.title = messages.editorHighlightGreen.message;
+// 	toggleNotesButton.title = messages.editorToggleNotes.message;
+// 	toggleHighlightsButton.title = messages.editorToggleHighlights.message;
+// 	removeHighlightButton.title = messages.editorRemoveHighlight.message;
+// 	editPageButton.title = messages.editorEditPage.message;
+// 	formatPageButton.title = messages.editorFormatPage.message;
+// 	cutInnerPageButton.title = messages.editorCutInnerPage.message;
+// 	cutOuterPageButton.title = messages.editorCutOuterPage.message;
+// 	undoCutPageButton.title = messages.editorUndoCutPage.message;
+// 	undoAllCutPageButton.title = messages.editorUndoAllCutPage.message;
+// 	redoCutPageButton.title = messages.editorRedoCutPage.message;
+// 	savePageButton.title = messages.editorSavePage.message;
+// 	printPageButton.title = messages.editorPrintPage.message;
+// }
 
 function viewportSizeChange() {
 	orientationPortrait = matchMedia("(orientation: portrait)").matches;
@@ -284,7 +283,7 @@ addEventListener("message", event => {
 	}
 	if (message.method == "onInit") {
 		tabData.options.disableFormatPage = !message.formatPageEnabled;
-		formatPageButton.hidden = !message.formatPageEnabled;
+		// formatPageButton.hidden = !message.formatPageEnabled;
 		document.title = "[WCAG] " + message.title;
 		if (message.filename) {
 			tabData.filename = message.filename;
@@ -445,8 +444,8 @@ function displayHighlights() {
 }
 
 function enableEditPage() {
-	editPageButton.classList.remove("edit-disabled");
-	toolbarElement.classList.add("edit-mode");
+	// editPageButton.classList.remove("edit-disabled");
+	// toolbarElement.classList.add("edit-mode");
 	editorElement.contentWindow.postMessage(JSON.stringify({ method: "enableEditPage" }), "*");
 }
 
