@@ -12,7 +12,7 @@ In tests the page didn't come out the same as the original webpage.
 
 ## single-file html
 
-When researching this problem we have search for existing plugins that try to save a web pages. We've found multiple but settled with single-file because of the following.
+When researching this problem we have searched for existing plugins that try to save a web page. We've found multiple but settled with single-file because of the following.
 
 * Custom options when saving (with or without JavaScript, compression, etc.)
 * Great support
