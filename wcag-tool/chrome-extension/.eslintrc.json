@@ -19,6 +19,7 @@
     "func-names": 0,
     "import/named": 0,
     "import/export": "warn",
+    "react/function-component-definition": 0,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-param-reassign": "warn",
     "import/prefer-default-export": "warn",

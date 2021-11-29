@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
 import '../css/styles.css'
 
-import setupStore from '../services/store'
 import SearchBar from './components/popup/searchBar'
 import Header from './components/popup/header'
 import SnapshotBody from './components/popup/snapshotBody'
@@ -24,15 +22,9 @@ const Popup = function () {
   )
 }
 
-;(async () => {
-  const store = await setupStore()
-
-  ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <Popup />
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-  )
-})()
+ReactDOM.render(
+  <React.StrictMode>
+    <Popup />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
