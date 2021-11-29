@@ -38,7 +38,7 @@ const Awareness = ({ provider, clientId, ...props }) => {
       <ul>
         {clients.map((client) => (
           <li key={client.name} style={{ color: client.color }}>
-            {client.name}
+            {'user ' + client.name}
           </li>
         ))}
       </ul>
