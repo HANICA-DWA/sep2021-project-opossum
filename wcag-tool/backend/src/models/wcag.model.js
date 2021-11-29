@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 // Web Content Accessibility Guideline
 const wcagSchema = new Schema(
@@ -32,8 +32,8 @@ const wcagSchema = new Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-const Wcag = model('Wcag', wcagSchema);
+const Wcag = model('Wcag', wcagSchema)
 
-module.exports = { wcagSchema, Wcag };
+module.exports = { wcagSchema, Wcag }

@@ -1,6 +1,6 @@
-const { annotationSchema, Annotation } = require('./annotation.model');
-const { snapshotSchema, Snapshot } = require('./snapshot.model');
-const { wcagSchema, Wcag } = require('./wcag.model');
+const { annotationSchema, Annotation } = require('./annotation.model')
+const { snapshotSchema, Snapshot } = require('./snapshot.model')
+const { wcagSchema, Wcag } = require('./wcag.model')
 
 module.exports = {
   annotationSchema,
@@ -9,4 +9,4 @@ module.exports = {
   Snapshot,
   wcagSchema,
   Wcag,
-};
+}
