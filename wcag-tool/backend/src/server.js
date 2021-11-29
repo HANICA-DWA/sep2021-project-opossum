@@ -8,6 +8,7 @@ const { errorHandler, loadSnapshot, logger } = require('./middleware')
 const { annotationRouter, snapshotRouter, wcagRouter } = require('./routers')
 
 const app = express()
+app.disable('x-powered-by')
 
 // EXPRESS CODE
 // Register middleware
