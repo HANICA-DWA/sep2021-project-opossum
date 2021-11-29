@@ -4,6 +4,9 @@
   "description": "",
   "main": "src/server.js",
   "private": true,
+  "_moduleAliases": {
+    "@": "./src/"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
