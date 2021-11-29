@@ -21,7 +21,12 @@
   },
   "plugins": ["jest", "prettier"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
@@ -30,6 +35,7 @@
     "no-underscore-dangle": "warn",
     "no-unused-vars": "warn",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+
     "node/no-unpublished-require": [
       "error",
       {
