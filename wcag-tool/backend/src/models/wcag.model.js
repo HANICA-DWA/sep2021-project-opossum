@@ -1,39 +1,113 @@
 const { Schema, model } = require('mongoose')
 
 // Web Content Accessibility Guideline
-const wcagSchema = new Schema(
+const principleSchema = new Schema({
+  principleId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  num: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  handle: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+})
+
+const Principle = model('Principle', principleSchema)
+
+const guidelineSchema = new Schema({
+  guidelineId: {
+    type: String,
+    require: true,
+    unique: true,
+  },
+  num: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  handle: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  techniques: [Object],
+})
+
+const Guideline = model('Guideline', guidelineSchema)
+
+const successCriteriumSchema = new Schema(
   {
-    w3Id: {
+    principle: {
+      type: Schema.Types.ObjectId,
+      ref: 'Principle',
+      required: true,
+    },
+    guideline: {
+      type: Schema.Types.ObjectId,
+      ref: 'Guideline',
+      required: true,
+    },
+    successCriteriumId: {
       type: String,
       required: true,
       unique: true,
     },
-    url: {
+    num: {
       type: String,
       required: true,
-    },
-    principle: {
-      type: String,
-      required: true,
-      enum: ['1. Perceivable', '2. Operable', '3. Understandable', '4. Robust'],
-    },
-    name: {
-      type: String,
-      required: true,
+      unique: true,
     },
     level: {
       type: String,
-      required: true,
       enum: ['A', 'AA', 'AAA'],
+      required: true,
     },
-    description: {
+    handle: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    details: [
+      {
+        handle: {
+          type: String,
+          required: true,
+          default: 'test',
+        },
+        text: {
+          type: String,
+          required: true,
+          default: 'test',
+        },
+      },
+    ],
+    techniques: {
+      type: [Object],
     },
   },
   { timestamps: true }
 )
 
-const Wcag = model('Wcag', wcagSchema)
+const SuccessCriterium = model('SuccessCriterium', successCriteriumSchema)
 
-module.exports = { wcagSchema, Wcag }
+module.exports = {
+  Principle,
+  Guideline,
+  SuccessCriterium,
+}
