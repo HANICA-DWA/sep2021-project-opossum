@@ -24,7 +24,7 @@ When researching this problem we have searched for existing plugins that try to 
 
 As the name suggests single-file plugin can save a page into a single html file. It encodes and inlines images, CSS, iframes, fonts and JavaScript. So you have everything in a single file without needing to do web requests.
 
-The exception is video's and audio files. It has the option to remove the link to those sources or leave them in.
+The exception is video and audio files. It has the option to remove the link to those sources or leave them in.
 
 
 
