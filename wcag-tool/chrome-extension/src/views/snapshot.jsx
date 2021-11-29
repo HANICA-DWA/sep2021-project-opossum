@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import '../css/styles.css'
 import setupStore from '../services/store'
 import { App } from '../components'
+
+// eslint-disable-next-line import/newline-after-import
 ;(async () => {
   const store = await setupStore()
 

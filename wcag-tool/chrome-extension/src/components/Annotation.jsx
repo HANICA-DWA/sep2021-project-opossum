@@ -9,18 +9,10 @@ import {
 const Annotation = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()
 
-  const handleFocus = function (event) {
-    dispatch(setHighlightElement(selector))
-  }
-
-  const handleBlur = function (event) {
-    dispatch(setHighlightElement(''))
-  }
-
   return (
     <div
-      onMouseEnter={handleFocus}
-      onMouseLeave={handleBlur}
+      onMouseEnter={() => dispatch(setHighlightElement(selector))}
+      onMouseLeave={() => dispatch(setHighlightElement(''))}
       onClick={() => {
         dispatch(setSelectedAnnotation({ title, description, selector }))
         dispatch(setDetailSliderIsOpen(true))

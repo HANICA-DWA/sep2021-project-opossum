@@ -9,7 +9,7 @@ const CloseSelectElementButton = function () {
   const dispatch = useDispatch()
 
   return (
-    <button className="absolute">
+    <button className="absolute" type="button">
       <svg
         onClick={() => {
           dispatch(setListSliderIsOpen(true))

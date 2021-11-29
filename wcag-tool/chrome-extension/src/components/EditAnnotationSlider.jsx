@@ -14,7 +14,6 @@ const EditAnnotationSlider = function () {
   const isOpen = useSelector(selectEditSliderIsOpen)
   const annotation = useSelector(selectSelectedAnnotation)
   const oldTitle = annotation.title
-  //   const oldDescription = annotation.description
   const dispatch = useDispatch()
   const [title, settitle] = useState('')
   const [description, setdescription] = useState('')

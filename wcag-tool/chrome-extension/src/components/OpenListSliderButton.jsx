@@ -6,7 +6,7 @@ const OpenListSliderButton = function () {
   const dispatch = useDispatch()
 
   return (
-    <button className="absolute">
+    <button type="button" className="absolute">
       <svg
         onClick={() => {
           dispatch(setListSliderIsOpen(true))

@@ -59,6 +59,7 @@ const IFrameWrapper = function () {
     iframeDoc.current = document.getElementById('myframe')
 
     iframeDoc.current.addEventListener('load', function () {
+      // eslint-disable-next-line react/no-this-in-sfc
       const Snapshotdocument = this.contentWindow.document
       const elements = Snapshotdocument.querySelectorAll('*')
       elements.forEach((element) => {

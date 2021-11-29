@@ -12,15 +12,15 @@ const NavigationButtons = function () {
         <div className="flex p-2 text-xl">
           <Button
             name="Prev"
-            isDisabled={true}
+            isDisabled
             disabledStyle={disabledStyle}
-            classNames={`p-2 rounded-l bg-gray-300 text-black hover:bg-gray-400`}
+            classNames="p-2 rounded-l bg-gray-300 text-black hover:bg-gray-400"
           />
           <Button
             name="Next"
-            isDisabled={true}
+            isDisabled
             disabledStyle={disabledStyle}
-            classNames={`p-2 rounded-r bg-gray-300 text-black hover:bg-gray-400`}
+            classNames="p-2 rounded-r bg-gray-300 text-black hover:bg-gray-400"
           />
         </div>
       </div>
