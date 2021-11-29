@@ -30,7 +30,11 @@ const IFrameWrapper = function () {
     e.target.style.border = 'none'
   }
 
-  const createNewAnnotation = (e) => {
+  const createNewAnnotation = function (e) {
+    if (e.target !== this) {
+      return
+    }
+
     e.target.style.border = 'none'
     dispatch(setSelectElement(false))
     dispatch(setCreateSliderIsOpen(true))
