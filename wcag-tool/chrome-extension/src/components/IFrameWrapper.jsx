@@ -9,7 +9,6 @@ import {
   selectHighlightElement,
 } from '../services/annotationSlice'
 
-// eslint-disable-next-line react/function-component-definition
 const IFrameWrapper = function () {
   const selectElement = useSelector(selectSelectElement)
   const iframeDoc = useRef(undefined)
