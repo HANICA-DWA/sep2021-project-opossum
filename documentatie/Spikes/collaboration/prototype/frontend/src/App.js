@@ -17,8 +17,8 @@ const App = () => {
   useEffect(() => {
     // ComponentWillUnmount
     return () => {
-      provider.current.destroy()
-      yDoc.current.destroy()
+      provider.destroy()
+      yDoc.destroy()
     }
   }, [])
 
@@ -28,17 +28,37 @@ const App = () => {
         <Awareness provider={provider} clientId={yDoc.clientID} />
       </div>
 
-      <div style={{ border: '2px solid green', margin: '1rem', padding: '1rem' }}>
-        <h2>Current annotation</h2>
-        {currentAnnotation && JSON.stringify(currentAnnotation)}
-      </div>
+      {currentAnnotation && (
+        <div style={{ border: '2px solid green', margin: '1rem', padding: '1rem' }}>
+          <h2>Current annotation</h2>
+          <p>
+            <strong>_id</strong> {currentAnnotation._id}
+          </p>
+          <p>
+            <strong>title</strong> <span dangerouslySetInnerHTML={{ __html: currentAnnotation.title }} />
+          </p>
+          <p>
+            <strong>description</strong> <span dangerouslySetInnerHTML={{ __html: currentAnnotation.description }} />
+          </p>
+        </div>
+      )}
 
       <div style={{ border: '2px solid red', margin: '1rem', padding: '1rem' }}>
-        <AnnotationList yDoc={yDoc} provider={provider} setCurrentAnnotation={setCurrentAnnotation} />
+        <AnnotationList
+          yDoc={yDoc}
+          provider={provider}
+          currentAnnotation={currentAnnotation}
+          setCurrentAnnotation={setCurrentAnnotation}
+        />
       </div>
 
       <div style={{ border: '2px solid blue', margin: '1rem', padding: '1rem' }}>
-        <AnnotationEditor yDoc={yDoc} provider={provider} currentAnnotation={currentAnnotation} />
+        <AnnotationEditor
+          yDoc={yDoc}
+          provider={provider}
+          currentAnnotation={currentAnnotation}
+          setCurrentAnnotation={setCurrentAnnotation}
+        />
       </div>
     </>
   )
