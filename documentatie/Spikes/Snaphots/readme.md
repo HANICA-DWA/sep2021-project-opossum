@@ -1,12 +1,12 @@
 # Snapshot Spike
 
-In this we research the best way to save a page. We need this so we can annotate dynamic every-changing websites.
+In this document we research the best way to save a page. We need this so we can annotate dynamic every-changing websites.
 
-## Mhtml
+## MHTML
 
 The browser API for extension (Chrome and Firefox) has the ability to save pages in mhtml.
 
-We haven't chosen for this due to the fact that mhtml has some difficulty with being displayed in html iframes. Doesn't work with JavaScript and images aren't stored.
+We haven't chosen for this due to the fact that iframes have difficulty displaying MHTML files. It also doesn't work with JavaScript and images and other media aren't stored.
 
 In tests the page didn't come out the same as the original webpage.
 
