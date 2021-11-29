@@ -13,6 +13,21 @@ router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   }
 })
 
+// add new annotation to the list of annotations in a snapshot
+router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
+  try {
+    const { title, description, selector } = req.body
+
+    const annotation = await req.snapshot.addAnnotation(title, description, selector)
+
+    if (!annotation) return next({ code: 500, message: 'Annotation could not be added' })
+
+    return res.json(annotation)
+  } catch (err) {
+    return next(err)
+  }
+})
+
 module.exports = {
   annotationRouter: router,
 }

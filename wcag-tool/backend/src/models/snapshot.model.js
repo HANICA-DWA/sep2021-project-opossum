@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const { annotationSchema } = require('./annotation.model')
+const { annotationSchema, Annotation } = require('./annotation.model')
 
 const snapshotSchema = new Schema(
   {
@@ -19,6 +19,25 @@ const snapshotSchema = new Schema(
   },
   { timestamps: true }
 )
+
+// eslint-disable-next-line func-names
+snapshotSchema.methods.addAnnotation = async function (
+  title,
+  description,
+  selector
+) {
+  const annotation = new Annotation({
+    title,
+    description,
+    selector,
+  })
+
+  this.annotations.push(annotation)
+
+  await this.save()
+
+  return annotation
+}
 
 const Snapshot = model('Snapshot', snapshotSchema)
 
