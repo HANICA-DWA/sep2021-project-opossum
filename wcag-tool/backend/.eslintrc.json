@@ -28,6 +28,13 @@
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error",
     "no-underscore-dangle": "warn",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "node/no-unpublished-require": [
+      "error",
+      {
+        "allowModules": ["mongodb-memory-server"]
+      }
+    ]
   }
 }

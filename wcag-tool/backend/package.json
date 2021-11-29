@@ -8,7 +8,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
-    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint": "eslint --ext .js,.jsx .",
     "lint:fix": "npm run lint -- --fix"
   },
   "author": "",
