@@ -1,17 +1,21 @@
-# Wcag-tool backend
+# WCAG Tool backend
 
-## Start
+## start
 
-`npm run start`
+`npm start`
 
-## Development
+## development
 
 `npm run dev`
 
-## Test
+## test
 
-`npm run test`
+`npm test`
 
-## Lint
+## lint
 
 `npm run lint`
+
+## lint & fix
+
+`npm run lint:fix`

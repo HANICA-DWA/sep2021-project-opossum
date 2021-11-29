@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "setup": "concurrently \"cd backend && npm install\" \"cd frontend && npm install\""
+  },
+  "dependencies": {
+    "concurrently": "^6.4.0"
+  }
+}

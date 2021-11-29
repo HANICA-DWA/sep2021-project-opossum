@@ -143,7 +143,7 @@ app.get('/snapshots/:snapshotId/annotations/:annotationid', async (req, res, nex
   }
 })
 
-// Edit single snapshot
+// Edit annotation
 app.put('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
   try {
     const { snapshotId, annotationId } = req.params
@@ -160,6 +160,24 @@ app.put('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, nex
     annotation.parent().save()
 
     return res.json(annotation)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+app.delete('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
+  try {
+    const { snapshotId, annotationId } = req.params
+
+    const snapshot = await Snapshot.findById(snapshotId).exec()
+    if (!snapshot) return res.status(404).send('Snapshot not found')
+
+    snapshot.annotations.id(annotationId).remove()
+
+    const _snapshot = await snapshot.save()
+    if (!_snapshot) return res.status(418).send('Not saved!')
+
+    return res.json('ok!')
   } catch (err) {
     return next(err)
   }

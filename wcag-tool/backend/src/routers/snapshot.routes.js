@@ -1,65 +1,67 @@
-const { Router } = require('express');
-const { Snapshot } = require('../models');
+const { Router } = require('express')
+const { Snapshot } = require('../models')
 
-const router = new Router();
+const router = new Router()
 
 router.post('/snapshots', async (req, res, next) => {
   try {
-    const { name, domain } = req.body;
+    const { name, domain } = req.body
 
-    const snapshot = await new Snapshot({ name, domain }).save();
-    if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' });
+    const snapshot = await new Snapshot({ name, domain }).save()
+    if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' })
 
     // TODO: Welke data is belangrijk om te returnen?
-    return res.status(201).json(snapshot);
+    return res.status(201).json(snapshot)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-});
+})
 
 router.get('/snapshots', async (req, res, next) => {
   try {
-    const snapshots = await Snapshot.find({}).exec();
+    const { page, limit } = req.query
+    const skip = page * (limit - 1) > 0 ? page * (limit - 1) : 0
 
-    return res.json(snapshots);
+    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec()
+
+    return res.json(snapshots)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-});
+})
 
 // Already done by middleware: loadSnapshot!
-router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot));
+router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
 
 router.put('/snapshots/:snapshotId', async (req, res, next) => {
   try {
-    const { name, domain } = req.body;
-    const { snapshot } = req;
+    const { name, domain } = req.body
+    const { snapshot } = req
 
-    if (name) snapshot.name = name;
-    if (domain) snapshot.domain = domain;
+    if (name) snapshot.name = name
+    if (domain) snapshot.domain = domain
 
-    const _snapshot = await snapshot.save();
-    if (_snapshot)
-      return next({ error: 500, message: 'Snapshot not updated!' });
+    // eslint-disable-next-line no-underscore-dangle
+    const _snapshot = await snapshot.save()
+    if (_snapshot) return next({ error: 500, message: 'Snapshot not updated!' })
 
-    return res.json(_snapshot);
+    return res.json(_snapshot)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-});
+})
 
 router.delete('/snapshots/:snapshotId', async (req, res, next) => {
   try {
-    const { snapshotId } = req.params;
+    const { snapshotId } = req.params
 
-    const snapshot = await Snapshot.findByIdAndRemove(snapshotId).exec();
-    if (!snapshot)
-      return next({ error: 500, message: 'Snapshot not deleted!' });
+    const snapshot = await Snapshot.findByIdAndRemove(snapshotId).exec()
+    if (!snapshot) return next({ error: 500, message: 'Snapshot not deleted!' })
 
-    return res.json(snapshot);
+    return res.json(snapshot)
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-});
+})
 
-module.exports = { snapshotRouter: router };
+module.exports = { snapshotRouter: router }

@@ -10,7 +10,7 @@ import axios from 'axios'
 //  Register Quill modules
 Quill.register('modules/cursors', QuillCursors, false)
 
-const snapshotId = '619cbbc19caecffdfbb25d0c'
+const snapshotId = '619fe1f637745026fc33fb2e'
 
 const AnnotationEditor = ({ yDoc, provider, currentAnnotation, ...props }) => {
   // States

@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const { annotationSchema } = require('./annotation.model');
+const { Schema, model } = require('mongoose')
+const { annotationSchema } = require('./annotation.model')
 
 const snapshotSchema = new Schema(
   {
@@ -18,11 +18,11 @@ const snapshotSchema = new Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-const Snapshot = model('Snapshot', snapshotSchema);
+const Snapshot = model('Snapshot', snapshotSchema)
 
 module.exports = {
   snapshotSchema,
   Snapshot,
-};
+}

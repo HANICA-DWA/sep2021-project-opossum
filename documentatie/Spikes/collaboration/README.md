@@ -6,7 +6,7 @@ This project is in need of a collaborative snapshot and corresponding annotation
 
 - Should work with _React_
 - Should be able to display list of all collaborators
-- Should be able to collaboratively edit arrays 
+- Should be able to collaboratively edit arrays
 - Should be able to collaboratively edit multiple text fields.
 - Should be usable (performance wise)
 
@@ -51,7 +51,7 @@ There are a few existing frameworks that the general internet and our teacher re
 | --------------------------------------------------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Automerge](https://github.com/automerge/automerge) | 11.4k  | 56     | CRDT       | JSON document, offline editing, p2p support (WebRTC), WebSocket support, auto distributed. Little [documentation](https://github.com/automerge/automerge) with a few examples.                                                                                                                                |
 | [yjs](https://github.com/yjs/yjs)                   | 5.6k   | 24     | CRDT       | same as Automerge, scalable with unlimited users, integration with 8 different [RTE](https://docs.yjs.dev/ecosystem/editor-bindings)s, rich [documentation](https://docs.yjs.dev/), many [examples](https://github.com/yjs/yjs#example-observe-types) and many more [demos](https://github.com/yjs/yjs-demos) |
-| [ShareDB](https://github.com/share/sharedb)         | 4.7k   | 24     | OT         | Uses a db as single source of truth (MongoDB, Postgres and [more](https://share.github.io/sharedb/adapters/database)), JSON document, middleware, reasonable [documentation](https://share.github.io/sharedb/), horizontally scalable, offline editing, access to previous versions                            |
+| [ShareDB](https://github.com/share/sharedb)         | 4.7k   | 24     | OT         | Uses a db as single source of truth (MongoDB, Postgres and [more](https://share.github.io/sharedb/adapters/database)), JSON document, middleware, reasonable [documentation](https://share.github.io/sharedb/), horizontally scalable, offline editing, access to previous versions                           |
 
 ## Comparison
 
@@ -337,7 +337,7 @@ In order to show awareness we use the object inside awareness objecti inside pro
 
 ```js
 const Awareness = ({ provider, clientId, ...props }) => {
-  const [name, setName] = useState(clientId)
+  const [name, setName] = useState('user' + clientId)
   const [color, setColor] = useState('blue')
   const [clients, setClients] = useState([])
 
