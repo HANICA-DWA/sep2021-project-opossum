@@ -4,14 +4,12 @@
   "description": "",
   "main": "src/server.js",
   "private": true,
-  "_moduleAliases": {
-    "@": "./src/"
-  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest --passWithNoTests",
-    "lint": "eslint 'src/**/*.{js,jsx}' --fix"
+    "test": "jest",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "",
   "license": "ISC",
@@ -25,11 +23,12 @@
   "devDependencies": {
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.3.1",
+    "mongodb-memory-server": "^8.0.2",
     "nodemon": "^2.0.15",
     "prettier": "^2.4.1"
   }

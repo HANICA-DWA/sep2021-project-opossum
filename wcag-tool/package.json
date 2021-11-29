@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "concurrently \"cd chrome-extension && npm run dev\" \"cd backend && npm run dev\"",
-    "install": "concurrently \"cd chrome-extension && npm install\" \"cd backend && npm install\""
+    "setup": "concurrently \"cd chrome-extension && npm install\" \"cd backend && npm install\"",
+    "test": "concurrently \"cd chrome-extension && npm test\" \"cd backend && npm test\" "
   },
   "dependencies": {
     "concurrently": "^6.4.0"
