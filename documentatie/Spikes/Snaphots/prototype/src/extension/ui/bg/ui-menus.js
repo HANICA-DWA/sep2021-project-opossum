@@ -94,22 +94,22 @@ export {
 async function init(businessApi) {
 	business = businessApi;
 	const messages = await getMessages();
-	MENU_CREATE_DOMAIN_RULE_MESSAGE = messages.menuCreateDomainRule.message;
-	MENU_UPDATE_RULE_MESSAGE = messages.menuUpdateRule.message;
-	MENU_SAVE_PAGE_MESSAGE = messages.menuSavePage.message;
-	MENU_SAVE_WITH_PROFILE = messages.menuSaveWithProfile.message;
-	MENU_SAVE_SELECTED_LINKS = messages.menuSaveSelectedLinks.message;
+	// MENU_CREATE_DOMAIN_RULE_MESSAGE = messages.menuCreateDomainRule.message;
+	// MENU_UPDATE_RULE_MESSAGE = messages.menuUpdateRule.message;
+	// MENU_SAVE_PAGE_MESSAGE = messages.menuSavePage.message;
+	// MENU_SAVE_WITH_PROFILE = messages.menuSaveWithProfile.message;
+	// MENU_SAVE_SELECTED_LINKS = messages.menuSaveSelectedLinks.message;
 	MENU_EDIT_PAGE_MESSAGE = messages.menuEditPage.message;
 	MENU_EDIT_AND_SAVE_PAGE_MESSAGE = messages.menuEditAndSavePage.message;
-	MENU_VIEW_PENDINGS_MESSAGE = messages.menuViewPendingSaves.message;
-	MENU_SAVE_SELECTION_MESSAGE = messages.menuSaveSelection.message;
-	MENU_SAVE_FRAME_MESSAGE = messages.menuSaveFrame.message;
-	MENU_SAVE_TABS_MESSAGE = messages.menuSaveTabs.message;
-	MENU_SAVE_SELECTED_TABS_MESSAGE = messages.menuSaveSelectedTabs.message;
-	MENU_SAVE_UNPINNED_TABS_MESSAGE = messages.menuSaveUnpinnedTabs.message;
-	MENU_SAVE_ALL_TABS_MESSAGE = messages.menuSaveAllTabs.message;
-	MENU_SELECT_PROFILE_MESSAGE = messages.menuSelectProfile.message;
-	PROFILE_DEFAULT_SETTINGS_MESSAGE = messages.profileDefaultSettings.message;
+	// MENU_VIEW_PENDINGS_MESSAGE = messages.menuViewPendingSaves.message;
+	// MENU_SAVE_SELECTION_MESSAGE = messages.menuSaveSelection.message;
+	// MENU_SAVE_FRAME_MESSAGE = messages.menuSaveFrame.message;
+	// MENU_SAVE_TABS_MESSAGE = messages.menuSaveTabs.message;
+	// MENU_SAVE_SELECTED_TABS_MESSAGE = messages.menuSaveSelectedTabs.message;
+	// MENU_SAVE_UNPINNED_TABS_MESSAGE = messages.menuSaveUnpinnedTabs.message;
+	// MENU_SAVE_ALL_TABS_MESSAGE = messages.menuSaveAllTabs.message;
+	// MENU_SELECT_PROFILE_MESSAGE = messages.menuSelectProfile.message;
+	// PROFILE_DEFAULT_SETTINGS_MESSAGE = messages.profileDefaultSettings.message;
 }
 
 function onMessage(message) {
@@ -120,7 +120,7 @@ function onMessage(message) {
 }
 
 async function createMenus(tab) {
-	const [profiles, allTabsData] = await Promise.all([config.getProfiles(), tabsData.get()]);
+	// const [profiles, allTabsData] = await Promise.all([config.getProfiles(), tabsData.get()]);
 	const options = await config.getOptions(tab && tab.url);
 	if (BROWSER_MENUS_API_SUPPORTED && options) {
 		const pageContextsEnabled = ["page", "frame", "image", "link", "video", "audio", "selection"];
@@ -143,11 +143,11 @@ async function createMenus(tab) {
 		await menus.removeAll();
 		const defaultContextsEnabled = defaultContextsDisabled.concat(...pageContextsEnabled);
 		const defaultContexts = options.contextMenuEnabled ? defaultContextsEnabled : defaultContextsDisabled;
-		menus.create({
-			id: MENU_ID_SAVE_PAGE,
-			contexts: defaultContexts,
-			title: MENU_SAVE_PAGE_MESSAGE
-		});
+		// menus.create({
+		// 	id: MENU_ID_SAVE_PAGE,
+		// 	contexts: defaultContexts,
+		// 	title: MENU_SAVE_PAGE_MESSAGE
+		// });
 		menus.create({
 			id: MENU_ID_EDIT_AND_SAVE_PAGE,
 			contexts: defaultContexts,
@@ -350,13 +350,13 @@ async function initialize() {
 	if (BROWSER_MENUS_API_SUPPORTED) {
 		createMenus();
 		menus.onClicked.addListener(async (event, tab) => {
-			if (event.menuItemId == MENU_ID_SAVE_PAGE) {
-				if (event.linkUrl) {
-					business.saveUrls([event.linkUrl]);
-				} else {
-					business.saveTabs([tab]);
-				}
-			}
+			// if (event.menuItemId == MENU_ID_SAVE_PAGE) {
+			// 	if (event.linkUrl) {
+			// 		business.saveUrls([event.linkUrl]);
+			// 	} else {
+			// 		business.saveTabs([tab]);
+			// 	}
+			// }
 			if (event.menuItemId == MENU_ID_EDIT_AND_SAVE_PAGE) {
 				const allTabsData = await tabsData.get(tab.id);
 				if (allTabsData[tab.id].savedPageDetected) {

@@ -55,6 +55,9 @@ async function onMessage(message, sender) {
 	if (message.method.endsWith(".activate")) {
 		await browser.tabs.update(message.tabId, { active: true });
 	}
+	if (message.method.endsWith(".snapshot")) {
+		return business.saveTabs([message.tab], {openEditor: true})
+	}
 }
 
 async function onInit(tab, options) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { setupStore, store } from '../services/store'
+import { setupStore } from '../services/store'
 
 const Options = function () {
   return <h1>Options</h1>

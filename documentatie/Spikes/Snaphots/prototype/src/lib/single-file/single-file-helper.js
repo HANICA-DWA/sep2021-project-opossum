@@ -56,7 +56,7 @@ const FONT_WEIGHTS = {
 	bolder: "700",
 	lighter: "100"
 };
-const COMMENT_HEADER = "Snapshot WCAGTool";
+const COMMENT_HEADER = "Snapshot WCAG Tool";
 const SINGLE_FILE_UI_ELEMENT_CLASS = "single-file-ui-element";
 const addEventListener = (type, listener, options) => globalThis.addEventListener(type, listener, options);
 const dispatchEvent = event => globalThis.dispatchEvent(event);
