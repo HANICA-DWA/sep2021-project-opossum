@@ -23,6 +23,5 @@ const snapshotSchema = new Schema(
 const Snapshot = model('Snapshot', snapshotSchema)
 
 module.exports = {
-  snapshotSchema,
   Snapshot,
 }

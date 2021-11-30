@@ -1,3 +1,11 @@
-module.exports = require('./annotation.model')
-module.exports = require('./snapshot.model')
-module.exports = require('./wcag.model')
+const { Annotation } = require('./annotation.model')
+const { Snapshot } = require('./snapshot.model')
+const { Principle, Guideline, SuccessCriterium } = require('./wcag.model')
+
+module.exports = {
+  Annotation,
+  Snapshot,
+  Principle,
+  Guideline,
+  SuccessCriterium,
+}

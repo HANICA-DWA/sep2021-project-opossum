@@ -1,63 +1,62 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
-// Web Content Accessibility Guideline
-const principleSchema = new Schema({
-  principleId: {
-    type: String,
-    required: true,
-    unique: true,
+const principleSchema = new Schema(
+  {
+    principleId: {
+      type: String,
+      required: true,
+    },
+    num: {
+      type: String,
+      required: true,
+    },
+    handle: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
   },
-  num: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  handle: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-})
+  { timestamps: true }
+)
 
 const Principle = model('Principle', principleSchema)
 
-const guidelineSchema = new Schema({
-  guidelineId: {
-    type: String,
-    require: true,
-    unique: true,
+const guidelineSchema = new Schema(
+  {
+    guidelineId: {
+      type: String,
+      require: true,
+    },
+    num: {
+      type: String,
+      required: true,
+    },
+    handle: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    techniques: [Object],
   },
-  num: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  handle: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  techniques: [Object],
-})
+  { timestamps: true }
+)
 
 const Guideline = model('Guideline', guidelineSchema)
 
 const successCriteriumSchema = new Schema(
   {
     principle: {
-      type: Schema.Types.ObjectId,
-      ref: 'Principle',
+      type: principleSchema,
       required: true,
     },
     guideline: {
-      type: Schema.Types.ObjectId,
-      ref: 'Guideline',
+      type: guidelineSchema,
       required: true,
     },
     successCriteriumId: {
@@ -83,20 +82,7 @@ const successCriteriumSchema = new Schema(
       type: String,
       required: true,
     },
-    details: [
-      {
-        handle: {
-          type: String,
-          required: true,
-          default: 'test',
-        },
-        text: {
-          type: String,
-          required: true,
-          default: 'test',
-        },
-      },
-    ],
+    details: [Object],
     techniques: {
       type: [Object],
     },
