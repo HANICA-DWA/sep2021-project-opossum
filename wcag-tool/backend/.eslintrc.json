@@ -27,13 +27,13 @@
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error",
-    "no-underscore-dangle": "warn",
+    "no-underscore-dangle": "off",
     "no-unused-vars": "warn",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "node/no-unpublished-require": [
       "error",
       {
-        "allowModules": ["mongodb-memory-server"]
+        "allowModules": ["mongodb-memory-server", "supertest", "jest-extended"]
       }
     ]
   }
