@@ -1,51 +1,79 @@
 # XPath vs CSS selector
 
-Het probleem: Het programmatisch aanwijzen van specifieke elementen op een pagina (in het geval van een 'snapshot' is de content statisch).
+**The problem that needs to be solved:** To programmatically select an element on a web page, while considering the next two conditions:
 
-de mogelijke oplossing die we gaan bekijken:
+- The web page is dynamic and 'live'. When we refresh and there is different content I want my annotations to point to the same element as before even if it changed position.
+- The web page is static because we created a 'snapshot' and the content will always be in the same position.
 
-- xpath
-- css selector
+The possible solutions we will look at:
+
+- XPath
+- CSS selector
 
 ## CSS selector
 
-### Voordelen:
+### Advantages:
 
-- CSS selector is leesbaarder 
-- CSS selector is sneller 
+- CSS selectors are more readable for humans
+- CSS selectors are faster*
 
-### Nadelen
+*according to the sources, but results in our own demo on a simple web page conclude that XPath is faster.
 
-- Iets minder select opties dan XPath
+### Disadvantages:
+
+- Less options for building a selector for a specific element
 
 ## XPath
 
-### Voordelen:
+### Advantages:
 
-- Je kan vanuit een node zowel naar een parent als child node wijzen. CSS selectors kunnen alleen naar een child wijzen.
-- Je kan conditionals toevoegen: `//button[starts-with(@id, 'save') and contains(@class,'publish')]`
+- You can traverse both ways from any node. Both to a child node aswell as a parent node. CSS selectors can only traverse to child nodes.
+- You can add conditional logic, for example: `//button[starts-with(@id, 'save') and contains(@class,'publish')]`
 
-### Nadelen
+### Disadvantages
 
-- XPath engines zijn verschillend per browser, waardoor ze inconsistent zijn.
-- XPath kan snel complex worden, waardoor het moeilijker te lezen is.
+- XPath engines differ from browser to browser which makes them inconsistent
+- XPath selectors can become really complex, which makes them difficult to read
 
-## Conclusie
+## Conclusion
 
-We kiezen voor CSS selectors, omdat de extra flexibiliteit die XPath heeft niet opweegt tegen de nadelen van de performance. Vooral uit de demo is gebleken dat XPath vele malen trager is dan CSS selectors, zelfs op een simpele pagina. Verder is de flexibiliteit ook niet van belang aangezien het gaat om 'snapshots' van een webpagina, hier blijft de content altijd hetzelfde. 
+There were two use cases to consider:
 
-Wanneer je te maken krijgt met dynamische websites is XPath een betere optie, door de flexibele selecteer methodes en conditionele selectie mogelijkheden. Je kan dan niet meer wijzen naar bijvoorbeeld het 6e element uit een lijst en dan moet je op attributen gaan selecteren. Echter krijg je dan ook vaak te maken met roulerende waardes in attributen, waardoor het programmatisch vrij lastig op te lossen is.  
+- annotating on static web pages we call 'snapshots'
+- annotating on dynamic 'live' web pages
 
-Denk bijvoorbeeld aan het volgende element op een pagina:
+Both of them satisfy the first use cases and have options to programmatically generate a selector that will always uniquely identify an element on the page considering it won't change.
 
-`<input type="submit" id=" submit_334350" value="Subscribe">`
+Unfortunately neither of the options are capable of satisfying the second use case. The options to generate a selector aren't advanced enough to generate a selector that will identify an element regardless of where it is on the page with a 100% certainty.
 
-De id `submit_334350` van de knop is bij elke refresh anders. Je kan de oplossen door het volgende XPath te gebruiken: `//input[starts-with(@id, ‘submit_’)]`. Je kijkt dan maar naar een deel van het attribuut. Echter is dit programmatisch lastig op te lossen en erg fout gevoelig. 
+The achieve the above mentioned problem in the second use case you are mainly depending on the following: does the element have an attribute or combination of attributes with values that can uniquely identify it?
+
+Consider the following element on a web page:
+
+`<input type="submit">`
+
+The only unique attributes it has right now are the position on the page and the value `submit` in the `type` attribute. The position on the page might change when refreshing, so this is not an option. Even if there is only one button with `type="submit"` on the page right now, this might also change when refreshing. There is no possible way to guarantee that the selector that is created for this element will point to the same element after refreshing. 
+
+Consider the following element on a web page:
+
+`<input type="submit" id="submitSubscribe" value="Subscribe">`
+
+This element has an `id` attribute that can be used to uniquely identify it assuming that the value in `id` is not programmatically generated and different every time. Even then the element could be gone from the web page when refreshing which will ofcourse make the annotation not show up as well. 
+
+Consider the following element on a web page:
+
+`<input type="submit" id="submit_334350" value="Subscribe">`
+
+Assuming the value in `id` is programmatically generated and changes every refresh. If you would use this to value to generate a selector it would be useless since it won't point to anything on the next refresh. A valid solution could be to take the path that is not dynamic and use it to select the element, that would look something like this in XPath: `//input[starts-with(@id, ‘submit_’)]`. This is not programmatically possible yet and will need the input of a human to determine which part of the value is dynamic and which part is static.
+
+Considering all these things it's incredibly hard to accurately annotate a live web page and expect all the annotations to point to the same elements when refreshing. There might be a solution possible where you use a combination of human input and XPath to generate selectors that could work on dynamic web pages. This would require further research to know for sure.
+
+The conclusion for now is to use XPath when dealing with 'snapshots' because it has the same or better performance than CSS selectors, has more options to generate unique selectors and we might need it when expanding to annotating dynamic web pages.
 
 ## sources:
 
- https://exadel.com/news/how-to-choose-selectors-for-automation-to-make-your-life-a-whole-lot-easier
+- https://exadel.com/news/how-to-choose-selectors-for-automation-to-make-your-life-a-whole-lot-easier
 
-https://www.jadeglobal.com/blog/ways-locate-dynamic-web-elements-selenium
+- https://www.jadeglobal.com/blog/ways-locate-dynamic-web-elements-selenium
 
-eigen demo
+- Our own demo
