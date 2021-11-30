@@ -10,7 +10,7 @@ import {
   setSelectedAnnotation,
   setEditSliderIsOpen,
   setHighlightElement,
-} from '../services/annotationSlice'
+} from '../../../services/annotationSlice'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -53,7 +53,6 @@ const AnnotationDetailSlider = function () {
             </p>
           </div>
           <button
-            type="button"
             onClick={() => {
               dispatch(setSelectedAnnotation(annotation))
               dispatch(setEditSliderIsOpen(true))
@@ -83,7 +82,6 @@ const AnnotationDetailSlider = function () {
               dispatch(setDetailSliderIsOpen(false))
               dispatch(setHighlightElement(''))
             }}
-            type="button"
             className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
           >
             Delete annotation

@@ -8,7 +8,7 @@ import {
   setSelectedAnnotation,
   setEditSliderIsOpen,
   updateAnnotation,
-} from '../services/annotationSlice'
+} from '../../../services/annotationSlice'
 
 const EditAnnotationSlider = function () {
   const isOpen = useSelector(selectEditSliderIsOpen)
@@ -97,7 +97,6 @@ const EditAnnotationSlider = function () {
               setSelectedAnnotation({ ...annotation, title, description })
             )
           }}
-          type="button"
           className="p-2 pl-5 pr-5 bg-green-600 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
         >
           Save changes

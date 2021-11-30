@@ -11,7 +11,7 @@ const Popup = function () {
   return (
     <div className="customSize flex flex-col justify-between text-sm text-gray-500 font-poppins">
       <div>
-        <SearchBar />
+        {/*<SearchBar />*/}
         <Header />
         <SnapshotBody />
       </div>

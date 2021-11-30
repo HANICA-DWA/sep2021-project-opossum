@@ -8,7 +8,7 @@ import {
 import { AnnotationDetailSlider } from './AnnotationDetailSlider'
 import { EditAnnotationSlider } from './EditAnnotationSlider'
 
-const App = function () {
+const App = () => {
   return (
     <>
       <OverlayButton />

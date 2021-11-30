@@ -1,16 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { setListSliderIsOpen } from '../services/annotationSlice'
+import { setListSliderIsOpen } from '../../../services/annotationSlice'
 
-const OpenListSliderButton = function () {
+const OpenSliderButton = function () {
   const dispatch = useDispatch()
-
   return (
-    <button type="button" className="absolute">
+    <button className="absolute">
       <svg
-        onClick={() => {
-          dispatch(setListSliderIsOpen(true))
-        }}
+        onClick={() => dispatch(setListSliderIsOpen(true))}
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
         fill="none"
@@ -28,4 +25,4 @@ const OpenListSliderButton = function () {
   )
 }
 
-export { OpenListSliderButton }
+export { OpenSliderButton }

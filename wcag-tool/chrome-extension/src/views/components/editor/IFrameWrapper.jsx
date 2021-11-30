@@ -7,7 +7,7 @@ import {
   selectSelectElement,
   addNewAnnotation,
   selectHighlightElement,
-} from '../services/annotationSlice'
+} from '../../../services/annotationSlice'
 
 // eslint-disable-next-line react/function-component-definition
 const IFrameWrapper = function () {
@@ -23,11 +23,11 @@ const IFrameWrapper = function () {
   }
 
   const addBorder = (e) => {
-    e.target.style.border = '1px solid red'
+    e.target.style.outline = '3px solid blue'
   }
 
   const removeBorder = (e) => {
-    e.target.style.border = 'none'
+    e.target.style.outline = 'none'
   }
 
   const createNewAnnotation = function (e) {
@@ -35,7 +35,7 @@ const IFrameWrapper = function () {
       return
     }
 
-    e.target.style.border = 'none'
+    e.target.style.outline = 'none'
     dispatch(setSelectElement(false))
     dispatch(setCreateSliderIsOpen(true))
 
@@ -113,13 +113,13 @@ const IFrameWrapper = function () {
             highlightElement
           )
         if (element) {
-          element.style.border = '1px solid red'
+          element.style.outline = '3px solid blue'
         }
       } else {
         const elements =
           iframeDoc.current.contentWindow.document.querySelectorAll('*')
         elements.forEach((element) => {
-          element.style.border = 'none'
+          element.style.outline = 'none'
         })
       }
     }
