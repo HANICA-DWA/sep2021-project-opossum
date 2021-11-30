@@ -83,8 +83,8 @@ const main = async () => {
       _guideline.successcriteria.forEach((_successCriterium) => {
         successCriteria.push(
           new SuccessCriterium({
-            principle: currentPrinciple._id,
-            guideline: currentGuideline._id,
+            principle: currentPrinciple,
+            guideline: currentGuideline,
             successCriteriumId: _successCriterium.id,
             num: _successCriterium.num,
             level: _successCriterium.level,
@@ -146,6 +146,7 @@ const main = async () => {
 
   console.log('\nDatabase seeded! Bye!')
   process.exit(1)
+  return 0
 }
 
 main()
