@@ -55,6 +55,32 @@ router.get('/wcag/successcritera', async (req, res, next) => {
   }
 })
 
+router.get(
+  '/wcag/successcritera/:successCriteriumId',
+  async (req, res, next) => {
+    try {
+      const { successCriteriumId } = req.params
+
+      // TODO: Welke data is nodig?
+      const successcriteria = await SuccessCriterium.findById(
+        successCriteriumId,
+        {
+          _id: 0,
+          principle: 0,
+          guideline: 0,
+          techniques: 0,
+        }
+      ).exec()
+      if (!successcriteria)
+        return next({ code: 404, message: 'Success criterium not found!' })
+
+      return res.json(successcriteria)
+    } catch (err) {
+      return next(err)
+    }
+  }
+)
+
 module.exports = {
   wcagRouter: router,
 }
