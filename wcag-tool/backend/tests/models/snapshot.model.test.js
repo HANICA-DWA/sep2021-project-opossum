@@ -61,4 +61,20 @@ describe('Snapshot model', () => {
     // Assert
     expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
   })
+
+  test('Add annotation to snapshot with missing field', async () => {
+    // Arrange
+    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+
+    // Act
+    let error
+    try {
+      const annotation = await snapshot.addAnnotation('testTitle', 'testDescription')
+    } catch (_error) {
+      error = _error
+    }
+
+    // Assert
+    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
+  })
 })
