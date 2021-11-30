@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const principleSchema = new Schema(
   {
@@ -28,7 +28,7 @@ const guidelineSchema = new Schema(
   {
     guidelineId: {
       type: String,
-      require: true,
+      required: true,
     },
     num: {
       type: String,
@@ -82,7 +82,10 @@ const successCriteriumSchema = new Schema(
       type: String,
       required: true,
     },
-    details: [Object],
+    details: {
+      type: [Object],
+      validate: (v) => Array.isArray(v) && v.length > 0,
+    },
     techniques: {
       type: [Object],
     },
