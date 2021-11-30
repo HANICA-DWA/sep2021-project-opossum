@@ -19,19 +19,19 @@ const main = async () => {
   console.log('ok!')
 
   // Drop collection
-  // console.log(
-  //   '\nDropping principle, guideline, success criterium collections...'
-  // )
-  // try {
-  //   await Promise.all([
-  //     Principle.collection.drop(),
-  //     Guideline.collection.drop(),
-  //     SuccessCriterium.collection.drop(),
-  //   ])
-  //   console.log('ok!')
-  // } catch (err) {
-  //   console.log('Error dropping collections:', err)
-  // }
+  console.log(
+    '\nDropping principle, guideline, success criterium collections...'
+  )
+  try {
+    await Promise.all([
+      Principle.collection.drop(),
+      Guideline.collection.drop(),
+      SuccessCriterium.collection.drop(),
+    ])
+    console.log('ok!')
+  } catch (err) {
+    console.log('Error dropping collections:', err)
+  }
 
   // Download official wcag quick reference
   console.log('\nDownloading official wcag 2.1 quick reference')
