@@ -1,22 +1,23 @@
+/* eslint-disable func-names, prefer-arrow-callback,no-unused-expressions */
+const { expect } = require('chai')
 const mongoose = require('mongoose')
-const db = require('./db')
-const { Annotation } = require('../../src/models/annotation.model')
+const setup = require('./setup')
+const { Annotation } = require('../../src/models')
 
-beforeAll(async () => {
-  await db.setupDB()
-})
+describe('Annotation Model', function () {
+  before(async function () {
+    await setup.before()
+  })
 
-afterEach(async () => {
-  await db.dropCollections()
-})
+  after(async function () {
+    await setup.after()
+  })
 
-afterAll(async () => {
-  await db.dropDB()
-})
+  afterEach(async function () {
+    await setup.afterEach()
+  })
 
-describe('Annotation model', () => {
-  test('Create annotation without required fields should fail', async () => {
-    // Arrange
+  it('Create annotation without required fields should fail', async function () {
     const annotation = new Annotation({})
     let error
 
@@ -28,9 +29,9 @@ describe('Annotation model', () => {
     }
 
     // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.title).toBeDefined()
-    expect(error.errors.description).toBeDefined()
-    expect(error.errors.selector).toBeDefined()
+    expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
+    expect(error.errors.title).to.exist
+    expect(error.errors.description).to.exist
+    expect(error.errors.selector).to.exist
   })
 })

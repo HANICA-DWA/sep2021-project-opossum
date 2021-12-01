@@ -1,21 +1,23 @@
+/* eslint-disable func-names, prefer-arrow-callback,no-unused-expressions */
+const { expect } = require('chai')
 const mongoose = require('mongoose')
-const db = require('./db')
 const { Principle } = require('../../src/models')
+const setup = require('./setup')
 
-beforeAll(async () => {
-  await db.setupDB()
-})
+describe('Principle Model', function () {
+  before(async function () {
+    await setup.before()
+  })
 
-afterEach(async () => {
-  await db.dropCollections()
-})
+  after(async function () {
+    await setup.after()
+  })
 
-afterAll(async () => {
-  await db.dropDB()
-})
+  afterEach(async function () {
+    await setup.afterEach()
+  })
 
-describe('Principle Model', () => {
-  test('Create & save principle successfully', async () => {
+  it('Create & save principle successfully', async function () {
     // Arrange
     const validPrinciple = new Principle({
       principleId: 'principleId',
@@ -28,13 +30,13 @@ describe('Principle Model', () => {
     const savedPrinciple = await validPrinciple.save()
 
     // Assert
-    expect(savedPrinciple._id).toBeDefined()
-    expect(savedPrinciple.num).toBe(validPrinciple.num)
-    expect(savedPrinciple.handle).toBe(validPrinciple.handle)
-    expect(savedPrinciple.title).toBe(validPrinciple.title)
+    expect(savedPrinciple._id).to.exist
+    expect(savedPrinciple.num).to.equal(validPrinciple.num)
+    expect(savedPrinciple.handle).to.equal(validPrinciple.handle)
+    expect(savedPrinciple.title).to.equal(validPrinciple.title)
   })
 
-  test('Create principle with extra field, field should be undefined', async () => {
+  it('Create principle with extra field, field should be undefined', async function () {
     // Arrange
     const principleWithExtraField = new Principle({
       principleId: 'dummy id',
@@ -48,11 +50,11 @@ describe('Principle Model', () => {
     const savedPrincipleWithExtraField = await principleWithExtraField.save()
 
     // Arrange
-    expect(savedPrincipleWithExtraField._id).toBeDefined()
-    expect(savedPrincipleWithExtraField.extraField).toBeUndefined()
+    expect(savedPrincipleWithExtraField._id).to.exist
+    expect(savedPrincipleWithExtraField.extraField).not.to.exist
   })
 
-  test('Create principle without required field should fail', async () => {
+  it('Create principle without required field should fail', async function () {
     // Arrange
     const principleWithoutRequiredFields = new Principle({})
     let error
@@ -65,10 +67,10 @@ describe('Principle Model', () => {
     }
 
     // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.principleId).toBeDefined()
-    expect(error.errors.num).toBeDefined()
-    expect(error.errors.handle).toBeDefined()
-    expect(error.errors.title).toBeDefined()
+    expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
+    expect(error.errors.principleId).to.exist
+    expect(error.errors.num).to.exist
+    expect(error.errors.handle).to.exist
+    expect(error.errors.title).to.exist
   })
 })

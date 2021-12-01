@@ -1,6 +1,8 @@
+/* eslint-disable func-names, prefer-arrow-callback,no-unused-expressions */
+const { expect } = require('chai')
 const mongoose = require('mongoose')
-const db = require('./db')
 const { SuccessCriterium } = require('../../src/models')
+const setup = require('./setup')
 
 const dummyPrinciple = {
   principleId: 'principleId',
@@ -16,20 +18,20 @@ const dummyGuideline = {
   extraField: 'example ',
 }
 
-beforeAll(async () => {
-  await db.setupDB()
-})
+describe('SuccessCriterium Model', function () {
+  before(async function () {
+    await setup.before()
+  })
 
-afterEach(async () => {
-  await db.dropCollections()
-})
+  after(async function () {
+    await setup.after()
+  })
 
-afterAll(async () => {
-  await db.dropDB()
-})
+  afterEach(async function () {
+    await setup.afterEach()
+  })
 
-describe('SuccessCriterium Model', () => {
-  test('Create & save success criterium successfully', async () => {
+  it('Create & save success criterium successfully', async function () {
     // Arrange
     const validSuccessCriterium = new SuccessCriterium({
       principle: dummyPrinciple,
@@ -46,24 +48,26 @@ describe('SuccessCriterium Model', () => {
     const savedSuccessCriterium = await validSuccessCriterium.save()
 
     // Assert
-    expect(savedSuccessCriterium._id).toBeDefined()
-    expect(savedSuccessCriterium.principle).toBe(
+    expect(savedSuccessCriterium._id).to.exist
+    expect(savedSuccessCriterium.principle).to.equal(
       validSuccessCriterium.principle
     )
-    expect(savedSuccessCriterium.guideline).toBe(
+    expect(savedSuccessCriterium.guideline).to.equal(
       validSuccessCriterium.guideline
     )
-    expect(savedSuccessCriterium.successCriteriumId).toBe(
+    expect(savedSuccessCriterium.successCriteriumId).to.equal(
       validSuccessCriterium.successCriteriumId
     )
-    expect(savedSuccessCriterium.num).toBe(validSuccessCriterium.num)
-    expect(savedSuccessCriterium.level).toBe(validSuccessCriterium.level)
-    expect(savedSuccessCriterium.handle).toBe(validSuccessCriterium.handle)
-    expect(savedSuccessCriterium.title).toBe(validSuccessCriterium.title)
-    expect(savedSuccessCriterium.details).toBe(validSuccessCriterium.details)
+    expect(savedSuccessCriterium.num).to.equal(validSuccessCriterium.num)
+    expect(savedSuccessCriterium.level).to.equal(validSuccessCriterium.level)
+    expect(savedSuccessCriterium.handle).to.equal(validSuccessCriterium.handle)
+    expect(savedSuccessCriterium.title).to.equal(validSuccessCriterium.title)
+    expect(savedSuccessCriterium.details).to.equal(
+      validSuccessCriterium.details
+    )
   })
 
-  test('Create success criterium with extra field, field should be undefined', async () => {
+  it('Create success criterium with extra field, field should be undefined', async function () {
     // Arrange
     const successCriteriumWithExtraField = new SuccessCriterium({
       principle: dummyPrinciple,
@@ -82,11 +86,11 @@ describe('SuccessCriterium Model', () => {
       await successCriteriumWithExtraField.save()
 
     // Arrange
-    expect(savedSuccessCriteriumWithExtraField._id).toBeDefined()
-    expect(savedSuccessCriteriumWithExtraField.extraField).toBeUndefined()
+    expect(savedSuccessCriteriumWithExtraField._id).to.exist
+    expect(savedSuccessCriteriumWithExtraField.extraField).not.to.exist
   })
 
-  test('Create successCriterium without required field should fail', async () => {
+  it('Create successCriterium without required field should fail', async function () {
     // Arrange
     const successCriteriumWithoutRequiredFields = new SuccessCriterium({})
     let error
@@ -99,44 +103,17 @@ describe('SuccessCriterium Model', () => {
     }
 
     // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.principle).toBeDefined()
-    expect(error.errors.guideline).toBeDefined()
-    expect(error.errors.successCriteriumId).toBeDefined()
-    expect(error.errors.num).toBeDefined()
-    expect(error.errors.level).toBeDefined()
-    expect(error.errors.handle).toBeDefined()
-    expect(error.errors.title).toBeDefined()
-    expect(error.errors.details).toBeDefined()
+    expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
+    expect(error.errors.principle).to.exist
+    expect(error.errors.guideline).to.exist
+    expect(error.errors.successCriteriumId).to.exist
+    expect(error.errors.num).to.exist
+    expect(error.errors.level).to.exist
+    expect(error.errors.handle).to.exist
+    expect(error.errors.title).to.exist
   })
 
-  test('Create successCriterium with empty details array should fail', async () => {
-    // Arrange
-    const successCriteriumWithoutDetails = new SuccessCriterium({
-      principle: dummyPrinciple,
-      guideline: dummyGuideline,
-      successCriteriumId: 'successCriteriumId',
-      num: '1.1.1',
-      level: 'A',
-      handle: 'dummy handle',
-      title: 'dummy title',
-      details: [],
-    })
-    let error
-
-    // Act
-    try {
-      await successCriteriumWithoutDetails.save()
-    } catch (_error) {
-      error = _error
-    }
-
-    // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.details).toBeDefined()
-  })
-
-  test('Create successCriterium with illegal level value should fail', async () => {
+  it('Create successCriterium with illegal level value should fail', async function () {
     // Arrange
     const successCriteriumWithoutDetails = new SuccessCriterium({
       principle: dummyPrinciple,
@@ -158,7 +135,7 @@ describe('SuccessCriterium Model', () => {
     }
 
     // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.level).toBeDefined()
+    expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
+    expect(error.errors.level).to.exist
   })
 })
