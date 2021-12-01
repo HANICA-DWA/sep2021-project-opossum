@@ -6,18 +6,10 @@ const mongoose = require('mongoose')
 const axios = require('axios')
 const { Principle, Guideline, SuccessCriterium } = require('../models')
 
-const main = async () => {
-  // Connect to MongoDB
-  console.log('\nConnecting to MongoDB...')
-  await mongoose.connect(
-    process.env.MONGO_URI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    (err) => {
-      if (err) throw new Error('Could not connect to MongoDB!')
-    }
+async function seed() {
+  console.log(
+    '\nSeeding database with WCAG Principles, Guidelines and Success criteria!'
   )
-  console.log('ok!')
-
   // Drop collection
   console.log(
     '\nDropping principle, guideline, success criterium collections...'
@@ -30,7 +22,7 @@ const main = async () => {
     ])
     console.log('ok!')
   } catch (err) {
-    console.log('Error dropping collections:', err)
+    console.log('error:', err.message)
   }
 
   // Download official wcag quick reference
@@ -144,9 +136,26 @@ const main = async () => {
     }
   }
 
-  console.log('\nDatabase seeded! Bye!')
-  process.exit(1)
+  console.log('\nDatabase seeded! Bye!\n')
   return 0
 }
 
-main()
+async function main() {
+  // Connect to MongoDB
+  console.log('\nConnecting to MongoDB...')
+  await mongoose.connect(
+    process.env.MONGO_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    (err) => {
+      if (err) throw new Error('Could not connect to MongoDB!')
+    }
+  )
+  console.log('ok!')
+
+  // Seed database
+  await seed()
+
+  process.exit(0)
+}
+
+module.exports = { seed, main }
