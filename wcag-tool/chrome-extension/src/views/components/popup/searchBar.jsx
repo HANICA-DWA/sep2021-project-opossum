@@ -1,5 +1,4 @@
 import React from 'react'
-import DefaultButton from '../common/DefaultButton'
 
 const SearchBar = function () {
   return (

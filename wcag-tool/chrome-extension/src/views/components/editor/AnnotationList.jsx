@@ -2,12 +2,12 @@ import React from 'react'
 import { Annotation } from '.'
 
 const AnnotationList = function ({ annotations }) {
-  return annotations.map((annotation) => (
+  return annotations.map(({ title, description, selector }) => (
     <Annotation
-      key={Math.random()}
-      title={annotation.title}
-      description={annotation.description}
-      selector={annotation.selector}
+      key={title}
+      title={title}
+      description={description}
+      selector={selector}
     />
   ))
 }
