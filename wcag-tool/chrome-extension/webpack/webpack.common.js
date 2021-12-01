@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     popup: path.join(srcDir, 'views', 'popup.jsx'),
     options: path.join(srcDir, 'views', 'options.jsx'),
+    snapshot: path.join(srcDir, 'views', 'snapshot.jsx'),
     background: path.join(srcDir, 'background.js'),
     content_script: path.join(srcDir, 'content.jsx'),
   },
@@ -33,12 +34,8 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
-      }
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
     ],
   },
   resolve: {

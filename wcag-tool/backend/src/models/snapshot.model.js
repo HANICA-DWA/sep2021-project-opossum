@@ -55,6 +55,5 @@ snapshotSchema.methods.updateAnnotation = async function (id, fields) {
 const Snapshot = model('Snapshot', snapshotSchema)
 
 module.exports = {
-  snapshotSchema,
   Snapshot,
 }

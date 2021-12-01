@@ -1,3 +1,4 @@
+/* eslint-disable */
 const mongoose = require('mongoose')
 const db = require('./db')
 const { Snapshot } = require('../../src/models/snapshot.model')

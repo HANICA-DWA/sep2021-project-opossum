@@ -10973,6 +10973,11 @@
   dependencies:
     "unique-slug" "^2.0.0"
 
+"unique-selector@^0.5.0":
+  "integrity" "sha512-2KCiRgM19ol67lO493tF7mnQPDuYzwRM7JXrVx336+BPXqT2ccCbUOQQpErFbSc8VIdifLf5x34x4lIeebk+YA=="
+  "resolved" "https://registry.npmjs.org/unique-selector/-/unique-selector-0.5.0.tgz"
+  "version" "0.5.0"
+
 "unique-slug@^2.0.0":
   "integrity" "sha512-zoWr9ObaxALD3DOPfjPSqxt4fnZiWblxHIgeWqW8x7UqDzEtHEQLzji2cuJYQFCU6KmoJikOYAZlrTHHebjx2w=="
   "resolved" "https://registry.npmjs.org/unique-slug/-/unique-slug-2.0.2.tgz"
