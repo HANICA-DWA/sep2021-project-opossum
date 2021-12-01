@@ -78,66 +78,69 @@ describe('Snapshot model', () => {
     expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
   })
 
-  xtest('Edit annotation in snapshot with required fields', async () => {
+  test('Edit annotation in snapshot with no fields', async () => {
     // Arrange
     const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
-
-    // Act
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
-    // Assert
-    expect(annotation.title).toBe('testTitle')
-    expect(annotation.description).toBe('testDescription')
-    expect(annotation.selector).toBe('testSelector')
-  })
-
-  xtest('Add annotation to snapshot with extra fields', async () => {
-    // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
-
     // Act
-    const annotation = await snapshot.addAnnotation(
-      'testTitle',
-      'testDescription',
-      'testSelector',
-      'testExtra'
-    )
+    const updatedAnnotation = await snapshot.updateAnnotation(annotation.id)
 
     // Assert
-    expect(annotation.title).toBe('testTitle')
-    expect(annotation.description).toBe('testDescription')
-    expect(annotation.selector).toBe('testSelector')
+    expect(updatedAnnotation.title).toBe('testTitle')
+    expect(updatedAnnotation.description).toBe('testDescription')
+    expect(updatedAnnotation.selector).toBe('testSelector')
   })
 
-  xtest('Add annotation to snapshot with no fields', async () => {
+  test('Edit annotation in snapshot with one field', async () => {
     // Arrange
     const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     // Act
-    let error
-    try {
-      const annotation = await snapshot.addAnnotation()
-    } catch (_error) {
-      error = _error
+    const updatedAnnotation = await snapshot.updateAnnotation(annotation.id, {
+      title: 'updatedTitle',
+    })
+
+    // Assert
+    expect(updatedAnnotation.title).toBe('updatedTitle')
+    expect(updatedAnnotation.description).toBe('testDescription')
+    expect(updatedAnnotation.selector).toBe('testSelector')
+  })
+
+  test('Edit annotation in snapshot with required fields', async () => {
+    // Arrange
+    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
+
+    // Act
+    const updatedAnnotation = await snapshot.updateAnnotation(annotation.id, {
+      title: 'updatedTitle',
+      description: 'updatedDescription',
+      selector: 'updatedSelector',
+    })
+
+    // Assert
+    expect(updatedAnnotation.title).toBe('updatedTitle')
+    expect(updatedAnnotation.description).toBe('updatedDescription')
+    expect(updatedAnnotation.selector).toBe('updatedSelector')
+  })
+
+  test('Edit annotation in snapshot with non-existent annotation id', async () => {
+    // Arrange
+    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
+
+    const editAnnotation = async function () {
+      await snapshot.updateAnnotation('fakeid123', {
+        title: 'updatedTitle',
+        description: 'updatedDescription',
+        selector: 'updatedSelector',
+      })
     }
 
-    // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
-  })
-
-  xtest('Add annotation to snapshot with missing field', async () => {
-    // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
-
     // Act
-    let error
-    try {
-      const annotation = await snapshot.addAnnotation('testTitle', 'testDescription')
-    } catch (_error) {
-      error = _error
-    }
-
     // Assert
-    expect(error).toBeInstanceOf(mongoose.Error.ValidationError)
+    await expect(editAnnotation).rejects.toThrowError('Annotation not found')
   })
 })
