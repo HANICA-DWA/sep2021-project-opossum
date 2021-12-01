@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DefaultButton = function ({
+const NavigationButton = function ({
   children,
   onClick,
   disabled,
@@ -22,4 +22,4 @@ const DefaultButton = function ({
   )
 }
 
-export default DefaultButton
+export default NavigationButton
