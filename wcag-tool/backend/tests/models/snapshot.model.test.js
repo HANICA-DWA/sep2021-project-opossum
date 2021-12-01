@@ -126,7 +126,7 @@ describe('Snapshot model', () => {
     expect(updatedAnnotation.selector).toBe('updatedSelector')
   })
 
-  test('Edit annotation in snapshot with non-existent annotation id', async () => {
+  test('Edit annotation in snapshot with non-existent annotation id throws error', async () => {
     // Arrange
     const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
     await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
