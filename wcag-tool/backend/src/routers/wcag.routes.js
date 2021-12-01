@@ -96,31 +96,28 @@ router.get('/wcag/successcriteria', async (req, res, next) => {
   }
 })
 
-router.get(
-  '/wcag/successcriteria/:successCriteriumId',
-  async (req, res, next) => {
-    try {
-      const { successCriteriumId } = req.params
+router.get('/wcag/successcriteria/:successCriteriumId', async (req, res, next) => {
+  try {
+    const { successCriteriumId } = req.params
 
-      // TODO: Welke data is nodig?
-      const successCriterium = await SuccessCriterium.find(
-        { successCriteriumId },
-        {
-          _id: 0,
-          principle: 0,
-          guideline: 0,
-          techniques: 0,
-        }
-      ).exec()
-      if (!successCriterium || successCriterium.length <= 0)
-        return next({ code: 404, message: 'Success criterium not found!' })
+    // TODO: Welke data is nodig?
+    const successCriterium = await SuccessCriterium.find(
+      { successCriteriumId },
+      {
+        _id: 0,
+        principle: 0,
+        guideline: 0,
+        techniques: 0,
+      }
+    ).exec()
+    if (!successCriterium || successCriterium.length <= 0)
+      return next({ code: 404, message: 'Success criterium not found!' })
 
-      return res.json(successCriterium[0])
-    } catch (err) {
-      return next(err)
-    }
+    return res.json(successCriterium[0])
+  } catch (err) {
+    return next(err)
   }
-)
+})
 
 module.exports = {
   wcagRouter: router,

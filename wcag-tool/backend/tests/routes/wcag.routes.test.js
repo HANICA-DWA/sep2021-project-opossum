@@ -27,17 +27,10 @@ describe('WCAG Endpoints', function () {
     })
 
     it('GET principle by principleId', async function () {
-      const response = await request(app).get(
-        '/v1/wcag/principles/WCAG2:perceivable'
-      )
+      const response = await request(app).get('/v1/wcag/principles/WCAG2:perceivable')
 
       expect(response.status).to.equal(200)
-      expect(response.body).contains.keys(
-        'principleId',
-        'num',
-        'handle',
-        'title'
-      )
+      expect(response.body).contains.keys('principleId', 'num', 'handle', 'title')
     })
 
     it('GET principle by principleId with an invalid id should fail', async function () {
@@ -60,17 +53,10 @@ describe('WCAG Endpoints', function () {
     })
 
     it('GET guideline by guidelineId', async function () {
-      const response = await request(app).get(
-        '/v1/wcag/guidelines/WCAG2:text-alternatives'
-      )
+      const response = await request(app).get('/v1/wcag/guidelines/WCAG2:text-alternatives')
 
       expect(response.status).to.equal(200)
-      expect(response.body).contains.keys(
-        'guidelineId',
-        'num',
-        'handle',
-        'title'
-      )
+      expect(response.body).contains.keys('guidelineId', 'num', 'handle', 'title')
     })
 
     it('GET guideline by guidelineId with an invalid id should fail', async function () {
@@ -93,9 +79,7 @@ describe('WCAG Endpoints', function () {
     })
 
     it('GET success criteria by successCriteriumId', async function () {
-      const response = await request(app).get(
-        `/v1/wcag/successcriteria/WCAG2:non-text-content`
-      )
+      const response = await request(app).get(`/v1/wcag/successcriteria/WCAG2:non-text-content`)
 
       expect(response.status).to.equal(200)
       expect(response.body).contains.keys(
@@ -109,9 +93,7 @@ describe('WCAG Endpoints', function () {
     })
 
     it('GET success criteria by successCriteriumId with an invalid id should fail', async function () {
-      const response = await request(app).get(
-        `/v1/wcag/successcriteria/invalidId`
-      )
+      const response = await request(app).get(`/v1/wcag/successcriteria/invalidId`)
 
       expect(response.status).to.equal(404)
       expect(response.body).to.have.property('message')

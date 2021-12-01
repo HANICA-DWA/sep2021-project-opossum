@@ -7,13 +7,9 @@ const axios = require('axios')
 const { Principle, Guideline, SuccessCriterium } = require('../models')
 
 async function seed() {
-  console.log(
-    '\nSeeding database with WCAG Principles, Guidelines and Success criteria!'
-  )
+  console.log('\nSeeding database with WCAG Principles, Guidelines and Success criteria!')
   // Drop collection
-  console.log(
-    '\nDropping principle, guideline, success criterium collections...'
-  )
+  console.log('\nDropping principle, guideline, success criterium collections...')
   try {
     await Promise.all([
       Principle.collection.drop(),
@@ -41,9 +37,7 @@ async function seed() {
   }
 
   // Map data to principles, guidelines and success criteria
-  console.log(
-    '\nMapping data to Principle, Guideline and SuccessCriterium models...'
-  )
+  console.log('\nMapping data to Principle, Guideline and SuccessCriterium models...')
   const principles = []
   const guidelines = []
   const successCriteria = []
@@ -96,9 +90,7 @@ async function seed() {
   console.log('ok!')
 
   // Saving all docs
-  console.log(
-    '\nSaving all principles, guidelines and success criteria to MongoDB...'
-  )
+  console.log('\nSaving all principles, guidelines and success criteria to MongoDB...')
 
   console.log('inserting principles...')
   try {

@@ -49,12 +49,8 @@ describe('SuccessCriterium Model', function () {
 
     // Assert
     expect(savedSuccessCriterium._id).to.exist
-    expect(savedSuccessCriterium.principle).to.equal(
-      validSuccessCriterium.principle
-    )
-    expect(savedSuccessCriterium.guideline).to.equal(
-      validSuccessCriterium.guideline
-    )
+    expect(savedSuccessCriterium.principle).to.equal(validSuccessCriterium.principle)
+    expect(savedSuccessCriterium.guideline).to.equal(validSuccessCriterium.guideline)
     expect(savedSuccessCriterium.successCriteriumId).to.equal(
       validSuccessCriterium.successCriteriumId
     )
@@ -62,9 +58,7 @@ describe('SuccessCriterium Model', function () {
     expect(savedSuccessCriterium.level).to.equal(validSuccessCriterium.level)
     expect(savedSuccessCriterium.handle).to.equal(validSuccessCriterium.handle)
     expect(savedSuccessCriterium.title).to.equal(validSuccessCriterium.title)
-    expect(savedSuccessCriterium.details).to.equal(
-      validSuccessCriterium.details
-    )
+    expect(savedSuccessCriterium.details).to.equal(validSuccessCriterium.details)
   })
 
   it('Create success criterium with extra field, field should be undefined', async function () {
@@ -82,8 +76,7 @@ describe('SuccessCriterium Model', function () {
     })
 
     // Act
-    const savedSuccessCriteriumWithExtraField =
-      await successCriteriumWithExtraField.save()
+    const savedSuccessCriteriumWithExtraField = await successCriteriumWithExtraField.save()
 
     // Arrange
     expect(savedSuccessCriteriumWithExtraField._id).to.exist
