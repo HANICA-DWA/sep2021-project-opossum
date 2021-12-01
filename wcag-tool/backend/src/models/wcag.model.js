@@ -84,7 +84,8 @@ const successCriteriumSchema = new Schema(
     },
     details: {
       type: [Object],
-      validate: (v) => Array.isArray(v) && v.length > 0,
+      required: true,
+      default: [],
     },
     techniques: {
       type: [Object],
