@@ -2,20 +2,29 @@ import logo from './logo.svg';
 import './App.css';
 import ReactTooltip from 'react-tooltip';
 import { useEffect, useState } from 'react';
+import unique from 'unique-selector';
 var csspath = require('cssman');
 
 function App() {
-  const [selector, setSelector] = useState('');
+  const [selector, setSelector] = useState('');  
 
+  useEffect(() => {
   document.querySelectorAll('*').forEach(element => {
-    element.addEventListener('mouseover', event => {
+    element.addEventListener('click', event => {
+     
+     
       //if event.target is body or html, don't change the border
-      if (event.target.tagName === 'BODY' || event.target.tagName === 'HTML') {
+      if (event.target.tagName === 'BODY' || event.target.tagName === 'HTML'|| event.target !== element) {
         return;
       }
       // change the border of the element
-       const selector = csspath(event.target);
+      console.time('unique');
+       const selector = unique(event.target);
+      
+        //console.time('select');
        const el = document.querySelector(selector);
+        //console.timeEnd('select');
+         console.timeEnd('unique');
      el.style.border = '1px solid red';
 
      
@@ -29,10 +38,11 @@ function App() {
       event.target.style.border = 'none';
     });
   });
+}, []);
 
   return (
     <>
-      <h1>selector:{selector}</h1>
+      <h1> css selector: {selector}</h1>
       <h1>
         My First <b>Heading</b>
       </h1>

@@ -1,14 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import setupStore from '../services/store'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import setupStore from '../services/store';
 
 const Options = function () {
-  return <h1>Options</h1>
-}
+  return <h1>Options</h1>;
+};
 
-;(async () => {
-  const store = await setupStore()
+(async () => {
+  const store = await setupStore();
 
   ReactDOM.render(
     <React.StrictMode>
@@ -17,5 +17,5 @@ const Options = function () {
       </Provider>
     </React.StrictMode>,
     document.getElementById('root')
-  )
-})()
+  );
+})();
