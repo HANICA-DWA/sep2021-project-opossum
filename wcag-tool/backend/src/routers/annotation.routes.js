@@ -28,6 +28,19 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   }
 })
 
+// edit annotation in a snapshot
+router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
+  try {
+    const annotation = await req.snapshot.updateAnnotation(req.params.annotationId, req.body)
+
+    if (!annotation) return next({ code: 500, message: 'Annotation could not be updated' })
+
+    return res.json(annotation)
+  } catch (err) {
+    return next(err)
+  }
+})
+
 module.exports = {
   annotationRouter: router,
 }
