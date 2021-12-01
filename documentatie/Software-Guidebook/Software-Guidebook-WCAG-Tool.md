@@ -35,9 +35,9 @@ Using their own knowledge and automated scripts they check the content of pages 
 The format of this rapport is rather clunky and obscure making it difficult to use both for the analyst and the receiver.
 
 For this reason, we were asked to create a tool that allows the user to create annotations on a given website/webpage. 
-These annotations should link/refer to an element on the website and comment on what’s wrong with it. 
+These annotations should link/refer to elements on the website and contain information about any mistakes or improvements that could be made. 
 This creates a clear(er) image about the issues that are present on the website. 
-In the end the tool should generate a rapport that’s easy and comprehensible.
+In the end the tool should generate a rapport that’s comprehensible and easy to read.
 
 
 
@@ -54,7 +54,24 @@ A context section should answer the following types of questions:
 
 ## Functional Overview
 
+What does our system do???
+- Create snapshots
+- Create annotations linking to html elements on those snapshots
+- Contain WACG references in those annotations
+- Generate a raport with any issues about a website as a whole
+- Accessible as a chrome extension
+- Allows the tracking of versions of website pages (Version control?)
+- Allows multiple analysts to work on the same page/snapshot together (collaboration)
+- Account management
 
+What kind of features/functions are (very) significant?
+- Creating snapshots /w version control
+- Creating annotations on those snapshots
+- Collaboration between analysts
+
+Stakeholders:
+- Analyst as main character
+- Company (employee) as secondary character
 
 <!--
 Intent
@@ -78,6 +95,33 @@ Alternatively, if your software automates a business process or workflow, a func
 
 ## Quality Attributes
 
+[what is a quality attribute](https://en.wikipedia.org/wiki/List_of_system_quality_attributes)
+
+Usability / Extensibility / Maintainability / Effectiveness / Robustness / Responsiveness
+
+Usability: "Usability can be described as the capacity of a system to provide a condition for its users to perform the tasks safely, effectively, and efficiently while enjoying the experience.[1] In software engineering, usability is the degree to which a software can be used by specified consumers to achieve quantified objectives with effectiveness, efficiency, and satisfaction in a quantified context of use."
+
+Extensibility: "Extensibility is a software engineering and systems design principle that provides for future growth. Extensibility is a measure of the ability to extend a system and the level of effort required to implement the extension. Extensions can be through the addition of new functionality or through modification of existing functionality. The principle provides for enhancements without impairing existing system functions."
+
+Maintainability: "In engineering, maintainability is the ease with which a product can be maintained in order to:
+
+-  correct defects or their cause,
+-  Repair or replace faulty or worn-out components without having to replace still working parts,
+-  prevent unexpected working conditions,
+-  maximize a product's useful life,
+-  maximize efficiency, reliability, and safety,
+-  meet new requirements,
+-  make future maintenance easier, or
+-  cope with a changing environment.
+
+In some cases, maintainability involves a system of continuous improvement - learning from the past in order to improve the ability to maintain systems, or improve the reliability of systems based on maintenance experience."
+
+Effectiveness: "Effectiveness is the capability of producing a desired result or the ability to produce desired output. When something is deemed effective, it means it has an intended or expected outcome, or produces a deep, vivid impression."
+
+Robustness: "In computer science, robustness is the ability of a computer system to cope with errors during execution[1][2] and cope with erroneous input.[2] Robustness can encompass many areas of computer science, such as robust programming, robust machine learning, and Robust Security Network. Formal techniques, such as fuzz testing, are essential to showing robustness since this type of testing involves invalid or unexpected inputs. Alternatively, fault injection can be used to test robustness. Various commercial products perform robustness testing of software analysis."
+
+Responsiveness: "Responsiveness as a concept of computer science refers to the specific ability of a system or functional unit to complete assigned tasks within a given time.[1] For example, it would refer to the ability of an artificial intelligence system to understand and carry out its tasks in a timely fashion.[2] It is one of the criteria under the principle of robustness (from a v principle). The other three are observability, recoverability, and task conformance."
+
 <!--
 Intent
 
@@ -96,6 +140,29 @@ why not make a note of them so that you can refer back to them later in the docu
 
 ## Constraints
 
+Available time: 8-9 weeks
+project methodology: Scrum
+Scrum sprint duration: 2 weeks (3 sprints total)
+Programming language: Javascript
+Libraries: React, Redux
+
+## Project Methodology
+In this project we'll be using Scrum as our framework to develop and deliver our application and products.
+We'll be doing daily stand-ups, holding sprint planning, sprint reviews and retrospectives.
+The daily stand-up will be used to give the team an moment of time to give each other progress reports, which will give the team an overview on how well the sprint is going.
+The Sprint planning and review will be used to start the sprint by determining what functionality/user stories we want to implement this sprint and review the results in the sprint review.
+Lastly in the retrospective we'll evalute our team as a whole and as individuals. This is the moment to give complements and constructive feedback. 
+
+## Time & Budget
+For this project we've got a 9 week time period to develop the application.
+Of these 9 weeks, 6 weeks (3 sprints) will be dedicated to programming and implementing features into the application.
+
+Our budget for this project will be 0, meaning that we'll only use free software & storage in this project.
+
+## Technology
+For our application we're obligated to use react redux combined with a node back-end.
+
+
 <!--
 Intent
 
@@ -107,6 +174,8 @@ This section allows you to explicitly summarise the constraints that you're work
 
 ## Principles
 
+Our principles are all defined in our [Project startup & Definition of Done](../Project Organisatie/Project plan.md)
+
 <!--
 Intent
 
@@ -115,6 +184,8 @@ These could have been explicitly asked for by a stakeholder or they could be pri
 -->
 
 ## Software Architecture
+
+
 
 <!--
 Intent
@@ -142,6 +213,18 @@ The purpose of this section is to answer the following types of questions:
 -->
 
 ## Code
+
+Significant aspects of our code:
+
+- React redux
+- Redux-toolkit -> Createslice & RTK Query
+- Chrome storage?
+- Unit tests
+- Tailwind?
+- Collaboration
+- XPath
+- Snapshot
+- 
 
 <!--
 The purpose of the code section is to describe the implementation details for parts of the software system that are important, complex, significant, etc.
@@ -181,6 +264,8 @@ The purpose of the data section is to record anything that is important from a d
 
 ## Infrastructure Architecture
 
+Chrome extension -> Backend -> cloud storage
+
 <!--
 Intent
 
@@ -203,6 +288,8 @@ The purpose of this section is to answer the following types of questions:
 
 ## Deployment
 
+
+
 <!--
 Intent
 
@@ -224,6 +311,8 @@ This section answers the following types of questions:
 
 ## Operation and Support
 
+
+
 <!--
 Intent
 
@@ -242,6 +331,15 @@ This section should address the following types of questions:
 
 
 ## Decision Log
+
+- React redux
+- Redux-toolkit -> Createslice & RTK Query
+- Chrome storage?
+- Unit tests
+- Tailwind?
+- Collaboration
+- XPath
+- Snapshot
 
 <!--
 Intent
