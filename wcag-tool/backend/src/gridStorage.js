@@ -7,11 +7,14 @@ const storage = new GridFsStorage({
       return {
         bucketName: 'images',
       }
-    } else if (file.mimetype === 'text/html') {
+    }
+    if (file.mimetype === 'text/html') {
       return {
         bucketName: 'snapshot',
       }
     }
+    // use default config
+    return null
   },
 })
 
