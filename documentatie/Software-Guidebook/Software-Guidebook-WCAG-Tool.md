@@ -28,7 +28,6 @@ Is the website able to navigate a person when he/she cannot use mouse and keyboa
 Because of these issues that occur on most websites, accesibility analists evaluate and judge websites based on how accessible they are using the Web Content Accessibility Guidelines (WCAG) requirements.
 Afterwards they send the company a report with any issues they found and a score.
 
-
 As of currently there isn't a tool available that allows analists to create annotations on a website.
 That's what we will be creating.
 
@@ -252,3 +251,12 @@ including both the technology choices (e.g. products, frameworks, etc) and the o
 � How do you know that the solution satisfies the major non-functional requirements?
 � etc
 -->
+
+### XPath vs CSS selectors
+
+When you are programmatically trying to select an element on a web page there are two obvious choices to consider: XPath and CSS selectors. 
+
+To determine which one would be best for our use cases we built two basic prototypes and consulted a few sources. The full report of this research can be read [here](../Spikes/CSS vs XPath/XPath vs CSS selector.md)
+
+The main take-away is that we are going to use XPath since it has a wider range of options in the way it generates selectors. 
+
