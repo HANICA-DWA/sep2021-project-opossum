@@ -13,7 +13,6 @@
     "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.0",
     "@reduxjs/toolkit": "^1.6.2",
     "formik": "^2.2.9",
     "prop-types": "^15.7.2",

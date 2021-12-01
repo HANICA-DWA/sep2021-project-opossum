@@ -9,11 +9,19 @@ import {
   setSelectElement,
 } from '../../../services/annotationSlice'
 import { AnnotationList, NoAnnotation } from '.'
+import { usePopperTooltip } from 'react-popper-tooltip'
 
 const AnnotationSlider = function() {
   const annotations = useSelector(selectAnnotations)
   const isOpen = useSelector(selectListSliderIsOpen)
   const dispatch = useDispatch()
+  const {
+    getArrowProps,
+    getTooltipProps,
+    setTooltipRef,
+    setTriggerRef,
+    visible,
+  } = usePopperTooltip({placement: 'bottom'});
   return (
     <SlidingPane
       width={'400px'}
@@ -39,6 +47,7 @@ const AnnotationSlider = function() {
                 dispatch(setSelectElement(true))
                 dispatch(setListSliderIsOpen(false))
               }}
+              ref={setTriggerRef}
               className={'text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200'}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd"
@@ -46,6 +55,15 @@ const AnnotationSlider = function() {
                       clipRule="evenodd" />
               </svg>
             </button>
+            {visible && (
+              <div
+                ref={setTooltipRef}
+                {...getTooltipProps({ className: 'tooltip-container' })}
+              >
+                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+                Create Annotation
+              </div>
+            )}
           </div>
         </>
       }
