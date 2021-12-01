@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import SlidingPane from 'react-sliding-pane'
-import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectSelectedAnnotation,
   selectEditSliderIsOpen,
-  setSelectedAnnotation,
+  selectSelectedAnnotation,
   setEditSliderIsOpen,
+  setSelectedAnnotation,
   updateAnnotation,
-} from '../../../services/annotationSlice'
+} from '../../../services/annotationSlice';
 
 const EditAnnotationSlider = function () {
-  const isOpen = useSelector(selectEditSliderIsOpen)
-  const annotation = useSelector(selectSelectedAnnotation)
-  const oldTitle = annotation.title
-  const dispatch = useDispatch()
-  const [title, settitle] = useState('')
-  const [description, setdescription] = useState('')
+  const isOpen = useSelector(selectEditSliderIsOpen);
+  const annotation = useSelector(selectSelectedAnnotation);
+  const oldTitle = annotation.title;
+  const dispatch = useDispatch();
+  const [title, settitle] = useState('');
+  const [description, setdescription] = useState('');
 
   useEffect(() => {
-    settitle(annotation.title)
-    setdescription(annotation.description)
-  }, [annotation])
+    settitle(annotation.title);
+    setdescription(annotation.description);
+  }, [annotation]);
 
   return (
     <SlidingPane
@@ -90,12 +90,12 @@ const EditAnnotationSlider = function () {
         </div>
         <button
           onClick={() => {
-            dispatch(setEditSliderIsOpen(false))
+            dispatch(setEditSliderIsOpen(false));
 
-            dispatch(updateAnnotation({ title, description, oldTitle }))
+            dispatch(updateAnnotation({ title, description, oldTitle }));
             dispatch(
               setSelectedAnnotation({ ...annotation, title, description })
-            )
+            );
           }}
           className="p-2 pl-5 pr-5 bg-green-600 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
         >
@@ -103,7 +103,7 @@ const EditAnnotationSlider = function () {
         </button>
       </form>
     </SlidingPane>
-  )
-}
+  );
+};
 
-export { EditAnnotationSlider }
+export default EditAnnotationSlider;

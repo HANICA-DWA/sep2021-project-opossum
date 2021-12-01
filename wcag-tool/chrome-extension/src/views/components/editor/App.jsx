@@ -1,12 +1,10 @@
-import React from 'react'
-import {
-  OverlayButton,
-  AnnotationSlider,
-  CreateAnnotationSlider,
-  IFrameWrapper,
-} from './index'
-import { AnnotationDetailSlider } from './AnnotationDetailSlider'
-import { EditAnnotationSlider } from './EditAnnotationSlider'
+import React from 'react';
+import OverlayButton from './OverlayButton';
+import AnnotationSlider from './AnnotationSlider';
+import CreateAnnotationSlider from './CreateAnnotationSlider';
+import AnnotationDetailSlider from './AnnotationDetailSlider';
+import EditAnnotationSlider from './EditAnnotationSlider';
+import IFrameWrapper from './IFrameWrapper';
 
 const App = () => {
   return (
@@ -18,7 +16,7 @@ const App = () => {
       <EditAnnotationSlider />
       <IFrameWrapper />
     </>
-  )
-}
+  );
+};
 
-export { App }
+export default App;

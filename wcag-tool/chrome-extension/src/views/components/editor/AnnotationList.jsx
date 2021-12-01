@@ -1,5 +1,5 @@
-import React from 'react'
-import { Annotation } from '.'
+import React from 'react';
+import Annotation from './Annotation';
 
 const AnnotationList = function ({ annotations }) {
   return annotations.map(({ title, description, selector }) => (
@@ -9,7 +9,7 @@ const AnnotationList = function ({ annotations }) {
       description={description}
       selector={selector}
     />
-  ))
-}
+  ));
+};
 
-export { AnnotationList }
+export default AnnotationList;

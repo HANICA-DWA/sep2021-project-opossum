@@ -1,7 +1,7 @@
-import React from 'react'
-import SlidingPane from 'react-sliding-pane'
-import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectDetailSliderIsOpen,
   setDetailSliderIsOpen,
@@ -10,22 +10,22 @@ import {
   setSelectedAnnotation,
   setEditSliderIsOpen,
   setHighlightElement,
-} from '../../../services/annotationSlice'
+} from '../../../services/annotationSlice';
 
 export function truncateStringAndCapitalize(num, str = '') {
-  const newString = str.charAt(0).toUpperCase() + str.slice(1)
+  const newString = str.charAt(0).toUpperCase() + str.slice(1);
 
   if (newString.length <= num) {
-    return newString
+    return newString;
   }
 
-  return `${str.slice(0, num)}'...'`
+  return `${str.slice(0, num)}'...'`;
 }
 
 const AnnotationDetailSlider = function () {
-  const annotation = useSelector(selectSelectedAnnotation)
-  const isOpen = useSelector(selectDetailSliderIsOpen)
-  const dispatch = useDispatch()
+  const annotation = useSelector(selectSelectedAnnotation);
+  const isOpen = useSelector(selectDetailSliderIsOpen);
+  const dispatch = useDispatch();
   return (
     <SlidingPane
       closeIcon={
@@ -54,8 +54,8 @@ const AnnotationDetailSlider = function () {
           </div>
           <button
             onClick={() => {
-              dispatch(setSelectedAnnotation(annotation))
-              dispatch(setEditSliderIsOpen(true))
+              dispatch(setSelectedAnnotation(annotation));
+              dispatch(setEditSliderIsOpen(true));
             }}
           >
             <svg
@@ -78,9 +78,9 @@ const AnnotationDetailSlider = function () {
         <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
           <button
             onClick={() => {
-              dispatch(deleteAnnotation(annotation.title))
-              dispatch(setDetailSliderIsOpen(false))
-              dispatch(setHighlightElement(''))
+              dispatch(deleteAnnotation(annotation.title));
+              dispatch(setDetailSliderIsOpen(false));
+              dispatch(setHighlightElement(''));
             }}
             className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
           >
@@ -89,7 +89,7 @@ const AnnotationDetailSlider = function () {
         </footer>
       </div>
     </SlidingPane>
-  )
-}
+  );
+};
 
-export { AnnotationDetailSlider }
+export default AnnotationDetailSlider;

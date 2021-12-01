@@ -1,9 +1,9 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { setListSliderIsOpen } from '../../../services/annotationSlice'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setListSliderIsOpen } from '../../../services/annotationSlice';
 
 const OpenSliderButton = function () {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <button className="absolute">
       <svg
@@ -22,7 +22,7 @@ const OpenSliderButton = function () {
         />
       </svg>
     </button>
-  )
-}
+  );
+};
 
-export { OpenSliderButton }
+export default OpenSliderButton;

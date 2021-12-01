@@ -1,17 +1,18 @@
-import React from 'react'
-import './react-sliding-pane.css'
-import SlidingPane from 'react-sliding-pane'
-import { useDispatch, useSelector } from 'react-redux'
-import { usePopperTooltip } from 'react-popper-tooltip'
+import React from "react"
+import "./react-sliding-pane.css"
+import SlidingPane from "react-sliding-pane"
+import { useDispatch, useSelector } from "react-redux"
+import { usePopperTooltip } from "react-popper-tooltip"
 import {
   selectAnnotations,
   selectListSliderIsOpen,
   setListSliderIsOpen,
   setSelectElement,
-} from '../../../services/annotationSlice'
-import { AnnotationList, NoAnnotation } from '.'
+} from "../../../services/annotationSlice"
+import NoAnnotation from "./NoAnnotation"
+import AnnotationList from "./AnnotationList"
 
-const AnnotationSlider = function () {
+const AnnotationSlider = () => {
   const annotations = useSelector(selectAnnotations)
   const isOpen = useSelector(selectListSliderIsOpen)
   const dispatch = useDispatch()
@@ -21,7 +22,7 @@ const AnnotationSlider = function () {
     setTooltipRef,
     setTriggerRef,
     visible,
-  } = usePopperTooltip({ placement: 'bottom' })
+  } = usePopperTooltip({ placement: "bottom" })
   return (
     <SlidingPane
       width="400px"
@@ -78,9 +79,9 @@ const AnnotationSlider = function () {
             {visible && (
               <div
                 ref={setTooltipRef}
-                {...getTooltipProps({ className: 'tooltip-container' })}
+                {...getTooltipProps({ className: "tooltip-container" })}
               >
-                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+                <div {...getArrowProps({ className: "tooltip-arrow" })} />
                 Create Annotation
               </div>
             )}
@@ -99,4 +100,4 @@ const AnnotationSlider = function () {
   )
 }
 
-export { AnnotationSlider }
+export default AnnotationSlider

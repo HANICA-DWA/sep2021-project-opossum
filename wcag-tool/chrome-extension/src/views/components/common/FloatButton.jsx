@@ -1,6 +1,6 @@
-import React from 'react'
-import { usePopperTooltip } from 'react-popper-tooltip'
-import '../editor/tooltip.css'
+import React from 'react';
+import { usePopperTooltip } from 'react-popper-tooltip';
+import '../editor/tooltip.css';
 
 const FloatButton = ({
   hidden,
@@ -15,7 +15,7 @@ const FloatButton = ({
     setTooltipRef,
     setTriggerRef,
     visible,
-  } = usePopperTooltip({ placement: toolTipPosition })
+  } = usePopperTooltip({ placement: toolTipPosition });
 
   return (
     <>
@@ -37,7 +37,7 @@ const FloatButton = ({
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default FloatButton
+export default FloatButton;

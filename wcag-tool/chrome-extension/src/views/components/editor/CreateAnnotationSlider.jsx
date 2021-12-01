@@ -1,9 +1,9 @@
-import React from 'react'
-import SlidingPane from 'react-sliding-pane'
-import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
+import React from 'react';
+import SlidingPane from 'react-sliding-pane';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import {
   addAnnotation,
   resetNewAnnotation,
@@ -11,13 +11,13 @@ import {
   selectNewAnnotation,
   setCreateSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/annotationSlice'
-import ActionButton from '../common/ActionButton'
+} from '../../../services/annotationSlice';
+import ActionButton from '../common/ActionButton';
 
 const CreateAnnotationSlider = function () {
-  const isOpen = useSelector(selectCreateSliderIsOpen)
-  const dispatch = useDispatch()
-  const newAnnotation = useSelector(selectNewAnnotation)
+  const isOpen = useSelector(selectCreateSliderIsOpen);
+  const dispatch = useDispatch();
+  const newAnnotation = useSelector(selectNewAnnotation);
 
   return (
     <SlidingPane
@@ -56,16 +56,16 @@ const CreateAnnotationSlider = function () {
     >
       <Formik
         onSubmit={({ title, description }) => {
-          dispatch(setCreateSliderIsOpen(false))
+          dispatch(setCreateSliderIsOpen(false));
           dispatch(
             addAnnotation({
               title,
               description,
               selector: newAnnotation.selector,
             })
-          )
-          dispatch(resetNewAnnotation())
-          dispatch(setListSliderIsOpen(true))
+          );
+          dispatch(resetNewAnnotation());
+          dispatch(setListSliderIsOpen(true));
         }}
         validationSchema={Yup.object().shape({
           title: Yup.string()
@@ -118,7 +118,7 @@ const CreateAnnotationSlider = function () {
         )}
       </Formik>
     </SlidingPane>
-  )
-}
+  );
+};
 
-export { CreateAnnotationSlider }
+export default CreateAnnotationSlider;
