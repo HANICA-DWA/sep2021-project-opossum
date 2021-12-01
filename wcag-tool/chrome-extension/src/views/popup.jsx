@@ -1,11 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { setupStore } from '../services/store'
-import '../styles.css'
+import '../css/styles.css'
+
+import setupStore from '../services/store'
+import SearchBar from './components/popup/searchBar'
+import Header from './components/popup/header'
+import SnapshotBody from './components/popup/snapshotBody'
+import NavigationButtons from './components/popup/navigationButtons'
 
 const Popup = function () {
-  return <h1 className={'text-xl font-bold'}>Popup</h1>
+  return (
+    <div className="customSize flex flex-col justify-between text-sm text-gray-500 font-poppins">
+      <div>
+        <SearchBar />
+        <Header />
+        <SnapshotBody />
+      </div>
+      <div>
+        <NavigationButtons />
+      </div>
+    </div>
+  )
 }
 
 ;(async () => {

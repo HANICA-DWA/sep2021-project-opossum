@@ -1,35 +1,47 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const { logger } = require('./middleware/logger');
-const { errorHandler } = require('./middleware/errorHandler');
-const snapshotRouter = require('./routers/snapshotRouter');
-const wcagRuleRouter = require('./routers/wcagRuleRouter');
+require('dotenv').config()
 
-const app = express();
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
 
-app.use(cors({ origin: true, credentials: true }));
-app.options('*', cors({ origin: true, credentials: true }));
-app.use(logger);
-app.use(express.json());
+const { errorHandler, loadSnapshot, logger } = require('./middleware')
+const { annotationRouter, snapshotRouter, wcagRouter } = require('./routers')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const app = express()
+app.disable('x-powered-by')
 
-app.use('/snapshot', snapshotRouter);
-app.use('/wcag-rules', wcagRuleRouter);
+// EXPRESS CODE
+// Register middleware
+app.use(cors({ origin: true, credentials: true }))
+app.use(express.json())
+app.use(logger)
 
-app.use(errorHandler);
+// Routes
+app.get('/', (req, res) => res.send('Hello World!'))
 
+app.use('/v1/snapshots/:snapshotId', loadSnapshot) // TODO: exclude delete method from this middleware
+app.use('/v1/', annotationRouter)
+app.use('/v1/', snapshotRouter)
+app.use('/v1/', wcagRouter)
+
+// Register error handler
+app.use(errorHandler)
+
+// WEBSOCKET CODE
+// TODO
+
+// START SERVER
 app.listen(process.env.PORT, () => {
-  console.log(`wcag-tool server started on port ${process.env.PORT}`);
+  /* eslint-disable-next-line no-console */
+  console.log(`Server started listening on port ${process.env.PORT}`)
+
   mongoose.connect(
-    process.env.MONGO_URL,
+    process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true },
-    () => {
-      console.log('Connected to mongodb!');
+    (err) => {
+      if (err) throw new Error('Could not connect to MongoDB!')
+      /* eslint-disable-next-line no-console */
+      console.log('Connected to MongoDB!')
     }
-  );
-});
+  )
+})

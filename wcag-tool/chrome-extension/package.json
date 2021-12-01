@@ -9,15 +9,18 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "jest --passWithNoTests",
-    "lint": "npx eslint 'src/**/*.{js,jsx}' --fix"
+    "lint": "npx eslint \"src/**/*.{js,jsx}\" --fix",
+    "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
-    "reduxed-chrome-storage": "^2.4.7"
+    "reduxed-chrome-storage": "^2.4.7",
+    "remote-redux-devtools": "^0.5.16"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -42,6 +45,7 @@
     "postcss": "^8.3.11",
     "postcss-loader": "^6.2.0",
     "prettier": "^2.4.1",
+    "remotedev-server": "^0.3.1",
     "rimraf": "^3.0.2 ",
     "style-loader": "^3.3.1",
     "tailwindcss": "^2.2.19",

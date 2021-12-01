@@ -341,6 +341,15 @@ This section should address the following types of questions:
 - XPath
 - Snapshot
 
+
+### XPath vs CSS selectors
+
+When you are programmatically trying to select an element on a web page there are two obvious choices to consider: XPath and CSS selectors. 
+
+To determine which one would be best for our use cases we built two basic prototypes and consulted a few sources. The full report of this research can be read [here](../Spikes/CSS vs XPath/XPath vs CSS selector.md)
+
+The main take-away is that we are going to use XPath since it has a wider range of options in the way it generates selectors. 
+
 <!--
 Intent
 
