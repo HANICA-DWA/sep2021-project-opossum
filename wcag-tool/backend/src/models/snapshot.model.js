@@ -11,6 +11,10 @@ const snapshotSchema = new Schema(
       type: String,
       required: true,
     },
+    filename: {
+      type: String,
+      required: true,
+    },
     annotations: {
       type: [annotationSchema],
       required: true,

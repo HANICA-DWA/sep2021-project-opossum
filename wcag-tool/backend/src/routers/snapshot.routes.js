@@ -1,13 +1,26 @@
 const { Router } = require('express')
+const multer = require('multer')
 const { Snapshot } = require('../models')
+const { storage } = require('../database')
 
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    // if file is not html dont upload
+    if (file.mimetype !== 'text/html') {
+      cb(new Error('Only html files are allowed'))
+    } else {
+      cb(null, true)
+    }
+  },
+})
 const router = new Router()
 
-router.post('/snapshots', async (req, res, next) => {
+router.post('/snapshots', upload.single('file'), async (req, res, next) => {
   try {
     const { name, domain } = req.body
 
-    const snapshot = await new Snapshot({ name, domain }).save()
+    const snapshot = await new Snapshot({ name, domain, filename: req.file.filename }).save()
     if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' })
 
     // TODO: Welke data is belangrijk om te returnen?

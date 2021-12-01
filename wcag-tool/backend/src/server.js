@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+require('./database')
 
 const { errorHandler, loadSnapshot, logger } = require('./middleware')
 const { annotationRouter, snapshotRouter, wcagRouter } = require('./routers')
@@ -34,14 +35,4 @@ app.use(errorHandler)
 app.listen(process.env.PORT, () => {
   /* eslint-disable-next-line no-console */
   console.log(`Server started listening on port ${process.env.PORT}`)
-
-  mongoose.connect(
-    process.env.MONGO_URI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    (err) => {
-      if (err) throw new Error('Could not connect to MongoDB!')
-      /* eslint-disable-next-line no-console */
-      console.log('Connected to MongoDB!')
-    }
-  )
 })
