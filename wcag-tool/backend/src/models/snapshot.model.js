@@ -38,6 +38,5 @@ snapshotSchema.methods.addAnnotation = async function (title, description, selec
 const Snapshot = model('Snapshot', snapshotSchema)
 
 module.exports = {
-  snapshotSchema,
   Snapshot,
 }

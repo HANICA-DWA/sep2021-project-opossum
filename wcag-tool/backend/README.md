@@ -19,3 +19,9 @@
 ## lint & fix
 
 `npm run lint:fix`
+
+## seed
+
+Seed the database with wcag 2.1 guidelines.
+
+`npm run seed`
