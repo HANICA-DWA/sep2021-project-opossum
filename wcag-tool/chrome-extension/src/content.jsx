@@ -1,2 +1,2 @@
 // Message passing Demo
-console.log('content')
+console.log('content');

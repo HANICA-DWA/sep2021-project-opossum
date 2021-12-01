@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import '../css/styles.css';
 import setupStore from '../services/store';
-
-const Options = function () {
-  return <h1>Options</h1>;
-};
+import App from './components/editor/App';
 
 (async () => {
   const store = await setupStore();
@@ -13,7 +11,7 @@ const Options = function () {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <Options />
+        <App />
       </Provider>
     </React.StrictMode>,
     document.getElementById('root')
