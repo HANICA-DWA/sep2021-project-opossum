@@ -28,7 +28,7 @@ If a website isn’t programmed correctly for the text-to-speech functionality t
 If a person isn’t able to use mouse and keyboard due to circumstances, would the website be able to utilize voice control to help this person?
 
 These are accessibility issues that occur on a lot of websites and leave users frustrated. 
-In the past people with handicaps or disabilities had to adapt to the environment, but in today’s world the digital environment should adapt to these people.
+In the past, people with handicaps or disabilities had to adapt to the environment, but in today’s world the digital environment should adapt to these people.
 
 Accessibility analysts evaluate and judge websites based on how accessible they are using the Web Content Accessibility Guidelines (WCAG). 
 Using their own knowledge and automated scripts they check the content of pages and create a rapport with issues that were found during the inspection. 
@@ -70,8 +70,8 @@ What kind of features/functions are (very) significant?
 - Collaboration between analysts
 
 Stakeholders:
-- Analyst as main character
-- Company (employee) as secondary character
+- WCAG Analyst
+- Website owner
 
 <!--
 Intent
