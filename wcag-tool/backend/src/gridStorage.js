@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const { GridFsStorage } = require('multer-gridfs-storage')
 
 const storage = new GridFsStorage({

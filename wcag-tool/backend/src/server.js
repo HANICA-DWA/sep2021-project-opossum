@@ -2,7 +2,7 @@ require('dotenv/config')
 const mongoose = require('mongoose')
 const { app } = require('./app')
 const cors = require('cors')
-require('./database')
+require('./gridStorage')
 
 // WEBSOCKET CODE
 // TODO

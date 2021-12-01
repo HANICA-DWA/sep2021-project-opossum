@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const multer = require('multer')
 const { Snapshot } = require('../models')
-const { storage } = require('../database')
+const { storage } = require('../gridStorage')
 
 const upload = multer({
   storage,
