@@ -116,7 +116,10 @@ const CreateAndEditAnnotationSlider = ({ newAnnotation }) => {
         onSubmit={sliderProps[sliderType].onSubmit(annotation)}
         validationSchema={Yup.object().shape({
           title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
-          description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
+          description: Yup.string()
+            .min(5, 'Too Short!')
+            .max(1000, 'Too Long!')
+            .required('Required'),
         })}
         initialValues={sliderProps[sliderType].initialValues(annotation)}
       >
