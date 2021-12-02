@@ -4,15 +4,17 @@ import AnnotationListSlider from './AnnotationListSlider'
 import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
 import IFrameWrapper from './IFrameWrapper'
+import { useSelector } from 'react-redux'
+import { selectorSelectedAnnotation } from '../../../services/annotationSlice'
 
 const App = () => {
+  const annotation = useSelector(selectorSelectedAnnotation)
   return (
     <>
       <OverlayButton />
       <AnnotationListSlider />
-      <CreateAndEditAnnotationSlider newAnnotation />
       <AnnotationDetailSlider />
-      <CreateAndEditAnnotationSlider />
+      <CreateAndEditAnnotationSlider annotation={annotation} />
       <IFrameWrapper />
     </>
   )

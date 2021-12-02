@@ -3,17 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import {
   addNewAnnotation,
-  selectHighlightElement,
-  selectSelectElement,
-  setCreateEditSliderIsOpen,
+  selectorHighlightElement,
+  selectorSelectElement, setNewAnnotationSelector,
   setSelectElement,
 } from '../../../services/annotationSlice'
+import { setCreateSliderIsOpen } from '../../../services/sliders'
 
 const IFrameWrapper = function () {
-  const selectElement = useSelector(selectSelectElement)
+  const selectElement = useSelector(selectorSelectElement)
   const iframeDoc = useRef(undefined)
   const dispatch = useDispatch()
-  const highlightElement = useSelector(selectHighlightElement)
+  const highlightElement = useSelector(selectorHighlightElement)
 
   const removeLink = (element) => {
     if (element.tagName === 'A') {
@@ -36,11 +36,11 @@ const IFrameWrapper = function () {
 
     e.target.style.outline = 'none'
     dispatch(setSelectElement(false))
-    dispatch(setCreateEditSliderIsOpen({ type: 'create', status: true }))
+    dispatch(setCreateSliderIsOpen(true))
 
     const selector = unique(e.target)
 
-    dispatch(addNewAnnotation({ selector }))
+    dispatch(setNewAnnotationSelector(selector))
   }
 
   const createNewAnnotationOnClick = (element) => {

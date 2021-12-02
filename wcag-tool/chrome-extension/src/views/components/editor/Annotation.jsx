@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  setDetailSliderIsOpen,
   setHighlightElement,
   setSelectedAnnotation,
 } from '../../../services/annotationSlice'
+import { setDetailSliderIsOpen } from '../../../services/sliders'
 
 const Annotation = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()
