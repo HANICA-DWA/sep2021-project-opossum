@@ -15,9 +15,6 @@ export const annotationSlice = createSlice({
     setSelectElement: (state, action) => {
       state.selectElement = action.payload
     },
-    addAnnotation: (state, { payload }) => {
-      state.annotations.push(payload)
-    },
     setNewAnnotationSelector: (state, { payload }) => {
       state.newAnnotationSelector = payload
     },
@@ -59,7 +56,6 @@ export const selectorSelectedAnnotation = (state) => state.annotation.selectedAn
 
 export const {
   setSelectElement,
-  addAnnotation,
   setNewAnnotationSelector,
   unsetNewAnnotationSelector,
   setHighlightElement,
