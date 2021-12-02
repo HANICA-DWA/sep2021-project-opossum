@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setListSliderIsOpen, setSelectElement } from '../../../services/annotationSlice'
+import { setListSliderIsOpen, setSelectElement } from '../../services/annotationSlice'
 import FloatButton from '../common/FloatButton'
 
 const OverlayButton = function () {

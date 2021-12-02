@@ -4,7 +4,7 @@ import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-// import { useGetSuccessCriteriaQuery } from '../../../services/apiService'
+// import { useGetSuccessCriteriaQuery } from '../../services/apiService'
 import {
   addAnnotation,
   resetNewAnnotation,
@@ -12,7 +12,7 @@ import {
   selectNewAnnotation,
   setCreateSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 import ActionButton from '../common/ActionButton'
 
 const CreateAnnotationSlider = function () {

@@ -7,7 +7,7 @@ import {
   selectSelectElement,
   addNewAnnotation,
   selectHighlightElement,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 
 const IFrameWrapper = function () {
   const selectElement = useSelector(selectSelectElement)

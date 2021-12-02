@@ -8,7 +8,7 @@ import {
   selectListSliderIsOpen,
   setListSliderIsOpen,
   setSelectElement,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
 

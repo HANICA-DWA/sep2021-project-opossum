@@ -4,7 +4,7 @@ import {
   setDetailSliderIsOpen,
   setHighlightElement,
   setSelectedAnnotation,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 
 const Annotation = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()

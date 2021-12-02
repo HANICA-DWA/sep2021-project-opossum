@@ -10,7 +10,7 @@ import {
   setSelectedAnnotation,
   setEditSliderIsOpen,
   setHighlightElement,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)

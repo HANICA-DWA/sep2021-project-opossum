@@ -8,7 +8,7 @@ import {
   setEditSliderIsOpen,
   setSelectedAnnotation,
   updateAnnotation,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 
 const EditAnnotationSlider = function () {
   const isOpen = useSelector(selectEditSliderIsOpen)
