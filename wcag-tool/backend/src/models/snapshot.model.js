@@ -35,6 +35,20 @@ snapshotSchema.methods.addAnnotation = async function (title, description, selec
   return annotation
 }
 
+// eslint-disable-next-line func-names
+snapshotSchema.methods.updateAnnotation = async function (id, fields) {
+  const annotationToEdit = this.annotations.id(id)
+  if (!annotationToEdit) { throw new Error('Annotation not found')  }
+
+  annotationToEdit.title = fields?.title ?? annotationToEdit.title
+  annotationToEdit.description = fields?.description ?? annotationToEdit.description
+  annotationToEdit.selector = fields?.selector ?? annotationToEdit.selector
+
+  await this.save()
+
+  return annotationToEdit
+}
+
 const Snapshot = model('Snapshot', snapshotSchema)
 
 module.exports = {
