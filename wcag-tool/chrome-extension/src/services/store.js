@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query/react'
 import devToolsEnhancer from 'remote-redux-devtools'
 import { api } from './apiService'
-import { annotationReducer } from './annotationSlice'
+import { annotationSlice } from './annotationSlice'
+import { sliderSlice } from './slidersSlice'
 
 const store = configureStore({
   reducer: {
-    annotation: annotationReducer,
+    annotation: annotationSlice.reducer,
+    sliders: sliderSlice.reducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),

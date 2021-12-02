@@ -4,17 +4,17 @@ import SlidingPane from 'react-sliding-pane'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import {
-  selectAnnotations,
-  selectListSliderIsOpen,
-  setListSliderIsOpen,
+  selectorAnnotations,
   setSelectElement,
+  unsetSelectedAnnotation,
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/slidersSlice'
 
-const AnnotationSlider = () => {
-  const annotations = useSelector(selectAnnotations)
-  const isOpen = useSelector(selectListSliderIsOpen)
+const AnnotationListSlider = () => {
+  const annotations = useSelector(selectorAnnotations)
+  const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
@@ -51,6 +51,7 @@ const AnnotationSlider = () => {
             <button
               onClick={() => {
                 dispatch(setSelectElement(true))
+                dispatch(unsetSelectedAnnotation())
                 dispatch(setListSliderIsOpen(false))
               }}
               ref={setTriggerRef}
@@ -86,4 +87,4 @@ const AnnotationSlider = () => {
   )
 }
 
-export default AnnotationSlider
+export default AnnotationListSlider

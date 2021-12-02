@@ -4,22 +4,29 @@ import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-// import { useGetSuccessCriteriaQuery } from '../../../services/apiService'
 import {
   addAnnotation,
-  resetNewAnnotation,
-  selectCreateSliderIsOpen,
-  selectNewAnnotation,
-  setCreateSliderIsOpen,
-  setListSliderIsOpen,
+  unsetNewAnnotationSelector,
+  selectorNewAnnotation,
+  setSelectedAnnotation,
+  updateAnnotation,
 } from '../../../services/annotationSlice'
 import ActionButton from '../common/ActionButton'
+import {
+  selectorCreateSliderIsOpen,
+  setCreateSliderIsOpen,
+  setDetailSliderIsOpen,
+  setListSliderIsOpen,
+} from '../../../services/slidersSlice'
 
-const CreateAnnotationSlider = function () {
-  // const { data, error } = useGetSuccessCriteriaQuery()
-  const isOpen = useSelector(selectCreateSliderIsOpen)
+const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const dispatch = useDispatch()
-  const newAnnotation = useSelector(selectNewAnnotation)
+  const isOpen = useSelector(selectorCreateSliderIsOpen)
+  const closeSlider = () => {
+    dispatch(setCreateSliderIsOpen(false))
+    dispatch(setListSliderIsOpen(true))
+  }
+  const selector = useSelector(selectorNewAnnotation)
 
   return (
     <SlidingPane
@@ -28,11 +35,10 @@ const CreateAnnotationSlider = function () {
       isOpen={isOpen}
       title={
         <div className="grid grid-flow-col justify-between">
-          <span className="text-gray-900 text-base font-poppins">Create annotation</span>
-          <button
-            className="text-gray-600 px-4 py-1"
-            onClick={() => dispatch(setCreateSliderIsOpen(false))}
-          >
+          <span className="text-gray-900 text-base font-poppins">
+            {`${annotation ? 'Edit' : 'Create'} Annotation`}
+          </span>
+          <button className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -51,32 +57,34 @@ const CreateAnnotationSlider = function () {
         </div>
       }
       from="left"
-      onRequestClose={() => dispatch(setCreateSliderIsOpen(false))}
+      onRequestClose={() => closeSlider()}
       width="400px"
     >
       <Formik
         onSubmit={({ title, description }) => {
-          dispatch(setCreateSliderIsOpen(false))
-          dispatch(
-            addAnnotation({
-              title,
-              description,
-              selector: newAnnotation.selector,
-            })
-          )
-          dispatch(resetNewAnnotation())
-          dispatch(setListSliderIsOpen(true))
+          closeSlider()
+          if (annotation) {
+            dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
+            dispatch(setSelectedAnnotation({ title, description, selector: annotation.selector }))
+          } else {
+            dispatch(addAnnotation({ title, description, selector }))
+            dispatch(unsetNewAnnotationSelector())
+            dispatch(setSelectedAnnotation({ title, description, selector }))
+            dispatch(setDetailSliderIsOpen(true))
+          }
         }}
         validationSchema={Yup.object().shape({
-          title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
-          description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
+          title: Yup.string().max(60, 'Too Long! Max 60 characters.').required('Required'),
+          description: Yup.string()
+            .max(1000, 'Too Long! Max 1000 characters.')
+            .required('Required'),
         })}
         initialValues={{
-          title: '',
-          description: '',
+          title: annotation?.title || '',
+          description: annotation?.description || '',
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, dirty, isValid }) => (
           <Form>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Title
@@ -103,9 +111,22 @@ const CreateAnnotationSlider = function () {
             {errors.description && touched.description ? (
               <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
             ) : null}
-            <div className="grid justify-end mt-8">
-              <ActionButton type="submit">Create Annotation</ActionButton>
-            </div>
+            {!annotation ? (
+              <div className="grid justify-end mt-8">
+                <ActionButton disabled={!(dirty && isValid)} type="submit">
+                  Create Annotation
+                </ActionButton>
+              </div>
+            ) : (
+              <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
+                <ActionButton onClick={() => closeSlider()} type="cancel">
+                  Cancel
+                </ActionButton>
+                <ActionButton disabled={!(dirty && isValid)} type="submit">
+                  Save
+                </ActionButton>
+              </div>
+            )}
           </Form>
         )}
       </Formik>
@@ -113,4 +134,4 @@ const CreateAnnotationSlider = function () {
   )
 }
 
-export default CreateAnnotationSlider
+export default CreateAndEditAnnotationSlider
