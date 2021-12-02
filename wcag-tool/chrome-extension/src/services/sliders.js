@@ -27,6 +27,5 @@ export const selectorCreateSliderIsOpen = (state) => state.sliders.createSliderI
 export const selectorListSliderIsOpen = (state) => state.sliders.listSliderIsOpen
 export const selectorDetailSliderIsOpen = (state) => state.sliders.detailSliderIsOpen
 
-
 export const { setListSliderIsOpen, setDetailSliderIsOpen, setCreateSliderIsOpen } =
   sliderSlice.actions

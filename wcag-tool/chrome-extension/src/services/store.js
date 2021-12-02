@@ -13,7 +13,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
   devTools: false,
-  enhancers: [devToolsEnhancer({ realtime: true, port: 8000 })],
+  enhancers: [devToolsEnhancer({ realtime: true, port: 8000, trace: true })],
 })
 
 setupListeners(store.dispatch)
