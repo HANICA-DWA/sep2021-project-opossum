@@ -1,24 +1,17 @@
 const { Router } = require('express')
-const multer = require('multer')
 const { Snapshot } = require('../models')
-const { storage } = require('../gridStorage')
+const { getUpload } = require('../database')
 
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    // if file is not html dont upload
-    if (file.mimetype !== 'text/html') {
-      cb(new Error('Only html files are allowed'))
-    } else {
-      cb(null, true)
-    }
-  },
-})
 const router = new Router()
+
+const upload = getUpload(['text/html'])
 
 router.post('/snapshots', upload.single('file'), async (req, res, next) => {
   try {
     const { name, domain } = req.body
+    console.log(req.body)
+
+    if (!req.file) return next({ code: 400, message: 'File not provided!' })
 
     const snapshot = await new Snapshot({ name, domain, filename: req.file.filename }).save()
     if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' })
