@@ -6,11 +6,13 @@ import {
   selectDetailSliderIsOpen,
   setDetailSliderIsOpen,
   selectSelectedAnnotation,
-  deleteAnnotation,
   setSelectedAnnotation,
   setEditSliderIsOpen,
-  setHighlightElement,
+  // deleteAnnotation,
+  // setHighlightElement,
 } from '../../../services/annotationSlice'
+
+import IconButton from '../common/IconButton'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -19,7 +21,7 @@ export function truncateStringAndCapitalize(num, str = '') {
     return newString
   }
 
-  return `${str.slice(0, num)}'...'`
+  return `${str.slice(0, num)}...`
 }
 
 const AnnotationDetailSlider = function () {
@@ -28,53 +30,43 @@ const AnnotationDetailSlider = function () {
   const dispatch = useDispatch()
   return (
     <SlidingPane
-      closeIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 18 18"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={3}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-      }
+      className="hide-default-close 
+                 remove-bottom-border 
+                 extra-margin 
+                 remove-slide-plane-close-padding 
+                 remove-slide-plane-content-padding 
+                 remove-slide-plane-title-wrapper-margin 
+                 remove-slide-plane-title-margin"
+      closeIcon={<div />}
+      onRequestClose={() => dispatch(setDetailSliderIsOpen(false))}
+      from="left"
+      width="400px"
       isOpen={isOpen}
       title={
-        <div className="grid grid-cols-6 rounded-l">
+        <div className="grid grid-cols-6 rounded-l items-center px-5">
           <div className="col-span-5">
-            <p className="text-base font-medium text-gray-900">
-              {truncateStringAndCapitalize(20, annotation.title)}
+            <p title={annotation.title} className="text-base font-medium text-gray-900">
+              {truncateStringAndCapitalize(70, annotation.title)}
             </p>
           </div>
-          <button
-            onClick={() => {
-              dispatch(setSelectedAnnotation(annotation))
-              dispatch(setEditSliderIsOpen(true))
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-          </button>
+          <div>
+            <IconButton
+              className="pencilIcon p-0.5 mr-1"
+              onClick={() => {
+                dispatch(setSelectedAnnotation(annotation))
+                dispatch(setEditSliderIsOpen(true))
+              }}
+            />
+            <IconButton
+              className="crossIcon p-0.5 ml-1"
+              onClick={() => dispatch(setDetailSliderIsOpen(false))}
+            />
+          </div>
         </div>
       }
-      from="left"
-      onRequestClose={() => dispatch(setDetailSliderIsOpen(false))}
-      width="400px"
     >
-      {annotation.description}
-      <div className="flex justify-center">
+      <div className="pl-5 pr-8 py-5">{annotation.description}</div>
+      {/* <div className="flex justify-center">
         <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
           <button
             onClick={() => {
@@ -87,7 +79,7 @@ const AnnotationDetailSlider = function () {
             Delete annotation
           </button>
         </footer>
-      </div>
+      </div> */}
     </SlidingPane>
   )
 }

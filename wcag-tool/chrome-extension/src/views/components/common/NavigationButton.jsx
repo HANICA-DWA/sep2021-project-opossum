@@ -8,6 +8,7 @@ const NavigationButton = function ({ children, onClick, disabled, className }) {
   }
   return (
     <button
+      type="button"
       disabled={disabled}
       className={`p-2 px-4 text-lg ${className} ${styles[disabled]}`}
       onClick={onClick}

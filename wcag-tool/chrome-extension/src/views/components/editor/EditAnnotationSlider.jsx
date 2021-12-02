@@ -81,6 +81,7 @@ const EditAnnotationSlider = function () {
           </label>
         </div>
         <button
+          type="button"
           onClick={() => {
             dispatch(setEditSliderIsOpen(false))
 
