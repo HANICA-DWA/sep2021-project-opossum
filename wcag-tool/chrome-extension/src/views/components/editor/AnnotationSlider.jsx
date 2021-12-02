@@ -4,16 +4,16 @@ import SlidingPane from 'react-sliding-pane'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import {
-  selectAnnotations,
   selectListSliderIsOpen,
   setListSliderIsOpen,
   setSelectElement,
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
+import { useGetAnnotationsQuery } from '../../../services/apiService'
 
 const AnnotationSlider = () => {
-  const annotations = useSelector(selectAnnotations)
+  const { data: annotations } = useGetAnnotationsQuery('619e4d5c260d3ff4c06f85e4') // TODO: replace with real snapshotId
   const isOpen = useSelector(selectListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -81,7 +81,11 @@ const AnnotationSlider = () => {
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
-      {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
+      {!annotations || annotations.length === 0 ? (
+        <NoAnnotation />
+      ) : (
+        <AnnotationList annotations={annotations} />
+      )}
     </SlidingPane>
   )
 }
