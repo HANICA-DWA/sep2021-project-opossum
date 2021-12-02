@@ -9,7 +9,6 @@ const upload = getUpload(['text/html'])
 router.post('/snapshots', upload.single('file'), async (req, res, next) => {
   try {
     const { name, domain } = req.body
-    console.log(req.body)
 
     if (!req.file) return next({ code: 400, message: 'File not provided!' })
 
