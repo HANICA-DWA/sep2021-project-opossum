@@ -4,7 +4,7 @@ import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { useGetSuccessCriteriaQuery } from '../../../services/apiService'
+// import { useGetSuccessCriteriaQuery } from '../../../services/apiService'
 import {
   addAnnotation,
   resetNewAnnotation,
@@ -16,7 +16,7 @@ import {
 import ActionButton from '../common/ActionButton'
 
 const CreateAnnotationSlider = function () {
-  const { data, error } = useGetSuccessCriteriaQuery()
+  // const { data, error } = useGetSuccessCriteriaQuery()
   const isOpen = useSelector(selectCreateSliderIsOpen)
   const dispatch = useDispatch()
   const newAnnotation = useSelector(selectNewAnnotation)
