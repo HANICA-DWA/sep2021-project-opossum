@@ -6,7 +6,8 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import {
   addAnnotation,
-  unsetNewAnnotationSelector, selectorNewAnnotation,
+  unsetNewAnnotationSelector,
+  selectorNewAnnotation,
   setSelectedAnnotation,
   updateAnnotation,
 } from '../../../services/annotationSlice'
@@ -20,53 +21,55 @@ import {
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const dispatch = useDispatch()
-  console.log(annotation)
   const isOpen = useSelector(selectorCreateSliderIsOpen)
-  const closeSlider = () => dispatch(setCreateSliderIsOpen(false))
+  const closeSlider = () => {
+    dispatch(setCreateSliderIsOpen(false))
+    dispatch(setListSliderIsOpen(true))
+  }
   const selector = useSelector(selectorNewAnnotation)
 
   return (
     <SlidingPane
-      className='hide-default-close'
+      className="hide-default-close"
       closeIcon={<div />}
       isOpen={isOpen}
       title={
-        <div className='grid grid-flow-col justify-between'>
-          <span className='text-gray-900 text-base font-poppins'>
-            {(annotation ? 'Edit' : 'Create') + ' Annotation'}
+        <div className="grid grid-flow-col justify-between">
+          <span className="text-gray-900 text-base font-poppins">
+            {`${annotation ? 'Edit' : 'Create'} Annotation`}
           </span>
-          <button className='text-gray-600 px-4 py-1' onClick={() => closeSlider()}>
+          <button className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
             <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-5 w-5'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M6 18L18 6M6 6l12 12'
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         </div>
       }
-      from='left'
+      from="left"
       onRequestClose={() => closeSlider()}
-      width='400px'
+      width="400px"
     >
       <Formik
         onSubmit={({ title, description }) => {
           closeSlider()
-          console.log(annotation)
           if (annotation) {
             dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
-            dispatch(setSelectedAnnotation({ ...annotation, title, description }))
+            dispatch(setSelectedAnnotation({ title, description, selector: annotation.selector }))
           } else {
             dispatch(addAnnotation({ title, description, selector }))
             dispatch(unsetNewAnnotationSelector())
+            dispatch(setSelectedAnnotation({ title, description, selector }))
             dispatch(setDetailSliderIsOpen(true))
           }
         }}
@@ -81,46 +84,49 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
           description: annotation?.description || '',
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, dirty, isValid }) => (
           <Form>
-            <label className='block text-gray-700 text-sm font-bold mb-2'>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               Title
               <Field
-                type='text'
-                name='title'
-                placeholder='Title'
-                className='mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type="text"
+                name="title"
+                placeholder="Title"
+                className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </label>
             {errors.title && touched.title ? (
-              <div className='text-red-700 -mt-2 mx-1'>{errors.title}</div>
+              <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>
             ) : null}
-            <label className='block text-gray-700 text-sm font-bold mb-2'>
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               Description
               <Field
-                as='textarea'
-                name='description'
-                placeholder='Description'
-                rows='10'
-                className='mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                as="textarea"
+                name="description"
+                placeholder="Description"
+                rows="10"
+                className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </label>
             {errors.description && touched.description ? (
-              <div className='text-red-700 -mt-2 mx-1'>{errors.description}</div>
+              <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
             ) : null}
-            {
-              !annotation ?
-                <div className='grid justify-end mt-8'>
-                  <ActionButton disabled={touched} type='submit'>Create Annotation</ActionButton>
-                </div>
-                :
-                <div className='grid grid-flow-col justify-end mt-8 gap-x-5'>
-                  <ActionButton onClick={() => closeSlider()} type='cancel'>
-                    Cancel
-                  </ActionButton>
-                  <ActionButton disabled={!touched} type='submit'>Save</ActionButton>
-                </div>
-            }
+            {!annotation ? (
+              <div className="grid justify-end mt-8">
+                <ActionButton disabled={!(dirty && isValid)} type="submit">
+                  Create Annotation
+                </ActionButton>
+              </div>
+            ) : (
+              <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
+                <ActionButton onClick={() => closeSlider()} type="cancel">
+                  Cancel
+                </ActionButton>
+                <ActionButton disabled={!(dirty && isValid)} type="submit">
+                  Save
+                </ActionButton>
+              </div>
+            )}
           </Form>
         )}
       </Formik>

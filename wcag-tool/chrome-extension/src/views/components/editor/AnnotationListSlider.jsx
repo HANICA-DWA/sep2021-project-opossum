@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import {
   selectorAnnotations,
-  setSelectElement, unsetSelectedAnnotation,
+  setSelectElement,
+  unsetSelectedAnnotation,
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'

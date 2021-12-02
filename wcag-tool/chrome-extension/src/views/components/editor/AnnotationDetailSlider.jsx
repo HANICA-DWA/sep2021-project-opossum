@@ -6,9 +6,15 @@ import {
   deleteAnnotation,
   selectorSelectedAnnotation,
   setHighlightElement,
-  setSelectedAnnotation, unsetSelectedAnnotation,
+  setSelectedAnnotation,
+  unsetSelectedAnnotation,
 } from '../../../services/annotationSlice'
-import { selectorDetailSliderIsOpen, setCreateSliderIsOpen, setDetailSliderIsOpen } from '../../../services/sliders'
+import {
+  selectorDetailSliderIsOpen,
+  setCreateSliderIsOpen,
+  setDetailSliderIsOpen,
+  setListSliderIsOpen,
+} from '../../../services/sliders'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -70,7 +76,9 @@ const AnnotationDetailSlider = function () {
       from="left"
       onRequestClose={() => {
         dispatch(setDetailSliderIsOpen(false))
+        dispatch(setListSliderIsOpen(true))
         dispatch(unsetSelectedAnnotation())
+        dispatch(setHighlightElement(''))
       }}
       width="400px"
     >
@@ -81,6 +89,7 @@ const AnnotationDetailSlider = function () {
             onClick={() => {
               dispatch(deleteAnnotation(annotation?.title))
               dispatch(setDetailSliderIsOpen(false))
+              dispatch(setListSliderIsOpen(true))
               dispatch(unsetSelectedAnnotation())
               dispatch(setHighlightElement(''))
             }}

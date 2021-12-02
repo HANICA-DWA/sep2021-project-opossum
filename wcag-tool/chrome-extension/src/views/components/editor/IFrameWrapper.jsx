@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import {
-  addNewAnnotation,
   selectorHighlightElement,
-  selectorSelectElement, setNewAnnotationSelector,
+  selectorSelectElement,
+  setNewAnnotationSelector,
   setSelectElement,
 } from '../../../services/annotationSlice'
 import { setCreateSliderIsOpen } from '../../../services/sliders'
@@ -34,7 +34,6 @@ const IFrameWrapper = function () {
       return
     }
 
-    e.target.style.outline = 'none'
     dispatch(setSelectElement(false))
     dispatch(setCreateSliderIsOpen(true))
 

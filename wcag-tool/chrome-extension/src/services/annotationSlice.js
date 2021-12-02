@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  newAnnotation: {},
   annotations: [],
-  highlightElement: ''
 }
 
 export const annotationSlice = createSlice({
@@ -13,8 +11,8 @@ export const annotationSlice = createSlice({
     setSelectElement: (state, action) => {
       state.selectElement = action.payload
     },
-    addAnnotation: (state, action) => {
-      state.annotations = [action.payload, ...state.annotations]
+    addAnnotation: (state, { payload }) => {
+      state.annotations.push(payload)
     },
     setNewAnnotationSelector: (state, { payload }) => {
       state.newAnnotationSelector = payload
@@ -22,11 +20,11 @@ export const annotationSlice = createSlice({
     unsetNewAnnotationSelector: (state) => {
       state.newAnnotationSelector = undefined
     },
-    setHighlightElement: (state, action) => {
-      state.highlightElement = action.payload
+    setHighlightElement: (state, { payload }) => {
+      state.highlightElement = payload
     },
-    setSelectedAnnotation: (state, action) => {
-      state.selectedAnnotation = action.payload
+    setSelectedAnnotation: (state, { payload }) => {
+      state.selectedAnnotation = payload
     },
     unsetSelectedAnnotation: (state) => {
       state.selectedAnnotation = undefined
@@ -51,7 +49,7 @@ export const annotationSlice = createSlice({
 
 export const selectorSelectElement = (state) => state.annotation.selectElement
 export const selectorAnnotations = (state) => state.annotation.annotations
-export const selectorNewAnnotation = (state) => state.annotation.newAnnotation
+export const selectorNewAnnotation = (state) => state.annotation.newAnnotationSelector
 export const selectorHighlightElement = (state) => state.annotation.highlightElement
 export const selectorSelectedAnnotation = (state) => state.annotation.selectedAnnotation
 

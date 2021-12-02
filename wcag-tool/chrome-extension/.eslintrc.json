@@ -1,47 +1,47 @@
-//{
-//  "env": {
-//    "browser": true,
-//    "es2021": true,
-//    "webextensions": true
-//  },
-//  "extends": [
-//    "eslint:recommended",
-//    "plugin:react/recommended",
-//    "airbnb",
-//    "airbnb/hooks",
-//    "prettier"
-//  ],
-//  "parserOptions": {
-//    "ecmaFeatures": {
-//      "jsx": true
-//    },
-//    "ecmaVersion": 12,
-//    "sourceType": "module"
-//  },
-//  "plugins": ["react", "prettier"],
-//  "rules": {
-//    "import/no-named-as-default": 0,
-//    "import/no-named-as-default-member": 0,
-//    "func-names": 0,
-//    "import/named": 0,
-//    "import/export": "off",
-//    "react/function-component-definition": 0,
-//    "react/prop-types": 0,
-//    "jsx-a11y/click-events-have-key-events": 0,
-//    "jsx-a11y/no-static-element-interactions": 0,
-//    "react-hooks/exhaustive-deps": "warn",
-//    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-//    "no-param-reassign": "off",
-//    "arrow-body-style": "off",
-//    "react/button-has-type": "off",
-//    "react/jsx-props-no-spreading": "off",
-//    "jsx-a11y/label-has-associated-control": "off",
-//    "prettier/prettier": [
-//      "error",
-//      {
-//        "endOfLine": "auto"
-//      }
-//    ]
-//  },
-//  "parser": "@babel/eslint-parser"
-//}
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "webextensions": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "func-names": 0,
+    "import/named": 0,
+    "import/export": "off",
+    "react/function-component-definition": 0,
+    "react/prop-types": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react-hooks/exhaustive-deps": "warn",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-param-reassign": "off",
+    "arrow-body-style": "off",
+    "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  },
+  "parser": "@babel/eslint-parser"
+}
