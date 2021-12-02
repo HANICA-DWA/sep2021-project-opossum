@@ -73,10 +73,9 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
               newAnnotation: { title, description, selector },
             })
               .unwrap()
-              .then((response) => {
-                console.log(response)
+              .then((newAnnotation) => {
                 dispatch(unsetNewAnnotationSelector())
-                dispatch(setSelectedAnnotation({ title, description, selector }))
+                dispatch(setSelectedAnnotation(newAnnotation))
                 dispatch(setDetailSliderIsOpen(true))
               })
               .catch((e) => console.log(e))
