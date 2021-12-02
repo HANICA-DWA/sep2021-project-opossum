@@ -1,10 +1,10 @@
 import { combineReducers, createStore } from 'redux';
 import storeCreatorFactory from 'reduxed-chrome-storage';
 import { composeWithDevTools } from 'remote-redux-devtools';
-import { annotationReducer } from './annotationSlice';
+import { annotationSlice } from './annotationSlice';
 
 const reducers = combineReducers({
-  annotation: annotationReducer,
+  annotation: annotationSlice.reducer,
 });
 
 let store;

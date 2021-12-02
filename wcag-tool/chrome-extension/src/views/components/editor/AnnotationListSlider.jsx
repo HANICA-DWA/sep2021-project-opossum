@@ -12,7 +12,7 @@ import {
 import NoAnnotation from "./NoAnnotation"
 import AnnotationList from "./AnnotationList"
 
-const AnnotationSlider = () => {
+const AnnotationListSlider = () => {
   const annotations = useSelector(selectAnnotations)
   const isOpen = useSelector(selectListSliderIsOpen)
   const dispatch = useDispatch()
@@ -100,4 +100,4 @@ const AnnotationSlider = () => {
   )
 }
 
-export default AnnotationSlider
+export default AnnotationListSlider

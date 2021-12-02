@@ -8,7 +8,7 @@ import {
   selectSelectedAnnotation,
   deleteAnnotation,
   setSelectedAnnotation,
-  setEditSliderIsOpen,
+  setCreateEditSliderIsOpen,
   setHighlightElement,
 } from '../../../services/annotationSlice';
 
@@ -55,7 +55,7 @@ const AnnotationDetailSlider = function () {
           <button
             onClick={() => {
               dispatch(setSelectedAnnotation(annotation));
-              dispatch(setEditSliderIsOpen(true));
+              dispatch(setCreateEditSliderIsOpen({type: "edit", status: true}));
             }}
           >
             <svg

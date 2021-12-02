@@ -1,107 +1,107 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import unique from 'unique-selector';
+import React, { useEffect, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import unique from "unique-selector"
 import {
-  setSelectElement,
-  setCreateSliderIsOpen,
-  selectSelectElement,
   addNewAnnotation,
   selectHighlightElement,
-} from '../../../services/annotationSlice';
+  selectSelectElement,
+  setCreateEditSliderIsOpen,
+  setSelectElement,
+} from "../../../services/annotationSlice"
 
-const IFrameWrapper = function () {
-  const selectElement = useSelector(selectSelectElement);
-  const iframeDoc = useRef(undefined);
-  const dispatch = useDispatch();
-  const highlightElement = useSelector(selectHighlightElement);
+const IFrameWrapper = function() {
+  const selectElement = useSelector(selectSelectElement)
+  const iframeDoc = useRef(undefined)
+  const dispatch = useDispatch()
+  const highlightElement = useSelector(selectHighlightElement)
 
   const removeLink = (element) => {
-    if (element.tagName === 'A') {
-      element.removeAttribute('href');
+    if (element.tagName === "A") {
+      element.removeAttribute("href")
     }
-  };
+  }
 
   const addBorder = (e) => {
-    e.target.style.outline = '3px solid blue';
-  };
+    e.target.style.outline = "3px solid blue"
+  }
 
   const removeBorder = (e) => {
-    e.target.style.outline = 'none';
-  };
+    e.target.style.outline = "none"
+  }
 
-  const createNewAnnotation = function (e) {
+  const createNewAnnotation = function(e) {
     if (e.target !== this) {
-      return;
+      return
     }
 
-    e.target.style.outline = 'none';
-    dispatch(setSelectElement(false));
-    dispatch(setCreateSliderIsOpen(true));
+    e.target.style.outline = "none"
+    dispatch(setSelectElement(false))
+    dispatch(setCreateEditSliderIsOpen({ type: 'create', status: true }))
 
-    const selector = unique(e.target);
+    const selector = unique(e.target)
 
-    dispatch(addNewAnnotation({ selector }));
-  };
+    dispatch(addNewAnnotation({ selector }))
+  }
 
   const createNewAnnotationOnClick = (element) => {
-    element.addEventListener('click', createNewAnnotation);
-  };
+    element.addEventListener("click", createNewAnnotation)
+  }
 
   const AddBorderOnHover = (element) => {
-    element.addEventListener('mouseover', addBorder);
-    element.addEventListener('mouseout', removeBorder);
-  };
+    element.addEventListener("mouseover", addBorder)
+    element.addEventListener("mouseout", removeBorder)
+  }
 
   const RemoveEventListeners = (element) => {
-    element.removeEventListener('mouseover', addBorder);
-    element.removeEventListener('mouseout', removeBorder);
-    element.removeEventListener('click', createNewAnnotation);
-  };
+    element.removeEventListener("mouseover", addBorder)
+    element.removeEventListener("mouseout", removeBorder)
+    element.removeEventListener("click", createNewAnnotation)
+  }
 
   useEffect(() => {
-    iframeDoc.current = document.getElementById('myframe');
+    iframeDoc.current = document.getElementById("myframe")
 
-    iframeDoc.current.addEventListener('load', function () {
+    iframeDoc.current.addEventListener("load", function() {
       // eslint-disable-next-line react/no-this-in-sfc
-      const Snapshotdocument = this.contentWindow.document;
-      const elements = Snapshotdocument.querySelectorAll('*');
+      const Snapshotdocument = this.contentWindow.document
+      const elements = Snapshotdocument.querySelectorAll("*")
       elements.forEach((element) => {
-        removeLink(element);
-      });
-    });
+        removeLink(element)
+      })
+    })
 
     return () => {
-      iframeDoc.current.removeEventListener('load');
-      iframeDoc.current = undefined;
-    };
-  }, []);
+      iframeDoc.current.removeEventListener("load")
+      iframeDoc.current = undefined
+    }
+  }, [])
 
   useEffect(() => {
     if (iframeDoc.current) {
       if (selectElement) {
         const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*');
+          iframeDoc.current.contentWindow.document.querySelectorAll("*")
         elements.forEach((element) => {
-          AddBorderOnHover(element);
-          createNewAnnotationOnClick(element);
-        });
+          AddBorderOnHover(element)
+          createNewAnnotationOnClick(element)
+        })
       } else {
         const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*');
+          iframeDoc.current.contentWindow.document.querySelectorAll("*")
         elements.forEach((element) => {
-          RemoveEventListeners(element);
-        });
+          RemoveEventListeners(element)
+        })
       }
     }
 
     return () => {
       const elements =
-        iframeDoc.current.contentWindow.document.querySelectorAll('*');
+        iframeDoc.current.contentWindow.document.querySelectorAll("*")
       elements.forEach((element) => {
-        RemoveEventListeners(element);
-      });
-    };
-  }, [selectElement]);
+        RemoveEventListeners(element)
+      })
+    }
+  }, [selectElement])
 
   // highlight element based on selector in useEffect
   useEffect(() => {
@@ -109,20 +109,20 @@ const IFrameWrapper = function () {
       if (highlightElement) {
         const element =
           iframeDoc.current.contentWindow.document.querySelector(
-            highlightElement
-          );
+            highlightElement,
+          )
         if (element) {
-          element.style.outline = '3px solid blue';
+          element.style.outline = "3px solid blue"
         }
       } else {
         const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*');
+          iframeDoc.current.contentWindow.document.querySelectorAll("*")
         elements.forEach((element) => {
-          element.style.outline = 'none';
-        });
+          element.style.outline = "none"
+        })
       }
     }
-  }, [highlightElement]);
+  }, [highlightElement])
 
   return (
     <iframe
@@ -131,7 +131,7 @@ const IFrameWrapper = function () {
       src="./html.html"
       className="h-screen w-full"
     />
-  );
-};
+  )
+}
 
-export default IFrameWrapper;
+export default IFrameWrapper

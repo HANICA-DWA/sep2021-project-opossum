@@ -22,8 +22,8 @@ export const annotationSlice = createSlice({
     setSelectElement: (state, action) => {
       state.selectElement = action.payload;
     },
-    setCreateSliderIsOpen: (state, action) => {
-      state.createSliderIsOpen = action.payload;
+    setCreateEditSliderIsOpen: (state, { payload }) => {
+      state[`${payload.type}SliderIsOpen`] = payload.status;
     },
     addAnnotation: (state, action) => {
       state.annotations = [action.payload, ...state.annotations];
@@ -64,25 +64,6 @@ export const annotationSlice = createSlice({
   },
 });
 
-const {
-  reducer: annotationReducer,
-  actions: {
-    setListSliderIsOpen,
-    setSelectElement,
-    setCreateSliderIsOpen,
-    addAnnotation,
-    addNewAnnotation,
-    resetNewAnnotation,
-    setHighlightElement,
-    setDetailSliderIsOpen,
-    setSelectedAnnotation,
-    deleteAnnotation,
-    setEditSliderIsOpen,
-    setEditAnnotation,
-    updateAnnotation,
-  },
-} = annotationSlice;
-
 export const selectListSliderIsOpen = (state) =>
   state.annotation.listSliderIsOpen;
 export const selectCreateSliderIsOpen = (state) =>
@@ -101,11 +82,10 @@ export const selectEditSliderIsOpen = (state) =>
 export const selectSelectedAnnotation = (state) =>
   state.annotation.selectedAnnotation;
 
-export {
-  annotationReducer,
+export const {
   setListSliderIsOpen,
   setSelectElement,
-  setCreateSliderIsOpen,
+  setCreateEditSliderIsOpen,
   addAnnotation,
   addNewAnnotation,
   resetNewAnnotation,
@@ -113,7 +93,5 @@ export {
   setDetailSliderIsOpen,
   setSelectedAnnotation,
   deleteAnnotation,
-  setEditSliderIsOpen,
-  setEditAnnotation,
   updateAnnotation,
-};
+} = annotationSlice.actions
