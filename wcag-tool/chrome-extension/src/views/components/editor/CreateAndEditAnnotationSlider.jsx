@@ -17,7 +17,7 @@ import {
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/sliders'
+} from '../../../services/slidersSlice'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const dispatch = useDispatch()

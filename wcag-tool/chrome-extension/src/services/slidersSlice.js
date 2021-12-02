@@ -4,7 +4,6 @@ const initialState = {
   listSliderIsOpen: false,
   createSliderIsOpen: false,
   detailSliderIsOpen: false,
-  editSliderIsOpen: false,
 }
 
 export const sliderSlice = createSlice({

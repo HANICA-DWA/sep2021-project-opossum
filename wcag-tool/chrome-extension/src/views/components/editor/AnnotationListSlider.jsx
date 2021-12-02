@@ -10,7 +10,7 @@ import {
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
-import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/sliders'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/slidersSlice'
 
 const AnnotationListSlider = () => {
   const annotations = useSelector(selectorAnnotations)
