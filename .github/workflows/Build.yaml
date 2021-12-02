@@ -21,6 +21,12 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo ${{ secrets.MONGO_URI }} >> .env
+          cat .env
+
       #install dependencies, build and test server
       - name: Build and test backend
         working-directory: ./wcag-tool/backend
