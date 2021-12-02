@@ -22,6 +22,7 @@ jobs:
           node-version: '16'
 
       - name: Create env file
+        working-directory: ./wcag-tool/backend
         run: |
           touch .env
           echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
