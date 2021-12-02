@@ -9,6 +9,8 @@ async function before() {
   mongod = await MongoMemoryServer.create()
   const uri = mongod.getUri()
 
+  await mongoose.connection.close()
+
   await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
