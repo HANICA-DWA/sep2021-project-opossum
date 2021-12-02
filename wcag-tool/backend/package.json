@@ -11,7 +11,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test:jest": "jest tests/jest --testTimout=10000 --coverage false",
-    "test": "mocha tests --recursive --exclude tests/jest/**/* -r dotenv/config",
+    "test": "mocha tests --recursive --exit --exclude tests/jest/**/* -r dotenv/config",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
     "seed": "node -e 'require(\"./src/utils/seed.js\").main()'"
@@ -24,7 +24,9 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "mongoose": "^6.0.13"
+    "mongoose": "^6.0.13",
+    "multer": "^1.4.3",
+    "multer-gridfs-storage": "^5.0.2"
   },
   "devDependencies": {
     "chai": "^4.3.4",

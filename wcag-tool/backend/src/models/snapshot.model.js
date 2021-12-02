@@ -11,6 +11,10 @@ const snapshotSchema = new Schema(
       type: String,
       required: true,
     },
+    filename: {
+      type: String,
+      required: true,
+    },
     annotations: {
       type: [annotationSchema],
       required: true,
@@ -38,9 +42,7 @@ snapshotSchema.methods.addAnnotation = async function (title, description, selec
 // eslint-disable-next-line func-names
 snapshotSchema.methods.updateAnnotation = async function (id, fields) {
   const annotationToEdit = this.annotations.id(id)
-  if (!annotationToEdit) {
-    throw new Error('Annotation not found')
-  }
+  if (!annotationToEdit) throw new Error('Annotation not found')
 
   annotationToEdit.title = fields?.title ?? annotationToEdit.title
   annotationToEdit.description = fields?.description ?? annotationToEdit.description
