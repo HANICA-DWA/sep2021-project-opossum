@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import '../css/styles.css'
 
-import SearchBar from './components/popup/searchBar'
+// import SearchBar from './components/popup/searchBar'
 import Header from './components/popup/header'
 import SnapshotBody from './components/popup/snapshotBody'
 import NavigationButtons from './components/popup/navigationButtons'
@@ -11,7 +11,7 @@ const Popup = function () {
   return (
     <div className="customSize flex flex-col justify-between text-sm text-gray-500 font-poppins">
       <div>
-        {/*<SearchBar />*/}
+        {/* <SearchBar /> */}
         <Header />
         <SnapshotBody />
       </div>

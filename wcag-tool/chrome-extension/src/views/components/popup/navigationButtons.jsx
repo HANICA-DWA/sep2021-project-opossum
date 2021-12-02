@@ -8,14 +8,12 @@ const NavigationButtons = function () {
       <div className="flex p-2 flex-col items-center">
         <p>Showing 0 Entries</p>
         <div className="flex p-2">
-          <NavigationButton
-            disabled={true}
-            className={'rounded-l'}
-          >Prev</NavigationButton>
-          <NavigationButton
-            disabled
-            className={'rounded-r'}
-          >Next</NavigationButton>
+          <NavigationButton disabled className="rounded-l">
+            Prev
+          </NavigationButton>
+          <NavigationButton disabled className="rounded-r">
+            Next
+          </NavigationButton>
         </div>
       </div>
     </>

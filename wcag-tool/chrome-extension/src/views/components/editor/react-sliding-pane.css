@@ -69,9 +69,6 @@ div.slide-pane__header {
     height: 64px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-div.hide-default-close.slide-pane .slide-pane__header .slide-pane__close{
-    pointer-events: none;
-}
 div.slide-pane__title-wrapper {
     display: flex;
     flex: 1;
@@ -109,4 +106,28 @@ div.slide-pane__content {
 div.slide-pane__subtitle {
     font-size: 12px;
     margin-top: 2px;
+}
+
+/* Custom css classes */
+div.hide-default-close.slide-pane .slide-pane__header .slide-pane__close{
+    pointer-events: none;
+}
+div.remove-slide-plane-close-padding.slide-pane .slide-pane__header .slide-pane__close{
+    padding: 0px;
+}
+div.remove-slide-plane-title-wrapper-margin.slide-pane .slide-pane__header .slide-pane__title-wrapper{
+    margin-left: 0px;
+}
+div.remove-slide-plane-title-margin.slide-pane .slide-pane__header .slide-pane__title{
+    margin: 0px;
+}
+div.remove-bottom-border.slide-pane .slide-pane__header{
+    border: 0px;
+}
+div.extra-margin.slide-pane .slide-pane__header{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+div.remove-slide-plane-content-padding.slide-pane .slide-pane__content{
+    padding: 0px;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -45,7 +46,7 @@ export const annotationSlice = createSlice({
     },
     deleteAnnotation: (state, action) => {
       state.annotations = state.annotations.filter(
-        (annotation) => annotation.title !== action.payload,
+        (annotation) => annotation.title !== action.payload
       )
     },
     setEditSliderIsOpen: (state, action) => {
@@ -55,10 +56,10 @@ export const annotationSlice = createSlice({
       state.annotations = state.annotations.map((annotation) =>
         annotation.title === action.payload.oldTitle
           ? {
-            ...annotation,
-            ...action.payload,
-          }
-          : annotation,
+              ...annotation,
+              ...action.payload,
+            }
+          : annotation
       )
     },
   },
@@ -83,8 +84,10 @@ const {
   },
 } = annotationSlice
 
-export const selectListSliderIsOpen = (state) => state.annotation.listSliderIsOpen
-export const selectCreateSliderIsOpen = (state) => state.annotation.createSliderIsOpen
+export const selectListSliderIsOpen = (state) =>
+  state.annotation.listSliderIsOpen
+export const selectCreateSliderIsOpen = (state) =>
+  state.annotation.createSliderIsOpen
 export const selectSelectElement = (state) => state.annotation.selectElement
 export const selectAnnotations = (state) => state.annotation.annotations
 export const selectNewAnnotation = (state) => state.annotation.newAnnotation

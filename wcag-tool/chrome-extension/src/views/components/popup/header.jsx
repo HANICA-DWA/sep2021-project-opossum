@@ -11,7 +11,9 @@ const Header = function () {
           chrome.tabs.create({ url: './snapshot.html' })
         }}
         classNames="border border-gray-400 rounded-full bg-gray-50 hover:bg-gray-200"
-      >Create</DefaultButton>
+      >
+        Create
+      </DefaultButton>
     </div>
   )
 }

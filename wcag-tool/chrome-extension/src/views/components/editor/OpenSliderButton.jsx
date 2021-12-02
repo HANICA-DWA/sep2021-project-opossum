@@ -5,7 +5,7 @@ import { setListSliderIsOpen } from '../../../services/annotationSlice'
 const OpenSliderButton = function () {
   const dispatch = useDispatch()
   return (
-    <button className="absolute">
+    <button type="button" className="absolute">
       <svg
         onClick={() => dispatch(setListSliderIsOpen(true))}
         xmlns="http://www.w3.org/2000/svg"

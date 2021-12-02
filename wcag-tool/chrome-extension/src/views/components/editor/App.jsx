@@ -8,17 +8,15 @@ import {
 import { AnnotationDetailSlider } from './AnnotationDetailSlider'
 import { EditAnnotationSlider } from './EditAnnotationSlider'
 
-const App = () => {
-  return (
-    <>
-      <OverlayButton />
-      <AnnotationSlider />
-      <CreateAnnotationSlider />
-      <AnnotationDetailSlider />
-      <EditAnnotationSlider />
-      <IFrameWrapper />
-    </>
-  )
-}
+const App = () => (
+  <>
+    <OverlayButton />
+    <AnnotationSlider />
+    <CreateAnnotationSlider />
+    <AnnotationDetailSlider />
+    <EditAnnotationSlider />
+    <IFrameWrapper />
+  </>
+)
 
 export { App }
