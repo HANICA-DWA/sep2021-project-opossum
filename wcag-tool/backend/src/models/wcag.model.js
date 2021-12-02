@@ -100,4 +100,5 @@ module.exports = {
   Principle,
   Guideline,
   SuccessCriterium,
+  successCriteriumSchema,
 }

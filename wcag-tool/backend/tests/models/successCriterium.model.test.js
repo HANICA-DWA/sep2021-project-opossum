@@ -130,5 +130,6 @@ describe('SuccessCriterium Model', function () {
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
     expect(error.errors.level).to.exist
+    // TODO: Check message!
   })
 })
