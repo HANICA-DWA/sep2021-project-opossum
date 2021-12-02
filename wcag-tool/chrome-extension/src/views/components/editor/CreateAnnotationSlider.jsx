@@ -1,9 +1,10 @@
-import React from 'react';
-import SlidingPane from 'react-sliding-pane';
-import 'react-sliding-pane/dist/react-sliding-pane.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
+import React from 'react'
+import SlidingPane from 'react-sliding-pane'
+import 'react-sliding-pane/dist/react-sliding-pane.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { Field, Form, Formik } from 'formik'
+import * as Yup from 'yup'
+import { useGetSuccessCriteriaQuery } from '../../../services/apiService'
 import {
   addAnnotation,
   resetNewAnnotation,
@@ -11,13 +12,14 @@ import {
   selectNewAnnotation,
   setCreateSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/annotationSlice';
-import ActionButton from '../common/ActionButton';
+} from '../../../services/annotationSlice'
+import ActionButton from '../common/ActionButton'
 
 const CreateAnnotationSlider = function () {
-  const isOpen = useSelector(selectCreateSliderIsOpen);
-  const dispatch = useDispatch();
-  const newAnnotation = useSelector(selectNewAnnotation);
+  const { data, error } = useGetSuccessCriteriaQuery()
+  const isOpen = useSelector(selectCreateSliderIsOpen)
+  const dispatch = useDispatch()
+  const newAnnotation = useSelector(selectNewAnnotation)
 
   return (
     <SlidingPane
@@ -26,9 +28,7 @@ const CreateAnnotationSlider = function () {
       isOpen={isOpen}
       title={
         <div className="grid grid-flow-col justify-between">
-          <span className="text-gray-900 text-base font-poppins">
-            Create annotation
-          </span>
+          <span className="text-gray-900 text-base font-poppins">Create annotation</span>
           <button
             className="text-gray-600 px-4 py-1"
             onClick={() => dispatch(setCreateSliderIsOpen(false))}
@@ -56,26 +56,20 @@ const CreateAnnotationSlider = function () {
     >
       <Formik
         onSubmit={({ title, description }) => {
-          dispatch(setCreateSliderIsOpen(false));
+          dispatch(setCreateSliderIsOpen(false))
           dispatch(
             addAnnotation({
               title,
               description,
               selector: newAnnotation.selector,
             })
-          );
-          dispatch(resetNewAnnotation());
-          dispatch(setListSliderIsOpen(true));
+          )
+          dispatch(resetNewAnnotation())
+          dispatch(setListSliderIsOpen(true))
         }}
         validationSchema={Yup.object().shape({
-          title: Yup.string()
-            .min(2, 'Too Short!')
-            .max(60, 'Too Long!')
-            .required('Required'),
-          description: Yup.string()
-            .min(5, 'Too Short!')
-            .max(255, 'Too Long!')
-            .required('Required'),
+          title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
+          description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
         })}
         initialValues={{
           title: '',
@@ -107,9 +101,7 @@ const CreateAnnotationSlider = function () {
               />
             </label>
             {errors.description && touched.description ? (
-              <div className="text-red-700 -mt-2 mx-1">
-                {errors.description}
-              </div>
+              <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
             ) : null}
             <div className="grid justify-end mt-8">
               <ActionButton type="submit">Create Annotation</ActionButton>
@@ -118,7 +110,7 @@ const CreateAnnotationSlider = function () {
         )}
       </Formik>
     </SlidingPane>
-  );
-};
+  )
+}
 
-export default CreateAnnotationSlider;
+export default CreateAnnotationSlider

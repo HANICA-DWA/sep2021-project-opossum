@@ -1,21 +1,21 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import {
   setDetailSliderIsOpen,
   setHighlightElement,
   setSelectedAnnotation,
-} from '../../../services/annotationSlice';
+} from '../../../services/annotationSlice'
 
 const Annotation = function ({ title = '', description = '', selector = '' }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <div
       onMouseEnter={() => dispatch(setHighlightElement(selector))}
       onMouseLeave={() => dispatch(setHighlightElement(''))}
       onClick={() => {
-        dispatch(setSelectedAnnotation({ title, description, selector }));
-        dispatch(setDetailSliderIsOpen(true));
+        dispatch(setSelectedAnnotation({ title, description, selector }))
+        dispatch(setDetailSliderIsOpen(true))
       }}
       className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
     >
@@ -33,7 +33,7 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
         <p className="italic text-gray-600">{description}</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Annotation;
+export default Annotation

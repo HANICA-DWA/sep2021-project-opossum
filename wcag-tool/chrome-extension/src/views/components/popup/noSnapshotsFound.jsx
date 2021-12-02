@@ -1,5 +1,5 @@
-import React from 'react';
-import DefaultButton from '../common/DefaultButton';
+import React from 'react'
+import DefaultButton from '../common/DefaultButton'
 
 // eslint-disable-next-line react/function-component-definition
 const NoSnapshotsFound = () => (
@@ -13,6 +13,6 @@ const NoSnapshotsFound = () => (
       </DefaultButton>
     </div>
   </div>
-);
+)
 
-export default NoSnapshotsFound;
+export default NoSnapshotsFound
