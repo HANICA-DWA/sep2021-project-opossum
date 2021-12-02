@@ -26,6 +26,7 @@ jobs:
         run: |
           touch .env
           echo MONGO_URI=${{ secrets.MONGO_URI }} >> .env
+          echo TEST_MONGO_URI=${{ secrets.TEST_MONGO_URI }} >> .env
           cat .env
 
       #install dependencies, build and test server
