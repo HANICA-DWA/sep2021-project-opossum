@@ -2,6 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   annotations: [],
+  selectElement: undefined,
+  newAnnotationSelector: undefined,
+  highlightElement: undefined,
+  selectedAnnotation: undefined,
 }
 
 export const annotationSlice = createSlice({

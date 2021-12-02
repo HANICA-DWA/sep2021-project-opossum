@@ -17,11 +17,9 @@ import {
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/sliders'
-import { useAddAnnotationMutation } from '../../../services/apiService'
+} from '../../../services/slidersSlice'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
-  const [addAnnotation] = useAddAnnotationMutation()
   const dispatch = useDispatch()
   const isOpen = useSelector(selectorCreateSliderIsOpen)
   const closeSlider = () => {
@@ -68,19 +66,18 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
           if (annotation) {
             dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
             dispatch(setSelectedAnnotation({ title, description, selector: annotation.selector }))
-          } else {                     
-            addAnnotation({
+          } else {
+              addAnnotation({
               snapshotId: '619e4d5c260d3ff4c06f85e4',
               newAnnotation: { title, description, selector },
             })
-              .unwrap()
               .then(() => {
                dispatch(unsetNewAnnotationSelector())
             dispatch(setSelectedAnnotation({ title, description, selector }))
+              .unwrap()
             dispatch(setDetailSliderIsOpen(true))
               })
               .catch((e) => console.log(e))
-            
           }
         }}
         validationSchema={Yup.object().shape({
@@ -145,3 +142,5 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
 }
 
 export default CreateAndEditAnnotationSlider
+
+          

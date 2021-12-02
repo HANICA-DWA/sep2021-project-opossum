@@ -14,7 +14,7 @@ import {
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/sliders'
+} from '../../../services/slidersSlice'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)

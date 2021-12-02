@@ -7,7 +7,7 @@ import {
   setNewAnnotationSelector,
   setSelectElement,
 } from '../../../services/annotationSlice'
-import { setCreateSliderIsOpen } from '../../../services/sliders'
+import { setCreateSliderIsOpen } from '../../../services/slidersSlice'
 
 const IFrameWrapper = function () {
   const selectElement = useSelector(selectorSelectElement)

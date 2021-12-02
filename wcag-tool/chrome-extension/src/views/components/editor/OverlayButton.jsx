@@ -7,7 +7,7 @@ import {
   selectorDetailSliderIsOpen,
   selectorListSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/sliders'
+} from '../../../services/slidersSlice'
 
 const OverlayButton = function () {
   const dispatch = useDispatch()

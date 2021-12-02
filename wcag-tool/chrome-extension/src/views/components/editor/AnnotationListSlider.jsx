@@ -10,11 +10,10 @@ import {
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
-import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/sliders'
-import { useGetAnnotationsQuery } from '../../../services/apiService'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/slidersSlice'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery('619e4d5c260d3ff4c06f85e4') // TODO: replace with real snapshotId  const isOpen = useSelector(selectorListSliderIsOpen)
+const { data: annotations } = useGetAnnotationsQuery('619e4d5c260d3ff4c06f85e4') // TODO: replace with real snapshotId  const isOpen = useSelector(selectorListSliderIsOpen)
   const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -83,11 +82,7 @@ const AnnotationListSlider = () => {
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
-      {!annotations || annotations.length === 0 ? (
-        <NoAnnotation />
-      ) : (
-        <AnnotationList annotations={annotations} />
-      )}
+      {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
     </SlidingPane>
   )
 }
