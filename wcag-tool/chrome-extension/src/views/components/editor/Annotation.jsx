@@ -6,6 +6,16 @@ import {
   setSelectedAnnotation,
 } from '../../../services/annotationSlice'
 
+export function truncateStringAndCapitalize(num, str = '') {
+  const newString = str.charAt(0).toUpperCase() + str.slice(1)
+
+  if (newString.length <= num) {
+    return newString
+  }
+
+  return `${str.slice(0, num)}...`
+}
+
 const Annotation = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()
 
@@ -17,20 +27,27 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
         dispatch(setSelectedAnnotation({ title, description, selector }))
         dispatch(setDetailSliderIsOpen(true))
       }}
-      className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
+      className="max-w-sm px-2 py-1 bg-white border-2 border-gray-300 rounded-md tracking-wide shadow-md hover:bg-gray-100 cursor-pointer"
     >
-      <div id="header" className="flex items-center mb-4">
-        <div id="header-text">
-          <h4 id="name" className="text-xl font-semibold">
-            {title}
-          </h4>
-          <h5 id="job" className="font-semibold text-blue-600">
-            Level AA
-          </h5>
+      <div className="pl-4 pr-2 py-2">
+        <div className="mb-4">
+          <div className="flex justify-between">
+            <div className="">
+              <p className="text-xl font-semibold">{title}</p>
+            </div>
+            <div className="">
+              <p>1d ago</p>
+            </div>
+          </div>
+          <div className="">
+            <p>Niveau AA</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <p className="italic text-gray-600">{description}</p>
+        <div>
+          <p className="italic text-gray-600">
+            {truncateStringAndCapitalize(250, description)}
+          </p>
+        </div>
       </div>
     </div>
   )

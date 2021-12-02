@@ -43,6 +43,7 @@ const AnnotationSlider = () => {
         <>
           <div className="grid grid-flow-row">
             <span className="text-base font-medium text-gray-900 self-end truncate">
+              {/* <p title="Nu.nl Homepage text is way too long for the pane">Nu.nl Homepage text is way too long for the pane</p> */}
               Nu.nl Homepage text is way too long for the pane
             </span>
             <span className="mt-1 text-sm text-gray-500 self-start truncate">1 Jan 2021</span>
