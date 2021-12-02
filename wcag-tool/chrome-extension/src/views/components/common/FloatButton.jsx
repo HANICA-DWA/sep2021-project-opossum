@@ -1,21 +1,10 @@
-import React from 'react';
-import { usePopperTooltip } from 'react-popper-tooltip';
-import '../editor/tooltip.css';
+import React from 'react'
+import { usePopperTooltip } from 'react-popper-tooltip'
+import '../editor/tooltip.css'
 
-const FloatButton = ({
-  hidden,
-  children,
-  onClick,
-  tooltipText,
-  toolTipPosition = 'bottom',
-}) => {
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip({ placement: toolTipPosition });
+const FloatButton = ({ hidden, children, onClick, tooltipText, toolTipPosition = 'bottom' }) => {
+  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
+    usePopperTooltip({ placement: toolTipPosition })
 
   return (
     <>
@@ -28,16 +17,13 @@ const FloatButton = ({
         {children}
       </button>
       {visible && (
-        <div
-          ref={setTooltipRef}
-          {...getTooltipProps({ className: 'tooltip-container' })}
-        >
+        <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
           <div {...getArrowProps({ className: 'tooltip-arrow' })} />
           {tooltipText}
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default FloatButton;
+export default FloatButton

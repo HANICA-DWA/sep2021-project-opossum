@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ActionButton = function ({ children, onClick, type }) {
   const style = {
@@ -13,7 +13,7 @@ const ActionButton = function ({ children, onClick, type }) {
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
-export default ActionButton;
+export default ActionButton

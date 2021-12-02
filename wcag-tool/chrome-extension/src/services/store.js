@@ -1,20 +1,19 @@
-import { combineReducers, createStore } from 'redux';
-import storeCreatorFactory from 'reduxed-chrome-storage';
-import { composeWithDevTools } from 'remote-redux-devtools';
-import { annotationSlice } from './annotationSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query/react'
+import devToolsEnhancer from 'remote-redux-devtools'
+import { api } from './apiService'
+import { annotationSlice } from './annotationSlice'
 
-const reducers = combineReducers({
-  annotation: annotationSlice.reducer,
-});
+const store = configureStore({
+  reducer: {
+    annotation: annotationSlice.reducer,
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+  devTools: false,
+  enhancers: [devToolsEnhancer({ realtime: true, port: 8000 })],
+})
 
-let store;
+setupListeners(store.dispatch)
 
-export default () => {
-  if (store) return store;
-
-  store = storeCreatorFactory({ createStore })(
-    reducers,
-    composeWithDevTools({ realtime: true, port: 8000 })()
-  );
-  return store;
-};
+export default store
