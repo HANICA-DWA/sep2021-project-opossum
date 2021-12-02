@@ -23,8 +23,8 @@ export const api = createApi({
         url: `snapshots/${snapshotId}/annotations`,
         method: 'POST',
         body: newAnnotation,
-        invalidatesTags: ['Annotation'],
       }),
+      invalidatesTags: ['Annotation'],
     }),
   }),
 })
