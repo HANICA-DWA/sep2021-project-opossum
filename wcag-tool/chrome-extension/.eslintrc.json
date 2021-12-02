@@ -20,6 +20,7 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
+    "no-underscore-dangle": "off",
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "func-names": 0,

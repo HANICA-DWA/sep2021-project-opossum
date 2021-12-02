@@ -1,25 +1,25 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-// import { useGetSuccessCriteriaQuery } from '../../services/apiService'
-import {
-  addAnnotation,
-  resetNewAnnotation,
-  selectCreateSliderIsOpen,
-  selectNewAnnotation,
-  setCreateSliderIsOpen,
-  setListSliderIsOpen,
-} from '../../services/annotationSlice'
-import ActionButton from '../common/ActionButton'
+import AnnotationForm from './AnnotationForm'
+import { selectCreateSliderIsOpen, setCreateSliderIsOpen } from '../../services/annotationSlice'
 
 const CreateAnnotationSlider = function () {
   // const { data, error } = useGetSuccessCriteriaQuery()
   const isOpen = useSelector(selectCreateSliderIsOpen)
   const dispatch = useDispatch()
-  const newAnnotation = useSelector(selectNewAnnotation)
+
+  // eslint-disable-next-line no-unused-vars
+  const dummyAnnotation = {
+    _id: 'testId',
+    successCriterium: {
+      successCriteriumId: 'WCAG2:audio-only-live',
+    },
+    title: 'titel',
+    description: 'description',
+    selector: 'selector',
+  }
 
   return (
     <SlidingPane
@@ -54,61 +54,26 @@ const CreateAnnotationSlider = function () {
       onRequestClose={() => dispatch(setCreateSliderIsOpen(false))}
       width="400px"
     >
-      <Formik
-        onSubmit={({ title, description }) => {
-          dispatch(setCreateSliderIsOpen(false))
-          dispatch(
-            addAnnotation({
+      <AnnotationForm
+        // selectedAnnotation={dummyAnnotation}
+        handleCreate={(successCriterium, title, description, selector) => {
+          // TODO Add RTK Query mutation for Create Annotation
+          // eslint-disable-next-line no-alert
+          alert(
+            `Create! \nfields: ${Object.keys({
+              successCriterium,
               title,
               description,
-              selector: newAnnotation.selector,
-            })
+              selector,
+            }).toString()}`
           )
-          dispatch(resetNewAnnotation())
-          dispatch(setListSliderIsOpen(true))
         }}
-        validationSchema={Yup.object().shape({
-          title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
-          description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
-        })}
-        initialValues={{
-          title: '',
-          description: '',
+        handleUpdate={(_id, fields) => {
+          // TODO Add RTK Query mutation for Update Annotation
+          // eslint-disable-next-line no-alert
+          alert(`Update! \nid: ${_id} \nfields: ${Object.keys(fields).toString()}`)
         }}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Title
-              <Field
-                type="text"
-                name="title"
-                placeholder="Title"
-                className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </label>
-            {errors.title && touched.title ? (
-              <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>
-            ) : null}
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Description
-              <Field
-                as="textarea"
-                name="description"
-                placeholder="Description"
-                rows="10"
-                className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </label>
-            {errors.description && touched.description ? (
-              <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
-            ) : null}
-            <div className="grid justify-end mt-8">
-              <ActionButton type="submit">Create Annotation</ActionButton>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      />
     </SlidingPane>
   )
 }
