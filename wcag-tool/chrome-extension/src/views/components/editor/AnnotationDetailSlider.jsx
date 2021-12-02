@@ -12,6 +12,8 @@ import {
   // setHighlightElement,
 } from '../../../services/annotationSlice'
 
+import IconButton from '../common/IconButton'
+
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -43,10 +45,7 @@ const AnnotationDetailSlider = function () {
       title={
         <div className="grid grid-cols-6 rounded-l items-center px-5">
           <div className="col-span-5">
-            <p
-              title={annotation.title}
-              className="text-base font-medium text-gray-900"
-            >
+            <p title={annotation.title} className="text-base font-medium text-gray-900">
               {truncateStringAndCapitalize(70, annotation.title)}
             </p>
           </div>
