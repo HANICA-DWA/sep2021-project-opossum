@@ -1,5 +1,5 @@
-import React from 'react';
-import NavigationButton from '../common/NavigationButton';
+import React from 'react'
+import NavigationButton from '../common/NavigationButton'
 
 const NavigationButtons = function () {
   return (
@@ -17,7 +17,7 @@ const NavigationButtons = function () {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default NavigationButtons;
+export default NavigationButtons

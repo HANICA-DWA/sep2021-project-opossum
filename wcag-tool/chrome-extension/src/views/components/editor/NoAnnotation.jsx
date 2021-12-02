@@ -1,13 +1,10 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  setListSliderIsOpen,
-  setSelectElement,
-} from '../../../services/annotationSlice';
-import DefaultButton from '../common/DefaultButton';
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { setListSliderIsOpen, setSelectElement } from '../../../services/annotationSlice'
+import DefaultButton from '../common/DefaultButton'
 
 const NoAnnotation = function () {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   return (
     <div className="flex justify-center">
       <div className="p-1 text-black">
@@ -19,8 +16,8 @@ const NoAnnotation = function () {
           <p className="m-2">Create an annotation and mark problems</p>
           <DefaultButton
             onClick={() => {
-              dispatch(setListSliderIsOpen(false));
-              dispatch(setSelectElement(true));
+              dispatch(setListSliderIsOpen(false))
+              dispatch(setSelectElement(true))
             }}
           >
             Create annotation
@@ -28,7 +25,7 @@ const NoAnnotation = function () {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NoAnnotation;
+export default NoAnnotation

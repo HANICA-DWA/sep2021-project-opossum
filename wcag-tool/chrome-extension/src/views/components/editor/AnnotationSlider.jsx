@@ -1,28 +1,23 @@
-import React from "react"
-import "./react-sliding-pane.css"
-import SlidingPane from "react-sliding-pane"
-import { useDispatch, useSelector } from "react-redux"
-import { usePopperTooltip } from "react-popper-tooltip"
+import React from 'react'
+import './react-sliding-pane.css'
+import SlidingPane from 'react-sliding-pane'
+import { useDispatch, useSelector } from 'react-redux'
+import { usePopperTooltip } from 'react-popper-tooltip'
 import {
   selectAnnotations,
   selectListSliderIsOpen,
   setListSliderIsOpen,
   setSelectElement,
-} from "../../../services/annotationSlice"
-import NoAnnotation from "./NoAnnotation"
-import AnnotationList from "./AnnotationList"
+} from '../../../services/annotationSlice'
+import NoAnnotation from './NoAnnotation'
+import AnnotationList from './AnnotationList'
 
 const AnnotationSlider = () => {
   const annotations = useSelector(selectAnnotations)
   const isOpen = useSelector(selectListSliderIsOpen)
   const dispatch = useDispatch()
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip({ placement: "bottom" })
+  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
+    usePopperTooltip({ placement: 'bottom' })
   return (
     <SlidingPane
       width="400px"
@@ -50,9 +45,7 @@ const AnnotationSlider = () => {
             <span className="text-base font-medium text-gray-900 self-end truncate">
               Nu.nl Homepage text is way too long for the pane
             </span>
-            <span className="mt-1 text-sm text-gray-500 self-start truncate">
-              1 Jan 2021
-            </span>
+            <span className="mt-1 text-sm text-gray-500 self-start truncate">1 Jan 2021</span>
           </div>
           <div className="self-center">
             <button
@@ -77,11 +70,8 @@ const AnnotationSlider = () => {
               </svg>
             </button>
             {visible && (
-              <div
-                ref={setTooltipRef}
-                {...getTooltipProps({ className: "tooltip-container" })}
-              >
-                <div {...getArrowProps({ className: "tooltip-arrow" })} />
+              <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
+                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
                 Create Annotation
               </div>
             )}
@@ -91,11 +81,7 @@ const AnnotationSlider = () => {
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
-      {annotations.length === 0 ? (
-        <NoAnnotation />
-      ) : (
-        <AnnotationList annotations={annotations} />
-      )}
+      {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
     </SlidingPane>
   )
 }
