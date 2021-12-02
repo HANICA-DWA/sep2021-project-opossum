@@ -19,8 +19,12 @@ export const api = createApi({
       providesTags: ['Annotation'],
     }),
     addAnnotation: builder.mutation({
-      query: (snapshotId) => `snapshots/${snapshotId}/annotations`,
-      invalidatesTags: ['Annotation'],
+      query: ({ snapshotId, newAnnotation }) => ({
+        url: `snapshots/${snapshotId}/annotations`,
+        method: 'POST',
+        body: newAnnotation,
+        invalidatesTags: ['Annotation'],
+      }),
     }),
   }),
 })
