@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import {
-  setSelectElement,
-  setCreateSliderIsOpen,
-  selectSelectElement,
   addNewAnnotation,
-  selectHighlightElement,
+  selectorHighlightElement,
+  selectorSelectElement, setNewAnnotationSelector,
+  setSelectElement,
 } from '../../../services/annotationSlice'
+import { setCreateSliderIsOpen } from '../../../services/sliders'
 
 const IFrameWrapper = function () {
-  const selectElement = useSelector(selectSelectElement)
+  const selectElement = useSelector(selectorSelectElement)
   const iframeDoc = useRef(undefined)
   const dispatch = useDispatch()
-  const highlightElement = useSelector(selectHighlightElement)
+  const highlightElement = useSelector(selectorHighlightElement)
 
   const removeLink = (element) => {
     if (element.tagName === 'A') {
@@ -40,7 +40,7 @@ const IFrameWrapper = function () {
 
     const selector = unique(e.target)
 
-    dispatch(addNewAnnotation({ selector }))
+    dispatch(setNewAnnotationSelector(selector))
   }
 
   const createNewAnnotationOnClick = (element) => {
