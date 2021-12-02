@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DefaultButton = function ({ children, onClick, className }) {
+const DefaultButton = ({ children, onClick, className }) => {
   return (
     <button
       type="button"

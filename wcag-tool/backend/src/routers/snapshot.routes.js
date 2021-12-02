@@ -1,13 +1,18 @@
 const { Router } = require('express')
 const { Snapshot } = require('../models')
+const { getUpload } = require('../database')
 
 const router = new Router()
 
-router.post('/snapshots', async (req, res, next) => {
+const upload = getUpload(['text/html'])
+
+router.post('/snapshots', upload.single('file'), async (req, res, next) => {
   try {
     const { name, domain } = req.body
 
-    const snapshot = await new Snapshot({ name, domain }).save()
+    if (!req.file) return next({ code: 400, message: 'File not provided!' })
+
+    const snapshot = await new Snapshot({ name, domain, filename: req.file.filename }).save()
     if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' })
 
     // TODO: Welke data is belangrijk om te returnen?

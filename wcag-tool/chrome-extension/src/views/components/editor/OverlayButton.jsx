@@ -1,28 +1,15 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setListSliderIsOpen,
-  setSelectElement,
-} from '../../../services/annotationSlice'
+import { setListSliderIsOpen, setSelectElement } from '../../../services/annotationSlice'
 import FloatButton from '../common/FloatButton'
 
 const OverlayButton = function () {
   const dispatch = useDispatch()
   const selectElement = useSelector((state) => state.annotation.selectElement)
-  const listSliderIsOpen = useSelector(
-    (state) => state.annotation.listSliderIsOpen
-  )
-  const createSliderIsOpen = useSelector(
-    (state) => state.annotation.createSliderIsOpen
-  )
-  const detailSliderIsOpen = useSelector(
-    (state) => state.annotation.detailSliderIsOpen
-  )
-  const isSliderOpen =
-    selectElement ||
-    listSliderIsOpen ||
-    createSliderIsOpen ||
-    detailSliderIsOpen
+  const listSliderIsOpen = useSelector((state) => state.annotation.listSliderIsOpen)
+  const createSliderIsOpen = useSelector((state) => state.annotation.createSliderIsOpen)
+  const detailSliderIsOpen = useSelector((state) => state.annotation.detailSliderIsOpen)
+  const isSliderOpen = selectElement || listSliderIsOpen || createSliderIsOpen || detailSliderIsOpen
 
   return (
     <div className="absolute top-4 left-4 flex align-middle justify-center">
@@ -77,4 +64,4 @@ const OverlayButton = function () {
   )
 }
 
-export { OverlayButton }
+export default OverlayButton

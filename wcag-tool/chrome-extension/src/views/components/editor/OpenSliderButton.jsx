@@ -25,4 +25,4 @@ const OpenSliderButton = function () {
   )
 }
 
-export { OpenSliderButton }
+export default OpenSliderButton

@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -84,23 +83,16 @@ const {
   },
 } = annotationSlice
 
-export const selectListSliderIsOpen = (state) =>
-  state.annotation.listSliderIsOpen
-export const selectCreateSliderIsOpen = (state) =>
-  state.annotation.createSliderIsOpen
+export const selectListSliderIsOpen = (state) => state.annotation.listSliderIsOpen
+export const selectCreateSliderIsOpen = (state) => state.annotation.createSliderIsOpen
 export const selectSelectElement = (state) => state.annotation.selectElement
 export const selectAnnotations = (state) => state.annotation.annotations
 export const selectNewAnnotation = (state) => state.annotation.newAnnotation
-export const selectHighlightElement = (state) =>
-  state.annotation.highlightElement
-export const selectDetailSliderIsOpen = (state) =>
-  state.annotation.detailSliderIsOpen
-export const selectDetailAnnotation = (state) =>
-  state.annotation.detailAnnotation
-export const selectEditSliderIsOpen = (state) =>
-  state.annotation.editSliderIsOpen
-export const selectSelectedAnnotation = (state) =>
-  state.annotation.selectedAnnotation
+export const selectHighlightElement = (state) => state.annotation.highlightElement
+export const selectDetailSliderIsOpen = (state) => state.annotation.detailSliderIsOpen
+export const selectDetailAnnotation = (state) => state.annotation.detailAnnotation
+export const selectEditSliderIsOpen = (state) => state.annotation.editSliderIsOpen
+export const selectSelectedAnnotation = (state) => state.annotation.selectedAnnotation
 
 export {
   annotationReducer,

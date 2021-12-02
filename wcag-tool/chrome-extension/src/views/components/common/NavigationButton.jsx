@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DefaultButton = function ({ children, onClick, disabled, className }) {
+const NavigationButton = function ({ children, onClick, disabled, className }) {
   const styles = {
     undefined: 'bg-gray-300 text-black hover:bg-gray-400',
     false: 'bg-gray-300 text-black hover:bg-gray-400',
@@ -18,4 +18,4 @@ const DefaultButton = function ({ children, onClick, disabled, className }) {
   )
 }
 
-export default DefaultButton
+export default NavigationButton

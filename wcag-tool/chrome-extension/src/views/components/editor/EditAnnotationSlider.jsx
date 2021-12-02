@@ -3,10 +3,10 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  selectSelectedAnnotation,
   selectEditSliderIsOpen,
-  setSelectedAnnotation,
+  selectSelectedAnnotation,
   setEditSliderIsOpen,
+  setSelectedAnnotation,
   updateAnnotation,
 } from '../../../services/annotationSlice'
 
@@ -47,9 +47,7 @@ const EditAnnotationSlider = function () {
       title={
         <div className="grid grid-cols-6 rounded-l">
           <div className="col-span-5">
-            <p className="text-base font-medium text-gray-900">
-              Edit annotation
-            </p>
+            <p className="text-base font-medium text-gray-900">Edit annotation</p>
           </div>
         </div>
       }
@@ -59,10 +57,7 @@ const EditAnnotationSlider = function () {
     >
       <form>
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="title"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
             Title
             <input
               value={title}
@@ -74,10 +69,7 @@ const EditAnnotationSlider = function () {
           </label>
         </div>
         <div className="form-control">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="description"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
             Description
             <textarea
               value={description}
@@ -94,9 +86,7 @@ const EditAnnotationSlider = function () {
             dispatch(setEditSliderIsOpen(false))
 
             dispatch(updateAnnotation({ title, description, oldTitle }))
-            dispatch(
-              setSelectedAnnotation({ ...annotation, title, description })
-            )
+            dispatch(setSelectedAnnotation({ ...annotation, title, description }))
           }}
           className="p-2 pl-5 pr-5 bg-green-600 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
         >
@@ -107,4 +97,4 @@ const EditAnnotationSlider = function () {
   )
 }
 
-export { EditAnnotationSlider }
+export default EditAnnotationSlider

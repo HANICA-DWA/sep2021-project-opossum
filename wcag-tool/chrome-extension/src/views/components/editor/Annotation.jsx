@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  setSelectedAnnotation,
   setDetailSliderIsOpen,
   setHighlightElement,
+  setSelectedAnnotation,
 } from '../../../services/annotationSlice'
 
 const Annotation = function ({ title = '', description = '', selector = '' }) {
@@ -36,4 +36,4 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
   )
 }
 
-export { Annotation }
+export default Annotation

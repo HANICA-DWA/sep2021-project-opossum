@@ -1,9 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  setListSliderIsOpen,
-  setSelectElement,
-} from '../../../services/annotationSlice'
+import { setListSliderIsOpen, setSelectElement } from '../../../services/annotationSlice'
 import DefaultButton from '../common/DefaultButton'
 
 const NoAnnotation = function () {
@@ -31,4 +28,4 @@ const NoAnnotation = function () {
   )
 }
 
-export { NoAnnotation }
+export default NoAnnotation

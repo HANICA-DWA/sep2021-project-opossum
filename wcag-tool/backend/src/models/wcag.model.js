@@ -1,32 +1,20 @@
 const { Schema, model } = require('mongoose')
 
-// Web Content Accessibility Guideline
-const wcagSchema = new Schema(
+const principleSchema = new Schema(
   {
-    w3Id: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    url: {
+    principleId: {
       type: String,
       required: true,
     },
-    principle: {
-      type: String,
-      required: true,
-      enum: ['1. Perceivable', '2. Operable', '3. Understandable', '4. Robust'],
-    },
-    name: {
+    num: {
       type: String,
       required: true,
     },
-    level: {
+    handle: {
       type: String,
       required: true,
-      enum: ['A', 'AA', 'AAA'],
     },
-    description: {
+    title: {
       type: String,
       required: true,
     },
@@ -34,6 +22,82 @@ const wcagSchema = new Schema(
   { timestamps: true }
 )
 
-const Wcag = model('Wcag', wcagSchema)
+const Principle = model('Principle', principleSchema)
 
-module.exports = { wcagSchema, Wcag }
+const guidelineSchema = new Schema(
+  {
+    guidelineId: {
+      type: String,
+      required: true,
+    },
+    num: {
+      type: String,
+      required: true,
+    },
+    handle: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    techniques: [Object],
+  },
+  { timestamps: true }
+)
+
+const Guideline = model('Guideline', guidelineSchema)
+
+const successCriteriumSchema = new Schema(
+  {
+    principle: {
+      type: principleSchema,
+      required: true,
+    },
+    guideline: {
+      type: guidelineSchema,
+      required: true,
+    },
+    successCriteriumId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    num: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    level: {
+      type: String,
+      enum: ['A', 'AA', 'AAA'],
+      required: true,
+    },
+    handle: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    details: {
+      type: [Object],
+      required: true,
+      default: [],
+    },
+    techniques: {
+      type: [Object],
+    },
+  },
+  { timestamps: true }
+)
+
+const SuccessCriterium = model('SuccessCriterium', successCriteriumSchema)
+
+module.exports = {
+  Principle,
+  Guideline,
+  SuccessCriterium,
+}

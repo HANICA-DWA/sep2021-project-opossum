@@ -11,7 +11,6 @@ import {
   // deleteAnnotation,
   // setHighlightElement,
 } from '../../../services/annotationSlice'
-import IconButton from '../common/IconButton'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -86,4 +85,4 @@ const AnnotationDetailSlider = function () {
   )
 }
 
-export { AnnotationDetailSlider }
+export default AnnotationDetailSlider

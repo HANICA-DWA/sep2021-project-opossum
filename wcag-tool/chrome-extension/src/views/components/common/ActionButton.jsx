@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import React from 'react'
 
 const ActionButton = function ({ children, onClick, type }) {

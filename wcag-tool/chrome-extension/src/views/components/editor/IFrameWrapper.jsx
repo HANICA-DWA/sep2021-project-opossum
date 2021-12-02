@@ -79,15 +79,13 @@ const IFrameWrapper = function () {
   useEffect(() => {
     if (iframeDoc.current) {
       if (selectElement) {
-        const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*')
+        const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
         elements.forEach((element) => {
           AddBorderOnHover(element)
           createNewAnnotationOnClick(element)
         })
       } else {
-        const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*')
+        const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
         elements.forEach((element) => {
           RemoveEventListeners(element)
         })
@@ -95,8 +93,7 @@ const IFrameWrapper = function () {
     }
 
     return () => {
-      const elements =
-        iframeDoc.current.contentWindow.document.querySelectorAll('*')
+      const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
       elements.forEach((element) => {
         RemoveEventListeners(element)
       })
@@ -107,16 +104,12 @@ const IFrameWrapper = function () {
   useEffect(() => {
     if (iframeDoc.current) {
       if (highlightElement) {
-        const element =
-          iframeDoc.current.contentWindow.document.querySelector(
-            highlightElement
-          )
+        const element = iframeDoc.current.contentWindow.document.querySelector(highlightElement)
         if (element) {
           element.style.outline = '3px solid blue'
         }
       } else {
-        const elements =
-          iframeDoc.current.contentWindow.document.querySelectorAll('*')
+        const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
         elements.forEach((element) => {
           element.style.outline = 'none'
         })
@@ -124,14 +117,7 @@ const IFrameWrapper = function () {
     }
   }, [highlightElement])
 
-  return (
-    <iframe
-      id="myframe"
-      title="snapshot"
-      src="./html.html"
-      className="h-screen w-full"
-    />
-  )
+  return <iframe id="myframe" title="snapshot" src="./html.html" className="h-screen w-full" />
 }
 
-export { IFrameWrapper }
+export default IFrameWrapper
