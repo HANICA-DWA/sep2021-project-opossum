@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   listSliderIsOpen: false,
@@ -10,46 +10,46 @@ const initialState = {
   detailSliderIsOpen: false,
   selectedAnnotation: {},
   editSliderIsOpen: false,
-};
+}
 
 export const annotationSlice = createSlice({
   name: 'annotation',
   initialState,
   reducers: {
     setListSliderIsOpen: (state, action) => {
-      state.listSliderIsOpen = action.payload;
+      state.listSliderIsOpen = action.payload
     },
     setSelectElement: (state, action) => {
-      state.selectElement = action.payload;
+      state.selectElement = action.payload
     },
     setCreateEditSliderIsOpen: (state, { payload }) => {
-      state[`${payload.type}SliderIsOpen`] = payload.status;
+      state[`${payload.type}SliderIsOpen`] = payload.status
     },
     addAnnotation: (state, action) => {
-      state.annotations = [action.payload, ...state.annotations];
+      state.annotations = [action.payload, ...state.annotations]
     },
     addNewAnnotation: (state, action) => {
-      state.newAnnotation = { ...state.newAnnotation, ...action.payload };
+      state.newAnnotation = { ...state.newAnnotation, ...action.payload }
     },
     resetNewAnnotation: (state) => {
-      state.newAnnotation = {};
+      state.newAnnotation = {}
     },
     setHighlightElement: (state, action) => {
-      state.highlightElement = action.payload;
+      state.highlightElement = action.payload
     },
     setDetailSliderIsOpen: (state, action) => {
-      state.detailSliderIsOpen = action.payload;
+      state.detailSliderIsOpen = action.payload
     },
     setSelectedAnnotation: (state, action) => {
-      state.selectedAnnotation = action.payload;
+      state.selectedAnnotation = action.payload
     },
     deleteAnnotation: (state, action) => {
       state.annotations = state.annotations.filter(
         (annotation) => annotation.title !== action.payload
-      );
+      )
     },
     setEditSliderIsOpen: (state, action) => {
-      state.editSliderIsOpen = action.payload;
+      state.editSliderIsOpen = action.payload
     },
     updateAnnotation: (state, action) => {
       state.annotations = state.annotations.map((annotation) =>
@@ -59,28 +59,21 @@ export const annotationSlice = createSlice({
               ...action.payload,
             }
           : annotation
-      );
+      )
     },
   },
-});
+})
 
-export const selectListSliderIsOpen = (state) =>
-  state.annotation.listSliderIsOpen;
-export const selectCreateSliderIsOpen = (state) =>
-  state.annotation.createSliderIsOpen;
-export const selectSelectElement = (state) => state.annotation.selectElement;
-export const selectAnnotations = (state) => state.annotation.annotations;
-export const selectNewAnnotation = (state) => state.annotation.newAnnotation;
-export const selectHighlightElement = (state) =>
-  state.annotation.highlightElement;
-export const selectDetailSliderIsOpen = (state) =>
-  state.annotation.detailSliderIsOpen;
-export const selectDetailAnnotation = (state) =>
-  state.annotation.detailAnnotation;
-export const selectEditSliderIsOpen = (state) =>
-  state.annotation.editSliderIsOpen;
-export const selectSelectedAnnotation = (state) =>
-  state.annotation.selectedAnnotation;
+export const selectListSliderIsOpen = (state) => state.annotation.listSliderIsOpen
+export const selectCreateSliderIsOpen = (state) => state.annotation.createSliderIsOpen
+export const selectSelectElement = (state) => state.annotation.selectElement
+export const selectAnnotations = (state) => state.annotation.annotations
+export const selectNewAnnotation = (state) => state.annotation.newAnnotation
+export const selectHighlightElement = (state) => state.annotation.highlightElement
+export const selectDetailSliderIsOpen = (state) => state.annotation.detailSliderIsOpen
+export const selectDetailAnnotation = (state) => state.annotation.detailAnnotation
+export const selectEditSliderIsOpen = (state) => state.annotation.editSliderIsOpen
+export const selectSelectedAnnotation = (state) => state.annotation.selectedAnnotation
 
 export const {
   setListSliderIsOpen,

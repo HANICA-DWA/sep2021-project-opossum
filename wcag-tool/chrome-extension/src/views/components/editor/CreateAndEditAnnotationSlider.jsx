@@ -1,9 +1,9 @@
-import React from "react"
-import SlidingPane from "react-sliding-pane"
-import "react-sliding-pane/dist/react-sliding-pane.css"
-import { useDispatch, useSelector } from "react-redux"
-import { Field, Form, Formik } from "formik"
-import * as Yup from "yup"
+import React from 'react'
+import SlidingPane from 'react-sliding-pane'
+import 'react-sliding-pane/dist/react-sliding-pane.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { Field, Form, Formik } from 'formik'
+import * as Yup from 'yup'
 import {
   addAnnotation,
   resetNewAnnotation,
@@ -13,69 +13,72 @@ import {
   setListSliderIsOpen,
   setSelectedAnnotation,
   updateAnnotation,
-} from "../../../services/annotationSlice"
-import ActionButton from "../common/ActionButton"
+} from '../../../services/annotationSlice'
+import ActionButton from '../common/ActionButton'
 
 const CreateAndEditAnnotationSlider = ({ newAnnotation }) => {
   let sliderType
-  if (newAnnotation)
-    sliderType = "create"
-  else
-    sliderType = "edit"
+  if (newAnnotation) sliderType = 'create'
+  else sliderType = 'edit'
+
+  const dispatch = useDispatch()
+  const isOpen = useSelector((state) => state.annotation[`${sliderType}SliderIsOpen`])
+  const closeSlider = () => dispatch(setCreateEditSliderIsOpen({ type: sliderType, status: false }))
 
   const sliderProps = {
     create: {
-      sliderTitle: "Create Annotation",
-      onSubmit: (annotation) => ({ title, description }) => {
-        closeSlider()
-        dispatch(
-          addAnnotation({
-            title,
-            description,
-            selector: annotation.selector,
-          }),
-        )
-        dispatch(resetNewAnnotation())
-        dispatch(setListSliderIsOpen(true))
-      },
-      buttons:
+      sliderTitle: 'Create Annotation',
+      onSubmit:
+        (annotation) =>
+        ({ title, description }) => {
+          closeSlider()
+          dispatch(
+            addAnnotation({
+              title,
+              description,
+              selector: annotation.selector,
+            })
+          )
+          dispatch(resetNewAnnotation())
+          dispatch(setListSliderIsOpen(true))
+        },
+      buttons: (
         <div className="grid justify-end mt-8">
           <ActionButton type="submit">Create Annotation</ActionButton>
-        </div>,
+        </div>
+      ),
       initialValues: () => ({
-        title: "",
-        description: "",
+        title: '',
+        description: '',
       }),
       annotationSelector: selectNewAnnotation,
     },
     edit: {
-      sliderTitle: "Edit Annotation",
-      onSubmit: (annotation) => ({ title, description }) => {
-        closeSlider()
-        dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
-        dispatch(
-          setSelectedAnnotation({ ...annotation, title, description }),
-        )
-      },
+      sliderTitle: 'Edit Annotation',
+      onSubmit:
+        (annotation) =>
+        ({ title, description }) => {
+          closeSlider()
+          dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
+          dispatch(setSelectedAnnotation({ ...annotation, title, description }))
+        },
       initialValues: ({ title, description }) => ({
         title,
         description,
       }),
-      buttons:
+      buttons: (
         <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
-          <ActionButton onClick={() => closeSlider()} type="cancel">Cancel</ActionButton>
+          <ActionButton onClick={() => closeSlider()} type="cancel">
+            Cancel
+          </ActionButton>
           <ActionButton type="submit">Save</ActionButton>
-        </div>,
+        </div>
+      ),
       annotationSelector: selectSelectedAnnotation,
     },
   }
 
-  const dispatch = useDispatch()
-  const isOpen = useSelector(state => state.annotation[sliderType + "SliderIsOpen"])
-  const closeSlider = () => dispatch(setCreateEditSliderIsOpen({ type: sliderType, status: false }))
   const annotation = useSelector(sliderProps[sliderType].annotationSelector)
-
-  console.log(sliderProps[sliderType])
 
   return (
     <SlidingPane
@@ -87,10 +90,7 @@ const CreateAndEditAnnotationSlider = ({ newAnnotation }) => {
           <span className="text-gray-900 text-base font-poppins">
             {sliderProps[sliderType].sliderTitle}
           </span>
-          <button
-            className="text-gray-600 px-4 py-1"
-            onClick={() => closeSlider()}
-          >
+          <button className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -115,14 +115,8 @@ const CreateAndEditAnnotationSlider = ({ newAnnotation }) => {
       <Formik
         onSubmit={sliderProps[sliderType].onSubmit(annotation)}
         validationSchema={Yup.object().shape({
-          title: Yup.string()
-            .min(2, "Too Short!")
-            .max(60, "Too Long!")
-            .required("Required"),
-          description: Yup.string()
-            .min(5, "Too Short!")
-            .max(255, "Too Long!")
-            .required("Required"),
+          title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
+          description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
         })}
         initialValues={sliderProps[sliderType].initialValues(annotation)}
       >
@@ -151,9 +145,7 @@ const CreateAndEditAnnotationSlider = ({ newAnnotation }) => {
               />
             </label>
             {errors.description && touched.description ? (
-              <div className="text-red-700 -mt-2 mx-1">
-                {errors.description}
-              </div>
+              <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
             ) : null}
             {sliderProps[sliderType].buttons}
           </Form>
