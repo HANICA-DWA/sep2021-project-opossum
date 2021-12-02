@@ -18,7 +18,11 @@ afterAll(async () => {
 describe('Snapshot model', () => {
   test('Add annotation to snapshot with required fields', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
 
     // Act
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
@@ -31,7 +35,11 @@ describe('Snapshot model', () => {
 
   test('Add annotation to snapshot with extra fields', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
 
     // Act
     const annotation = await snapshot.addAnnotation(
@@ -49,7 +57,11 @@ describe('Snapshot model', () => {
 
   test('Add annotation to snapshot with no fields', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
 
     // Act
     let error
@@ -65,7 +77,11 @@ describe('Snapshot model', () => {
 
   test('Add annotation to snapshot with missing field', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
 
     // Act
     let error
@@ -81,7 +97,11 @@ describe('Snapshot model', () => {
 
   test('Edit annotation in snapshot with no fields', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     // Act
@@ -95,7 +115,11 @@ describe('Snapshot model', () => {
 
   test('Edit annotation in snapshot with one field', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     // Act
@@ -111,7 +135,11 @@ describe('Snapshot model', () => {
 
   test('Edit annotation in snapshot with required fields', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     // Act
@@ -129,7 +157,11 @@ describe('Snapshot model', () => {
 
   test('Edit annotation in snapshot with non-existent annotation id throws error', async () => {
     // Arrange
-    const snapshot = new Snapshot({ name: 'testName', domain: 'testdomain.nl' })
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
     await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     const editAnnotation = async function () {
