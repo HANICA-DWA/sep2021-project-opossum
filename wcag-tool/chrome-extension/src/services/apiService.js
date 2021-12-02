@@ -27,6 +27,14 @@ export const api = createApi({
       invalidatesTags: ['Annotation'],
     }),
   }),
+  updateAnnotation: builder.mutation({
+    query: ({ snapshotId, annotationId, newFields }) => ({
+      url: `snapshots/${snapshotId}/annotations/${annotationId}`,
+      method: 'POST',
+      body: newFields,
+    }),
+    invalidatesTags: ['Annotation'],
+  }),
 })
 
 // Hooks
