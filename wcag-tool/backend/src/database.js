@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { GridFsStorage } = require('multer-gridfs-storage')
 const multer = require('multer')
+
 const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png']
 
 // Connect to MongoDB
