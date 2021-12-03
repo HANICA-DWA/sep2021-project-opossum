@@ -1,19 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import unique from 'unique-selector'
-import {
-  selectorHighlightElement,
-  selectorSelectElement,
-  setNewAnnotationSelector,
-  setSelectElement,
-} from '../../services/annotationSlice'
-import { setCreateSliderIsOpen } from '../../services/slidersSlice'
+import { useSliders } from '../../hooks'
 
 const IFrameWrapper = function () {
-  const selectElement = useSelector(selectorSelectElement)
+  // eslint-disable-next-line no-empty-pattern
+  const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
+  const { highlightedElementSelector } = useSelector((state) => state.annotation)
+
   const iframeDoc = useRef(undefined)
-  const dispatch = useDispatch()
-  const highlightElement = useSelector(selectorHighlightElement)
 
   const removeLink = (element) => {
     if (element.tagName === 'A') {
@@ -30,16 +25,10 @@ const IFrameWrapper = function () {
   }
 
   const createNewAnnotation = function (e) {
-    if (e.target !== this) {
-      return
-    }
-
-    dispatch(setSelectElement(false))
-    dispatch(setCreateSliderIsOpen(true))
+    if (e.target !== this) return
 
     const selector = unique(e.target)
-
-    dispatch(setNewAnnotationSelector(selector))
+    openCreateAndEditSlider(selector)
   }
 
   const createNewAnnotationOnClick = (element) => {
@@ -77,7 +66,7 @@ const IFrameWrapper = function () {
 
   useEffect(() => {
     if (iframeDoc.current) {
-      if (selectElement) {
+      if (elementSelectorIsOpen) {
         const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
         elements.forEach((element) => {
           AddBorderOnHover(element)
@@ -97,13 +86,16 @@ const IFrameWrapper = function () {
         RemoveEventListeners(element)
       })
     }
-  }, [selectElement])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [elementSelectorIsOpen])
 
   // highlight element based on selector in useEffect
   useEffect(() => {
     if (iframeDoc.current) {
-      if (highlightElement) {
-        const element = iframeDoc.current.contentWindow.document.querySelector(highlightElement)
+      if (highlightedElementSelector) {
+        const element = iframeDoc.current.contentWindow.document.querySelector(
+          highlightedElementSelector
+        )
         if (element) {
           element.style.outline = '3px solid blue'
         }
@@ -114,7 +106,7 @@ const IFrameWrapper = function () {
         })
       }
     }
-  }, [highlightElement])
+  }, [highlightedElementSelector])
 
   return <iframe id="myframe" title="snapshot" src="./html.html" className="h-screen w-full" />
 }

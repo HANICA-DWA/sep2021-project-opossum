@@ -1,20 +1,7 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  deleteAnnotation,
-  selectorSelectedAnnotation,
-  setHighlightElement,
-  setSelectedAnnotation,
-  unsetSelectedAnnotation,
-} from '../../services/annotationSlice'
-import {
-  selectorDetailSliderIsOpen,
-  setCreateSliderIsOpen,
-  setDetailSliderIsOpen,
-  setListSliderIsOpen,
-} from '../../services/slidersSlice'
+import { useAnnotation, useSliders } from '../../hooks'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -27,9 +14,9 @@ export function truncateStringAndCapitalize(num, str = '') {
 }
 
 const AnnotationDetailSlider = function () {
-  const annotation = useSelector(selectorSelectedAnnotation)
-  const isOpen = useSelector(selectorDetailSliderIsOpen)
-  const dispatch = useDispatch()
+  const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
+  const { selectedAnnotation } = useAnnotation()
+
   return (
     <SlidingPane
       closeIcon={
@@ -48,20 +35,16 @@ const AnnotationDetailSlider = function () {
           />
         </svg>
       }
-      isOpen={isOpen}
+      onRequestClose={openListSlider}
+      isOpen={detailsSliderIsOpen}
       title={
         <div className="grid grid-cols-6 rounded-l">
           <div className="col-span-5">
             <p className="text-base font-medium text-gray-900">
-              {truncateStringAndCapitalize(20, annotation?.title)}
+              {truncateStringAndCapitalize(20, selectedAnnotation?.title)}
             </p>
           </div>
-          <button
-            onClick={() => {
-              dispatch(setSelectedAnnotation(annotation))
-              dispatch(setCreateSliderIsOpen(true))
-            }}
-          >
+          <button onClick={() => openCreateAndEditSlider()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -74,24 +57,16 @@ const AnnotationDetailSlider = function () {
         </div>
       }
       from="left"
-      onRequestClose={() => {
-        dispatch(setDetailSliderIsOpen(false))
-        dispatch(setListSliderIsOpen(true))
-        dispatch(unsetSelectedAnnotation())
-        dispatch(setHighlightElement(''))
-      }}
       width="400px"
     >
-      {annotation?.description}
+      <p>{selectedAnnotation?.description}</p>
+
       <div className="flex justify-center">
         <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
           <button
             onClick={() => {
-              dispatch(deleteAnnotation(annotation?.title))
-              dispatch(setDetailSliderIsOpen(false))
-              dispatch(setListSliderIsOpen(true))
-              dispatch(unsetSelectedAnnotation())
-              dispatch(setHighlightElement(''))
+              // eslint-disable-next-line no-alert
+              alert('Delete annotation not implemented yet!')
             }}
             className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
           >

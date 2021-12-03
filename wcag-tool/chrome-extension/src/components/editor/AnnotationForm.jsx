@@ -13,7 +13,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
 
   const initialValues = {
-    successCriteriumId: selectedAnnotation?.successCriterium.successCriteriumId || '',
+    successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '',
     title: selectedAnnotation?.title || '',
     description: selectedAnnotation?.description || '',
   }
@@ -116,7 +116,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
           <button
             type="submit"
             className="py-1 px-5 text-lg rounded-lg focus:border-4 border-green-400 bg-green-700 text-gray-100 hover:bg-green-900"
-            disabled={!(dirty && isValid)}
+            disabled
           >
             {selectedAnnotation ? 'Save' : 'Create Annotation'}
           </button>
@@ -144,7 +144,7 @@ const TitleField = (props) => {
         (el) => el.successCriteriumId === successCriteriumId
       )
       // eslint-disable-next-line react/destructuring-assignment
-      setFieldValue(props.name, successCriterium.handle)
+      setFieldValue(props.name, successCriterium?.handle)
     }
     // eslint-disable-next-line react/destructuring-assignment, react-hooks/exhaustive-deps
   }, [successCriteriumId, touched.successCriteriumId, touched.title, setFieldValue, props.name])

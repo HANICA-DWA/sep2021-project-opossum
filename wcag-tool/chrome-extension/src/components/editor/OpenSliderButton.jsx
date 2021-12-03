@@ -1,13 +1,13 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { setListSliderIsOpen } from '../../services/annotationSlice'
+import { useSliders } from '../../hooks'
 
 const OpenSliderButton = function () {
-  const dispatch = useDispatch()
+  const [{ openListSlider }] = useSliders()
+
   return (
     <button className="absolute">
       <svg
-        onClick={() => dispatch(setListSliderIsOpen(true))}
+        onClick={openListSlider}
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
         fill="none"

@@ -1,22 +1,20 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
-import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
-import { useGetAnnotationsQuery } from '../../services/apiService'
-import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/slidersSlice'
-import { setSelectElement, unsetSelectedAnnotation } from '../../services/annotationSlice'
+import { useAnnotation, useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3') // TODO: replace with real snapshotId
-  const isOpen = useSelector(selectorListSliderIsOpen)
-  const dispatch = useDispatch()
+  const { annotations } = useAnnotation()
+  const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
+
   return (
     <SlidingPane
       width="400px"
@@ -37,7 +35,8 @@ const AnnotationListSlider = () => {
           />
         </svg>
       }
-      isOpen={isOpen}
+      onRequestClose={closeAllSliders}
+      isOpen={listSliderIsOpen}
       title={
         <>
           <div className="grid grid-flow-row">
@@ -48,14 +47,11 @@ const AnnotationListSlider = () => {
           </div>
           <div className="self-center">
             <button
-              onClick={() => {
-                dispatch(setSelectElement(true))
-                dispatch(unsetSelectedAnnotation())
-                dispatch(setListSliderIsOpen(false))
-              }}
+              onClick={openElementSelector}
               ref={setTriggerRef}
               className="text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200"
             >
+              {/* Create button! */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -79,10 +75,9 @@ const AnnotationListSlider = () => {
         </>
       }
       from="left"
-      onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
       {!annotations || annotations.length === 0 ? (
-        <NoAnnotation />
+        <NoAnnotation openElementSelector={openElementSelector} />
       ) : (
         <AnnotationList annotations={annotations} />
       )}

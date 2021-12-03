@@ -1,25 +1,23 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
-import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
+import { useDispatch } from 'react-redux'
+import { setHighlightedElementSelector } from '../../services/annotationSlice'
+import { useSliders } from '../../hooks'
 
 const AnnotationListItem = function ({ annotation }) {
-  const { successCriterium, title, description, selector } = annotation
+  const { _id, successCriterium, title, description, selector } = annotation
+
+  // eslint-disable-next-line no-empty-pattern
+  const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
 
   const dispatch = useDispatch()
-  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
 
   return (
     <div
-      onMouseEnter={() => dispatch(setHighlightElement(selector))}
+      onMouseEnter={() => dispatch(setHighlightedElementSelector(selector))}
       onMouseLeave={() => {
-        if (!detailSliderIsOpen) dispatch(setHighlightElement(''))
+        if (!detailsSliderIsOpen) dispatch(setHighlightedElementSelector(''))
       }}
-      onClick={() => {
-        dispatch(setSelectedAnnotation(annotation))
-        dispatch(setDetailSliderIsOpen(true))
-      }}
+      onClick={() => openDetailsSlider(_id)}
       className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
     >
       <div id="header" className="flex items-center mb-4">

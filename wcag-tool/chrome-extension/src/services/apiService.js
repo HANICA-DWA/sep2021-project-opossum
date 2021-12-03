@@ -18,7 +18,7 @@ export const api = createApi({
       query: (snapshotId) => `snapshots/${snapshotId}/annotations`,
       providesTags: ['Annotation'],
     }),
-    addAnnotation: builder.mutation({
+    createAnnotation: builder.mutation({
       query: ({ snapshotId, newAnnotation }) => ({
         url: `snapshots/${snapshotId}/annotations`,
         method: 'POST',
@@ -43,6 +43,6 @@ export const {
   useGetGuidelinesQuery,
   useGetSuccessCriteriaQuery,
   useGetAnnotationsQuery,
-  useAddAnnotationMutation,
+  useCreateAnnotationMutation,
   useUpdateAnnotationMutation,
 } = api
