@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setHighlightElement, setSelectedAnnotation } from '../../../services/annotationSlice'
 import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../../services/slidersSlice'
 
-const Annotation = function ({ title = '', description = '', selector = '' }) {
+const AnnotationListItem = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()
   const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
   return (
@@ -35,4 +35,4 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
   )
 }
 
-export default Annotation
+export default AnnotationListItem

@@ -1,9 +1,9 @@
 import React from 'react'
-import Annotation from './Annotation'
+import AnnotationListItem from './AnnotationListItem'
 
 const AnnotationList = function ({ annotations }) {
   return annotations.map(({ title, description, selector, _id }) => (
-    <Annotation key={_id} title={title} description={description} selector={selector} />
+    <AnnotationListItem key={_id} title={title} description={description} selector={selector} />
   ))
 }
 
