@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
 import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
 
+import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
+
 const AnnotationListItem = function ({ annotation }) {
   const { title, description, selector } = annotation
   const dispatch = useDispatch()
@@ -17,20 +19,27 @@ const AnnotationListItem = function ({ annotation }) {
         dispatch(setSelectedAnnotation(annotation))
         dispatch(setDetailSliderIsOpen(true))
       }}
-      className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
+      className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer"
     >
-      <div id="header" className="flex items-center mb-4">
-        <div id="header-text">
-          <h4 id="name" className="text-xl font-semibold">
-            {title}
-          </h4>
-          <h5 id="job" className="font-semibold text-blue-600">
-            Level AA
-          </h5>
+      <div className="pl-5 pr-3 pt-3 pb-4">
+        <div className="grid grid-cols-6">
+          <div className="col-span-5">
+            <div>
+              <p title={title} className="text-lg truncate font-poppins-semi">
+                {title}
+              </p>
+            </div>
+            {/* <div>
+              <p>Niveau AA</p>
+            </div> */}
+          </div>
+          <div className="flex justify-end pt-1">
+            <p className="text-gray-600">1d ago</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <p className="italic text-gray-600">{description}</p>
+        <div className="pt-4">
+          <p className="text-base overflowWrap">{truncateStringAndCapitalize(100, description)}</p>
+        </div>
       </div>
     </div>
   )

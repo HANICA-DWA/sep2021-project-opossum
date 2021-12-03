@@ -78,4 +78,8 @@
         width: 30rem;
     }
 
+    .overflowWrap {
+        overflow-wrap: anywhere;
+    }
+
 }
