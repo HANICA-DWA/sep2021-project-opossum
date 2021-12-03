@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import '../css/styles.css'
 
-import Header from './components/popup/header'
-import SnapshotBody from './components/popup/snapshotBody'
-import NavigationButtons from './components/popup/navigationButtons'
+import Header from '../components/popup/header'
+import SnapshotBody from '../components/popup/snapshotBody'
+import NavigationButtons from '../components/popup/navigationButtons'
 
 const Popup = function () {
   return (

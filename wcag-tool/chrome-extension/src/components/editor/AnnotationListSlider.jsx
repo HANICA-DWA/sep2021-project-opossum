@@ -3,11 +3,11 @@ import './react-sliding-pane.css'
 import SlidingPane from 'react-sliding-pane'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
-import { setSelectElement, unsetSelectedAnnotation } from '../../../services/annotationSlice'
+import { setSelectElement, unsetSelectedAnnotation } from '../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
-import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/slidersSlice'
-import { useGetAnnotationsQuery } from '../../../services/apiService'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/slidersSlice'
+import { useGetAnnotationsQuery } from '../../services/apiService'
 
 const AnnotationListSlider = () => {
   const { data: annotations } = useGetAnnotationsQuery('61a88e9c3ba0687ee717760d') // TODO: replace with real snapshotId
