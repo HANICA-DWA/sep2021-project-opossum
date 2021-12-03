@@ -5,7 +5,7 @@ import AnnotationListSlider from './AnnotationListSlider'
 import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
 import IFrameWrapper from './IFrameWrapper'
-import { selectorSelectedAnnotation } from '../../../services/annotationSlice'
+import { selectorSelectedAnnotation } from '../../services/annotationSlice'
 
 const App = () => {
   const annotation = useSelector(selectorSelectedAnnotation)

@@ -8,15 +8,15 @@ import {
   unsetNewAnnotationSelector,
   selectorNewAnnotation,
   setSelectedAnnotation,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 import ActionButton from '../common/ActionButton'
 import {
   selectorCreateSliderIsOpen,
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/slidersSlice'
-import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../../services/apiService'
+} from '../../services/slidersSlice'
+import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../services/apiService'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const [addAnnotation] = useAddAnnotationMutation()

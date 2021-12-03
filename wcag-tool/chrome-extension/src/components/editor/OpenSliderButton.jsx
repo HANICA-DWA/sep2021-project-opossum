@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { setListSliderIsOpen } from '../../../services/annotationSlice'
+import { setListSliderIsOpen } from '../../services/annotationSlice'
 
 const OpenSliderButton = function () {
   const dispatch = useDispatch()
