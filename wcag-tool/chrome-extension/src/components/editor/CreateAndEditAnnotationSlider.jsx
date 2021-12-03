@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import {
-  selectorNewAnnotation, setHighlightElement, setNewAnnotationSelector,
+  selectorNewAnnotation,
+  setHighlightElement,
   setSelectedAnnotation,
   unsetNewAnnotationSelector,
 } from '../../services/annotationSlice'
@@ -32,9 +33,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
     dispatch(setCreateSliderIsOpen(false))
     dispatch(setListSliderIsOpen(true))
     if (!annotation) {
-      dispatch(unsetNewAnnotationSelector())
       dispatch(setHighlightElement(''))
-      console.log('true')
     }
   }
   const selector = useSelector(selectorNewAnnotation)

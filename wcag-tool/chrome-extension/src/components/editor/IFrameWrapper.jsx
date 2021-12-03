@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import {
   selectorHighlightElement,
-  selectorSelectElement, setHighlightElement,
+  selectorSelectElement,
+  setHighlightElement,
   setNewAnnotationSelector,
   setSelectElement,
 } from '../../services/annotationSlice'

@@ -71,7 +71,7 @@ const AnnotationListSlider = () => {
                 />
               </svg>
             </button>
-           </div>
+          </div>
           <div className="self-center">
             {visible && (
               <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
