@@ -36,7 +36,6 @@ const AnnotationDetailSlider = function () {
     <SlidingPane
       className="hide-default-close 
                  remove-bottom-border 
-                 extra-margin 
                  remove-slide-plane-close-padding 
                  remove-slide-plane-content-padding 
                  remove-slide-plane-title-wrapper-margin 
