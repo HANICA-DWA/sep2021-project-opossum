@@ -3,7 +3,6 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  // deleteAnnotation,
   selectorSelectedAnnotation,
   setHighlightElement,
   setSelectedAnnotation,
@@ -13,7 +12,6 @@ import {
   selectorDetailSliderIsOpen,
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
-  setListSliderIsOpen,
 } from '../../services/slidersSlice'
 
 import IconButton from '../common/IconButton'
@@ -68,7 +66,6 @@ const AnnotationDetailSlider = function () {
               className="crossIcon p-0.5 ml-1"
               onClick={() => {
                 dispatch(setDetailSliderIsOpen(false))
-                dispatch(setListSliderIsOpen(true))
                 dispatch(unsetSelectedAnnotation())
                 dispatch(setHighlightElement(''))
               }}
@@ -77,23 +74,7 @@ const AnnotationDetailSlider = function () {
         </div>
       }
     >
-      <div className="pl-5 pr-8 py-5 text-sm">{annotation?.description}</div>
-      {/* <div className="flex justify-center">
-        <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
-          <button
-            onClick={() => {
-              dispatch(deleteAnnotation(annotation?.title))
-              dispatch(setDetailSliderIsOpen(false))
-              dispatch(setListSliderIsOpen(true))
-              dispatch(unsetSelectedAnnotation())
-              dispatch(setHighlightElement(''))
-            }}
-            className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
-          >
-            Delete annotation
-          </button>
-        </footer>
-      </div> */}
+      <div className="pl-5 pr-8 py-5">{annotation?.description}</div>
     </SlidingPane>
   )
 }
