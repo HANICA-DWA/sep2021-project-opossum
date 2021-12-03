@@ -6,6 +6,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import {
   selectorNewAnnotation,
+  setHighlightElement,
   setSelectedAnnotation,
   unsetNewAnnotationSelector,
 } from '../../services/annotationSlice'
@@ -31,6 +32,9 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const closeSliderCancel = () => {
     dispatch(setCreateSliderIsOpen(false))
     dispatch(setListSliderIsOpen(true))
+    if (!annotation) {
+      dispatch(setHighlightElement(''))
+    }
   }
   const selector = useSelector(selectorNewAnnotation)
 
