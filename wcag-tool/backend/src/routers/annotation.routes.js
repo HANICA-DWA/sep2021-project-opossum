@@ -6,10 +6,12 @@ const router = new Router()
 // add new annotation to the list of annotations in a snapshot
 router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-    const { successCriterium, title, description, selector } = req.body
+    console.log(req.body)
+
+    const { successCriteriumId, title, description, selector } = req.body
 
     const annotation = await req.snapshot.addAnnotation(
-      successCriterium,
+      successCriteriumId,
       title,
       description,
       selector

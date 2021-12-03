@@ -26,13 +26,13 @@ const snapshotSchema = new Schema(
 
 // eslint-disable-next-line func-names
 snapshotSchema.methods.addAnnotation = async function (
-  successCriterium,
+  successCriteriumId,
   title,
   description,
   selector
 ) {
   const annotation = new Annotation({
-    successCriterium,
+    successCriteriumId,
     title,
     description,
     selector,

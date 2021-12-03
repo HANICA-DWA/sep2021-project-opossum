@@ -3,9 +3,9 @@ const { successCriteriumSchema } = require('./wcag.model')
 
 const annotationSchema = new Schema(
   {
-    successCriterium: {
-      type: successCriteriumSchema,
-      required: true,
+    successCriteriumId: {
+      type: String,
+      ref: 'SuccessCriterium',
     },
     title: {
       type: String,

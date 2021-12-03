@@ -24,6 +24,7 @@
     "react-sliding-pane": "^7.1.0",
     "redux": "^4.1.2",
     "remote-redux-devtools": "^0.5.16",
+    "sqlite3": "^5.0.2",
     "unique-selector": "^0.5.0",
     "yup": "^0.32.11"
   },

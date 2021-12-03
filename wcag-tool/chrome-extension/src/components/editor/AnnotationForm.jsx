@@ -19,21 +19,16 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
   }
 
   const validationSchema = Yup.object().shape({
-    successCriteriumId: Yup.string().required('Required'),
+    successCriteriumId: Yup.string(),
     title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
     description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
   })
 
   const handleSubmit = async (successCriteriumId, title, description) => {
-    const selector = 'dummy selector'
-    const successCriterium = successCriteria.find(
-      (el) => el.successCriteriumId === successCriteriumId
-    )
-
     if (selectedAnnotation) {
-      handleUpdate(selectedAnnotation._id, { successCriterium, title, description, selector })
+      handleUpdate(selectedAnnotation._id, { successCriteriumId, title, description })
     } else {
-      handleCreate(successCriterium, title, description, selector)
+      handleCreate(successCriteriumId, title, description)
     }
   }
 
@@ -45,7 +40,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
         handleSubmit(successCriteriumId, title, description)
       }
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, dirty, isValid }) => (
         <Form>
           <label className="block text-gray-700 text-sm font-bold mb-2">
             WCAG
@@ -121,6 +116,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
           <button
             type="submit"
             className="py-1 px-5 text-lg rounded-lg focus:border-4 border-green-400 bg-green-700 text-gray-100 hover:bg-green-900"
+            disabled={!(dirty && isValid)}
           >
             {selectedAnnotation ? 'Save' : 'Create Annotation'}
           </button>
@@ -156,4 +152,5 @@ const TitleField = (props) => {
   return <Field {...props} {...field} />
 }
 
-export default AnnotationForm
+// eslint-disable-next-line import/prefer-default-export
+export { AnnotationForm }

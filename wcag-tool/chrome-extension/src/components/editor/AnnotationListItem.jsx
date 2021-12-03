@@ -1,20 +1,23 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import {
-  setDetailSliderIsOpen,
-  setHighlightElement,
-  setSelectedAnnotation,
-} from '../../services/annotationSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Annotation = function ({ title = '', description = '', selector = '' }) {
+import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
+import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
+
+const AnnotationListItem = function ({ annotation }) {
+  const { successCriterium, title, description, selector } = annotation
+
   const dispatch = useDispatch()
+  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
 
   return (
     <div
       onMouseEnter={() => dispatch(setHighlightElement(selector))}
-      onMouseLeave={() => dispatch(setHighlightElement(''))}
+      onMouseLeave={() => {
+        if (!detailSliderIsOpen) dispatch(setHighlightElement(''))
+      }}
       onClick={() => {
-        dispatch(setSelectedAnnotation({ title, description, selector }))
+        dispatch(setSelectedAnnotation(annotation))
         dispatch(setDetailSliderIsOpen(true))
       }}
       className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
@@ -25,7 +28,7 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
             {title}
           </h4>
           <h5 id="job" className="font-semibold text-blue-600">
-            Level AA
+            {successCriterium?.level || 'NO LEVEL DEFINED'}
           </h5>
         </div>
       </div>
@@ -36,4 +39,4 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
   )
 }
 
-export default Annotation
+export default AnnotationListItem

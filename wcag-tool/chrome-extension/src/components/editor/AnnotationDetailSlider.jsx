@@ -3,14 +3,18 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  selectDetailSliderIsOpen,
-  setDetailSliderIsOpen,
-  selectSelectedAnnotation,
   deleteAnnotation,
-  setSelectedAnnotation,
-  setEditSliderIsOpen,
+  selectorSelectedAnnotation,
   setHighlightElement,
+  setSelectedAnnotation,
+  unsetSelectedAnnotation,
 } from '../../services/annotationSlice'
+import {
+  selectorDetailSliderIsOpen,
+  setCreateSliderIsOpen,
+  setDetailSliderIsOpen,
+  setListSliderIsOpen,
+} from '../../services/slidersSlice'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -23,8 +27,8 @@ export function truncateStringAndCapitalize(num, str = '') {
 }
 
 const AnnotationDetailSlider = function () {
-  const annotation = useSelector(selectSelectedAnnotation)
-  const isOpen = useSelector(selectDetailSliderIsOpen)
+  const annotation = useSelector(selectorSelectedAnnotation)
+  const isOpen = useSelector(selectorDetailSliderIsOpen)
   const dispatch = useDispatch()
   return (
     <SlidingPane
@@ -49,13 +53,13 @@ const AnnotationDetailSlider = function () {
         <div className="grid grid-cols-6 rounded-l">
           <div className="col-span-5">
             <p className="text-base font-medium text-gray-900">
-              {truncateStringAndCapitalize(20, annotation.title)}
+              {truncateStringAndCapitalize(20, annotation?.title)}
             </p>
           </div>
           <button
             onClick={() => {
               dispatch(setSelectedAnnotation(annotation))
-              dispatch(setEditSliderIsOpen(true))
+              dispatch(setCreateSliderIsOpen(true))
             }}
           >
             <svg
@@ -70,16 +74,23 @@ const AnnotationDetailSlider = function () {
         </div>
       }
       from="left"
-      onRequestClose={() => dispatch(setDetailSliderIsOpen(false))}
+      onRequestClose={() => {
+        dispatch(setDetailSliderIsOpen(false))
+        dispatch(setListSliderIsOpen(true))
+        dispatch(unsetSelectedAnnotation())
+        dispatch(setHighlightElement(''))
+      }}
       width="400px"
     >
-      {annotation.description}
+      {annotation?.description}
       <div className="flex justify-center">
         <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
           <button
             onClick={() => {
-              dispatch(deleteAnnotation(annotation.title))
+              dispatch(deleteAnnotation(annotation?.title))
               dispatch(setDetailSliderIsOpen(false))
+              dispatch(setListSliderIsOpen(true))
+              dispatch(unsetSelectedAnnotation())
               dispatch(setHighlightElement(''))
             }}
             className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"

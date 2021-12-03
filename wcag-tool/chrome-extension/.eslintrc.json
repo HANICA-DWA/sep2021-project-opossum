@@ -26,6 +26,7 @@
     "func-names": 0,
     "import/named": 0,
     "import/export": "off",
+    "no-underscore-dangle": 0,
     "react/function-component-definition": 0,
     "react/prop-types": 0,
     "jsx-a11y/click-events-have-key-events": 0,
