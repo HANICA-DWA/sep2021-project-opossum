@@ -3,14 +3,18 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  selectDetailSliderIsOpen,
-  setDetailSliderIsOpen,
-  selectSelectedAnnotation,
-  setSelectedAnnotation,
-  setEditSliderIsOpen,
   // deleteAnnotation,
-  // setHighlightElement,
+  selectorSelectedAnnotation,
+  setHighlightElement,
+  setSelectedAnnotation,
+  unsetSelectedAnnotation,
 } from '../../../services/annotationSlice'
+import {
+  selectorDetailSliderIsOpen,
+  // setCreateSliderIsOpen,
+  setDetailSliderIsOpen,
+  setListSliderIsOpen,
+} from '../../../services/slidersSlice'
 
 import IconButton from '../common/IconButton'
 
@@ -25,8 +29,8 @@ export function truncateStringAndCapitalize(num, str = '') {
 }
 
 const AnnotationDetailSlider = function () {
-  const annotation = useSelector(selectSelectedAnnotation)
-  const isOpen = useSelector(selectDetailSliderIsOpen)
+  const annotation = useSelector(selectorSelectedAnnotation)
+  const isOpen = useSelector(selectorDetailSliderIsOpen)
   const dispatch = useDispatch()
   return (
     <SlidingPane
@@ -59,7 +63,12 @@ const AnnotationDetailSlider = function () {
             />
             <IconButton
               className="crossIcon p-0.5 ml-1"
-              onClick={() => dispatch(setDetailSliderIsOpen(false))}
+              onClick={() => { 
+                dispatch(setDetailSliderIsOpen(false))
+                dispatch(setListSliderIsOpen(true))
+                dispatch(unsetSelectedAnnotation())
+                dispatch(setHighlightElement(''))
+              }}
             />
           </div>
         </div>
@@ -70,8 +79,10 @@ const AnnotationDetailSlider = function () {
         <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
           <button
             onClick={() => {
-              dispatch(deleteAnnotation(annotation.title))
+              dispatch(deleteAnnotation(annotation?.title))
               dispatch(setDetailSliderIsOpen(false))
+              dispatch(setListSliderIsOpen(true))
+              dispatch(unsetSelectedAnnotation())
               dispatch(setHighlightElement(''))
             }}
             className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"

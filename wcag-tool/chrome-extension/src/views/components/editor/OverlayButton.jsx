@@ -1,14 +1,20 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setListSliderIsOpen, setSelectElement } from '../../../services/annotationSlice'
+import { selectorSelectElement, setSelectElement } from '../../../services/annotationSlice'
 import FloatButton from '../common/FloatButton'
+import {
+  selectorCreateSliderIsOpen,
+  selectorDetailSliderIsOpen,
+  selectorListSliderIsOpen,
+  setListSliderIsOpen,
+} from '../../../services/slidersSlice'
 
 const OverlayButton = function () {
   const dispatch = useDispatch()
-  const selectElement = useSelector((state) => state.annotation.selectElement)
-  const listSliderIsOpen = useSelector((state) => state.annotation.listSliderIsOpen)
-  const createSliderIsOpen = useSelector((state) => state.annotation.createSliderIsOpen)
-  const detailSliderIsOpen = useSelector((state) => state.annotation.detailSliderIsOpen)
+  const selectElement = useSelector(selectorSelectElement)
+  const listSliderIsOpen = useSelector(selectorListSliderIsOpen)
+  const createSliderIsOpen = useSelector(selectorCreateSliderIsOpen)
+  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
   const isSliderOpen = selectElement || listSliderIsOpen || createSliderIsOpen || detailSliderIsOpen
 
   return (

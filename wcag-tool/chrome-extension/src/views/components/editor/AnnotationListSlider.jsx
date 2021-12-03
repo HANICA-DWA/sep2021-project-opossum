@@ -3,18 +3,15 @@ import './react-sliding-pane.css'
 import SlidingPane from 'react-sliding-pane'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
-import {
-  selectAnnotations,
-  selectListSliderIsOpen,
-  setListSliderIsOpen,
-  setSelectElement,
-} from '../../../services/annotationSlice'
+import { setSelectElement, unsetSelectedAnnotation } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../../services/slidersSlice'
+import { useGetAnnotationsQuery } from '../../../services/apiService'
 
-const AnnotationSlider = () => {
-  const annotations = useSelector(selectAnnotations)
-  const isOpen = useSelector(selectListSliderIsOpen)
+const AnnotationListSlider = () => {
+  const { data: annotations } = useGetAnnotationsQuery('61a88e9c3ba0687ee717760d') // TODO: replace with real snapshotId
+  const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
@@ -51,6 +48,7 @@ const AnnotationSlider = () => {
             <button
               onClick={() => {
                 dispatch(setSelectElement(true))
+                dispatch(unsetSelectedAnnotation())
                 dispatch(setListSliderIsOpen(false))
               }}
               ref={setTriggerRef}
@@ -81,9 +79,13 @@ const AnnotationSlider = () => {
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
-      {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
+      {!annotations || annotations.length === 0 ? (
+        <NoAnnotation />
+      ) : (
+        <AnnotationList annotations={annotations} />
+      )}
     </SlidingPane>
   )
 }
 
-export default AnnotationSlider
+export default AnnotationListSlider
