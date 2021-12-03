@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { setSelectElement } from '../../../services/annotationSlice'
+import { setSelectElement } from '../../services/annotationSlice'
 import DefaultButton from '../common/DefaultButton'
-import { setListSliderIsOpen } from '../../../services/slidersSlice'
+import { setListSliderIsOpen } from '../../services/slidersSlice'
 
 const NoAnnotation = function () {
   const dispatch = useDispatch()

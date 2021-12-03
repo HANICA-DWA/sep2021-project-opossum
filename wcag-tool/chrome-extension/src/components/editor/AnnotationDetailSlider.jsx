@@ -8,13 +8,13 @@ import {
   setHighlightElement,
   setSelectedAnnotation,
   unsetSelectedAnnotation,
-} from '../../../services/annotationSlice'
+} from '../../services/annotationSlice'
 import {
   selectorDetailSliderIsOpen,
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
   setListSliderIsOpen,
-} from '../../../services/slidersSlice'
+} from '../../services/slidersSlice'
 
 import IconButton from '../common/IconButton'
 
