@@ -71,18 +71,7 @@ const AnnotationListSlider = () => {
                 />
               </svg>
             </button>
-            {/* <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
-              <IconButton
-                title="Add annotation"
-                ref={setTriggerRef}
-                className="plusIcon"
-                onClick={() => {
-                  dispatch(setSelectElement(true))
-                  dispatch(setListSliderIsOpen(false))
-                }}
-              />
-            </div> */}
-          </div>
+           </div>
           <div className="self-center">
             {visible && (
               <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
