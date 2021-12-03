@@ -14,7 +14,6 @@ import {
   selectorCreateSliderIsOpen,
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
-  setListSliderIsOpen,
 } from '../../services/slidersSlice'
 import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../services/apiService'
 
@@ -25,7 +24,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const isOpen = useSelector(selectorCreateSliderIsOpen)
   const closeSlider = () => {
     dispatch(setCreateSliderIsOpen(false))
-    dispatch(setListSliderIsOpen(true))
+    dispatch(setDetailSliderIsOpen(true))
   }
   const selector = useSelector(selectorNewAnnotation)
 
@@ -39,7 +38,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
           <span className="text-gray-900 text-base font-poppins">
             {`${annotation ? 'Edit' : 'Create'} Annotation`}
           </span>
-          <button className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
+          <button title="Close" className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -63,7 +62,6 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
     >
       <Formik
         onSubmit={({ title, description }) => {
-          closeSlider()
           if (annotation) {
             updateAnnotation({
               snapshotId: '61a88e9c3ba0687ee717760d',
@@ -73,6 +71,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
               .unwrap()
               .then((updatedAnnotation) => {
                 dispatch(setSelectedAnnotation(updatedAnnotation))
+                closeSlider()
               })
               .catch((e) => console.log(e))
           } else {
@@ -84,7 +83,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
               .then((newAnnotation) => {
                 dispatch(unsetNewAnnotationSelector())
                 dispatch(setSelectedAnnotation(newAnnotation))
-                dispatch(setDetailSliderIsOpen(true))
+                closeSlider()
               })
               .catch((e) => console.log(e))
           }
