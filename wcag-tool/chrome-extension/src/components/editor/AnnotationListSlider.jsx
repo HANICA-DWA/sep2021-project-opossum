@@ -25,15 +25,7 @@ const AnnotationListSlider = () => {
       shouldCloseOnEsc
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
-      closeIcon={
-        <IconButton
-          title="Close Menu"
-          className="arrowLeftIcon"
-          onClick={() => {
-            dispatch(setSelectElement(true))
-            dispatch(setListSliderIsOpen(false))
-          }}
-        />
+      closeIcon={ <IconButton title="Close Menu" className="arrowLeftIcon" onClick={() => { dispatch(setSelectElement(true)); dispatch(setListSliderIsOpen(false)) }} />
       }
       isOpen={isOpen}
       title={
@@ -71,7 +63,7 @@ const AnnotationListSlider = () => {
                 />
               </svg>
             </button>
-           </div>
+          </div>
           <div className="self-center">
             {visible && (
               <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
