@@ -29,10 +29,6 @@ const AnnotationListSlider = () => {
         <IconButton
           title="Close Menu"
           className="arrowLeftIcon"
-          onClick={() => {
-            dispatch(setSelectElement(true))
-            dispatch(setListSliderIsOpen(false))
-          }}
         />
       }
       isOpen={isOpen}
