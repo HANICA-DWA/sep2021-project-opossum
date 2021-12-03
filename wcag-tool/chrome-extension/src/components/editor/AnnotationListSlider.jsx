@@ -25,7 +25,7 @@ const AnnotationListSlider = () => {
       shouldCloseOnEsc
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
-      closeIcon={ <IconButton title="Close Menu" className="arrowLeftIcon" /> }
+      closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
       isOpen={isOpen}
       title={
         <div className="grid grid-cols-6 items-center pr-3">
