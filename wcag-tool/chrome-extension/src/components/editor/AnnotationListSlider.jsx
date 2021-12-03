@@ -19,7 +19,9 @@ const AnnotationListSlider = () => {
   return (
     <SlidingPane
       width="400px"
-      className="remove-slide-plane-content-padding"
+      className="remove-slide-plane-content-padding
+                 font-poppins
+                 text-gray-700"
       shouldCloseOnEsc
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
@@ -37,7 +39,7 @@ const AnnotationListSlider = () => {
       title={
         <div className="grid grid-cols-6 items-center pr-3">
           <div className="col-span-5">
-            <div className="text-base ">
+            <div className="text-base">
               <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">Nu.nl Homepage text is way too long for the pane</p>
             </div>
             <div>
@@ -47,6 +49,7 @@ const AnnotationListSlider = () => {
           <div className="flex justify-end">
             <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
               <IconButton
+                title="Add annotation"
                 ref={setTriggerRef}
                 className="plusIcon" 
                 onClick={() => {
