@@ -41,8 +41,8 @@
         background-image: url(../img/icon/arrow-left.svg);
         background-size: contain;
 		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
+		height: 30px;
+		width: 30px;
     }
 
     .crossIcon {
@@ -76,6 +76,10 @@
     .customSize {
         height: 37rem;
         width: 30rem;
+    }
+
+    .overflowWrap {
+        overflow-wrap: anywhere;
     }
 
 }

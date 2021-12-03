@@ -8,14 +8,14 @@ import IFrameWrapper from './IFrameWrapper'
 
 const App = () => {
   return (
-    <>
+    <div className="font-poppins text-gray-900">
       <OverlayButton />
       <AnnotationSlider />
       <CreateAnnotationSlider />
       <AnnotationDetailSlider />
       <EditAnnotationSlider />
       <IFrameWrapper />
-    </>
+    </ div>
   )
 }
 

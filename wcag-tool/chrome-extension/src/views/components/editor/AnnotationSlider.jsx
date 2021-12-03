@@ -11,6 +11,7 @@ import {
 } from '../../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
+import IconButton from '../common/IconButton'
 
 const AnnotationSlider = () => {
   const annotations = useSelector(selectAnnotations)
@@ -21,66 +22,51 @@ const AnnotationSlider = () => {
   return (
     <SlidingPane
       width="400px"
+      className="remove-slide-plane-content-padding"
       shouldCloseOnEsc
+      from="left"
+      onRequestClose={() => dispatch(setListSliderIsOpen(false))}
       closeIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-gray-700"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
+        <IconButton 
+          className="arrowLeftIcon" 
+          onClick={() => {
+            dispatch(setSelectElement(true))
+            dispatch(setListSliderIsOpen(false))
+          }}
+        />
       }
       isOpen={isOpen}
       title={
-        <>
-          <div className="grid grid-flow-row">
-            <span className="text-base font-medium text-gray-900 self-end truncate">
-              {/* <p title="Nu.nl Homepage text is way too long for the pane">Nu.nl Homepage text is way too long for the pane</p> */}
-              Nu.nl Homepage text is way too long for the pane
-            </span>
-            <span className="mt-1 text-sm text-gray-500 self-start truncate">1 Jan 2021</span>
+        <div className="grid grid-cols-6 items-center pr-3">
+          <div className="col-span-5">
+            <div className="text-base ">
+              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">Nu.nl Homepage text is way too long for the pane</p>
+            </div>
+            <div>
+              <p className="mt-1 text-sm text-gray-500">1 Jan 2021</p>
+            </div>
           </div>
-          <div className="self-center">
-            <button
-              onClick={() => {
-                dispatch(setSelectElement(true))
-                dispatch(setListSliderIsOpen(false))
-              }}
-              ref={setTriggerRef}
-              className="text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            {visible && (
-              <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
-                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-                Create Annotation
+          <div className="flex justify-end">
+            <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
+              <IconButton 
+                className="plusIcon" 
+                onClick={() => {
+                  dispatch(setSelectElement(true))
+                  dispatch(setListSliderIsOpen(false))
+                }}
+              />
               </div>
-            )}
-          </div>
-        </>
+            </div>
+            <div className="self-center">
+              {visible && (
+                <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
+                  <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+                  Create Annotation
+                </div>
+              )}
+            </div>
+        </div>
       }
-      from="left"
-      onRequestClose={() => dispatch(setListSliderIsOpen(false))}
     >
       {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
     </SlidingPane>

@@ -27,26 +27,24 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
         dispatch(setSelectedAnnotation({ title, description, selector }))
         dispatch(setDetailSliderIsOpen(true))
       }}
-      className="max-w-sm px-2 py-1 bg-white border-2 border-gray-300 rounded-md tracking-wide shadow-md hover:bg-gray-100 cursor-pointer"
+      className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer font-poppins text-gray-900"
     >
-      <div className="pl-4 pr-2 py-2">
-        <div className="mb-4">
-          <div className="flex justify-between">
-            <div className="">
-              <p className="text-xl font-semibold">{title}</p>
+      <div className="pl-5 pr-3 pt-3 pb-4">
+        <div className="grid grid-cols-6">
+          <div className="col-span-5">
+            <div>
+              <p title={title} className="text-lg truncate font-poppins-semi text-gray-900">{title}</p>
             </div>
-            <div className="">
-              <p>1d ago</p>
+            <div>
+              <p>Niveau AA</p>
             </div>
           </div>
-          <div className="">
-            <p>Niveau AA</p>
+          <div className="flex justify-end pt-1">
+            <p className="text-gray-600">1d ago</p>
           </div>
         </div>
-        <div>
-          <p className="italic text-gray-600">
-            {truncateStringAndCapitalize(250, description)}
-          </p>
+        <div className="pt-4">
+          <p className="text-base overflowWrap">{truncateStringAndCapitalize(100, description)}</p>
         </div>
       </div>
     </div>
