@@ -3,19 +3,16 @@ import './react-sliding-pane.css'
 import SlidingPane from 'react-sliding-pane'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
-import {
-  selectAnnotations,
-  selectListSliderIsOpen,
-  setListSliderIsOpen,
-  setSelectElement,
-} from '../../../services/annotationSlice'
+import { setSelectElement, unsetSelectedAnnotation } from '../../services/annotationSlice'
 import NoAnnotation from './NoAnnotation'
 import AnnotationList from './AnnotationList'
 import IconButton from '../common/IconButton'
+import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/slidersSlice'
+import { useGetAnnotationsQuery } from '../../services/apiService'
 
-const AnnotationSlider = () => {
-  const annotations = useSelector(selectAnnotations)
-  const isOpen = useSelector(selectListSliderIsOpen)
+const AnnotationListSlider = () => {
+  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3') // TODO: replace with real snapshotId
+  const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
@@ -27,7 +24,8 @@ const AnnotationSlider = () => {
       from="left"
       onRequestClose={() => dispatch(setListSliderIsOpen(false))}
       closeIcon={
-        <IconButton 
+        <IconButton
+          title="Close Menu"
           className="arrowLeftIcon" 
           onClick={() => {
             dispatch(setSelectElement(true))
@@ -48,7 +46,8 @@ const AnnotationSlider = () => {
           </div>
           <div className="flex justify-end">
             <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
-              <IconButton 
+              <IconButton
+                ref={setTriggerRef}
                 className="plusIcon" 
                 onClick={() => {
                   dispatch(setSelectElement(true))
@@ -68,9 +67,13 @@ const AnnotationSlider = () => {
         </div>
       }
     >
-      {annotations.length === 0 ? <NoAnnotation /> : <AnnotationList annotations={annotations} />}
+      {!annotations || annotations.length === 0 ? (
+        <NoAnnotation />
+      ) : (
+        <AnnotationList annotations={annotations} />
+      )}
     </SlidingPane>
   )
 }
 
-export default AnnotationSlider
+export default AnnotationListSlider

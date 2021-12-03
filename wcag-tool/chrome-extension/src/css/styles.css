@@ -41,24 +41,24 @@
         background-image: url(../img/icon/arrow-left.svg);
         background-size: contain;
 		background-repeat: no-repeat;
-		height: 30px;
-		width: 30px;
+		height: 25px;
+		width: 25px;
     }
 
     .crossIcon {
         background-image: url(../img/icon/cross.svg);
         background-size: contain;
 		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
+		height: 20px;
+		width: 20px;
     }
 
     .pencilIcon {
         background-image: url(../img/icon/pencil.svg);
         background-size: contain;
 		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
+		height: 20px;
+		width: 20px;
     }
 
     .plusIcon {

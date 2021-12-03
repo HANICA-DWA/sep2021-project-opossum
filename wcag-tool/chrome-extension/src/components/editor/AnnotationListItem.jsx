@@ -1,10 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import {
-  setDetailSliderIsOpen,
-  setHighlightElement,
-  setSelectedAnnotation,
-} from '../../../services/annotationSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
+import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
 
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
@@ -16,15 +13,18 @@ export function truncateStringAndCapitalize(num, str = '') {
   return `${str.slice(0, num)}...`
 }
 
-const Annotation = function ({ title = '', description = '', selector = '' }) {
+const AnnotationListItem = function ({ annotation }) {
+  const { title, description, selector } = annotation
   const dispatch = useDispatch()
-
+  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
   return (
     <div
       onMouseEnter={() => dispatch(setHighlightElement(selector))}
-      onMouseLeave={() => dispatch(setHighlightElement(''))}
+      onMouseLeave={() => {
+        if (!detailSliderIsOpen) dispatch(setHighlightElement(''))
+      }}
       onClick={() => {
-        dispatch(setSelectedAnnotation({ title, description, selector }))
+        dispatch(setSelectedAnnotation(annotation))
         dispatch(setDetailSliderIsOpen(true))
       }}
       className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer font-poppins text-gray-900"
@@ -51,4 +51,4 @@ const Annotation = function ({ title = '', description = '', selector = '' }) {
   )
 }
 
-export default Annotation
+export default AnnotationListItem
