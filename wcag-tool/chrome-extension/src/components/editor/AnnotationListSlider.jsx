@@ -28,7 +28,7 @@ const AnnotationListSlider = () => {
       closeIcon={
         <IconButton
           title="Close Menu"
-          className="arrowLeftIcon" 
+          className="arrowLeftIcon"
           onClick={() => {
             dispatch(setSelectElement(true))
             dispatch(setListSliderIsOpen(false))
@@ -51,22 +51,22 @@ const AnnotationListSlider = () => {
               <IconButton
                 title="Add annotation"
                 ref={setTriggerRef}
-                className="plusIcon" 
+                className="plusIcon"
                 onClick={() => {
                   dispatch(setSelectElement(true))
                   dispatch(setListSliderIsOpen(false))
                 }}
               />
+            </div>
+          </div>
+          <div className="self-center">
+            {visible && (
+              <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
+                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+                Create Annotation
               </div>
-            </div>
-            <div className="self-center">
-              {visible && (
-                <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
-                  <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-                  Create Annotation
-                </div>
-              )}
-            </div>
+            )}
+          </div>
         </div>
       }
     >
