@@ -8,7 +8,6 @@ import {
   unsetNewAnnotationSelector,
   selectorNewAnnotation,
   setSelectedAnnotation,
-  updateAnnotation,
 } from '../../../services/annotationSlice'
 import ActionButton from '../common/ActionButton'
 import {
@@ -17,10 +16,11 @@ import {
   setDetailSliderIsOpen,
   setListSliderIsOpen,
 } from '../../../services/slidersSlice'
-import { useAddAnnotationMutation } from '../../../services/apiService'
+import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../../services/apiService'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const [addAnnotation] = useAddAnnotationMutation()
+  const [updateAnnotation] = useUpdateAnnotationMutation()
   const dispatch = useDispatch()
   const isOpen = useSelector(selectorCreateSliderIsOpen)
   const closeSlider = () => {
@@ -65,8 +65,16 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
         onSubmit={({ title, description }) => {
           closeSlider()
           if (annotation) {
-            dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
-            dispatch(setSelectedAnnotation({ title, description, selector: annotation.selector }))
+            updateAnnotation({
+              snapshotId: '61a88e9c3ba0687ee717760d',
+              annotationId: annotation._id,
+              newFields: { title, description },
+            })
+              .unwrap()
+              .then((updatedAnnotation) => {
+                dispatch(setSelectedAnnotation(updatedAnnotation))
+              })
+              .catch((e) => console.log(e))
           } else {
             addAnnotation({
               snapshotId: '61a88e9c3ba0687ee717760d',

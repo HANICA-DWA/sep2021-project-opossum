@@ -26,6 +26,14 @@ export const api = createApi({
       }),
       invalidatesTags: ['Annotation'],
     }),
+    updateAnnotation: builder.mutation({
+      query: ({ snapshotId, annotationId, newFields }) => ({
+        url: `snapshots/${snapshotId}/annotations/${annotationId}`,
+        method: 'PATCH',
+        body: newFields,
+      }),
+      invalidatesTags: ['Annotation'],
+    }),
   }),
 })
 
@@ -36,4 +44,5 @@ export const {
   useGetSuccessCriteriaQuery,
   useGetAnnotationsQuery,
   useAddAnnotationMutation,
+  useUpdateAnnotationMutation,
 } = api

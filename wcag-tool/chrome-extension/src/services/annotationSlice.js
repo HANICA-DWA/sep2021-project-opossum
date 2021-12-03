@@ -35,16 +35,6 @@ export const annotationSlice = createSlice({
         (annotation) => annotation.title !== action.payload
       )
     },
-    updateAnnotation: (state, action) => {
-      state.annotations = state.annotations.map((annotation) =>
-        annotation.title === action.payload.oldTitle
-          ? {
-              ...annotation,
-              ...action.payload,
-            }
-          : annotation
-      )
-    },
   },
 })
 
@@ -61,6 +51,5 @@ export const {
   setHighlightElement,
   setSelectedAnnotation,
   deleteAnnotation,
-  updateAnnotation,
   unsetSelectedAnnotation,
 } = annotationSlice.actions
