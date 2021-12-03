@@ -3,15 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
 import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
 
-export function truncateStringAndCapitalize(num, str = '') {
-  const newString = str.charAt(0).toUpperCase() + str.slice(1)
-
-  if (newString.length <= num) {
-    return newString
-  }
-
-  return `${str.slice(0, num)}...`
-}
+import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
 
 const AnnotationListItem = function ({ annotation }) {
   const { title, description, selector } = annotation
@@ -33,11 +25,13 @@ const AnnotationListItem = function ({ annotation }) {
         <div className="grid grid-cols-6">
           <div className="col-span-5">
             <div>
-              <p title={title} className="text-lg truncate font-poppins-semi">{title}</p>
+              <p title={title} className="text-lg truncate font-poppins-semi">
+                {title}
+              </p>
             </div>
-            <div>
+            {/* <div>
               <p>Niveau AA</p>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-end pt-1">
             <p className="text-gray-600">1d ago</p>

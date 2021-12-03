@@ -40,14 +40,38 @@ const AnnotationListSlider = () => {
         <div className="grid grid-cols-6 items-center pr-3">
           <div className="col-span-5">
             <div className="text-base">
-              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">Nu.nl Homepage text is way too long for the pane</p>
+              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
+                Nu.nl Homepage text is way too long for the pane
+              </p>
             </div>
             <div>
               <p className="mt-1 text-sm text-gray-500">1 Jan 2021</p>
             </div>
           </div>
           <div className="flex justify-end">
-            <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
+            <button
+              onClick={() => {
+                dispatch(setSelectElement(true))
+                dispatch(unsetSelectedAnnotation())
+                dispatch(setListSliderIsOpen(false))
+              }}
+              ref={setTriggerRef}
+              className="text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {/* <div className="flex p-1.5 items-center border border-gray-500 rounded-full hover:bg-gray-200">
               <IconButton
                 title="Add annotation"
                 ref={setTriggerRef}
@@ -57,7 +81,7 @@ const AnnotationListSlider = () => {
                   dispatch(setListSliderIsOpen(false))
                 }}
               />
-            </div>
+            </div> */}
           </div>
           <div className="self-center">
             {visible && (
