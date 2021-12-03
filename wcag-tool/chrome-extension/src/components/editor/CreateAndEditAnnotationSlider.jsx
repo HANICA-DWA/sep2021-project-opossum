@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import {
-  unsetNewAnnotationSelector,
   selectorNewAnnotation,
   setSelectedAnnotation,
+  unsetNewAnnotationSelector,
 } from '../../services/annotationSlice'
 import ActionButton from '../common/ActionButton'
 import {
   selectorCreateSliderIsOpen,
   setCreateSliderIsOpen,
   setDetailSliderIsOpen,
+  setListSliderIsOpen,
 } from '../../services/slidersSlice'
 import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../services/apiService'
 
@@ -22,9 +23,14 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const [updateAnnotation] = useUpdateAnnotationMutation()
   const dispatch = useDispatch()
   const isOpen = useSelector(selectorCreateSliderIsOpen)
-  const closeSlider = () => {
+  const closeSliderSuccess = () => {
     dispatch(setCreateSliderIsOpen(false))
+    dispatch(setListSliderIsOpen(true))
     dispatch(setDetailSliderIsOpen(true))
+  }
+  const closeSliderCancel = () => {
+    dispatch(setCreateSliderIsOpen(false))
+    dispatch(setListSliderIsOpen(true))
   }
   const selector = useSelector(selectorNewAnnotation)
 
@@ -38,7 +44,11 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
           <span className="text-gray-900 text-base font-poppins">
             {`${annotation ? 'Edit' : 'Create'} Annotation`}
           </span>
-          <button title="Close" className="text-gray-600 px-4 py-1" onClick={() => closeSlider()}>
+          <button
+            title="Close"
+            className="text-gray-600 px-4 py-1"
+            onClick={() => closeSliderCancel()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -57,33 +67,33 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
         </div>
       }
       from="left"
-      onRequestClose={() => closeSlider()}
+      onRequestClose={() => closeSliderCancel()}
       width="400px"
     >
       <Formik
         onSubmit={({ title, description }) => {
           if (annotation) {
             updateAnnotation({
-              snapshotId: '61a88e9c3ba0687ee717760d',
+              snapshotId: '61a9f47fe84cdb57824daed3',
               annotationId: annotation._id,
               newFields: { title, description },
             })
               .unwrap()
               .then((updatedAnnotation) => {
                 dispatch(setSelectedAnnotation(updatedAnnotation))
-                closeSlider()
+                closeSliderSuccess()
               })
               .catch((e) => console.log(e))
           } else {
             addAnnotation({
-              snapshotId: '61a88e9c3ba0687ee717760d',
+              snapshotId: '61a9f47fe84cdb57824daed3',
               newAnnotation: { title, description, selector },
             })
               .unwrap()
               .then((newAnnotation) => {
                 dispatch(unsetNewAnnotationSelector())
                 dispatch(setSelectedAnnotation(newAnnotation))
-                closeSlider()
+                closeSliderSuccess()
               })
               .catch((e) => console.log(e))
           }
@@ -134,7 +144,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
               </div>
             ) : (
               <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
-                <ActionButton onClick={() => closeSlider()} type="cancel">
+                <ActionButton onClick={() => closeSliderCancel()} type="cancel">
                   Cancel
                 </ActionButton>
                 <ActionButton disabled={!(dirty && isValid)} type="submit">
