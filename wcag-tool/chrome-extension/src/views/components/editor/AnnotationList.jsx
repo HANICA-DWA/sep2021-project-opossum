@@ -1,5 +1,5 @@
 import React from 'react'
-import Annotation from './Annotation'
+import AnnotationListItem from './AnnotationListItem'
 
 const AnnotationList = function ({ annotations }) {
   return annotations.map((annotation) => (

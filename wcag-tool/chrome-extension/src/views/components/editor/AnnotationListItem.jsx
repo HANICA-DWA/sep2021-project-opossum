@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setHighlightElement, setSelectedAnnotation } from '../../../services/annotationSlice'
 import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../../services/slidersSlice'
 
-const Annotation = function ({ annotation }) {
-  const { title, description, selector } = annotation
+const AnnotationListItem = function ({ title = '', description = '', selector = '' }) {
   const dispatch = useDispatch()
   const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
   return (
@@ -14,7 +13,7 @@ const Annotation = function ({ annotation }) {
         if (!detailSliderIsOpen) dispatch(setHighlightElement(''))
       }}
       onClick={() => {
-        dispatch(setSelectedAnnotation(annotation))
+        dispatch(setSelectedAnnotation({ title, description, selector }))
         dispatch(setDetailSliderIsOpen(true))
       }}
       className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
@@ -36,4 +35,4 @@ const Annotation = function ({ annotation }) {
   )
 }
 
-export default Annotation
+export default AnnotationListItem
