@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import {
-  addAnnotation,
   unsetNewAnnotationSelector,
   selectorNewAnnotation,
   setSelectedAnnotation,
@@ -18,8 +17,10 @@ import {
   setDetailSliderIsOpen,
   setListSliderIsOpen,
 } from '../../../services/slidersSlice'
+import { useAddAnnotationMutation } from '../../../services/apiService'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
+  const [addAnnotation] = useAddAnnotationMutation()
   const dispatch = useDispatch()
   const isOpen = useSelector(selectorCreateSliderIsOpen)
   const closeSlider = () => {
@@ -67,10 +68,17 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
             dispatch(updateAnnotation({ title, description, oldTitle: annotation.oldTitle }))
             dispatch(setSelectedAnnotation({ title, description, selector: annotation.selector }))
           } else {
-            dispatch(addAnnotation({ title, description, selector }))
-            dispatch(unsetNewAnnotationSelector())
-            dispatch(setSelectedAnnotation({ title, description, selector }))
-            dispatch(setDetailSliderIsOpen(true))
+            addAnnotation({
+              snapshotId: '61a88e9c3ba0687ee717760d',
+              newAnnotation: { title, description, selector },
+            })
+              .unwrap()
+              .then((newAnnotation) => {
+                dispatch(unsetNewAnnotationSelector())
+                dispatch(setSelectedAnnotation(newAnnotation))
+                dispatch(setDetailSliderIsOpen(true))
+              })
+              .catch((e) => console.log(e))
           }
         }}
         validationSchema={Yup.object().shape({
