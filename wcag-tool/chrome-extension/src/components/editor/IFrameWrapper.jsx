@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import {
   selectorHighlightElement,
-  selectorSelectElement,
+  selectorSelectElement, setHighlightElement,
   setNewAnnotationSelector,
   setSelectElement,
 } from '../../services/annotationSlice'
@@ -39,6 +39,7 @@ const IFrameWrapper = function () {
 
     const selector = unique(e.target)
 
+    dispatch(setHighlightElement(selector))
     dispatch(setNewAnnotationSelector(selector))
   }
 
