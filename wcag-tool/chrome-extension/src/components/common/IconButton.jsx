@@ -2,9 +2,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
 
-const IconButton = function ({ onClick, className }) {
+const IconButton = function ({ onClick, className, title }) {
   return (
     <button
+      title={title}
       type="button"
       className={`${className}`} 
       onClick={onClick} 

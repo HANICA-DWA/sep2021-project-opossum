@@ -66,7 +66,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
           closeSlider()
           if (annotation) {
             updateAnnotation({
-              snapshotId: '61a88e9c3ba0687ee717760d',
+              snapshotId: '61a9f47fe84cdb57824daed3',
               annotationId: annotation._id,
               newFields: { title, description },
             })
@@ -77,7 +77,7 @@ const CreateAndEditAnnotationSlider = ({ annotation }) => {
               .catch((e) => console.log(e))
           } else {
             addAnnotation({
-              snapshotId: '61a88e9c3ba0687ee717760d',
+              snapshotId: '61a9f47fe84cdb57824daed3',
               newAnnotation: { title, description, selector },
             })
               .unwrap()

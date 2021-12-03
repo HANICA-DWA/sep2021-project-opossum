@@ -10,7 +10,7 @@ import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/sl
 import { useGetAnnotationsQuery } from '../../services/apiService'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery('61a88e9c3ba0687ee717760d') // TODO: replace with real snapshotId
+  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3') // TODO: replace with real snapshotId
   const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
