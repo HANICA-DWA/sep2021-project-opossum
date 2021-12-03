@@ -9,6 +9,7 @@ const FloatButton = ({ hidden, children, onClick, tooltipText, toolTipPosition =
   return (
     <>
       <button
+        type="button"
         className="text-gray-600 bg-white bg-opacity-80 rounded-full p-1 hover:text-black"
         hidden={hidden}
         ref={setTriggerRef}

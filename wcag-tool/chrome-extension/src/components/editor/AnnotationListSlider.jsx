@@ -10,7 +10,7 @@ import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/sl
 import { useGetAnnotationsQuery } from '../../services/apiService'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery('61a88e9c3ba0687ee717760d') // TODO: replace with real snapshotId
+  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3') // TODO: replace with real snapshotId
   const isOpen = useSelector(selectorListSliderIsOpen)
   const dispatch = useDispatch()
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -20,20 +20,22 @@ const AnnotationListSlider = () => {
       width="400px"
       shouldCloseOnEsc
       closeIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-gray-700"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
+        <div title="Close Menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-gray-700"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </div>
       }
       isOpen={isOpen}
       title={
