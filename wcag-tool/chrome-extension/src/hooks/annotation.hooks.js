@@ -7,8 +7,10 @@ import {
 } from '../services/apiService'
 import { setNewAnnotationSelector } from '../services/annotationSlice'
 
+const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
+
 export const useAnnotation = () => {
-  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3')
+  const { data: annotations } = useGetAnnotationsQuery(dummySnapshotId)
   const { selectedAnnotationId } = useSelector((state) => state.annotation)
 
   const selectedAnnotation = annotations?.find(
@@ -24,15 +26,16 @@ export const useCreateAnnotation = () => {
   const [_createAnnotation, { error }] = useCreateAnnotationMutation()
   const [{ openDetailsSlider }] = useSliders()
 
-  const createAnnotation = (successCriteriumId, title, description) => {
+  const createAnnotation = (successCriterium, title, description) => {
+    console.log('DEBUG')
+
     _createAnnotation({
-      snapshotId: '61a9f47fe84cdb57824daed3', // TODO: Replace snapshotId!
-      newAnnotation: { successCriteriumId, title, description, selector },
+      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
+      newAnnotation: { successCriterium, title, description, selector },
     })
       .unwrap()
       .then((createdAnnotation) => {
         dispatch(setNewAnnotationSelector('')) // unset new annotation css selector
-
         openDetailsSlider(createdAnnotation._id)
       })
       // eslint-disable-next-line no-console
@@ -49,8 +52,11 @@ export const useUpdateAnnotation = () => {
   // TODO: Logic to set new selector for selectedAnnotation
 
   const updateAnnotation = (_id, fields) => {
+    // Filter unchanged fields
+    console.log(_id, fields)
+
     _updateAnnotation({
-      snapshotId: '61a9f47fe84cdb57824daed3', // TODO: Replace snapshotId!
+      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
       annotationId: _id,
       newFields: fields,
     })

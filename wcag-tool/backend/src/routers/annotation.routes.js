@@ -8,10 +8,10 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
     console.log(req.body)
 
-    const { successCriteriumId, title, description, selector } = req.body
+    const { successCriterium, title, description, selector } = req.body
 
     const annotation = await req.snapshot.addAnnotation(
-      successCriteriumId,
+      successCriterium,
       title,
       description,
       selector

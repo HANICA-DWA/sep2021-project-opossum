@@ -53,21 +53,17 @@ const successCriteriumSchema = new Schema(
   {
     principle: {
       type: principleSchema,
-      required: true,
     },
     guideline: {
       type: guidelineSchema,
-      required: true,
     },
     successCriteriumId: {
       type: String,
       required: true,
-      unique: true,
     },
     num: {
       type: String,
       required: true,
-      unique: true,
     },
     level: {
       type: String,

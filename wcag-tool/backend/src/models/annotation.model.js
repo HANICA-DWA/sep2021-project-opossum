@@ -3,10 +3,6 @@ const { successCriteriumSchema } = require('./wcag.model')
 
 const annotationSchema = new Schema(
   {
-    successCriteriumId: {
-      type: String,
-      ref: 'SuccessCriterium',
-    },
     title: {
       type: String,
       required: true,
@@ -18,6 +14,10 @@ const annotationSchema = new Schema(
     selector: {
       type: String,
       required: true,
+    },
+    successCriterium: {
+      type: successCriteriumSchema,
+      required: false,
     },
   },
   { timestamps: true }

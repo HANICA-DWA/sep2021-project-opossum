@@ -30,9 +30,7 @@ const AnnotationListItem = function ({ annotation }) {
               </p>
             </div>
             <div>
-              <p className="font-semibold text-blue-600">
-                {successCriterium?.level || 'NO LEVEL DEFINED'}
-              </p>
+              <p>{successCriterium && `LEVEL ${successCriterium.level}`}</p>
             </div>
           </div>
           <div className="flex justify-end pt-1">

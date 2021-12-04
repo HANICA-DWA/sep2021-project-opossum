@@ -17,10 +17,13 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
   const [{ openListSlider }] = useSliders()
 
   const initialValues = {
-    successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '', // TODO Dit fixen
+    successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '',
     title: selectedAnnotation?.title || '',
     description: selectedAnnotation?.description || '',
   }
+
+  console.log('TEST')
+  console.log(initialValues.successCriteriumId)
 
   const validationSchema = Yup.object().shape({
     successCriteriumId: Yup.string(),
@@ -29,10 +32,14 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
   })
 
   const handleSubmit = async (successCriteriumId, title, description) => {
+    const successCriterium = successCriteria?.find(
+      (el) => el.successCriteriumId === successCriteriumId
+    )
+
     if (selectedAnnotation) {
-      handleUpdate(selectedAnnotation._id, { successCriteriumId, title, description })
+      handleUpdate(selectedAnnotation._id, { successCriterium, title, description })
     } else {
-      handleCreate(successCriteriumId, title, description)
+      handleCreate(successCriterium, title, description)
     }
   }
 
@@ -40,9 +47,9 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={async ({ successCriteriumId, title, description }) =>
+      onSubmit={async ({ successCriteriumId, title, description }) => {
         handleSubmit(successCriteriumId, title, description)
-      }
+      }}
     >
       {({ errors, touched, dirty, isValid }) => (
         <Form>
@@ -51,9 +58,12 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
             <Field
               as="select"
               name="successCriteriumId"
+              defaultValue="WCAG2:extended-audio-description-prerecorded"
               className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option key="default">Choose WCAG success criterium</option>
+              <option key="default" selected>
+                Choose WCAG success criterium
+              </option>
 
               {principles &&
                 principles.map((principle) => (
@@ -152,12 +162,12 @@ const TitleField = (props) => {
 
   useEffect(() => {
     // set the value of title, based on successCriteriumId
-    if (successCriteriumId !== undefined && touched.successCriteriumId && !touched.title) {
+    if (successCriteriumId && touched.successCriteriumId && !touched.title) {
       const successCriterium = successCriteria.find(
         (el) => el.successCriteriumId === successCriteriumId
       )
       // eslint-disable-next-line react/destructuring-assignment
-      setFieldValue(props.name, successCriterium?.handle)
+      setFieldValue(props.name, `${successCriterium?.num} ${successCriterium?.handle}`)
     }
     // eslint-disable-next-line react/destructuring-assignment, react-hooks/exhaustive-deps
   }, [successCriteriumId, touched.successCriteriumId, touched.title, setFieldValue, props.name])
