@@ -27,8 +27,6 @@ export const useCreateAnnotation = () => {
   const [{ openDetailsSlider }] = useSliders()
 
   const createAnnotation = (successCriterium, title, description) => {
-    console.log('DEBUG')
-
     _createAnnotation({
       snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
       newAnnotation: { successCriterium, title, description, selector },

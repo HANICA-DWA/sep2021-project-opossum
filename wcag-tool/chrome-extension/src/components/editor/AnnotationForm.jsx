@@ -22,9 +22,6 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
     description: selectedAnnotation?.description || '',
   }
 
-  console.log('TEST')
-  console.log(initialValues.successCriteriumId)
-
   const validationSchema = Yup.object().shape({
     successCriteriumId: Yup.string(),
     title: Yup.string().max(60, 'Too Long! Max 60 characters.').required('Required'),
