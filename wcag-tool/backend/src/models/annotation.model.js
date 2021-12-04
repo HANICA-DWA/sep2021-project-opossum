@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { successCriteriumSchema } = require('./wcag.model')
 
 const annotationSchema = new Schema(
   {
@@ -13,6 +14,10 @@ const annotationSchema = new Schema(
     selector: {
       type: String,
       required: true,
+    },
+    successCriterium: {
+      type: successCriteriumSchema,
+      required: false,
     },
   },
   { timestamps: true }
