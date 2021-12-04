@@ -54,6 +54,17 @@ router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res
   }
 })
 
+// delete annotation from a snapshot
+router.delete('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
+  try {
+    const deletedAnnotation = await req.snapshot.deleteAnnotation(req.params.annotationId)
+
+    return res.json(deletedAnnotation)
+  } catch (err) {
+    return next(err)
+  }
+})
+
 module.exports = {
   annotationRouter: router,
 }
