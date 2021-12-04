@@ -97,8 +97,6 @@ describe('SuccessCriterium Model', function () {
 
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.principle).to.exist
-    expect(error.errors.guideline).to.exist
     expect(error.errors.successCriteriumId).to.exist
     expect(error.errors.num).to.exist
     expect(error.errors.level).to.exist
@@ -130,5 +128,6 @@ describe('SuccessCriterium Model', function () {
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
     expect(error.errors.level).to.exist
+    // TODO: Check message!
   })
 })

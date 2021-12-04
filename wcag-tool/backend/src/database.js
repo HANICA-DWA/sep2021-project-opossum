@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const { GridFsStorage } = require('multer-gridfs-storage')
 const multer = require('multer')
 
-const imageMimeTypes = ['image/jpeg', 'image/jpg', 'image/png']
-
 // Connect to MongoDB
 mongoose.connect(
   process.env.MONGO_URI,
@@ -18,7 +16,7 @@ mongoose.connect(
 const storage = new GridFsStorage({
   url: process.env.MONGO_URI,
   file: (req, file) => {
-    if (imageMimeTypes.includes(file.mimetype)) {
+    if (['image/jpeg', 'image/jpg', 'image/png'].includes(file.mimetype)) {
       return {
         bucketName: 'images',
       }

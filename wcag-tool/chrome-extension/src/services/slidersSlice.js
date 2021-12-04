@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   listSliderIsOpen: false,
-  createSliderIsOpen: false,
-  detailSliderIsOpen: false,
+  createAndEditSliderIsOpen: false,
+  detailsSliderIsOpen: false,
+  elementSelectorIsOpen: false,
 }
 
 export const sliderSlice = createSlice({
@@ -13,18 +14,21 @@ export const sliderSlice = createSlice({
     setListSliderIsOpen: (state, action) => {
       state.listSliderIsOpen = action.payload
     },
-    setCreateSliderIsOpen: (state, { payload }) => {
-      state.createSliderIsOpen = payload
+    setCreateAndEditSliderIsOpen: (state, action) => {
+      state.createAndEditSliderIsOpen = action.payload
     },
     setDetailSliderIsOpen: (state, action) => {
-      state.detailSliderIsOpen = action.payload
+      state.detailsSliderIsOpen = action.payload
+    },
+    setElementSelectorIsOpen: (state, action) => {
+      state.elementSelectorIsOpen = action.payload
     },
   },
 })
 
-export const selectorCreateSliderIsOpen = (state) => state.sliders.createSliderIsOpen
-export const selectorListSliderIsOpen = (state) => state.sliders.listSliderIsOpen
-export const selectorDetailSliderIsOpen = (state) => state.sliders.detailSliderIsOpen
-
-export const { setListSliderIsOpen, setDetailSliderIsOpen, setCreateSliderIsOpen } =
-  sliderSlice.actions
+export const {
+  setListSliderIsOpen,
+  setDetailSliderIsOpen,
+  setCreateAndEditSliderIsOpen,
+  setElementSelectorIsOpen,
+} = sliderSlice.actions
