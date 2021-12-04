@@ -36,7 +36,7 @@ describe('Snapshot Model', function () {
     expect(deletedAnnotation.selector).to.equal('testSelector')
   })
 
-  xit('Delete annotation with no id', async function () {
+  it('Delete annotation with no id', async function () {
     // Arrange
     const snapshot = new Snapshot({
       name: 'testName',
@@ -46,11 +46,37 @@ describe('Snapshot Model', function () {
     const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
 
     // Act
-    const deleteAnnotation = async function () {
+    let error
+    try {
       await snapshot.deleteAnnotation()
+    } catch (err) {
+      error = err
     }
 
     // Assert
-    expect(() => deleteAnnotation()).to.throw(new Error('Annotation not found'))
+    expect(error.message).to.equal('Annotation not found')
+    expect(error).to.be.an.instanceof(Error)
+  })
+
+  it('Delete annotation with wrong id', async function () {
+    // Arrange
+    const snapshot = new Snapshot({
+      name: 'testName',
+      domain: 'testdomain.nl',
+      filename: 'testfile.html',
+    })
+    const annotation = await snapshot.addAnnotation('testTitle', 'testDescription', 'testSelector')
+
+    // Act
+    let error
+    try {
+      await snapshot.deleteAnnotation('fakeId')
+    } catch (err) {
+      error = err
+    }
+
+    // Assert
+    expect(error.message).to.equal('Annotation not found')
+    expect(error).to.be.an.instanceof(Error)
   })
 })
