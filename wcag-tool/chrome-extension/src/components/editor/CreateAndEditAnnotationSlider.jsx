@@ -17,7 +17,11 @@ import {
   setDetailSliderIsOpen,
   setListSliderIsOpen,
 } from '../../services/slidersSlice'
-import { useAddAnnotationMutation, useUpdateAnnotationMutation } from '../../services/apiService'
+import {
+  useAddAnnotationMutation,
+  useDeleteAnnotationMutation,
+  useUpdateAnnotationMutation,
+} from '../../services/apiService'
 
 const CreateAndEditAnnotationSlider = ({ annotation }) => {
   const [addAnnotation] = useAddAnnotationMutation()
