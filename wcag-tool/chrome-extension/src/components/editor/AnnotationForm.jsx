@@ -1,27 +1,31 @@
 import React, { useEffect } from 'react'
 import { Formik, Field, Form, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
+import ActionButton from '../common/ActionButton'
 import {
   useGetSuccessCriteriaQuery,
   useGetGuidelinesQuery,
   useGetPrinciplesQuery,
 } from '../../services/apiService'
+import { useSliders } from '../../hooks'
 
 function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
   const { data: principles } = useGetPrinciplesQuery()
   const { data: guidelines } = useGetGuidelinesQuery()
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
 
+  const [{ openListSlider }] = useSliders()
+
   const initialValues = {
-    successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '',
+    successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '', // TODO Dit fixen
     title: selectedAnnotation?.title || '',
     description: selectedAnnotation?.description || '',
   }
 
   const validationSchema = Yup.object().shape({
     successCriteriumId: Yup.string(),
-    title: Yup.string().min(2, 'Too Short!').max(60, 'Too Long!').required('Required'),
-    description: Yup.string().min(5, 'Too Short!').max(255, 'Too Long!').required('Required'),
+    title: Yup.string().max(60, 'Too Long! Max 60 characters.').required('Required'),
+    description: Yup.string().max(1000, 'Too Long! Max 1000 characters.').required('Required'),
   })
 
   const handleSubmit = async (successCriteriumId, title, description) => {
@@ -113,13 +117,22 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
             <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
           )}
 
-          <button
-            type="submit"
-            className="py-1 px-5 text-lg rounded-lg focus:border-4 border-green-400 bg-green-700 text-gray-100 hover:bg-green-900"
-            disabled
-          >
-            {selectedAnnotation ? 'Save' : 'Create Annotation'}
-          </button>
+          {!selectedAnnotation ? (
+            <div className="grid justify-end mt-8">
+              <ActionButton disabled={!(dirty && isValid)} type="submit">
+                Create Annotation
+              </ActionButton>
+            </div>
+          ) : (
+            <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
+              <ActionButton onClick={openListSlider} type="cancel">
+                Cancel
+              </ActionButton>
+              <ActionButton disabled={!(dirty && isValid)} type="submit">
+                Save
+              </ActionButton>
+            </div>
+          )}
         </Form>
       )}
     </Formik>

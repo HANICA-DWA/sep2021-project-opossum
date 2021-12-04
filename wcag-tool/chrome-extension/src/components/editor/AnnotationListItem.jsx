@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
+import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
+
 const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
 
-  // eslint-disable-next-line no-empty-pattern
-  const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
-
   const dispatch = useDispatch()
+  const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
 
   return (
     <div
@@ -18,20 +18,31 @@ const AnnotationListItem = function ({ annotation }) {
         if (!detailsSliderIsOpen) dispatch(setHighlightedElementSelector(''))
       }}
       onClick={() => openDetailsSlider(_id)}
-      className="max-w-sm bg-white border-2 my-4 border-gray-300 p-6 rounded-md tracking-wide shadow-lg"
+      className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer"
     >
-      <div id="header" className="flex items-center mb-4">
-        <div id="header-text">
-          <h4 id="name" className="text-xl font-semibold">
-            {title}
-          </h4>
-          <h5 id="job" className="font-semibold text-blue-600">
-            {successCriterium?.level || 'NO LEVEL DEFINED'}
-          </h5>
+      <div className="pl-5 pr-3 pt-3 pb-4">
+        <div className="grid grid-cols-6">
+          <div className="col-span-5">
+            <div>
+              {/* TODO: even checken wat dit doen */}
+              <p title={title} className="text-lg truncate font-poppins-semi">
+                {title}
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold text-blue-600">
+                {successCriterium?.level || 'NO LEVEL DEFINED'}
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end pt-1">
+            <p className="text-gray-600">1d ago</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <p className="italic text-gray-600">{description}</p>
+        <div className="pt-4">
+          <p className="text-base overflowWrap">{truncateStringAndCapitalize(100, description)}</p>
+        </div>
+        {/* Success criterium: WCAG toevoegen */}
       </div>
     </div>
   )

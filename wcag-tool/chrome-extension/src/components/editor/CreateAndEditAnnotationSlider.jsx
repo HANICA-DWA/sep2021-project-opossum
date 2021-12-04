@@ -24,10 +24,10 @@ const CreateAndEditAnnotationSlider = () => {
       title={
         <div className="grid grid-flow-col justify-between">
           <span className="text-gray-900 text-base font-poppins">
-            {`${selectedAnnotation?._id ? 'Edit' : 'Create'} Annotation`}
+            {`${selectedAnnotationId ? 'Edit' : 'Create'} Annotation`}
           </span>
-
           <button
+            title="Close"
             className="text-gray-600 px-4 py-1"
             onClick={
               selectedAnnotationId
@@ -55,6 +55,7 @@ const CreateAndEditAnnotationSlider = () => {
       from="left"
       width="400px"
     >
+      {/* TODO: Deze errors stylen! */}
       {createError && <h1>CREATE ERROR!</h1>}
 
       {updateError && <h1>UPDATE ERROR!</h1>}

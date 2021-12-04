@@ -3,6 +3,8 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { useAnnotation, useSliders } from '../../hooks'
 
+import IconButton from '../common/IconButton'
+
 export function truncateStringAndCapitalize(num, str = '') {
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -10,70 +12,51 @@ export function truncateStringAndCapitalize(num, str = '') {
     return newString
   }
 
-  return `${str.slice(0, num)}'...'`
+  return `${str.slice(0, num)}...`
 }
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
-  const { selectedAnnotation } = useAnnotation()
+  const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
 
   return (
     <SlidingPane
-      closeIcon={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 18 18"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={3}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          />
-        </svg>
-      }
+      className="hide-default-close 
+                 remove-bottom-border 
+                 remove-slide-plane-close-padding 
+                 remove-slide-plane-content-padding 
+                 remove-slide-plane-title-wrapper-margin 
+                 remove-slide-plane-title-margin
+                 font-poppins
+                 text-gray-700"
+      closeIcon={<div />}
       onRequestClose={openListSlider}
-      isOpen={detailsSliderIsOpen}
-      title={
-        <div className="grid grid-cols-6 rounded-l">
-          <div className="col-span-5">
-            <p className="text-base font-medium text-gray-900">
-              {truncateStringAndCapitalize(20, selectedAnnotation?.title)}
-            </p>
-          </div>
-          <button onClick={() => openCreateAndEditSlider()}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-            </svg>
-          </button>
-        </div>
-      }
       from="left"
       width="400px"
+      isOpen={detailsSliderIsOpen}
+      title={
+        <div className="grid grid-cols-6 px-5 rounded-l items-center">
+          <div className="col-span-5">
+            <p title={selectedAnnotation?.title} className="text-base font-poppins-semi">
+              {truncateStringAndCapitalize(70, selectedAnnotation?.title)}
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <IconButton
+              title="Edit annotation"
+              className="pencilIcon p-0.5 mr-1"
+              onClick={() => openCreateAndEditSlider(selectedAnnotationId)}
+            />
+            <IconButton
+              title="Close annotation"
+              className="crossIcon p-0.5 ml-1"
+              onClick={openListSlider}
+            />
+          </div>
+        </div>
+      }
     >
-      <p>{selectedAnnotation?.description}</p>
-
-      <div className="flex justify-center">
-        <footer className="footer fixed bottom-0 pt-1 py-2  border-b-2">
-          <button
-            onClick={() => {
-              // eslint-disable-next-line no-alert
-              alert('Delete annotation not implemented yet!')
-            }}
-            className="p-2 pl-5 pr-5 bg-red-500 text-gray-100 text-lg rounded-lg focus:border-4 border-green-300"
-          >
-            Delete annotation
-          </button>
-        </footer>
-      </div>
+      <div className="pl-5 pr-8 py-5">{selectedAnnotation?.description}</div>
     </SlidingPane>
   )
 }

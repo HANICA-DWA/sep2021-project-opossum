@@ -22,7 +22,7 @@
 @layer utilities {
     
     .searchIcon {
-        background-image: url(../img/icon/search-icon.svg);
+        background-image: url(../img/icon/search.svg);
         background-size: contain;
 		background-repeat: no-repeat;
 		height: 25px;
@@ -37,9 +37,49 @@
 		width: 200px;
     }
 
+    .arrowLeftIcon {
+        background-image: url(../img/icon/arrow-left.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 25px;
+		width: 25px;
+    }
+
+    .crossIcon {
+        background-image: url(../img/icon/cross.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 20px;
+		width: 20px;
+    }
+
+    .pencilIcon {
+        background-image: url(../img/icon/pencil.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 20px;
+		width: 20px;
+    }
+
+    .plusIcon {
+        background-image: url(../img/icon/plus.svg);
+        background-size: contain;
+		background-repeat: no-repeat;
+		height: 25px;
+		width: 25px;
+    }
+
+    .noBorder {
+        border: 0px;
+    }
+
     .customSize {
         height: 37rem;
         width: 30rem;
+    }
+
+    .overflowWrap {
+        overflow-wrap: anywhere;
     }
 
 }

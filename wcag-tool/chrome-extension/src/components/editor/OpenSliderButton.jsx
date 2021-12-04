@@ -5,7 +5,7 @@ const OpenSliderButton = function () {
   const [{ openListSlider }] = useSliders()
 
   return (
-    <button className="absolute">
+    <button type="button" className="absolute">
       <svg
         onClick={openListSlider}
         xmlns="http://www.w3.org/2000/svg"
