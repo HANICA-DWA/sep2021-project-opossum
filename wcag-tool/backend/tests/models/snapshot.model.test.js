@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const setup = require('./setup')
 const { Snapshot } = require('../../src/models')
 
-// the other test for snapshot model can be found ./jest/snapshot.model.test.js
 describe('Snapshot Model', function () {
   before(async function () {
     await setup.before()
