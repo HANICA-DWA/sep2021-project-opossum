@@ -10,7 +10,6 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test:jest": "jest tests/jest --testTimout=10000 --coverage false",
     "test": "mocha tests --recursive --exit --exclude tests/jest/**/* -r dotenv/config",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
