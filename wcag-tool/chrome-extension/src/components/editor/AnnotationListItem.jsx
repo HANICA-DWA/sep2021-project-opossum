@@ -24,23 +24,21 @@ const AnnotationListItem = function ({ annotation }) {
         <div className="grid grid-cols-6">
           <div className="col-span-5">
             <div>
-              {/* TODO: even checken wat dit doen */}
-              <p title={title} className="text-lg truncate font-poppins-semi">
+              <p title={title} className="text-base truncate font-poppins-semi">
                 {title}
               </p>
             </div>
-            <div>
+            <div className="text-md">
               <p>{successCriterium && `LEVEL ${successCriterium.level}`}</p>
             </div>
           </div>
           <div className="flex justify-end pt-1">
-            <p className="text-gray-600">1d ago</p>
+            <p className="text-gray-600 text-xs">1d ago</p>
           </div>
         </div>
         <div className="pt-4">
-          <p className="text-base overflowWrap">{truncateStringAndCapitalize(100, description)}</p>
+          <p className="overflowWrap text-md">{truncateStringAndCapitalize(110, description)}</p>
         </div>
-        {/* Success criterium: WCAG toevoegen */}
       </div>
     </div>
   )

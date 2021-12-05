@@ -21,7 +21,7 @@ const AnnotationListSlider = () => {
       width="400px"
       className="remove-slide-plane-content-padding
                  font-poppins
-                 text-gray-700"
+                 text-gray-600"
       shouldCloseOnEsc
       from="left"
       onRequestClose={closeAllSliders}
