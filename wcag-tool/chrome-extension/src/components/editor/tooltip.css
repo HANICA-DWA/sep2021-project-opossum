@@ -1,5 +1,5 @@
 .tooltip-container {
-  --tooltipBackground: rgba(0,0,0,0.8);
+  --tooltipBackground: rgba(0, 0, 0, 0.8);
   --tooltipBorder: #c0c0c0;
   --tooltipTextColor: white;
 
@@ -12,13 +12,17 @@
   display: flex;
   white-space: nowrap;
   flex-direction: row;
-  padding: .7rem 1rem;
+  padding: 0.7rem 1rem;
   transition: opacity 0.3s;
   z-index: 9999;
 }
 
 .tooltip-container[data-popper-interactive='false'] {
   pointer-events: none;
+}
+
+.tooltip-interactive {
+  pointer-events: auto !important;
 }
 
 .tooltip-arrow {
