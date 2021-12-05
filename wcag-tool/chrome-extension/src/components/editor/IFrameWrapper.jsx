@@ -29,6 +29,22 @@ const IFrameWrapper = function () {
 
     const selector = unique(e.target)
     openCreateAndEditSlider(selector)
+
+    const badge = document.createElement('div')
+
+    badge.innerText = '1'
+    badge.style.position = 'absolute'
+    badge.style.padding = '3px 8px'
+    badge.style.borderRadius = ' 50%'
+    badge.style.top = '0px'
+    badge.style.right = '0px'
+
+    // badge.style.marginLeft = 'auto'
+
+    badge.style.background = 'red'
+    badge.style.color = 'white'
+
+    this.appendChild(badge)
   }
 
   const createNewAnnotationOnClick = (element) => {
@@ -48,7 +64,15 @@ const IFrameWrapper = function () {
 
   useEffect(() => {
     iframeDoc.current = document.getElementById('myframe')
-
+    const badgeStyles = {
+      position: 'absolute',
+      top: '-10px',
+      right: '-10px',
+      padding: '5px 10px',
+      borderRadius: ' 50%',
+      background: 'red',
+      color: 'white',
+    }
     iframeDoc.current.addEventListener('load', function () {
       // eslint-disable-next-line react/no-this-in-sfc
       const Snapshotdocument = this.contentWindow.document
