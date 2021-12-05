@@ -93,11 +93,16 @@ const IFrameWrapper = function () {
   useEffect(() => {
     if (iframeDoc.current) {
       if (highlightedElementSelector) {
-        const element = iframeDoc.current.contentWindow.document.querySelector(
-          highlightedElementSelector
-        )
-        if (element) {
-          element.style.outline = '3px solid blue'
+        // TODO: figure out why this crashed when 'highlightedElementSelector' is not a valid selector like '543teafdsf36tdgdfs'
+        try {
+          const element = iframeDoc.current.contentWindow.document.querySelector(
+            highlightedElementSelector
+          )
+          if (element) {
+            element.style.outline = '3px solid blue'
+          }
+        } catch (error) {
+          console.log(`Not a valid selector!! ${highlightedElementSelector}`)
         }
       } else {
         const elements = iframeDoc.current.contentWindow.document.querySelectorAll('*')
