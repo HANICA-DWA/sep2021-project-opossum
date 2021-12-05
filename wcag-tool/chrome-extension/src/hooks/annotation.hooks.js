@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useSliders } from './sliders.hooks'
 import {
   useCreateAnnotationMutation,
+  useDeleteAnnotationMutation,
   useGetAnnotationsQuery,
   useUpdateAnnotationMutation,
 } from '../services/apiService'
@@ -67,4 +68,24 @@ export const useUpdateAnnotation = () => {
   }
 
   return [updateAnnotation, { error }]
+}
+
+export const useDeleteAnnotation = () => {
+  const [_deleteAnnotation, { error }] = useDeleteAnnotationMutation()
+  const [{ openListSlider }] = useSliders()
+
+  const deleteAnnotation = (_id) => {
+    _deleteAnnotation({
+      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
+      annotationId: _id,
+    })
+      .unwrap()
+      .then((deletedAnnotation) => {
+        openListSlider()
+      })
+      // eslint-disable-next-line no-console
+      .catch((e) => console.log(e))
+  }
+
+  return [deleteAnnotation, { error }]
 }
