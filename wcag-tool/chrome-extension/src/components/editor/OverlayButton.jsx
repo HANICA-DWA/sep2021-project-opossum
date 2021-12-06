@@ -1,32 +1,25 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectorSelectElement, setSelectElement } from '../../services/annotationSlice'
+import { useSliders } from '../../hooks'
 import FloatButton from '../common/FloatButton'
-import {
-  selectorCreateSliderIsOpen,
-  selectorDetailSliderIsOpen,
-  selectorListSliderIsOpen,
-  setListSliderIsOpen,
-} from '../../services/slidersSlice'
 
 const OverlayButton = function () {
-  const dispatch = useDispatch()
-  const selectElement = useSelector(selectorSelectElement)
-  const listSliderIsOpen = useSelector(selectorListSliderIsOpen)
-  const createSliderIsOpen = useSelector(selectorCreateSliderIsOpen)
-  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
-  const isSliderOpen = selectElement || listSliderIsOpen || createSliderIsOpen || detailSliderIsOpen
+  const [
+    { openListSlider },
+    { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
+  ] = useSliders()
+
+  const isSliderOpen =
+    elementSelectorIsOpen || listSliderIsOpen || createAndEditSliderIsOpen || detailsSliderIsOpen
 
   return (
     <div className="absolute top-4 left-4 flex align-middle justify-center">
       <FloatButton
         tooltipText="Open Annotation Menu"
         toolTipPosition="bottom-start"
-        onClick={() => {
-          dispatch(setListSliderIsOpen(true))
-        }}
+        onClick={openListSlider}
         hidden={isSliderOpen}
       >
+        {/* Open annotation list slider */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -45,11 +38,8 @@ const OverlayButton = function () {
       <FloatButton
         tooltipText="Exit Selection Mode"
         toolTipPosition="bottom-start"
-        onClick={() => {
-          dispatch(setListSliderIsOpen(true))
-          dispatch(setSelectElement(false))
-        }}
-        hidden={!selectElement}
+        onClick={openListSlider}
+        hidden={!elementSelectorIsOpen}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

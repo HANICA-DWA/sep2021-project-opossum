@@ -1,44 +1,43 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setHighlightElement, setSelectedAnnotation } from '../../services/annotationSlice'
-import { selectorDetailSliderIsOpen, setDetailSliderIsOpen } from '../../services/slidersSlice'
+import { useDispatch } from 'react-redux'
+import { setHighlightedElementSelector } from '../../services/annotationSlice'
+import { useSliders } from '../../hooks'
 
 import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
 
 const AnnotationListItem = function ({ annotation }) {
-  const { title, description, selector } = annotation
+  const { _id, successCriterium, title, description, selector } = annotation
+
   const dispatch = useDispatch()
-  const detailSliderIsOpen = useSelector(selectorDetailSliderIsOpen)
+  const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
+
   return (
     <div
-      onMouseEnter={() => dispatch(setHighlightElement(selector))}
+      onMouseEnter={() => dispatch(setHighlightedElementSelector(selector))}
       onMouseLeave={() => {
-        if (!detailSliderIsOpen) dispatch(setHighlightElement(''))
+        if (!detailsSliderIsOpen) dispatch(setHighlightedElementSelector(''))
       }}
-      onClick={() => {
-        dispatch(setSelectedAnnotation(annotation))
-        dispatch(setDetailSliderIsOpen(true))
-      }}
+      onClick={() => openDetailsSlider(_id)}
       className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer"
     >
       <div className="pl-5 pr-3 pt-3 pb-4">
         <div className="grid grid-cols-6">
           <div className="col-span-5">
             <div>
-              <p title={title} className="text-lg truncate font-poppins-semi">
+              <p title={title} className="text-base truncate font-poppins-semi">
                 {title}
               </p>
             </div>
-            {/* <div>
-              <p>Niveau AA</p>
-            </div> */}
+            <div className="text-md">
+              <p>{successCriterium && `LEVEL ${successCriterium.level}`}</p>
+            </div>
           </div>
           <div className="flex justify-end pt-1">
-            <p className="text-gray-600">1d ago</p>
+            <p className="text-gray-600 text-xs">1d ago</p>
           </div>
         </div>
         <div className="pt-4">
-          <p className="text-base overflowWrap">{truncateStringAndCapitalize(100, description)}</p>
+          <p className="overflowWrap text-md">{truncateStringAndCapitalize(110, description)}</p>
         </div>
       </div>
     </div>

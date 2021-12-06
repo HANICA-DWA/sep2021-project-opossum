@@ -1,32 +1,32 @@
 import React from 'react'
-import './react-sliding-pane.css'
 import SlidingPane from 'react-sliding-pane'
-import { useDispatch, useSelector } from 'react-redux'
 import { usePopperTooltip } from 'react-popper-tooltip'
-import { setSelectElement, unsetSelectedAnnotation } from '../../services/annotationSlice'
-import NoAnnotation from './NoAnnotation'
-import AnnotationList from './AnnotationList'
+import './react-sliding-pane.css'
+
 import IconButton from '../common/IconButton'
-import { selectorListSliderIsOpen, setListSliderIsOpen } from '../../services/slidersSlice'
-import { useGetAnnotationsQuery } from '../../services/apiService'
+import { useAnnotation, useSliders } from '../../hooks'
+
+import AnnotationList from './AnnotationList'
+import NoAnnotation from './NoAnnotation'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery('61a9f47fe84cdb57824daed3') // TODO: replace with real snapshotId
-  const isOpen = useSelector(selectorListSliderIsOpen)
-  const dispatch = useDispatch()
+  const { annotations } = useAnnotation()
+  const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
+
   return (
     <SlidingPane
       width="400px"
       className="remove-slide-plane-content-padding
                  font-poppins
-                 text-gray-700"
+                 text-gray-600"
       shouldCloseOnEsc
       from="left"
-      onRequestClose={() => dispatch(setListSliderIsOpen(false))}
+      onRequestClose={closeAllSliders}
       closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
-      isOpen={isOpen}
+      isOpen={listSliderIsOpen}
       title={
         <div className="grid grid-cols-6 items-center pr-3">
           <div className="col-span-5">
@@ -41,11 +41,7 @@ const AnnotationListSlider = () => {
           </div>
           <div className="flex justify-end">
             <button
-              onClick={() => {
-                dispatch(setSelectElement(true))
-                dispatch(unsetSelectedAnnotation())
-                dispatch(setListSliderIsOpen(false))
-              }}
+              onClick={openElementSelector}
               ref={setTriggerRef}
               className="text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200"
             >
@@ -75,7 +71,7 @@ const AnnotationListSlider = () => {
       }
     >
       {!annotations || annotations.length === 0 ? (
-        <NoAnnotation />
+        <NoAnnotation openElementSelector={openElementSelector} />
       ) : (
         <AnnotationList annotations={annotations} />
       )}

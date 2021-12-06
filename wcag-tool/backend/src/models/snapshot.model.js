@@ -25,8 +25,14 @@ const snapshotSchema = new Schema(
 )
 
 // eslint-disable-next-line func-names
-snapshotSchema.methods.addAnnotation = async function (title, description, selector) {
+snapshotSchema.methods.addAnnotation = async function (
+  successCriterium,
+  title,
+  description,
+  selector
+) {
   const annotation = new Annotation({
+    successCriterium,
     title,
     description,
     selector,
@@ -41,16 +47,17 @@ snapshotSchema.methods.addAnnotation = async function (title, description, selec
 
 // eslint-disable-next-line func-names
 snapshotSchema.methods.updateAnnotation = async function (id, fields) {
-  const annotationToEdit = this.annotations.id(id)
-  if (!annotationToEdit) throw new Error('Annotation not found')
+  const annotation = this.annotations.id(id)
+  if (!annotation) throw new Error('Annotation not found')
 
-  annotationToEdit.title = fields?.title ?? annotationToEdit.title
-  annotationToEdit.description = fields?.description ?? annotationToEdit.description
-  annotationToEdit.selector = fields?.selector ?? annotationToEdit.selector
+  annotation.successCriterium = fields?.successCriterium ?? annotation.successCriterium
+  annotation.title = fields?.title ?? annotation.title
+  annotation.description = fields?.description ?? annotation.description
+  annotation.selector = fields?.selector ?? annotation.selector
 
   await this.save()
 
-  return annotationToEdit
+  return annotation
 }
 
 const Snapshot = model('Snapshot', snapshotSchema)
