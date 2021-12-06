@@ -25,7 +25,6 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
 
 router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-    console.log(req.body)
 
     const { successCriterium, title, description, selector } = req.body
 
