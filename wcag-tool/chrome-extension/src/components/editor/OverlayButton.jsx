@@ -5,11 +5,11 @@ import FloatButton from '../common/FloatButton'
 const OverlayButton = function () {
   const [
     { openListSlider },
-    { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelecorIsOpen },
+    { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
   ] = useSliders()
 
   const isSliderOpen =
-    elementSelecorIsOpen || listSliderIsOpen || createAndEditSliderIsOpen || detailsSliderIsOpen
+    elementSelectorIsOpen || listSliderIsOpen || createAndEditSliderIsOpen || detailsSliderIsOpen
 
   return (
     <div className="absolute top-4 left-4 flex align-middle justify-center">
@@ -39,7 +39,7 @@ const OverlayButton = function () {
         tooltipText="Exit Selection Mode"
         toolTipPosition="bottom-start"
         onClick={openListSlider}
-        hidden={!elementSelecorIsOpen}
+        hidden={!elementSelectorIsOpen}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
