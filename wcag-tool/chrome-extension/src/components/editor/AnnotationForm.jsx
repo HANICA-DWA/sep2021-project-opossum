@@ -52,10 +52,11 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
             <Field
               as="select"
               name="successCriteriumId"
-              defaultValue="WCAG2:extended-audio-description-prerecorded"
               className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option key="default">Choose WCAG success criterium</option>
+              <option key="default" hidden>
+                Choose WCAG success criterium
+              </option>
 
               {principles &&
                 principles.map((principle) => (
@@ -127,7 +128,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
             </div>
           ) : (
             <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
-              <ActionButton onClick={closeEditor} type="cancel">
+              <ActionButton onClick={closeEditor()} type="button">
                 Cancel
               </ActionButton>
               <ActionButton disabled={!(dirty && isValid)} type="submit">

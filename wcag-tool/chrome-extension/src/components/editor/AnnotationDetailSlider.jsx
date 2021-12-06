@@ -45,7 +45,7 @@ const AnnotationDetailSlider = function () {
             <IconButton
               title="Edit annotation"
               className="pencilIcon p-0.5 mr-1"
-              onClick={() => openCreateAndEditSlider(selectedAnnotationId)}
+              onClick={() => openCreateAndEditSlider()}
             />
             <IconButton
               title="Close annotation"
