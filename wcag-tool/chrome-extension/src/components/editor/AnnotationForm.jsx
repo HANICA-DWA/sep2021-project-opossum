@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Formik, Field, Form, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import ActionButton from '../common/ActionButton'
@@ -8,6 +8,22 @@ import {
   useGetPrinciplesQuery,
 } from '../../services/apiService'
 
+const SelectField = ({ field, form, ...props }) => {
+  return (
+    <div className="relative">
+      <select {...field} {...props} />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 pointer-events-none"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  )
+}
 function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeEditor }) {
   const { data: principles } = useGetPrinciplesQuery()
   const { data: guidelines } = useGetGuidelinesQuery()
@@ -153,7 +169,6 @@ const TitleField = (props) => {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
-    touched,
     setFieldValue,
   } = useFormikContext()
   const [field] = useField(props)
@@ -163,6 +178,7 @@ const TitleField = (props) => {
       const successCriterium = successCriteria?.find(
         (el) => el.successCriteriumId === successCriteriumId
       )
+      // eslint-disable-next-line react/destructuring-assignment
       setFieldValue(props.name, `${successCriterium?.num} ${successCriterium?.handle}`)
     }
   }
@@ -186,23 +202,6 @@ const TitleField = (props) => {
           />
         </svg>
       </button>
-    </div>
-  )
-}
-
-const SelectField = ({ field, form, ...props }) => {
-  return (
-    <div className="relative">
-      <select {...field} {...props} />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 pointer-events-none"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
     </div>
   )
 }

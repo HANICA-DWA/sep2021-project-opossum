@@ -17,7 +17,7 @@ export function truncateStringAndCapitalize(num, str = '') {
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
-  const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
+  const { selectedAnnotation } = useAnnotation()
 
   return (
     <SlidingPane
