@@ -38,6 +38,7 @@
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/label-has-associated-control": "off",
+    "no-use-before-define": "off",
     "prettier/prettier": [
       "error",
       {

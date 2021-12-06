@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import '../css/styles.css'
 import './editor.css'
-// eslint-disable-next-line import/extensions
-import './editor.js'
+import './editorjs'
 import App from '../components/editor/App'
 import store from '../services/store'
 
