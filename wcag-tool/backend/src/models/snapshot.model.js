@@ -26,10 +26,10 @@ const snapshotSchema = new Schema(
 
 // eslint-disable-next-line func-names
 snapshotSchema.methods.addAnnotation = async function (
-  successCriterium,
   title,
   description,
-  selector
+  selector,
+  successCriterium
 ) {
   const annotation = new Annotation({
     successCriterium,
@@ -58,6 +58,18 @@ snapshotSchema.methods.updateAnnotation = async function (id, fields) {
   await this.save()
 
   return annotation
+}
+
+// eslint-disable-next-line func-names
+snapshotSchema.methods.deleteAnnotation = async function (id) {
+  const annotationToDelete = this.annotations.id(id)
+  if (!annotationToDelete) throw new Error('Annotation not found')
+
+  annotationToDelete.remove()
+
+  await this.save()
+
+  return annotationToDelete
 }
 
 const Snapshot = model('Snapshot', snapshotSchema)
