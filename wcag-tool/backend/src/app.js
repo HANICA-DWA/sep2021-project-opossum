@@ -8,7 +8,7 @@ const app = express()
 app.disable('x-powered-by')
 
 // Register middleware
-app.use(cors({ origin: true, credentials: true }))
+app.use(cors({ origin: '*' }))
 app.use(express.json())
 app.use(logger)
 
