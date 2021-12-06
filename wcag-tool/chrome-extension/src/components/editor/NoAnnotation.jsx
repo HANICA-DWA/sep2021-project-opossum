@@ -1,7 +1,10 @@
 import React from 'react'
+import { useSliders } from '../../hooks'
 import DefaultButton from '../common/DefaultButton'
 
-const NoAnnotation = function ({ openElementSelector }) {
+const NoAnnotation = function () {
+  const [{ openElementSelector }] = useSliders()
+
   return (
     <div className="flex justify-center">
       <div className="p-1 text-black">

@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import * as Y from 'yjs'
+import { WebsocketProvider } from 'y-websocket'
+
 import { useSliders } from './sliders.hooks'
 import {
   useCreateAnnotationMutation,
@@ -7,17 +11,65 @@ import {
 } from '../services/apiService'
 import { setNewAnnotationSelector } from '../services/annotationSlice'
 
-const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
+const dummySnapshotId = '61ae2c0c729e718c04cc26ff'
+
+const ydoc = new Y.Doc()
+const provider = new WebsocketProvider('ws://localhost:5000', 'room', ydoc)
+const sharedAnnotations = ydoc.getArray(`${dummySnapshotId}-annotations`) // shared Yjs state
 
 export const useAnnotation = () => {
-  const { data: annotations } = useGetAnnotationsQuery(dummySnapshotId)
+  const [localAnnotations, setLocalAnnotations] = useState([]) // local React state
+  const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(dummySnapshotId) // remote MongoDB state
   const { selectedAnnotationId } = useSelector((state) => state.annotation)
 
-  const selectedAnnotation = annotations?.find(
+  const selectedAnnotation = localAnnotations?.find(
     (annotation) => annotation._id === selectedAnnotationId
   )
 
-  return { annotations, selectedAnnotationId, selectedAnnotation }
+  // Setup synchronisation between shared and local state
+  useEffect(() => {
+    // Initial sync
+    if (provider.synced) {
+      refetch()
+    } else {
+      provider.once('synced', refetch)
+    }
+
+    sharedAnnotations.observe(() => {
+      console.log('shared array changed!')
+      setLocalAnnotations(sharedAnnotations.toArray())
+    })
+
+    return () => {
+      sharedAnnotations.unobserve(() => {
+        console.log('shared array unobserved!')
+      })
+    }
+  }, [])
+
+  // Sync remote, shared and local states when new data is fetched
+  useEffect(() => {
+    if (!remoteAnnotations || remoteAnnotations.length === 0) return
+
+    // 2. Calculate difference between local and remote state
+    const difference = [...sharedAnnotations.toArray(), ...remoteAnnotations].filter(
+      (el) => !sharedAnnotations.toArray().some((_el) => _el._id === el._id)
+    )
+
+    // 3. Insert differences into shared state
+    if (difference.length > 0) sharedAnnotations.insert(0, difference)
+
+    // 4. Update local state
+    setLocalAnnotations(sharedAnnotations.toArray())
+
+    // DEBUG
+    console.log('rerender useAnnotations!')
+    console.log('local', localAnnotations.slice(0, 5))
+    console.log('remote', remoteAnnotations)
+    console.log('shared', sharedAnnotations.toArray().slice(0, 5))
+  }, [remoteAnnotations])
+
+  return { annotations: localAnnotations, selectedAnnotation, selectedAnnotationId }
 }
 
 export const useCreateAnnotation = () => {
@@ -61,6 +113,7 @@ export const useUpdateAnnotation = () => {
       .unwrap()
       .then((updatedAnnotation) => {
         openDetailsSlider(updatedAnnotation._id)
+        // TODO: Add yjs logic!
       })
       // eslint-disable-next-line no-console
       .catch((e) => console.log(e))

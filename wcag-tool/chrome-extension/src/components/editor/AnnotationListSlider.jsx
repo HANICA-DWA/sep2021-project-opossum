@@ -3,17 +3,11 @@ import SlidingPane from 'react-sliding-pane'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
+import AnnotationList from './AnnotationList'
 import IconButton from '../common/IconButton'
 import { useSliders } from '../../hooks'
 
-import AnnotationList from './AnnotationList'
-import NoAnnotation from './NoAnnotation'
-import { useGetAnnotationsQuery } from '../../services/apiService'
-
-const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
-
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetAnnotationsQuery(dummySnapshotId)
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -73,11 +67,7 @@ const AnnotationListSlider = () => {
         </div>
       }
     >
-      {!annotations || annotations.length === 0 ? (
-        <NoAnnotation openElementSelector={openElementSelector} />
-      ) : (
-        <AnnotationList annotations={annotations} />
-      )}
+      <AnnotationList />
     </SlidingPane>
   )
 }
