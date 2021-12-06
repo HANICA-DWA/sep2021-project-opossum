@@ -8,12 +8,12 @@ import { useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
-import { useGetSuccessCriteriaQuery } from '../../services/apiService'
+import { useGetAnnotationsQuery } from '../../services/apiService'
 
 const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
 
 const AnnotationListSlider = () => {
-  const { data: annotations } = useGetSuccessCriteriaQuery(dummySnapshotId)
+  const { data: annotations } = useGetAnnotationsQuery(dummySnapshotId)
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
