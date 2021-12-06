@@ -11,22 +11,22 @@ const CreateAndEditAnnotationSlider = () => {
   const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
   const [{ openListSlider, openDetailsSlider }, { createAndEditSliderIsOpen }] = useSliders()
 
-  const closeEditor = () => {
-    return selectedAnnotationId ? () => openDetailsSlider(selectedAnnotationId) : openListSlider
-  }
+  const closeEditor = selectedAnnotationId
+    ? () => openDetailsSlider(selectedAnnotationId)
+    : openListSlider
 
   return (
     <SlidingPane
       className="hide-default-close"
       closeIcon={<div />}
-      onRequestClose={closeEditor()}
+      onRequestClose={closeEditor}
       isOpen={createAndEditSliderIsOpen}
       title={
         <div className="grid grid-flow-col justify-between">
           <span className="text-gray-900 text-base font-poppins">
             {`${selectedAnnotationId ? 'Edit' : 'Create'} Annotation`}
           </span>
-          <button title="Close" className="text-gray-600 px-4 py-1" onClick={closeEditor()}>
+          <button title="Close" className="text-gray-600 px-4 py-1" onClick={closeEditor}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
