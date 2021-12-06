@@ -50,9 +50,9 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">
             WCAG
             <Field
-              as="select"
+              component={SelectField}
               name="successCriteriumId"
-              className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="mt-1 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option key="default" hidden>
                 Choose WCAG success criterium
@@ -166,6 +166,23 @@ const TitleField = (props) => {
   }, [successCriteriumId, touched.successCriteriumId, touched.title, setFieldValue, props.name])
 
   return <Field {...props} {...field} />
+}
+
+const SelectField = ({ field, form, ...props }) => {
+  return (
+    <div className="relative">
+      <select {...field} {...props} />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 pointer-events-none"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  )
 }
 
 // eslint-disable-next-line import/prefer-default-export
