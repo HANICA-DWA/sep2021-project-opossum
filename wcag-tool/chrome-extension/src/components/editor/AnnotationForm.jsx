@@ -7,14 +7,11 @@ import {
   useGetGuidelinesQuery,
   useGetPrinciplesQuery,
 } from '../../services/apiService'
-import { useSliders } from '../../hooks'
 
-function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
+function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeEditor }) {
   const { data: principles } = useGetPrinciplesQuery()
   const { data: guidelines } = useGetGuidelinesQuery()
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
-
-  const [{ openListSlider }] = useSliders()
 
   const initialValues = {
     successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '',
@@ -58,9 +55,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
               defaultValue="WCAG2:extended-audio-description-prerecorded"
               className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option key="default" selected>
-                Choose WCAG success criterium
-              </option>
+              <option key="default">Choose WCAG success criterium</option>
 
               {principles &&
                 principles.map((principle) => (
@@ -132,7 +127,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate }) {
             </div>
           ) : (
             <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
-              <ActionButton onClick={openListSlider} type="cancel">
+              <ActionButton onClick={closeEditor} type="cancel">
                 Cancel
               </ActionButton>
               <ActionButton disabled={!(dirty && isValid)} type="submit">

@@ -11,14 +11,16 @@ const CreateAndEditAnnotationSlider = () => {
   const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
   const [{ openListSlider, openDetailsSlider }, { createAndEditSliderIsOpen }] = useSliders()
 
+  const closeEditor = () => {
+    selectedAnnotationId ? () => openDetailsSlider(selectedAnnotationId) : openListSlider
+  }
+
   return (
     <SlidingPane
       className="hide-default-close"
       closeIcon={<div />}
       onRequestClose={
-        selectedAnnotationId
-          ? () => openDetailsSlider(selectedAnnotationId)
-          : () => openListSlider()
+        selectedAnnotationId ? () => openDetailsSlider(selectedAnnotationId) : openListSlider
       }
       isOpen={createAndEditSliderIsOpen}
       title={
@@ -26,15 +28,7 @@ const CreateAndEditAnnotationSlider = () => {
           <span className="text-gray-900 text-base font-poppins">
             {`${selectedAnnotationId ? 'Edit' : 'Create'} Annotation`}
           </span>
-          <button
-            title="Close"
-            className="text-gray-600 px-4 py-1"
-            onClick={
-              selectedAnnotationId
-                ? () => openDetailsSlider(selectedAnnotationId)
-                : () => openListSlider()
-            }
-          >
+          <button title="Close" className="text-gray-600 px-4 py-1" onClick={closeEditor}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -64,6 +58,7 @@ const CreateAndEditAnnotationSlider = () => {
         selectedAnnotation={selectedAnnotation}
         handleCreate={createAnnotation}
         handleUpdate={updateAnnotation}
+        closeEditor={closeEditor}
       />
     </SlidingPane>
   )
