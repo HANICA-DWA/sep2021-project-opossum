@@ -80,7 +80,7 @@ export const useDeleteAnnotation = () => {
       annotationId: _id,
     })
       .unwrap()
-      .then((deletedAnnotation) => {
+      .then(() => {
         openListSlider()
       })
       // eslint-disable-next-line no-console

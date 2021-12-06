@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 import { usePopperTooltip } from 'react-popper-tooltip'
+import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 
 import IconButton from '../common/IconButton'
 
@@ -18,7 +18,7 @@ export function truncateStringAndCapitalize(num, str = '') {
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
-  const { selectedAnnotation } = useAnnotation()
+  const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
   const [deleteAnnotation] = useDeleteAnnotation()
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
@@ -95,6 +95,7 @@ const AnnotationDetailSlider = function () {
                 <button
                   onClick={() => {
                     deleteAnnotation(selectedAnnotationId)
+                    setTooltipIsVisible(false)
                   }}
                   className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-1 border border-red-500"
                 >
