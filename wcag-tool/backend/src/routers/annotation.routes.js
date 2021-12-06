@@ -25,9 +25,18 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
 
 router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-    const { annotations } = req.snapshot // Snapshot already loaded through middleware
 
-    return res.json(annotations)
+    const { successCriterium, title, description, selector } = req.body
+
+    const annotation = await req.snapshot.addAnnotation(
+      successCriterium,
+      title,
+      description,
+      selector
+    )
+    if (!annotation) return next({ code: 500, message: 'Annotation could not be added' })
+
+    return res.status(201).json(annotation)
   } catch (err) {
     return next(err)
   }

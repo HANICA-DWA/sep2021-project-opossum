@@ -22,7 +22,10 @@ export const useSliders = () => {
   } = useSelector((state) => state.sliders)
 
   const openCreateAndEditSlider = (selector) => {
-    if (selector) dispatch(setNewAnnotationSelector(selector))
+    if (selector) {
+      dispatch(setNewAnnotationSelector(selector))
+      dispatch(setHighlightedElementSelector(selector))
+    }
 
     dispatch(setCreateAndEditSliderIsOpen(true))
     dispatch(setDetailSliderIsOpen(false))

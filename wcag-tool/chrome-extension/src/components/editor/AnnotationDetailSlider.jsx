@@ -18,7 +18,7 @@ export function truncateStringAndCapitalize(num, str = '') {
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
-  const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
+  const { selectedAnnotation } = useAnnotation()
   const [deleteAnnotation] = useDeleteAnnotation()
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
@@ -59,7 +59,7 @@ const AnnotationDetailSlider = function () {
             <IconButton
               title="Edit annotation"
               className="pencilIcon p-0.5 mr-1"
-              onClick={() => openCreateAndEditSlider(selectedAnnotationId)}
+              onClick={() => openCreateAndEditSlider()}
             />
             <IconButton
               title="Close annotation"
