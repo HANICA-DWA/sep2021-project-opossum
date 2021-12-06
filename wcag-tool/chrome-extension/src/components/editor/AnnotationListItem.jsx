@@ -39,7 +39,6 @@ const AnnotationListItem = function ({ annotation }) {
         <div className="pt-4">
           <p className="overflowWrap text-md">{truncateStringAndCapitalize(110, description)}</p>
         </div>
-        {/* Success criterium: WCAG toevoegen */}
       </div>
     </div>
   )
