@@ -4,13 +4,16 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
 import IconButton from '../common/IconButton'
-import { useAnnotation, useSliders } from '../../hooks'
+import { useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
+import { useGetSuccessCriteriaQuery } from '../../services/apiService'
+
+const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
 
 const AnnotationListSlider = () => {
-  const { annotations } = useAnnotation()
+  const { data: annotations } = useGetSuccessCriteriaQuery(dummySnapshotId)
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
