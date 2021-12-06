@@ -25,7 +25,6 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
 
 router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-
     const { successCriterium, title, description, selector } = req.body
 
     const annotation = await req.snapshot.addAnnotation(
