@@ -33,18 +33,14 @@ const IFrameWrapper = function () {
     const badge = document.createElement('div')
 
     badge.innerText = '1'
-    badge.style.position = 'absolute'
     badge.style.padding = '3px 8px'
     badge.style.borderRadius = ' 50%'
-    badge.style.top = '0px'
-    badge.style.right = '0px'
-
-    // badge.style.marginLeft = 'auto'
+    bade.style.position = 'absolute'
 
     badge.style.background = 'red'
     badge.style.color = 'white'
 
-    this.appendChild(badge)
+    this.insertBefore(badge, this.firstChild)
   }
 
   const createNewAnnotationOnClick = (element) => {
