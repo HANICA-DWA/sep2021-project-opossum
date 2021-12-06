@@ -3,7 +3,6 @@ import OverlayButton from './OverlayButton'
 import AnnotationListSlider from './AnnotationListSlider'
 import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
-import IFrameWrapper from './IFrameWrapper'
 
 const App = () => {
   return (
@@ -12,7 +11,6 @@ const App = () => {
       <AnnotationListSlider />
       <AnnotationDetailSlider />
       <CreateAndEditAnnotationSlider />
-      <IFrameWrapper />
     </>
   )
 }

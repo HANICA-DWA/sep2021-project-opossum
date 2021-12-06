@@ -1,26 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import '../css/styles.css'
 import './editor.css'
+// eslint-disable-next-line import/extensions
 import './editor.js'
-
-const Editor = () => {
-  const editorElement = document.querySelector('.editor')
-
-  return (
-    <div className={"toolbar"}>
-      <button onClick={(e)=> {
-        console.log("clicked")
-        editorElement.contentWindow.postMessage(JSON.stringify({method: 'elementSelect'}), '*')
-        editorElement.contentWindow.focus()
-      }}>Test</button>
-    </div>
-  )
-}
+import App from '../components/editor/App'
+import store from '../services/store'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Editor />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
