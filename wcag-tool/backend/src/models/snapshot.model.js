@@ -63,7 +63,7 @@ snapshotSchema.methods.updateAnnotation = async function (id, fields) {
 // eslint-disable-next-line func-names
 snapshotSchema.methods.deleteAnnotation = async function (id) {
   const annotationToDelete = this.annotations.id(id)
-  if (!annotationToDelete) throw new Error('Annotation not found')
+  if (!annotationToDelete) return undefined
 
   annotationToDelete.remove()
 
