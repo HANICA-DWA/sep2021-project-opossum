@@ -25,6 +25,10 @@ addEventListener('message', (event) => {
     }
     tabData.docSaved = true
   }
+
+  if (message.method === 'onSelect') {
+    console.log('onSelect', message)
+  }
 })
 
 addEventListener('load', () => {

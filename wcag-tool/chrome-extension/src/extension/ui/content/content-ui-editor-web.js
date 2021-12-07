@@ -894,6 +894,7 @@ table {
     if (message.method === 'elementSelectionMode') {
       elementSelectionMode(message.content)
     }
+    return {}
   }
   window.onresize = reflowNotes
   document.ondragover = (event) => event.preventDefault()
@@ -907,7 +908,6 @@ table {
   }
 
   async function init(content, { filename, reset } = {}) {
-    console.log('init true')
     await initConstants()
     const initScriptContentMatch = content.match(/<script data-template-shadow-root.*<\/script>/)
     if (initScriptContentMatch && initScriptContentMatch[0]) {
@@ -985,6 +985,12 @@ table {
         const { clientX, clientY } = getPosition(event)
         anchorElement = getTarget(clientX, clientY) || document.documentElement
         displayMaskNote()
+      }
+      document.documentElement.onclick = () => {
+        window.parent.postMessage(
+          JSON.stringify({ method: 'onSelect', content: unique(anchorElement), test: 'test' }),
+          '*'
+        )
       }
     } else {
       document.documentElement.onmousemove = null

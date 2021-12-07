@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SlidingPane from 'react-sliding-pane'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
@@ -11,10 +11,32 @@ import NoAnnotation from './NoAnnotation'
 
 const AnnotationListSlider = () => {
   const { annotations } = useAnnotation()
-  const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+  const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen, elementSelectorIsOpen }] =
+    useSliders()
+  const editorIframe = document.querySelector('.editor')
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
+
+  useEffect(() => {
+    if (elementSelectorIsOpen) {
+      editorIframe.contentWindow.postMessage(
+        JSON.stringify({
+          method: 'elementSelectionMode',
+          content: true,
+        }),
+        '*'
+      )
+    } else {
+      editorIframe.contentWindow.postMessage(
+        JSON.stringify({
+          method: 'elementSelectionMode',
+          content: false,
+        }),
+        '*'
+      )
+    }
+  }, [elementSelectorIsOpen])
 
   return (
     <SlidingPane

@@ -62,6 +62,7 @@ export const useSliders = () => {
   const openElementSelector = () => {
     dispatch(setSelectedAnnotationId(''))
 
+
     dispatch(setElementSelectorIsOpen(true))
     dispatch(setCreateAndEditSliderIsOpen(false))
     dispatch(setDetailSliderIsOpen(false))
