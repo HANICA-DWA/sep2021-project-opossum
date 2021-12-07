@@ -3,83 +3,89 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Poppins';
-    src: url(./font/Poppins/Poppins-Regular.ttf);
-    font-weight: normal;
+  font-family: 'Poppins';
+  src: url(./font/Poppins/Poppins-Regular.ttf);
+  font-weight: normal;
 }
 
 @font-face {
-    font-family: Poppins;
-    src: url(./font/Poppins/Poppins-Bold.ttf);
-    font-weight: bold;
+  font-family: Poppins;
+  src: url(./font/Poppins/Poppins-Bold.ttf);
+  font-weight: bold;
 }
 
 @font-face {
-    font-family: Poppins-Semi;
-    src: url(./font/Poppins/Poppins-SemiBold.ttf);
+  font-family: Poppins-Semi;
+  src: url(./font/Poppins/Poppins-SemiBold.ttf);
 }
 
 @layer utilities {
-    
-    .searchIcon {
-        background-image: url(../img/icon/search.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
-    }
+  .searchIcon {
+    background-image: url(../img/icon/search.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
 
-    .folderIcon {
-        background-image: url(../img/icon/folder.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 150px;
-		width: 200px;
-    }
+  .folderIcon {
+    background-image: url(../img/icon/folder.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 200px;
+  }
 
-    .arrowLeftIcon {
-        background-image: url(../img/icon/arrow-left.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
-    }
+  .arrowLeftIcon {
+    background-image: url(../img/icon/arrow-left.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
 
-    .crossIcon {
-        background-image: url(../img/icon/cross.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 20px;
-		width: 20px;
-    }
+  .crossIcon {
+    background-image: url(../img/icon/cross.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+  }
 
-    .pencilIcon {
-        background-image: url(../img/icon/pencil.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 20px;
-		width: 20px;
-    }
+  .pencilIcon {
+    background-image: url(../img/icon/pencil.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+  }
 
-    .plusIcon {
-        background-image: url(../img/icon/plus.svg);
-        background-size: contain;
-		background-repeat: no-repeat;
-		height: 25px;
-		width: 25px;
-    }
+  .plusIcon {
+    background-image: url(../img/icon/plus.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
 
-    .noBorder {
-        border: 0px;
-    }
+  .trashIcon {
+    background-image: url(../img/icon/trash-can.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
 
-    .customSize {
-        height: 37rem;
-        width: 30rem;
-    }
+  .noBorder {
+    border: 0px;
+  }
 
-    .overflowWrap {
-        overflow-wrap: anywhere;
-    }
+  .customSize {
+    height: 37rem;
+    width: 30rem;
+  }
 
+  .overflowWrap {
+    overflow-wrap: anywhere;
+  }
 }
