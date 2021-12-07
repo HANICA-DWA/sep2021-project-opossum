@@ -1,5 +1,7 @@
 /* global globalThis, window, document, fetch, DOMParser, getComputedStyle, setTimeout, clearTimeout, NodeFilter, Readability, isProbablyReaderable, matchMedia, TextDecoder, Node */
 
+import unique from '../../../../node_modules/unique-selector/src/index.js'
+
 ;((globalThis) => {
   const { singlefile } = globalThis
 
@@ -988,13 +990,13 @@ table {
       }
       document.documentElement.onclick = () => {
         window.parent.postMessage(
-          JSON.stringify({ method: 'onSelect', content: unique(anchorElement), test: 'test' }),
+          JSON.stringify({ method: 'onElementSelected', content: unique(anchorElement) }),
           '*'
         )
       }
     } else {
       document.documentElement.onmousemove = null
-      maskPageElement.classList.remove(PAGE_MASK_ACTIVE_CLASS)
+      document.documentElement.onclick = null
       document.documentElement.style.removeProperty('user-select')
       anchorElement = null
     }

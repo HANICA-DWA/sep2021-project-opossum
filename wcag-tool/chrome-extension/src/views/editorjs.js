@@ -5,32 +5,6 @@ let tabData,
   tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024
 
-addEventListener('message', (event) => {
-  const message = JSON.parse(event.data)
-  if (message.method === 'onUpdate') {
-    tabData.docSaved = message.saved
-  }
-  if (message.method === 'onInit') {
-    tabData.options.disableFormatPage = !message.formatPageEnabled
-    // formatPageButton.hidden = !message.formatPageEnabled;
-    document.title = '[WCAG] ' + message.title
-    if (message.filename) {
-      tabData.filename = message.filename
-    }
-    if (message.icon) {
-      const linkElement = document.createElement('link')
-      linkElement.rel = 'icon'
-      linkElement.href = message.icon
-      document.head.appendChild(linkElement)
-    }
-    tabData.docSaved = true
-  }
-
-  if (message.method === 'onSelect') {
-    console.log('onSelect', message)
-  }
-})
-
 addEventListener('load', () => {
   browser.runtime.sendMessage({ method: 'editor.getTabData' })
 })
