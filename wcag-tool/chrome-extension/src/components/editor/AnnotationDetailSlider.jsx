@@ -7,6 +7,7 @@ import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 import IconButton from '../common/IconButton'
 
 export function truncateStringAndCapitalize(num, str = '') {
+  console.log('str value: ' + str)
   const newString = str.charAt(0).toUpperCase() + str.slice(1)
 
   if (newString.length <= num) {
