@@ -28,7 +28,7 @@ const App = () => {
         <Awareness provider={provider} clientId={yDoc.clientID} />
       </div>
 
-      {currentAnnotation && (
+      {/* {currentAnnotation && (
         <div style={{ border: '2px solid green', margin: '1rem', padding: '1rem' }}>
           <h2>Current annotation</h2>
           <p>
@@ -59,7 +59,7 @@ const App = () => {
           currentAnnotation={currentAnnotation}
           setCurrentAnnotation={setCurrentAnnotation}
         />
-      </div>
+      </div> */}
     </>
   )
 }

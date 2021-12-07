@@ -169,6 +169,7 @@ const TitleField = (props) => {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
+    touched,
     setFieldValue,
   } = useFormikContext()
   const [field] = useField(props)

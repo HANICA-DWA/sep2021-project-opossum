@@ -1,12 +1,22 @@
+/* eslint-disable import/newline-after-import */
 require('dotenv/config')
-require('./database')
-const { app } = require('./app')
+const { createServer } = require('http')
 
-// WEBSOCKET CODE
-// TODO
+const { app } = require('./app')
+const { wsServer } = require('./websocket')
+const httpServer = createServer(app)
+require('./database')
+
+httpServer.on('upgrade', (req, socket, head) => {
+  // TODO authenticate requests here!
+
+  wsServer.handleUpgrade(req, socket, head, (ws, _req) => {
+    wsServer.emit('connection', ws, req)
+  })
+})
 
 // Start server
-app.listen(process.env.PORT, async () => {
+httpServer.listen(process.env.PORT, async () => {
   /* eslint-disable-next-line no-console */
   console.log(`Server started listening on port ${process.env.PORT}`)
 })
