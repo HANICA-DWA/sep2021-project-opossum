@@ -77,9 +77,9 @@ const AnnotationDetailSlider = function () {
         <div className="flex justify-center border-t border-gray-400">
           <button
             ref={setTriggerRef}
-            className="inline-flex items-center p-2 my-6 pl-5 pr-5 bg-white hover:bg-red-50 border-red-500 text-red-500 border text-lg rounded-lg focus:border-4"
+            className="inline-flex items-center p-2 my-6 pl-3 pr-5 gap-x-2 bg-white hover:bg-red-50 border-red-500 text-red-500 border text-lg rounded-lg focus:border-4"
           >
-            <span className="trashIcon px-2" />
+            <span className="trashIcon" />
             Delete annotation
           </button>
           <div className="self-center">
@@ -97,7 +97,7 @@ const AnnotationDetailSlider = function () {
                     deleteAnnotation(selectedAnnotationId)
                     setTooltipIsVisible(false)
                   }}
-                  className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-1 border border-red-500"
+                  className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-4 border border-red-500"
                 >
                   <span className="trashIcon text-xs" />
                 </button>
@@ -105,7 +105,7 @@ const AnnotationDetailSlider = function () {
                   onClick={() => {
                     setTooltipIsVisible(false)
                   }}
-                  className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 px-2  ml-3 text-gray-400 font-poppins hover:bg-gray-800 "
+                  className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-2 px-2 text-gray-400 font-poppins hover:bg-gray-800 "
                 >
                   Cancel
                 </button>
@@ -114,8 +114,6 @@ const AnnotationDetailSlider = function () {
           </div>
         </div>
       </div>
-
-      {/* Delete button */}
     </SlidingPane>
   )
 }
