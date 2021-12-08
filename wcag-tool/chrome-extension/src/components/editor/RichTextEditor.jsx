@@ -2,9 +2,15 @@ import ReactQuill, { Quill } from 'react-quill'
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { useYjs } from '../../hooks'
+import { useFormikContext } from 'formik'
 
-const RichTextEditor = function () {
+const RichTextEditor = function ({ field, form, ...props }) {
   const { yDoc, provider } = useYjs()
+
+  const {
+    values: { description },
+    setFieldValue,
+  } = useFormikContext()
 
   // States
   const [text, setText] = useState('')
@@ -37,12 +43,15 @@ const RichTextEditor = function () {
 
   return (
     <ReactQuill
+      {...field}
+      {...props}
       modules={modules}
-      value={text}
-      onChange={setText}
+      value={description}
+      onChange={(value) => {
+        setFieldValue(field.name, value)
+      }}
       ref={reactQuillRef}
       placeholder="Description"
-      theme="snow"
     />
   )
 }
