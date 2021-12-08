@@ -72,7 +72,7 @@ const AnnotationDetailSlider = function () {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden">
+        <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden annotation-details">
           {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
         <div className="flex justify-center border-t border-gray-400">
