@@ -30,11 +30,6 @@ const RichTextEditor = function ({ field, placeholder }) {
   }
 
   useEffect(() => {
-    // Cleanup before unmounting
-    return () => {}
-  }, [ydoc, provider])
-
-  useEffect(() => {
     attachRefs()
     const yText = ydoc.getText(field.name)
     const quillBinding = new QuillBinding(yText, quillRef.current, provider.awareness)
