@@ -1,24 +1,4 @@
 {
-	"extensionDescription": {
-		"message": "Save a complete page into a single HTML file",
-		"description": "Description of the extension."
-	},
-	"commandSaveSelectedTabs": {
-		"message": "Save the selected tabs or their selected contents",
-		"description": "Command (Ctrl+Shift+Y): 'Save the selected tabs or their selected contents'"
-	},
-	"commandSaveAllTabs": {
-		"message": "Save all tabs",
-		"description": "Command (Ctrl+Shift+U): 'Save all tabs'"
-	},
-	"menuSavePage": {
-		"message": "Save page and download",
-		"description": "Menu entry: 'Save page and download'"
-	},
-	"menuEditPage": {
-		"message": "Annotate the page...",
-		"description": "Menu entry: 'Annotate the page...'"
-	},
 	"menuEditAndSavePage": {
 		"message": "Create Snapshot [WCAG Tool]",
 		"description": "Menu entry: 'Create snapshot [WCAG Tool]'"

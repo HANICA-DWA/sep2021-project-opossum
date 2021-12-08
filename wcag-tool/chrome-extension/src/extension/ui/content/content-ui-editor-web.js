@@ -238,7 +238,7 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
       const boundingRect = element.getBoundingClientRect()
       if (
         element.parentElement &&
-        !element.parentElement.tagName.toLowerCase() !== NOTE_TAGNAME &&
+        !element.parentElement.tagName.toLowerCase() != NOTE_TAGNAME &&
         !element.classList.contains(MASK_CLASS)
       ) {
         const parentBoundingRect = element.parentElement.getBoundingClientRect()
