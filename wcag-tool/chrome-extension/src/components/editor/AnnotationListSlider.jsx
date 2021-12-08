@@ -4,13 +4,13 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
 import IconButton from '../common/IconButton'
-import { useAnnotation, useSliders } from '../../hooks'
+import { useYAnnotations, useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 
 const AnnotationListSlider = () => {
-  const { annotations } = useAnnotation()
+  const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
