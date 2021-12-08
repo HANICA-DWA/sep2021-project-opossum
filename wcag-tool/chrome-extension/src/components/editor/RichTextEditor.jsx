@@ -1,10 +1,10 @@
 import ReactQuill, { Quill } from 'react-quill'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import 'react-quill/dist/quill.snow.css'
-import { useYjs } from '../../hooks'
 import { useFormikContext } from 'formik'
 import QuillCursors from 'quill-cursors'
 import { QuillBinding } from 'y-quill'
+import { useYjs } from '../../hooks'
 
 const RichTextEditor = function ({ field, placeholder }) {
   const { ydoc, provider } = useYjs()
