@@ -4,16 +4,8 @@ import 'react-quill/dist/quill.snow.css'
 import { useYjs } from '../../hooks'
 import { useFormikContext } from 'formik'
 
-const RichTextEditor = function ({ field, form, ...props }) {
-  const { yDoc, provider } = useYjs()
-
-  const {
-    values: { description },
-    setFieldValue,
-  } = useFormikContext()
-
-  // States
-  const [text, setText] = useState('')
+const RichTextEditor = function ({ field, placeholder }) {
+  const { setFieldValue } = useFormikContext()
 
   // Refs
   const quillRef = useRef(undefined)
@@ -26,7 +18,7 @@ const RichTextEditor = function ({ field, form, ...props }) {
 
   // Quill modules
   const modules = {
-    toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic']],
+    toolbar: field.name === 'title' ? false : [[{ header: [1, 2, 3, false] }], ['bold', 'italic']],
     history: {
       userOnly: true,
     },
@@ -41,17 +33,22 @@ const RichTextEditor = function ({ field, form, ...props }) {
     }
   }, [])
 
+  useEffect(() => {
+    // https://stackoverflow.com/questions/38936594/dynamically-change-quill-placeholder LOOOOOOOOOOOOOOOOOOOOOL
+
+    const selector = `#${field.name}-editor > div.ql-container.ql-snow > div.ql-editor`
+    const element = document.querySelector(selector)
+    element.setAttribute('data-placeholder', placeholder)
+  }, [placeholder])
+
   return (
     <ReactQuill
-      {...field}
-      {...props}
+      id={`${field.name}-editor`}
       modules={modules}
-      value={description}
-      onChange={(value) => {
-        setFieldValue(field.name, value)
-      }}
+      value={field.value}
+      placeholder={placeholder}
+      onChange={(value) => setFieldValue(field.name, value)}
       ref={reactQuillRef}
-      placeholder="Description"
     />
   )
 }
