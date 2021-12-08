@@ -1,31 +1,19 @@
 import React from 'react'
-import { useEffect } from 'react'
 import OverlayButton from './OverlayButton'
 import AnnotationListSlider from './AnnotationListSlider'
 import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
 import IFrameWrapper from './IFrameWrapper'
-
 import Awareness from '../common/Awareness'
-import * as Y from 'yjs'
-import { WebsocketProvider } from 'y-websocket'
 
-const yDoc = new Y.Doc()
-const provider = new WebsocketProvider('ws://localhost:5000', 'room', yDoc)
+import { useYjs } from '../../hooks'
 
 const App = () => {
-  // ComponentDidMount
-  useEffect(() => {
-    // ComponentWillUnmount
-    return () => {
-      provider.destroy()
-      yDoc.destroy()
-    }
-  }, [])
+  const {ydoc, provider} = useYjs()
 
   return (
     <>
-      <Awareness provider={provider} clientId={yDoc.clientID} />
+      <Awareness provider={provider} clientId={ydoc.clientID} />
       <OverlayButton />
       <AnnotationListSlider />
       <AnnotationDetailSlider />

@@ -12,6 +12,9 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      backgroundOpacity: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      textOpacity: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      visibility: ['responsive', 'hover', 'focus', 'active', 'disabled'],
     },
   },
   plugins: [],

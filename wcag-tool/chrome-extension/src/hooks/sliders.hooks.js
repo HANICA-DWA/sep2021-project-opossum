@@ -21,6 +21,8 @@ export const useSliders = () => {
     elementSelectorIsOpen,
   } = useSelector((state) => state.sliders)
 
+  const anySliderOpen = listSliderIsOpen || createAndEditSliderIsOpen || detailsSliderIsOpen
+
   const openCreateAndEditSlider = (selector) => {
     if (selector) {
       dispatch(setNewAnnotationSelector(selector))
@@ -76,6 +78,6 @@ export const useSliders = () => {
       openCreateAndEditSlider,
       openElementSelector,
     },
-    { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
+    { anySliderOpen, listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
   ]
 }
