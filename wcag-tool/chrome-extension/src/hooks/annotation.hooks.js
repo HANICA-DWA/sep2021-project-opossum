@@ -52,8 +52,7 @@ export const useUpdateAnnotation = () => {
   // TODO: Logic to set new selector for selectedAnnotation
 
   const updateAnnotation = (_id, fields) => {
-    // Filter unchanged fields
-    console.log(_id, fields)
+    // TODO: filter & sanitize unchanged fields!
 
     _updateAnnotation({
       snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
