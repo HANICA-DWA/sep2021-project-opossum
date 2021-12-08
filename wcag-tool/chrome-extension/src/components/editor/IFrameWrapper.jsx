@@ -3,12 +3,20 @@ import { useSelector } from 'react-redux'
 import unique from 'unique-selector'
 import { useSliders } from '../../hooks'
 
+const ReactDOM = require('react-dom')
+const axe = require('@axe-core/react')
+
 const IFrameWrapper = function () {
   // eslint-disable-next-line no-empty-pattern
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const { highlightedElementSelector } = useSelector((state) => state.annotation)
 
   const iframeDoc = useRef(undefined)
+
+  // run axe core analyses on document object of iframe
+  useEffect(() => {
+    console.log('iframeDoc', iframeDoc.current)
+  }, [iframeDoc])
 
   const removeLink = (element) => {
     if (element.tagName === 'A') {
@@ -49,10 +57,20 @@ const IFrameWrapper = function () {
   useEffect(() => {
     iframeDoc.current = document.getElementById('myframe')
 
-    iframeDoc.current.addEventListener('load', function () {
+    iframeDoc.current.addEventListener('load', async function () {
       // eslint-disable-next-line react/no-this-in-sfc
       const Snapshotdocument = this.contentWindow.document
-      const elements = Snapshotdocument.querySelectorAll('*')
+
+      const elements = Snapshotdocument.body.querySelectorAll('*')
+
+      axe(React, ReactDOM, 1000)
+        .then((results) => {
+          console.log('results', results)
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+
       elements.forEach((element) => {
         removeLink(element)
       })
