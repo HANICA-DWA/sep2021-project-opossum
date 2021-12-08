@@ -34,13 +34,7 @@ async function downloadPage(pageData, options) {
   if (options.includeBOM) {
     pageData.content = `\ufeff${pageData.content}`
   }
-  if (
-    options.backgroundSave ||
-    options.openEditor ||
-    options.saveToGDrive ||
-    options.saveToGitHub ||
-    options.saveWithCompanion
-  ) {
+  if (options.backgroundSave || options.openEditor) {
     for (
       let blockIndex = 0;
       blockIndex * MAX_CONTENT_SIZE < pageData.content.length;
@@ -53,13 +47,6 @@ async function downloadPage(pageData, options) {
         filenameConflictAction: options.filenameConflictAction,
         filename: pageData.filename,
         saveToClipboard: options.saveToClipboard,
-        saveToGDrive: options.saveToGDrive,
-        saveToGitHub: options.saveToGitHub,
-        githubToken: options.githubToken,
-        githubUser: options.githubUser,
-        githubRepository: options.githubRepository,
-        githubBranch: options.githubBranch,
-        saveWithCompanion: options.saveWithCompanion,
         forceWebAuthFlow: options.forceWebAuthFlow,
         extractAuthCode: options.extractAuthCode,
         filenameReplacementCharacter: options.filenameReplacementCharacter,

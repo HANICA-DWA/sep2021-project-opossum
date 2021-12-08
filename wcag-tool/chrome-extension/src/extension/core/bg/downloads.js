@@ -23,52 +23,25 @@
 
 /* global browser, Blob */
 
-import * as config from './config.js'
 import * as bookmarks from './bookmarks.js'
 import * as companion from './companion.js'
 import * as business from './business.js'
 import * as editor from './editor.js'
-import { launchWebAuthFlow, extractAuthCode, promptValue } from './tabs-util.js'
 import * as ui from '../../ui/bg/index.js'
-import * as woleet from '../../lib/woleet/woleet.js'
-import { GDrive } from '../../lib/gdrive/gdrive.js'
-import { pushGitHub } from '../../lib/github/github.js'
 import { download } from './download-util.js'
 
 const partialContents = new Map()
-const MIMETYPE_HTML = 'text/html'
-const CLIENT_ID = '207618107333-3pj2pmelhnl4sf3rpctghs9cean3q8nj.apps.googleusercontent.com'
-const SCOPES = ['https://www.googleapis.com/auth/drive.file']
 const CONFLICT_ACTION_SKIP = 'skip'
 const CONFLICT_ACTION_UNIQUIFY = 'uniquify'
 const REGEXP_ESCAPE = /([{}()^$&.*?/+|[\\\\]|\]|-)/g
 
-const manifest = browser.runtime.getManifest()
-const requestPermissionIdentity =
-  manifest.optional_permissions && manifest.optional_permissions.includes('identity')
-const gDrive = new GDrive(CLIENT_ID, SCOPES)
-export { onMessage, downloadPage, saveToGDrive, saveToGitHub }
+export { onMessage, downloadPage }
 
 async function onMessage(message, sender) {
   if (message.method.endsWith('.download')) {
     return downloadTabPage(message, sender.tab)
   }
-  if (message.method.endsWith('.disableGDrive')) {
-    const authInfo = await config.getAuthInfo()
-    config.removeAuthInfo()
-    await gDrive.revokeAuthToken(
-      authInfo && (authInfo.accessToken || authInfo.revokableAccessToken)
-    )
-    return {}
-  }
   if (message.method.endsWith('.end')) {
-    if (message.hash) {
-      try {
-        await woleet.anchor(message.hash, message.woleetKey)
-      } catch (error) {
-        ui.onError(sender.tab.id, error.message, error.link)
-      }
-    }
     business.onSaveEnd(message.taskId)
     return {}
   }
@@ -123,34 +96,7 @@ async function downloadTabPage(message, tab) {
 
 async function downloadContent(contents, tab, incognito, message) {
   try {
-    if (message.saveToGDrive) {
-      await (
-        await saveToGDrive(
-          message.taskId,
-          message.filename,
-          new Blob(contents, { type: MIMETYPE_HTML }),
-          {
-            forceWebAuthFlow: message.forceWebAuthFlow,
-            extractAuthCode: message.extractAuthCode,
-          },
-          {
-            onProgress: (offset, size) => ui.onUploadProgress(tab.id, offset, size),
-          }
-        )
-      ).uploadPromise
-    } else if (message.saveToGitHub) {
-      await (
-        await saveToGitHub(
-          message.taskId,
-          message.filename,
-          contents.join(''),
-          message.githubToken,
-          message.githubUser,
-          message.githubRepository,
-          message.githubBranch
-        )
-      ).pushPromise
-    } else if (message.saveWithCompanion) {
+    if (message.saveWithCompanion) {
       await companion.save({
         filename: message.filename,
         content: message.content,
@@ -178,7 +124,7 @@ async function downloadContent(contents, tab, incognito, message) {
       browser.tabs.create(createTabProperties)
     }
   } catch (error) {
-    if (!error.message || error.message != 'upload_cancelled') {
+    if (!error.message || error.message !== 'upload_cancelled') {
       console.error(error) // eslint-disable-line no-console
       ui.onError(tab.id, error.message, error.link)
     }
@@ -189,97 +135,10 @@ function getRegExp(string) {
   return string.replace(REGEXP_ESCAPE, '\\$1')
 }
 
-async function getAuthInfo(authOptions, force) {
-  let authInfo = await config.getAuthInfo()
-  const options = {
-    interactive: true,
-    auto: authOptions.extractAuthCode,
-    forceWebAuthFlow: authOptions.forceWebAuthFlow,
-    requestPermissionIdentity,
-    launchWebAuthFlow: (options) => launchWebAuthFlow(options),
-    extractAuthCode: (authURL) => extractAuthCode(authURL),
-    promptAuthCode: () => promptValue('Please enter the access code for Google Drive'),
-  }
-  gDrive.setAuthInfo(authInfo, options)
-  if (!authInfo || !authInfo.accessToken || force) {
-    authInfo = await gDrive.auth(options)
-    if (authInfo) {
-      await config.setAuthInfo(authInfo)
-    } else {
-      await config.removeAuthInfo()
-    }
-  }
-  return authInfo
-}
-
-async function saveToGitHub(
-  taskId,
-  filename,
-  content,
-  githubToken,
-  githubUser,
-  githubRepository,
-  githubBranch
-) {
-  const taskInfo = business.getTaskInfo(taskId)
-  if (!taskInfo || !taskInfo.cancelled) {
-    const pushInfo = pushGitHub(
-      githubToken,
-      githubUser,
-      githubRepository,
-      githubBranch,
-      filename,
-      content
-    )
-    business.setCancelCallback(taskId, pushInfo.cancelPush)
-    try {
-      await (
-        await pushInfo
-      ).pushPromise
-      return pushInfo
-    } catch (error) {
-      throw new Error(`${error.message} (GitHub)`)
-    }
-  }
-}
-
-async function saveToGDrive(taskId, filename, blob, authOptions, uploadOptions) {
-  try {
-    await getAuthInfo(authOptions)
-    const taskInfo = business.getTaskInfo(taskId)
-    if (!taskInfo || !taskInfo.cancelled) {
-      const uploadInfo = await gDrive.upload(filename, blob, uploadOptions)
-      business.setCancelCallback(taskId, uploadInfo.cancelUpload)
-      return uploadInfo
-    }
-  } catch (error) {
-    if (error.message == 'invalid_token') {
-      let authInfo
-      try {
-        authInfo = await gDrive.refreshAuthToken()
-      } catch (error) {
-        if (error.message == 'unknown_token') {
-          authInfo = await getAuthInfo(authOptions, true)
-        } else {
-          throw new Error(`${error.message} (Google Drive)`)
-        }
-      }
-      if (authInfo) {
-        await config.setAuthInfo(authInfo)
-      } else {
-        await config.removeAuthInfo()
-      }
-      await saveToGDrive(taskId, filename, blob, authOptions, uploadOptions)
-    } else {
-      throw new Error(`${error.message} (Google Drive)`)
-    }
-  }
-}
-
 async function downloadPage(pageData, options) {
   const { filenameConflictAction } = options
   let skipped
-  if (filenameConflictAction == CONFLICT_ACTION_SKIP) {
+  if (filenameConflictAction === CONFLICT_ACTION_SKIP) {
     const downloadItems = await browser.downloads.search({
       filenameRegex: `(\\\\|/)${getRegExp(pageData.filename)}$`,
       exists: true,

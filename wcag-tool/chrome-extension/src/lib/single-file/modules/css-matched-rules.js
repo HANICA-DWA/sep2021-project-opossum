@@ -458,29 +458,37 @@ function computeSpecificity(selector, specificity = { a: 0, b: 0, c: 0 }) {
 }
 
 function compareSpecificity(specificity1, specificity2) {
-	if (specificity1.a > specificity2.a) {
-		return -1;
-	} if (specificity1.a < specificity2.a) {
-		return 1;
-	} if (specificity1.b > specificity2.b) {
-		return -1;
-	} if (specificity1.b < specificity2.b) {
-		return 1;
-	} if (specificity1.c > specificity2.c) {
-		return -1;
-	} if (specificity1.c < specificity2.c) {
-		return 1;
-	} if (specificity1.sheetIndex > specificity2.sheetIndex) {
-		return -1;
-	} if (specificity1.sheetIndex < specificity2.sheetIndex) {
-		return 1;
-	} if (specificity1.ruleIndex > specificity2.ruleIndex) {
-		return -1;
-	} if (specificity1.ruleIndex < specificity2.ruleIndex) {
-		return 1;
-	} 
-		return -1;
-	
+  if (specificity1.a > specificity2.a) {
+    return -1
+  }
+  if (specificity1.a < specificity2.a) {
+    return 1
+  }
+  if (specificity1.b > specificity2.b) {
+    return -1
+  }
+  if (specificity1.b < specificity2.b) {
+    return 1
+  }
+  if (specificity1.c > specificity2.c) {
+    return -1
+  }
+  if (specificity1.c < specificity2.c) {
+    return 1
+  }
+  if (specificity1.sheetIndex > specificity2.sheetIndex) {
+    return -1
+  }
+  if (specificity1.sheetIndex < specificity2.sheetIndex) {
+    return 1
+  }
+  if (specificity1.ruleIndex > specificity2.ruleIndex) {
+    return -1
+  }
+  if (specificity1.ruleIndex < specificity2.ruleIndex) {
+    return 1
+  }
+  return -1
 }
 
 function log(...args) {

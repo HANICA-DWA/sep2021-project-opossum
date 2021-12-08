@@ -101,10 +101,8 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
   }
 
   async function initConstants() {
-    ;[NOTES_WEB_STYLESHEET, MASK_WEB_STYLESHEET, HIGHLIGHTS_WEB_STYLESHEET] = await Promise.all([
-      minifyText(await (await fetch('/extension/ui/pages/editor-note-web.css')).text()),
-      minifyText(await (await fetch('/extension/ui/pages/editor-mask-web.css')).text()),
-      minifyText(await (await fetch('/extension/ui/pages/editor-frame-web.css')).text()),
+    ;[MASK_WEB_STYLESHEET] = await Promise.all([
+      minifyText(await (await fetch('/extension/ui/content/editor-mask-web.css')).text()),
     ])
   }
 

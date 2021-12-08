@@ -1,35 +1,11 @@
-/*
- * Copyright 2010-2020 Gildas Lormeau
- * contact : gildas.lormeau <at> gmail.com
- *
- * This file is part of SingleFile.
- *
- *   The code in this file is free software: you can redistribute it and/or
- *   modify it under the terms of the GNU Affero General Public License
- *   (GNU AGPL) as published by the Free Software Foundation, either version 3
- *   of the License, or (at your option) any later version.
- *
- *   The code in this file is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero
- *   General Public License for more details.
- *
- *   As additional permission under GNU AGPL version 3 section 7, you may
- *   distribute UNMODIFIED VERSIONS OF THIS file without the copy of the GNU
- *   AGPL normally required by section 4, provided you include this license
- *   notice and a URL through which recipients can access the Corresponding
- *   Source.
- */
-
 /* global browser */
 
 import { queryTabs } from '../../core/bg/tabs-util.js'
 import * as tabsData from '../../core/bg/tabs-data.js'
 import { getMessages } from '../../core/bg/i18n.js'
 
-// const DEFAULT_ICON_PATH = "/extension/ui/resources/icon_128.png";
 const DEFAULT_ICON_PATH = 'icon.png'
-const WAIT_ICON_PATH_PREFIX = '/extension/ui/resources/icon_128_wait'
+// const WAIT_ICON_PATH_PREFIX = '/extension/ui/resources/icon_128_wait'
 const BUTTON_DEFAULT_BADGE_MESSAGE = ''
 let BUTTON_DEFAULT_TOOLTIP_MESSAGE
 let BUTTON_BLOCKED_TOOLTIP_MESSAGE
@@ -166,7 +142,7 @@ function onMessage(message, sender) {
 }
 
 function onStart(tabId, step) {
-  const state = step == INJECT_SCRIPTS_STEP ? getButtonState('inject') : getButtonState('execute')
+  const state = step === INJECT_SCRIPTS_STEP ? getButtonState('inject') : getButtonState('execute')
   state.setTitle = { title: `${BUTTON_INITIALIZING_TOOLTIP_MESSAGE} (${step}/2)` }
   // state.setIcon = { path: WAIT_ICON_PATH_PREFIX + "0.png" };
   refresh(tabId, state)
@@ -202,8 +178,8 @@ function onUploadProgress(tabId, index, maxIndex) {
 
 function onProgress(tabId, index, maxIndex, tooltipMessage) {
   const progress = Math.max(Math.min(20, Math.floor((index / maxIndex) * 20)), 0)
-  const barProgress = Math.min(Math.floor((index / maxIndex) * 8), 8)
-  const path = `${WAIT_ICON_PATH_PREFIX + barProgress}.png`
+  // const barProgress = Math.min(Math.floor((index / maxIndex) * 8), 8)
+  // const path = `${WAIT_ICON_PATH_PREFIX + barProgress}.png`
   const state = getButtonState('progress')
   state.setTitle = { title: `${tooltipMessage + progress * 5}%` }
   // state.setIcon = { path };
@@ -226,7 +202,7 @@ async function refresh(tabId, state) {
     Object.keys(state).forEach((property) => {
       if (
         state[property] !== undefined &&
-        JSON.stringify(lastState[property]) != JSON.stringify(state[property])
+        JSON.stringify(lastState[property]) !== JSON.stringify(state[property])
       ) {
         newState[property] = state[property]
       }

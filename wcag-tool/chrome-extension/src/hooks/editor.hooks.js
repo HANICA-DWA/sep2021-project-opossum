@@ -63,6 +63,7 @@ export const useRegisterEditorEffects = () => {
       if (message.method === 'onElementSelected') {
         openCreateAndEditSlider(message.content)
       }
+      return {}
     }
 
     addEventListener('message', eventListener)
@@ -70,7 +71,7 @@ export const useRegisterEditorEffects = () => {
     return () => {
       removeEventListener('message', eventListener)
     }
-  }, [])
+  }, [openCreateAndEditSlider])
 
   useEffect(() => {
     if (elementSelectorIsOpen) {

@@ -67,6 +67,7 @@ function process(input) {
       pos += chars.length
       return chars
     }
+    return undefined
   }
 
   const inputLength = input.length
