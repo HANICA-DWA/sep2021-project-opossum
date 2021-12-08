@@ -3,8 +3,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import 'react-quill/dist/quill.snow.css'
 import { useYjs } from '../../hooks'
 import { useFormikContext } from 'formik'
+import QuillCursors from 'quill-cursors'
+import { QuillBinding } from 'y-quill'
 
 const RichTextEditor = function ({ field, placeholder }) {
+  const { ydoc, provider } = useYjs()
+  Quill.register('modules/cursors', QuillCursors, false)
   const { setFieldValue } = useFormikContext()
 
   // Refs
@@ -22,16 +26,33 @@ const RichTextEditor = function ({ field, placeholder }) {
     history: {
       userOnly: true,
     },
+    cursors: true,
   }
 
   useEffect(() => {
+    // Cleanup before unmounting
+    return () => {}
+  }, [ydoc, provider])
+
+  useEffect(() => {
     attachRefs()
+    const yText = ydoc.getText(field.name)
+    const quillBinding = new QuillBinding(yText, quillRef.current, provider.awareness)
+    if (provider.synced) {
+      // Logic to initialize the text fields, use setText(). It will automatically sync with the ydoc because of the QuillBinding
+    } else {
+      provider.once('synced', () => {
+        // Read above comment...
+      })
+    }
 
     // Cleanup before unmounting
     return () => {
-      ;(quillRef.current = undefined), (reactQuillRef.current = undefined)
+      quillRef.current = undefined
+      reactQuillRef.current = undefined
+      quillBinding.destroy()
     }
-  }, [])
+  }, [ydoc, provider])
 
   useEffect(() => {
     // https://stackoverflow.com/questions/38936594/dynamically-change-quill-placeholder LOOOOOOOOOOOOOOOOOOOOOL
