@@ -7,9 +7,7 @@ module.exports = {
   entry: {
     popup: path.join(srcDir, 'views', 'popup.jsx'),
     options: path.join(srcDir, 'views', 'options.jsx'),
-    snapshot: path.join(srcDir, 'views', 'snapshot.jsx'),
-    background: path.join(srcDir, 'background.js'),
-    content_script: path.join(srcDir, 'content.jsx'),
+    editor: path.join(srcDir, 'views', 'editor.jsx'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),
@@ -33,7 +31,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
+        test: /\.(scss|css)$/,
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
@@ -43,7 +41,14 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: '.', to: '../', context: 'public' }],
+      patterns: [
+        { from: './public', to: '../'},
+        { from: 'manifest.json', to: '../' },
+        { from: './src/extension', to: '../extension' },
+        { from: './src/common', to: '../common' },
+        { from: './src/lib', to: '../lib' },
+        { from: './_locales', to: '../_locales' },
+      ],
       options: {},
     }),
   ],
