@@ -37,7 +37,9 @@ const AnnotationListItem = function ({ annotation }) {
           </div>
         </div>
         <div className="pt-4">
-          <p className="overflowWrap text-md">{truncateStringAndCapitalize(110, description)}</p>
+          <p className="overflowWrap text-md">
+            {truncateStringAndCapitalize(110, description.replace(/(<([^>]+)>)/gi, ''))}
+          </p>
         </div>
       </div>
     </div>

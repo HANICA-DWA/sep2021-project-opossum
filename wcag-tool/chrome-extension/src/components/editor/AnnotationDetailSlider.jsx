@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactHtmlParser from 'react-html-parser'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
@@ -72,7 +73,7 @@ const AnnotationDetailSlider = function () {
     >
       <div className="flex flex-col h-full justify-between">
         <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden">
-          {selectedAnnotation?.description}
+          {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
         <div className="flex justify-center border-t border-gray-400">
           <button

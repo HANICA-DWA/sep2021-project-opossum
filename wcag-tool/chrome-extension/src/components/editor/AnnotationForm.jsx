@@ -130,13 +130,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Description
-            <Field
-              component={RichTextEditor}
-              name="description"
-              placeholder="Description"
-              rows="10"
-              className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            <Field component={RichTextEditor} name="description" placeholder="Description" />
           </label>
           {errors.description && touched.description && (
             <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
