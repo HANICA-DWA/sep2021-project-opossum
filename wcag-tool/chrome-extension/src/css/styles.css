@@ -88,4 +88,19 @@
   .overflowWrap {
     overflow-wrap: anywhere;
   }
+
+  .annotation-details h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .annotation-details h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .annotation-details h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
 }
