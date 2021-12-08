@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+
 import { useSliders } from './sliders.hooks'
 import {
   useCreateAnnotationMutation,
@@ -11,14 +12,14 @@ import { setNewAnnotationSelector } from '../services/annotationSlice'
 const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
 
 export const useAnnotation = () => {
-  const { data: annotations } = useGetAnnotationsQuery(dummySnapshotId)
+  const { data: remoteAnnotations } = useGetAnnotationsQuery(dummySnapshotId)
   const { selectedAnnotationId } = useSelector((state) => state.annotation)
 
-  const selectedAnnotation = annotations?.find(
+  const selectedAnnotation = remoteAnnotations?.find(
     (annotation) => annotation._id === selectedAnnotationId
   )
 
-  return { annotations, selectedAnnotationId, selectedAnnotation }
+  return { annotations: remoteAnnotations, selectedAnnotation, selectedAnnotationId }
 }
 
 export const useCreateAnnotation = () => {
