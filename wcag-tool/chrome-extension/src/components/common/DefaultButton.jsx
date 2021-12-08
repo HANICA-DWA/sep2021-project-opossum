@@ -7,7 +7,7 @@ const DefaultButton = ({ children, onClick, loading, disabled }) => {
     <button
       type="button"
       className={`px-4 py-1 border border-gray-400 rounded-full font-poppins ${
-        (!loading && !disabled) ? defaultStyle : disabledStyle
+        !loading && !disabled ? defaultStyle : disabledStyle
       }`}
       onClick={onClick}
       disabled={loading || disabled}
@@ -15,8 +15,8 @@ const DefaultButton = ({ children, onClick, loading, disabled }) => {
       {!loading ? (
         children
       ) : (
-        <div className={'relative'}>
-          <div className={'opacity-20'}>{children}</div>
+        <div className="relative">
+          <div className="opacity-20">{children}</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 animate-bounce absolute left-0 right-0 top-0 ml-auto mr-auto"

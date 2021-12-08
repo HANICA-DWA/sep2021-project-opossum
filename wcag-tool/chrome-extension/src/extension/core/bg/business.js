@@ -1,23 +1,23 @@
 /*
  * Copyright 2010-2020 Gildas Lormeau
  * contact : gildas.lormeau <at> gmail.com
- * 
+ *
  * This file is part of SingleFile.
  *
- *   The code in this file is free software: you can redistribute it and/or 
- *   modify it under the terms of the GNU Affero General Public License 
+ *   The code in this file is free software: you can redistribute it and/or
+ *   modify it under the terms of the GNU Affero General Public License
  *   (GNU AGPL) as published by the Free Software Foundation, either version 3
  *   of the License, or (at your option) any later version.
- * 
- *   The code in this file is distributed in the hope that it will be useful, 
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of 
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero 
+ *
+ *   The code in this file is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero
  *   General Public License for more details.
  *
- *   As additional permission under GNU AGPL version 3 section 7, you may 
- *   distribute UNMODIFIED VERSIONS OF THIS file without the copy of the GNU 
- *   AGPL normally required by section 4, provided you include this license 
- *   notice and a URL through which recipients can access the Corresponding 
+ *   As additional permission under GNU AGPL version 3 section 7, you may
+ *   distribute UNMODIFIED VERSIONS OF THIS file without the copy of the GNU
+ *   AGPL normally required by section 4, provided you include this license
+ *   notice and a URL through which recipients can access the Corresponding
  *   Source.
  */
 
@@ -25,9 +25,10 @@
 
 import * as config from './config.js'
 import * as editor from './editor.js'
-import * as ui from './../../ui/bg/index.js'
+import * as ui from '../../ui/bg/index.js'
 
-const ERROR_CONNECTION_ERROR_CHROMIUM = 'Could not establish connection. Receiving end does not exist.'
+const ERROR_CONNECTION_ERROR_CHROMIUM =
+  'Could not establish connection. Receiving end does not exist.'
 const ERROR_CONNECTION_LOST_CHROMIUM = 'The message port closed before a response was received.'
 const ERROR_CONNECTION_LOST_GECKO = 'Message manager disconnected'
 const ERROR_EDITOR_PAGE_CHROMIUM = 'Cannot access contents of url '
@@ -46,7 +47,8 @@ const CONTENT_SCRIPTS = [
 ]
 
 const tasks = []
-let currentTaskId = 0, maxParallelWorkers
+let currentTaskId = 0
+let maxParallelWorkers
 ui.init({ isSavingTab, saveTabs, saveUrls, cancelTab, openEditor, saveSelectedLinks })
 
 export {
@@ -76,46 +78,50 @@ async function saveSelectedLinks(tab) {
 
 async function saveUrls(urls, options = {}) {
   await initMaxParallelWorkers()
-  await Promise.all(urls.map(async url => {
-    const tabOptions = await config.getOptions(url)
-    Object.keys(options).forEach(key => tabOptions[key] = options[key])
-    tabOptions.autoClose = true
-    addTask({
-      tab: { url },
-      status: TASK_PENDING_STATE,
-      options: tabOptions,
-      method: 'content.save',
+  await Promise.all(
+    urls.map(async (url) => {
+      const tabOptions = await config.getOptions(url)
+      Object.keys(options).forEach((key) => (tabOptions[key] = options[key]))
+      tabOptions.autoClose = true
+      addTask({
+        tab: { url },
+        status: TASK_PENDING_STATE,
+        options: tabOptions,
+        method: 'content.save',
+      })
     })
-  }))
+  )
   runTasks()
 }
 
 async function saveTabs(tabs, options = {}) {
   await initMaxParallelWorkers()
   try {
-    await Promise.all(tabs.map(async tab => {
-      const tabId = tab.id
-      const tabOptions = await config.getOptions(tab.url)
-      Object.keys(options).forEach(key => tabOptions[key] = options[key])
-      tabOptions.tabId = tabId
-      tabOptions.tabIndex = tab.index
-      ui.onStart(tabId, INJECT_SCRIPTS_STEP)
-      const scriptsInjected = await injectScripts(tab.id, options)
-      if (scriptsInjected || editor.isEditor(tab)) {
-        ui.onStart(tabId, EXECUTE_SCRIPTS_STEP)
-        addTask({
-          status: TASK_PENDING_STATE,
-          tab,
-          options: tabOptions,
-          method: 'content.save',
-        })
-      } else {
-        ui.onForbiddenDomain(tab)
-      }
-    }))
+    await Promise.all(
+      tabs.map(async (tab) => {
+        const tabId = tab.id
+        const tabOptions = await config.getOptions(tab.url)
+        Object.keys(options).forEach((key) => (tabOptions[key] = options[key]))
+        tabOptions.tabId = tabId
+        tabOptions.tabIndex = tab.index
+        ui.onStart(tabId, INJECT_SCRIPTS_STEP)
+        const scriptsInjected = await injectScripts(tab.id, options)
+        if (scriptsInjected || editor.isEditor(tab)) {
+          ui.onStart(tabId, EXECUTE_SCRIPTS_STEP)
+          addTask({
+            status: TASK_PENDING_STATE,
+            tab,
+            options: tabOptions,
+            method: 'content.save',
+          })
+        } else {
+          ui.onForbiddenDomain(tab)
+        }
+      })
+    )
   } catch (e) {
     ui.onForbiddenDomain(tabs[0])
-    return {method: "popup.noAccess"}
+    return { method: 'popup.noAccess' }
   }
 
   runTasks()
@@ -128,8 +134,11 @@ function addTask(info) {
     tab: info.tab,
     options: info.options,
     method: info.method,
-    done: function() {
-      tasks.splice(tasks.findIndex(taskInfo => taskInfo.id == this.id), 1)
+    done() {
+      tasks.splice(
+        tasks.findIndex((taskInfo) => taskInfo.id == this.id),
+        1
+      )
       runTasks()
     },
   }
@@ -149,9 +158,15 @@ async function initMaxParallelWorkers() {
 }
 
 function runTasks() {
-  const processingCount = tasks.filter(taskInfo => taskInfo.status == TASK_PROCESSING_STATE).length
-  for (let index = 0; index < Math.min(tasks.length - processingCount, (maxParallelWorkers - processingCount)); index++) {
-    const taskInfo = tasks.find(taskInfo => taskInfo.status == TASK_PENDING_STATE)
+  const processingCount = tasks.filter(
+    (taskInfo) => taskInfo.status == TASK_PROCESSING_STATE
+  ).length
+  for (
+    let index = 0;
+    index < Math.min(tasks.length - processingCount, maxParallelWorkers - processingCount);
+    index++
+  ) {
+    const taskInfo = tasks.find((taskInfo) => taskInfo.status == TASK_PENDING_STATE)
     if (taskInfo) {
       runTask(taskInfo)
     }
@@ -181,7 +196,10 @@ async function runTask(taskInfo) {
   }
   taskInfo.options.taskId = taskId
   try {
-    await browser.tabs.sendMessage(taskInfo.tab.id, { method: taskInfo.method, options: taskInfo.options })
+    await browser.tabs.sendMessage(taskInfo.tab.id, {
+      method: taskInfo.method,
+      options: taskInfo.options,
+    })
   } catch (error) {
     if (error && (!error.message || !isIgnoredError(error))) {
       console.log(error.message ? error.message : error) // eslint-disable-line no-console
@@ -192,14 +210,16 @@ async function runTask(taskInfo) {
 }
 
 function isIgnoredError(error) {
-  return error.message == ERROR_CONNECTION_LOST_CHROMIUM ||
+  return (
+    error.message == ERROR_CONNECTION_LOST_CHROMIUM ||
     error.message == ERROR_CONNECTION_ERROR_CHROMIUM ||
     error.message == ERROR_CONNECTION_LOST_GECKO ||
     error.message.startsWith(ERROR_EDITOR_PAGE_CHROMIUM + JSON.stringify(editor.EDITOR_URL))
+  )
 }
 
 function isSavingTab(tab) {
-  return Boolean(tasks.find(taskInfo => taskInfo.tab.id == tab.id))
+  return Boolean(tasks.find((taskInfo) => taskInfo.tab.id == tab.id))
 }
 
 function onInit(tab) {
@@ -207,7 +227,7 @@ function onInit(tab) {
 }
 
 function onSaveEnd(taskId) {
-  const taskInfo = tasks.find(taskInfo => taskInfo.id == taskId)
+  const taskInfo = tasks.find((taskInfo) => taskInfo.id == taskId)
   if (taskInfo) {
     if (taskInfo.options.autoClose && !taskInfo.cancelled) {
       browser.tabs.remove(taskInfo.tab.id)
@@ -218,10 +238,12 @@ function onSaveEnd(taskId) {
 
 async function injectScripts(tabId, options = {}) {
   let scriptsInjected
-  const resultData = (await browser.scripting.executeScript({
-    target: { tabId },
-    func: () => Boolean(globalThis.singlefile),
-  }))[0]
+  const resultData = (
+    await browser.scripting.executeScript({
+      target: { tabId },
+      func: () => Boolean(globalThis.singlefile),
+    })
+  )[0]
   scriptsInjected = resultData && resultData.result
   if (!scriptsInjected) {
     try {
@@ -240,7 +262,7 @@ async function injectScripts(tabId, options = {}) {
         tabId,
         frameIds: [options.frameId],
       },
-      func: () => document.documentElement.dataset.requestedFrameId = true,
+      func: () => (document.documentElement.dataset.requestedFrameId = true),
     })
   }
   return scriptsInjected
@@ -270,18 +292,20 @@ async function createTabAndWaitUntilComplete(createProperties) {
 }
 
 function setCancelCallback(taskId, cancelCallback) {
-  const taskInfo = tasks.find(taskInfo => taskInfo.id == taskId)
+  const taskInfo = tasks.find((taskInfo) => taskInfo.id == taskId)
   if (taskInfo) {
     taskInfo.cancel = cancelCallback
   }
 }
 
 function cancelTab(tabId) {
-  Array.from(tasks).filter(taskInfo => taskInfo.tab.id == tabId).forEach(cancel)
+  Array.from(tasks)
+    .filter((taskInfo) => taskInfo.tab.id == tabId)
+    .forEach(cancel)
 }
 
 function cancelTask(taskId) {
-  cancel(tasks.find(taskInfo => taskInfo.id == taskId))
+  cancel(tasks.find((taskInfo) => taskInfo.id == taskId))
 }
 
 function cancelAllTasks() {
@@ -293,7 +317,7 @@ function getTasksInfo() {
 }
 
 function getTaskInfo(taskId) {
-  return tasks.find(taskInfo => taskInfo.id == taskId)
+  return tasks.find((taskInfo) => taskInfo.id == taskId)
 }
 
 function cancel(taskInfo) {
