@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik, Field, Form, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import ActionButton from '../common/ActionButton'
+import RichTextEditor from './RichTextEditor'
 import {
   useGetSuccessCriteriaQuery,
   useGetGuidelinesQuery,
@@ -130,7 +131,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Description
             <Field
-              as="textarea"
+              component={RichTextEditor}
               name="description"
               placeholder="Description"
               rows="10"
