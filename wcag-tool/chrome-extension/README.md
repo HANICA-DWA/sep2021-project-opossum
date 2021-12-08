@@ -54,11 +54,11 @@ A typical chrome extension exists of the following three files:
 Use the following command to enable hot reloading  
 `npm run dev`
 
-## Package single-file
-Use once this to package single-file.
-Then use it to package single-file after every change to the single-file source.
+## Build single-file
+The files that are part of single-file need to be build before the extension can be run.
+Run this command prior to starting the extension or if you're making changes to single-file source files.
 
-`npm run single-file`
+`npm run build:single-file`
 
 ## Lint
 
