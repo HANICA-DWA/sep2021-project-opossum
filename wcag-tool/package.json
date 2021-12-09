@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "concurrently  \"cd backend && npm run dev\" \"cd chrome-extension && npm run dev\"  \"cd chrome-extension && npm run remotedev\"",
-    "setup": "concurrently \"cd chrome-extension && npm install\" \"cd backend && npm install\"",
+    "setup": "concurrently \"cd chrome-extension && npm install && npm run build:single-file\" \"cd backend && npm install\"",
     "test": "concurrently \"cd chrome-extension && npm test\" \"cd backend && npm test\"",
     "lint": "concurrently \"cd chrome-extension && npm run lint\" \"cd backend && npm run lint\"",
     "lint:fix": "concurrently \"cd chrome-extension && npm run lint:fix\" \"cd backend && npm run lint:fix\""
