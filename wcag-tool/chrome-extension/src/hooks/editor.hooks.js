@@ -3,6 +3,7 @@
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useSliders } from './sliders.hooks'
+import { usePostSnapshotMutation } from '../services/apiService'
 
 let tabData
 let tabDataContents = []
@@ -14,6 +15,8 @@ export const useRegisterEditorEffects = () => {
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
   )
+  // api call to create new snapshot
+  const [postSnapshot] = usePostSnapshotMutation()
 
   useEffect(() => {
     const eventListener = () => {
@@ -136,6 +139,11 @@ export const useRegisterEditorEffects = () => {
         }
         return Promise.resolve({})
       }
+      if (message.method === 'editor.persistSnapshot') {
+        console.log('persistSnapshot', message.content)
+        createNewSnapshot(message.content)//.then(console.log)
+        return Promise.resolve({})
+      }
       return {}
     }
     browser.runtime.onMessage.addListener(eventListener)
@@ -143,6 +151,18 @@ export const useRegisterEditorEffects = () => {
       browser.runtime.onMessage.removeListener(eventListener)
     }
   }, [])
+
+  async function createNewSnapshot(content) {
+    const formData = new FormData()
+    console.log('content', content)
+    formData.append('file', content)
+    formData.append('filename', 'untitled snapshot')
+    // append name and domain
+    formData.append('name', 'test')
+    formData.append('domain', 'test')
+
+    // return postSnapshot({ content, filename })
+  }
 }
 
 function loadTabData() {
@@ -176,6 +196,7 @@ function loadTabData() {
 function saveTabData() {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify(tabData)
+    console.log('tabdata', tabData)
     webkitRequestFileSystem(
       TEMPORARY,
       FS_SIZE,

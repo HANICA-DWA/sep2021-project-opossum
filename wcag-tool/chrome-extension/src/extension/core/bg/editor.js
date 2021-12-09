@@ -17,6 +17,11 @@ async function open({ tabIndex, content, filename }) {
   }
   const tab = await browser.tabs.create(createTabProperties)
   tabsData.set(tab.id, { content, filename })
+  // await browser.tabs.sendMessage(tab.id, {
+  //   method: 'editor.persistSnapshot',
+  //   tabId: tab.id,
+  //   content,
+  // })
 }
 
 function onTabRemoved(tabId) {

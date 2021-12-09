@@ -41,6 +41,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['Annotation'],
     }),
+    postSnapshot: builder.mutation({
+      query: ({ newSnapshot }) => ({
+        url: 'snapshots',
+        method: 'POST',
+        body: newSnapshot,
+      }),
+    }),
   }),
 })
 
@@ -53,4 +60,5 @@ export const {
   useCreateAnnotationMutation,
   useUpdateAnnotationMutation,
   useDeleteAnnotationMutation,
+  usePostSnapshotMutation,
 } = api
