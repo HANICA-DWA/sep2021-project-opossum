@@ -21,6 +21,8 @@ export const useSliders = () => {
     elementSelectorIsOpen,
   } = useSelector((state) => state.sliders)
 
+  const anySliderOpen = listSliderIsOpen || createAndEditSliderIsOpen || detailsSliderIsOpen
+
   const openCreateAndEditSlider = (selector) => {
     dispatch(setCreateAndEditSliderIsOpen(true))
     dispatch(setDetailSliderIsOpen(false))
@@ -76,6 +78,6 @@ export const useSliders = () => {
       openCreateAndEditSlider,
       openElementSelector,
     },
-    { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
+    { anySliderOpen, listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
   ]
 }
