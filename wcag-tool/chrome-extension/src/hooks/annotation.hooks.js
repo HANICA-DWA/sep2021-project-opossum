@@ -19,7 +19,7 @@ export const useAnnotation = () => {
     (annotation) => annotation._id === selectedAnnotationId
   )
 
-  return { annotations: remoteAnnotations, selectedAnnotation, selectedAnnotationId }
+  return { selectedAnnotation, selectedAnnotationId }
 }
 
 export const useCreateAnnotation = () => {
@@ -55,8 +55,7 @@ export const useUpdateAnnotation = () => {
   // TODO: Logic to set new selector for selectedAnnotation
 
   const updateAnnotation = (_id, fields) => {
-    // Filter unchanged fields
-    console.log(_id, fields)
+    // TODO: filter & sanitize unchanged fields!
 
     _updateAnnotation({
       snapshotId,

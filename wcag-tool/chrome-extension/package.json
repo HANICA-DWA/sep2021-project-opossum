@@ -11,7 +11,7 @@
     "test": "jest --passWithNoTests",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "single-file": "npx rollup -c rollup.config.js -w",
+    "build:single-file": "npx rollup -c rollup.config.js -w",
     "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
