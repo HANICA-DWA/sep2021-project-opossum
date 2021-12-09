@@ -89,7 +89,7 @@
     overflow-wrap: anywhere;
   }
 
-  .transparent {
+  .transparent-and-hide {
     pointer-events: none;
     opacity: 0;
   }
