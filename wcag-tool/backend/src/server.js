@@ -4,9 +4,13 @@ const { createServer } = require('http')
 
 const { app } = require('./app')
 const { wsServer } = require('./websocket')
+
 const httpServer = createServer(app)
+
+// Database code
 require('./database')
 
+// Websocket code
 httpServer.on('upgrade', (req, socket, head) => {
   // TODO authenticate requests here!
 
