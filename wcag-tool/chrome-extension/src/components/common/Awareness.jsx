@@ -1,4 +1,3 @@
-import { PLACEHOLDERS_ALIAS } from '@babel/types'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSliders } from '../../hooks'
@@ -10,8 +9,9 @@ export function FirstLetterAndCapitalize(str = '') {
 }
 
 const Awareness = ({ provider, clientId }) => {
-  const [{}, {anySliderOpen}] = useSliders()
+  const [{}, {anySliderOpen, elementSelectorIsOpen}] = useSliders()
   const position = anySliderOpen ? 'transform-to-right' : 'transform-to-left'
+  const invisible = elementSelectorIsOpen ? 'transparent-and-hide' : ''
 
   const [clients, setClients] = useState([])
 
@@ -22,11 +22,8 @@ const Awareness = ({ provider, clientId }) => {
       provider.awareness.on('change', () => {
         const _clients = []
         provider.awareness.getStates().forEach((state) => { 
-          if (state.user) {
-            _clients.push({ ...state.user })
-          }
+          if (state.user) _clients.push({ ...state.user })
         })
-        // _clients.reverse()
         setClients(_clients)
       })
 
@@ -48,28 +45,15 @@ const Awareness = ({ provider, clientId }) => {
   }, [provider])
 
   return (
-    <div className={`flex flex-col absolute top-12 p-4 pr-8 pb-8 font-poppins ${position} hover:bg-opacity-0 hover:text-opacity-0`}>
-      <div className="bg-gray-500 p-6 hover:bg-opacity-0 hover:text-opacity-0">
-        <p className="">This is a piece of text</p>
-      </div>
+    <div className={`flex flex-col absolute top-12 p-4 pr-8 pb-8 font-poppins ${position} ${invisible}`}>
       {clients.map((client) => (
-        <div key={client.id} style={{ backgroundColor: client.color }} className="flex justify-center items-center rounded-full my-1 h-8 w-8 hover:bg-opacity-0" >
-          <p title={client.name} className="text-center text-sm font-poppins-semi cursor-default hover:text-opacity-0">
+        <div key={client.id} className="flex justify-center items-center rounded-full my-1 h-8 w-8" style={{ backgroundColor: client.color }} >
+          <p title={client.name} className="text-center text-sm font-poppins-semi cursor-default">
             {FirstLetterAndCapitalize(client.name)}
           </p>
         </div>
       ))}
     </div>
-
-    // <div className="flex absolute top-4 right-4 font-poppins">
-    // {clients.map((client) => (
-    //   <div key={client.id} className="flex justify-center items-center rounded-full m-1 h-8 w-8" style={{ backgroundColor: client.color }} >
-    //     <p title={client.name} className="text-center text-sm font-poppins-semi">
-    //       {FirstLetterAndCapitalize(client.name)}
-    //     </p>
-    //   </div>
-    // ))}
-    // </div>
   )
 }
 
