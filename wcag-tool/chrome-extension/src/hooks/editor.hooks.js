@@ -1,9 +1,10 @@
 /* global webkitRequestFileSystem, TEMPORARY */
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useSliders } from './sliders.hooks'
 import { usePostSnapshotMutation } from '../services/apiService'
+import { setSnapshotId } from '../services/snapshotSlice'
 
 let tabData
 let tabDataContents = []
@@ -11,11 +12,11 @@ const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
 export const useRegisterEditorEffects = () => {
+  const dispatch = useDispatch()
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
   )
-  // api call to create new snapshot
   const [postSnapshot] = usePostSnapshotMutation()
 
   useEffect(() => {
@@ -49,7 +50,6 @@ export const useRegisterEditorEffects = () => {
       }
       if (message.method === 'onInit') {
         tabData.options.disableFormatPage = !message.formatPageEnabled
-        // formatPageButton.hidden = !message.formatPageEnabled;
         document.title = `[WCAG] ${message.title}`
         if (message.filename) {
           tabData.filename = message.filename
@@ -126,6 +126,11 @@ export const useRegisterEditorEffects = () => {
             )
             editorIframe.contentWindow.focus()
             saveTabData()
+            if (message.newSnapshot) {
+              createNewSnapshot(tabData.content).then(({ _id }) => {
+                dispatch(setSnapshotId(_id))
+              })
+            }
           }
         } else {
           tabData = { tabId: message.tabId }
@@ -139,11 +144,6 @@ export const useRegisterEditorEffects = () => {
         }
         return Promise.resolve({})
       }
-      if (message.method === 'editor.persistSnapshot') {
-        console.log('persistSnapshot', message.content)
-        createNewSnapshot(message.content)//.then(console.log)
-        return Promise.resolve({})
-      }
       return {}
     }
     browser.runtime.onMessage.addListener(eventListener)
@@ -154,14 +154,13 @@ export const useRegisterEditorEffects = () => {
 
   async function createNewSnapshot(content) {
     const formData = new FormData()
-    console.log('content', content)
-    formData.append('file', content)
-    formData.append('filename', 'untitled snapshot')
-    // append name and domain
-    formData.append('name', 'test')
-    formData.append('domain', 'test')
+    const { url } = content.match(/url: (?<url>.+) \n saved date/).groups
 
-    // return postSnapshot({ content, filename })
+    formData.append('file', new Blob([content], { type: 'text/html' }))
+    formData.append('name', 'untitled snapshot')
+    formData.append('domain', url)
+
+    return postSnapshot(formData).unwrap()
   }
 }
 
@@ -196,7 +195,6 @@ function loadTabData() {
 function saveTabData() {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify(tabData)
-    console.log('tabdata', tabData)
     webkitRequestFileSystem(
       TEMPORARY,
       FS_SIZE,
@@ -217,4 +215,8 @@ function saveTabData() {
       reject
     )
   })
+}
+
+export const useGetCurrentSnapshotId = () => {
+  return useSelector((state) => state.snapshot.snapshotId)
 }

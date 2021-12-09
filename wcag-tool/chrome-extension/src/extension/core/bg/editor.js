@@ -5,6 +5,7 @@ import * as config from './config.js'
 const MAX_CONTENT_SIZE = 32 * (1024 * 1024)
 const EDITOR_PAGE_URL = '/editor.html'
 const tabsData = new Map()
+const newSnapshot = new Map()
 const partialContents = new Map()
 const EDITOR_URL = browser.runtime.getURL(EDITOR_PAGE_URL)
 
@@ -17,11 +18,7 @@ async function open({ tabIndex, content, filename }) {
   }
   const tab = await browser.tabs.create(createTabProperties)
   tabsData.set(tab.id, { content, filename })
-  // await browser.tabs.sendMessage(tab.id, {
-  //   method: 'editor.persistSnapshot',
-  //   tabId: tab.id,
-  //   content,
-  // })
+  newSnapshot.set(tab.id, true)
 }
 
 function onTabRemoved(tabId) {
@@ -36,6 +33,8 @@ async function onMessage(message, sender) {
   if (message.method.endsWith('.getTabData')) {
     const { tab } = sender
     const tabData = tabsData.get(tab.id)
+    const newSnapshotValue = newSnapshot.get(tab.id)
+    newSnapshot.set(tab.id, false)
     if (tabData) {
       const options = await config.getOptions(tabData.url)
       const content = JSON.stringify(tabData)
@@ -43,6 +42,7 @@ async function onMessage(message, sender) {
         const message = {
           method: 'editor.setTabData',
           tabId: tab.id,
+          newSnapshot: newSnapshotValue,
         }
         message.truncated = content.length > MAX_CONTENT_SIZE
         message.url = tabData.url

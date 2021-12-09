@@ -42,10 +42,10 @@ export const api = createApi({
       invalidatesTags: ['Annotation'],
     }),
     postSnapshot: builder.mutation({
-      query: ({ newSnapshot }) => ({
+      query: (formData) => ({
         url: 'snapshots',
         method: 'POST',
-        body: newSnapshot,
+        body: formData,
       }),
     }),
   }),
