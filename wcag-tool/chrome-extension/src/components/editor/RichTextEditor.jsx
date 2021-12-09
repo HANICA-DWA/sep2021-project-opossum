@@ -74,6 +74,7 @@ const RichTextEditor = function ({ field, placeholder, annotationId }) {
       placeholder={placeholder}
       onChange={(value) => setFieldValue(field.name, value)}
       ref={reactQuillRef}
+      className="bg-white text-base font-normal"
     />
   )
 }
