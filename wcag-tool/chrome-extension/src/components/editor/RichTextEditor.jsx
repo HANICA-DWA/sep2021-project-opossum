@@ -4,8 +4,8 @@ import 'react-quill/dist/quill.snow.css'
 import { useFormikContext } from 'formik'
 import QuillCursors from 'quill-cursors'
 import { QuillBinding } from 'y-quill'
-import { useYjs } from '../../hooks'
 import { v4 as uuid } from 'uuid'
+import { useYjs } from '../../hooks'
 
 Quill.register('modules/cursors', QuillCursors, false)
 
