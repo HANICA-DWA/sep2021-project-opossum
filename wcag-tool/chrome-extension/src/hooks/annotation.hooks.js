@@ -9,7 +9,7 @@ import {
 } from '../services/apiService'
 import { setNewAnnotationSelector } from '../services/annotationSlice'
 
-const dummySnapshotId = '61ae1902828d1e7505098dca'
+const dummySnapshotId = '61ab35e4d0cbda92f64eef6d'
 
 export const useAnnotation = () => {
   const { data: remoteAnnotations } = useGetAnnotationsQuery(dummySnapshotId)

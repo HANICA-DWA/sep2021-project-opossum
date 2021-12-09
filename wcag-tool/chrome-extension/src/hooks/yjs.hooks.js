@@ -9,14 +9,14 @@ import { useGetAnnotationsQuery } from '../services'
 const ydoc = new Y.Doc()
 const provider = new WebsocketProvider('ws://localhost:5000', 'room', ydoc)
 
-const dummySnapshotId = '61ae1902828d1e7505098dca' // TODO: Vervangen!
+const dummySnapshotId = '61ab35e4d0cbda92f64eef6d' // TODO: Vervangen!
 
 export const useYjs = () => {
   useEffect(() => {
-    return () => {
-      provider.destroy()
-      ydoc.destroy()
-    }
+    // return () => {
+    //   provider.destroy()
+    //   ydoc.destroy()
+    // }
   }, [])
 
   return { ydoc, provider }

@@ -82,8 +82,8 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
   return (
     <Formik
-      initialValues={initialValues}
       validate={(values) => validate(values)}
+      initialValues={initialValues}
       onSubmit={async ({ successCriteriumId, title, description }) => {
         handleSubmit(successCriteriumId, title, description)
       }}
@@ -139,6 +139,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Title
             <TitleField
+              annotationId={selectedAnnotation?._id}
               name="title"
               placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
             />
@@ -146,7 +147,12 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           {errors.title && <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>}
 
           <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
-          <Field component={RichTextEditor} name="description" placeholder="Description" />
+          <Field
+            component={RichTextEditor}
+            annotationId={selectedAnnotation?._id}
+            name="description"
+            placeholder="Description"
+          />
           {errors.description && <div className="text-red-700 mx-1">{errors.description}</div>}
 
           {!selectedAnnotation ? (
@@ -173,7 +179,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
 // Depends on successCriterium field.
 // source: https://formik.org/docs/examples/dependent-fields
-const TitleField = ({ name, placeholder }) => {
+const TitleField = ({ name, placeholder, annotationId }) => {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
@@ -192,7 +198,13 @@ const TitleField = ({ name, placeholder }) => {
 
   return (
     <div className="relative">
-      <Field component={RichTextEditor} type="text" name={name} placeholder={placeholder} />
+      <Field
+        component={RichTextEditor}
+        annotationId={annotationId}
+        type="text"
+        name={name}
+        placeholder={placeholder}
+      />
 
       <svg
         title="Copy WCAG to title"

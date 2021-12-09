@@ -5,10 +5,12 @@ import { useFormikContext } from 'formik'
 import QuillCursors from 'quill-cursors'
 import { QuillBinding } from 'y-quill'
 import { useYjs } from '../../hooks'
+import { v4 as uuid } from 'uuid'
 
-const RichTextEditor = function ({ field, placeholder }) {
+Quill.register('modules/cursors', QuillCursors, false)
+
+const RichTextEditor = function ({ field, placeholder, annotationId }) {
   const { ydoc, provider } = useYjs()
-  Quill.register('modules/cursors', QuillCursors, false)
   const { setFieldValue } = useFormikContext()
 
   // Refs
@@ -31,23 +33,30 @@ const RichTextEditor = function ({ field, placeholder }) {
 
   useEffect(() => {
     attachRefs()
-    const yText = ydoc.getText(field.name)
+    const yId = annotationId ? `${field.name}-${annotationId}` : `${field.name}-${uuid()}`
+    const yText = ydoc.getText(yId)
     const quillBinding = new QuillBinding(yText, quillRef.current, provider.awareness)
-    if (provider.synced) {
-      // Logic to initialize the text fields, use setText(). It will automatically sync with the ydoc because of the QuillBinding
-    } else {
-      provider.once('synced', () => {
-        // Read above comment...
-      })
+
+    console.log(yId)
+    if (annotationId) {
+      const initializeText = () => {
+        if (yText.toString() === '') {
+          setFieldValue(field.name, field.value)
+        }
+      }
+
+      if (provider.synced) {
+        initializeText()
+      } else {
+        provider.once('synced', initializeText)
+      }
     }
 
     // Cleanup before unmounting
     return () => {
-      quillRef.current = undefined
-      reactQuillRef.current = undefined
       quillBinding.destroy()
     }
-  }, [ydoc, provider])
+  }, [ydoc, provider, annotationId])
 
   useEffect(() => {
     // https://stackoverflow.com/questions/38936594/dynamically-change-quill-placeholder LOOOOOOOOOOOOOOOOOOOOOL
