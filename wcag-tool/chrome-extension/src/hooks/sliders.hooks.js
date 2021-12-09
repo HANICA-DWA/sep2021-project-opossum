@@ -78,6 +78,12 @@ export const useSliders = () => {
       openCreateAndEditSlider,
       openElementSelector,
     },
-    { anySliderOpen, listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
+    {
+      anySliderOpen,
+      listSliderIsOpen,
+      createAndEditSliderIsOpen,
+      detailsSliderIsOpen,
+      elementSelectorIsOpen,
+    },
   ]
 }

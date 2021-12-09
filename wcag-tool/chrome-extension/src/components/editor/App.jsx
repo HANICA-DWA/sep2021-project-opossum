@@ -8,7 +8,7 @@ import Awareness from '../common/Awareness'
 import { useYjs } from '../../hooks'
 
 const App = () => {
-  const {ydoc, provider} = useYjs()
+  const { ydoc, provider } = useYjs()
 
   return (
     <>
