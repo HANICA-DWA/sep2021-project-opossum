@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const { GridFsStorage } = require('multer-gridfs-storage')
 const multer = require('multer')
+const { createModel } = require('mongoose-gridfs')
 
 // Connect to MongoDB
-mongoose.connect(
+const connection = mongoose.createConnection(
   process.env.MONGO_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
@@ -44,6 +45,13 @@ const getUpload = (fileTypes) =>
     },
   })
 
+const getFileCollection = (collectionName) => {
+  if (!['snapshot', 'images'].includes(collectionName)) throw new Error('Invalid collection name')
+  const model = createModel(connection, collectionName)
+  return model
+}
+
 module.exports = {
   getUpload,
+  getFileCollection,
 }

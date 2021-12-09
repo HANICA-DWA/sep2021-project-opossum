@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { Snapshot } = require('../models')
-const { getUpload } = require('../database')
+const { getUpload, getFileCollection } = require('../database')
 
 const router = new Router()
 
@@ -37,6 +37,20 @@ router.get('/snapshots', async (req, res, next) => {
 
 // Already done by middleware: loadSnapshot!
 router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
+
+// get html file from snapshot
+router.get('/snapshots/:snapshotId/:filename', (req, res) => {
+  try {
+    const Snapshot = getFileCollection('snapshot')
+    const readStream = Snapshot.read({ filename: req.params.id })
+    readStream.pipe(res)
+  } catch (err) {
+    console.log(err)
+    res.status(404).json({
+      err: 'No file found',
+    })
+  }
+})
 
 router.put('/snapshots/:snapshotId', async (req, res, next) => {
   try {
