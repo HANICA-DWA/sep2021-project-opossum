@@ -23,7 +23,7 @@ const NoSnapshotsFound = () => {
             const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
             browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then((response) => {
               if (response.method === 'popup.noAccess') {
-                toast.error('Creating snapshot failed. You might be on a protected page.')
+                toast.error('Unable to create a snapshot on this page')
               }
               dispatch(setLoaderPopupBody(false))
             })

@@ -1,5 +1,6 @@
 import React from 'react'
 import NoSnapshotsFound from './noSnapshotsFound'
+import { ToastContainer } from "react-toastify";
 
 const SnapshotBody = function () {
   return (

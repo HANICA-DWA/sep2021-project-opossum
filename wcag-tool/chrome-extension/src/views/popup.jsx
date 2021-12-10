@@ -22,7 +22,13 @@ const Popup = () => {
           <NavigationButtons />
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
+        autoClose={false}
+        position="top-center"
+        draggable={false}
+      />
     </>
   )
 }

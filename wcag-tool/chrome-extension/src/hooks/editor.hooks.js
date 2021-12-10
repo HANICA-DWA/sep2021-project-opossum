@@ -3,7 +3,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useSliders } from './sliders.hooks'
-import { usePostSnapshotMutation } from '../services/apiService'
 import { setSnapshotId } from '../services/snapshotSlice'
 
 let tabData
@@ -17,7 +16,6 @@ export const useRegisterEditorEffects = () => {
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
   )
-  const [postSnapshot] = usePostSnapshotMutation()
 
   useEffect(() => {
     const eventListener = () => {
@@ -116,6 +114,9 @@ export const useRegisterEditorEffects = () => {
             tabDataContents = [message.content]
           }
           if (!message.truncated || message.finished) {
+            const urlSearchParams = new URLSearchParams(window.location.search)
+            const snapshotId = urlSearchParams.get('id')
+            dispatch(setSnapshotId(snapshotId))
             tabData = JSON.parse(tabDataContents.join(''))
             tabData.tabId = message.tabId
             tabData.options = message.options
@@ -126,11 +127,6 @@ export const useRegisterEditorEffects = () => {
             )
             editorIframe.contentWindow.focus()
             saveTabData()
-            if (message.newSnapshot) {
-              createNewSnapshot(tabData.content).then(({ _id }) => {
-                dispatch(setSnapshotId(_id))
-              })
-            }
           }
         } else {
           tabData = { tabId: message.tabId }
@@ -151,17 +147,6 @@ export const useRegisterEditorEffects = () => {
       browser.runtime.onMessage.removeListener(eventListener)
     }
   }, [])
-
-  async function createNewSnapshot(content) {
-    const formData = new FormData()
-    const { url } = content.match(/url: (?<url>.+) \n saved date/).groups
-
-    formData.append('file', new Blob([content], { type: 'text/html' }))
-    formData.append('name', 'untitled snapshot')
-    formData.append('domain', url)
-
-    return postSnapshot(formData).unwrap()
-  }
 }
 
 function loadTabData() {

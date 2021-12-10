@@ -220,7 +220,7 @@ async function processPage(options) {
     }
     ui.onEndPage()
     if (options.displayStats) {
-      console.log('SingleFile Lite stats') // eslint-disable-line no-console
+      console.log('WCAG Tool stats') // eslint-disable-line no-console
       console.table(page.stats) // eslint-disable-line no-console
     }
   }
