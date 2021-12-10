@@ -2,14 +2,13 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import DefaultButton from '../common/DefaultButton'
-import { setLoaderPopupHeader } from '../../services/loadingSlice'
-import { useGetSnapshotCreationProgress } from '../../hooks/popup.hooks'
+import { setCreateSnapshotHeaderIsLoading } from '../../services/popupSlice'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const loading = useSelector((state) => state.loading.popupHeaderCreateSnapshot)
-  const loadingBody = useSelector((state) => state.loading.popupBodyCreateSnapshot)
-  const snapshotCreationInProgress = useGetSnapshotCreationProgress()
+  const loading = useSelector((state) => state.popup.createSnapshotHeaderIsLoading)
+  const loadingBody = useSelector((state) => state.popup.createSnapshotBodyIsLoading)
+  const snapshotCreationNotAllowed = useSelector((state) => state.popup.snapshotCreationNotAllowed)
 
   return (
     <div className="flex mt-0.5 p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300">
@@ -17,15 +16,15 @@ const Header = () => {
       <p>Site</p>
       <DefaultButton
         loading={loading}
-        disabled={loadingBody || snapshotCreationInProgress}
+        disabled={loadingBody || snapshotCreationNotAllowed}
         onClick={async () => {
-          dispatch(setLoaderPopupHeader(true))
+          dispatch(setCreateSnapshotHeaderIsLoading(true))
           const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
           browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then((response) => {
             if (response.method === 'popup.noAccess') {
               toast.error('Unable to create a snapshot on this page')
             }
-            dispatch(setLoaderPopupHeader(false))
+            dispatch(setCreateSnapshotHeaderIsLoading(false))
           })
         }}
       >

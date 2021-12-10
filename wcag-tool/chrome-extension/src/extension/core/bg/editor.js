@@ -3,7 +3,6 @@
 import * as config from './config.js'
 import * as ui from '../../ui/bg/index.js'
 
-
 const MAX_CONTENT_SIZE = 32 * (1024 * 1024)
 const EDITOR_PAGE_URL = '/editor.html'
 const tabsData = new Map()
@@ -28,7 +27,6 @@ async function open({ tabIndex, content, filename }) {
   } catch (e) {
     onError()
   }
-
 }
 
 async function createNewSnapshot(content) {
@@ -39,7 +37,7 @@ async function createNewSnapshot(content) {
   formData.append('name', 'untitled snapshot')
   formData.append('domain', url)
 
-  const response = await fetch('http://localhost:5000/v1/snapshots', { // todo set base url in a .env file.
+  const response = await fetch('http://localhost:5000/v1/snapshots', {
     method: 'POST',
     body: formData
   })
@@ -56,7 +54,7 @@ function onTabRemoved(tabId) {
 }
 
 function isEditor(tab) {
-  return tab.url == EDITOR_URL
+  return !!tab.url.match(EDITOR_URL)
 }
 
 async function onMessage(message, sender) {
@@ -115,4 +113,8 @@ async function onMessage(message, sender) {
       tabsData.set(tab.id, { url: tab.url, content: contents.join(''), filename: message.filename })
     }
   }
+  if (message.method.endsWith('.isEditor')) {
+    return isEditor(message.tab)
+  }
+  return {}
 }
