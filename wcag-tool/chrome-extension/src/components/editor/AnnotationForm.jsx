@@ -11,7 +11,7 @@ import {
 const SelectField = ({ field, form, ...props }) => {
   return (
     <div className="relative">
-      <select {...field} {...props} />
+      <input placeholder="WCAG" list="WCAG" {...field} {...props} />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 pointer-events-none"
@@ -42,8 +42,13 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
   })
 
   const getSuccesCriteriumTitleFromId = (id) => {
-    const successCriterium = successCriteria?.find((el) => el.successCriteriumId === id)
+    const successCriterium = successCriteria?.find((el) => el.num === id)
     return successCriterium ? `${successCriterium?.num} ${successCriterium?.handle} ` : 'Title'
+  }
+
+  const getSuccesCriteriumFromId = (id) => {
+    const successCriterium = successCriteria?.find((el) => el.num === id)
+    return successCriterium
   }
 
   const handleSubmit = async (successCriteriumId, title, description) => {
@@ -74,41 +79,49 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               component={SelectField}
               name="successCriteriumId"
               className="mt-1 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <svg
+              onClick={() => {
+                console.log(
+                  getSuccesCriteriumFromId(
+                    values.successCriteriumId.slice(0, values.successCriteriumId.indexOf(' '))
+                  ).title
+                )
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-gray-600 absolute right-1 top-12"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <option key="default" hidden>
-                Choose WCAG success criterium
-              </option>
-
-              {principles &&
-                principles.map((principle) => (
-                  <>
-                    <option key={principle.principleId} className="font-black" disabled>
-                      {principle.num} {principle.handle}
+              <title>
+                {
+                  getSuccesCriteriumFromId(
+                    values.successCriteriumId.slice(0, values.successCriteriumId.indexOf(' '))
+                  )?.title
+                }
+              </title>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <datalist id="WCAG">
+              {successCriteria &&
+                successCriteria
+                  .slice() // copy array to avoid mutation
+                  .sort((a, b) => (a.num > b.num ? 1 : -1))
+                  .map((successCriterium) => (
+                    <option
+                      key={successCriterium.successCriteriumId}
+                      value={`${successCriterium.num} ${successCriterium.handle}`}
+                    >
+                      {`${successCriterium.level}`}
                     </option>
-                    {guidelines &&
-                      guidelines
-                        // .filter((el) => el.num.substring(0, 1) === principle.num)
-                        .map((guideline) => (
-                          <optgroup
-                            key={guideline.num + guideline.handle}
-                            label={`${guideline.num} ${guideline.handle}`}
-                          >
-                            {successCriteria &&
-                              successCriteria
-                                .filter((el) => el.num.substring(0, 3) === guideline.num)
-                                .map((successCriterium) => (
-                                  <option
-                                    key={successCriterium.num + successCriterium.handle}
-                                    value={successCriterium.successCriteriumId}
-                                  >
-                                    {successCriterium.num} {successCriterium.handle}
-                                  </option>
-                                ))}
-                          </optgroup>
-                        ))}
-                  </>
-                ))}
-            </Field>
+                  ))}
+            </datalist>
           </label>
           {errors.successCriterium && touched.successCriterium && (
             <div className="text-red-700 -mt-2 mx-1">{errors.successCriterium}</div>
@@ -119,7 +132,9 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
             <TitleField
               type="text"
               name="title"
-              placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
+              placeholder={getSuccesCriteriumTitleFromId(
+                values.successCriteriumId.substring(0, values.successCriteriumId.indexOf(' '))
+              )}
               className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
@@ -176,10 +191,10 @@ const TitleField = (props) => {
   const copyWcagToTitle = () => {
     if (successCriteriumId) {
       const successCriterium = successCriteria?.find(
-        (el) => el.successCriteriumId === successCriteriumId
+        (el) => el.num === successCriteriumId.substring(0, successCriteriumId.indexOf(' '))
       )
       // eslint-disable-next-line react/destructuring-assignment
-      setFieldValue(props.name, `${successCriterium?.num} ${successCriterium?.handle}`)
+      setFieldValue(props.name, `${successCriterium?.num || ''} ${successCriterium?.handle || ''}`)
     }
   }
 

@@ -88,4 +88,8 @@
   .overflowWrap {
     overflow-wrap: anywhere;
   }
+
+  input::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
 }
