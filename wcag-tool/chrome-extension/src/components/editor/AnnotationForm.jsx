@@ -40,25 +40,23 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
   const validate = (values) => {
     const errors = {}
 
-    if (values.title) {
-      const title = stripHtml(values.title)
+    const title = stripHtml(values.title)
 
-      if (title.length < 5 || title.length > 60) {
-        errors.title = 'Title must be between 5 and 60 characters.'
-      } else if (!values.title) {
-        errors.title = 'Required'
-      }
+    if (!title) {
+      errors.title = 'Required'
+    } else if (title.length < 5 || title.length > 60) {
+      errors.title = 'Title must be between 5 and 60 characters.'
     }
 
-    if (values.description) {
-      const description = stripHtml(values.description)
+    const description = stripHtml(values.description)
 
-      if (description.length < 10 || description.length > 1000) {
-        errors.description = 'Description must be between 10 and 1000 characters.'
-      } else if (!values.description) {
-        errors.description = 'Required'
-      }
+    if (!description) {
+      errors.description = 'Required'
+    } else if (description.length < 10 || description.length > 1000) {
+      errors.description = 'Description must be between 10 and 1000 characters.'
     }
+
+    console.log('errors', errors)
 
     return errors
   }
@@ -144,7 +142,9 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
             />
           </label>
-          {errors.title && <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>}
+          {errors.title && touched.title && (
+            <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>
+          )}
 
           <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
           <Field
@@ -153,11 +153,13 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
             name="description"
             placeholder="Description"
           />
-          {errors.description && <div className="text-red-700 mx-1">{errors.description}</div>}
+          {errors.description && touched.description && (
+            <div className="text-red-700 mx-1">{errors.description}</div>
+          )}
 
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
-              <ActionButton disabled={!(dirty && isValid)} type="submit">
+              <ActionButton disabled={!isValid || !dirty} type="submit">
                 Create Annotation
               </ActionButton>
             </div>
@@ -166,7 +168,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               <ActionButton onClick={closeEditor} type="button">
                 Cancel
               </ActionButton>
-              <ActionButton disabled={!(dirty && isValid)} type="submit">
+              <ActionButton disabled={!(errors && isValid)} type="submit">
                 Save
               </ActionButton>
             </div>
@@ -207,7 +209,6 @@ const TitleField = ({ name, placeholder, annotationId }) => {
       />
 
       <svg
-        title="Copy WCAG to title"
         onClick={copyWcagToTitle}
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 cursor-pointer"
@@ -215,6 +216,7 @@ const TitleField = ({ name, placeholder, annotationId }) => {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
+        <title>Copy WCAG to title</title>
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

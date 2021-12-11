@@ -11,7 +11,7 @@ Quill.register('modules/cursors', QuillCursors, false)
 
 const RichTextEditor = function ({ field, placeholder, annotationId }) {
   const { ydoc, provider } = useYjs()
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, setFieldTouched } = useFormikContext()
 
   // Refs
   const quillRef = useRef(undefined)
@@ -37,7 +37,6 @@ const RichTextEditor = function ({ field, placeholder, annotationId }) {
     const yText = ydoc.getText(yId)
     const quillBinding = new QuillBinding(yText, quillRef.current, provider.awareness)
 
-    console.log(yId)
     if (annotationId) {
       const initializeText = () => {
         if (yText.toString() === '') {
@@ -67,15 +66,23 @@ const RichTextEditor = function ({ field, placeholder, annotationId }) {
   }, [placeholder])
 
   return (
-    <ReactQuill
-      id={`${field.name}-editor`}
-      modules={modules}
-      value={field.value}
-      placeholder={placeholder}
-      onChange={(value) => setFieldValue(field.name, value)}
-      ref={reactQuillRef}
-      className="bg-white text-base font-normal"
-    />
+    <div
+      onBlur={() => {
+        setFieldTouched(field.name, true)
+      }}
+    >
+      <ReactQuill
+        id={`${field.name}-editor`}
+        modules={modules}
+        value={field.value}
+        placeholder={placeholder}
+        onChange={(value) => {
+          setFieldValue(field.name, value)
+        }}
+        ref={reactQuillRef}
+        className="bg-white text-base font-normal"
+      />
+    </div>
   )
 }
 
