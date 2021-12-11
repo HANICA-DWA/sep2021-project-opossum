@@ -56,8 +56,6 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
       errors.description = 'Description must be between 10 and 1000 characters.'
     }
 
-    console.log('errors', errors)
-
     return errors
   }
 
