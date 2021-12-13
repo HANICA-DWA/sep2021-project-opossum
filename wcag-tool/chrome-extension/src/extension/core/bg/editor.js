@@ -22,10 +22,10 @@ async function open({ tabIndex, content, filename }) {
       const tab = await browser.tabs.create(createTabProperties)
       tabsData.set(tab.id, { content, filename})
     } else {
-      onError()
+      onServerError()
     }
   } catch (e) {
-    onError()
+    onServerError()
   }
 }
 
@@ -44,9 +44,9 @@ async function createNewSnapshot(content) {
   return response.json()
 }
 
-const onError = async () => {
+const onServerError = async () => {
   const [tab] = await browser.tabs.query({ currentWindow: true, active: true })
-  ui.onError(tab.id, 'Unable to save snapshot on server. Try again', 'no-link')
+  ui.onError(tab.id, 'Unable to save snapshot on server. Please try again', 'no-link')
 }
 
 function onTabRemoved(tabId) {

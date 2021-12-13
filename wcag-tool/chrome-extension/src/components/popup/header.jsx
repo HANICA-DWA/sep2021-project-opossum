@@ -1,13 +1,12 @@
 import React from 'react'
-import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import DefaultButton from '../common/DefaultButton'
 import { setCreateSnapshotHeaderIsLoading } from '../../services/popupSlice'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const loading = useSelector((state) => state.popup.createSnapshotHeaderIsLoading)
-  const loadingBody = useSelector((state) => state.popup.createSnapshotBodyIsLoading)
+  const loading = useSelector((state) => state.popup.createSnapshotHeaderButtonIsLoading)
+  const loadingBody = useSelector((state) => state.popup.createSnapshotBodyButtonIsLoading)
   const snapshotCreationNotAllowed = useSelector((state) => state.popup.snapshotCreationNotAllowed)
 
   return (
@@ -20,10 +19,7 @@ const Header = () => {
         onClick={async () => {
           dispatch(setCreateSnapshotHeaderIsLoading(true))
           const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-          browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then((response) => {
-            if (response.method === 'popup.noAccess') {
-              toast.error('Unable to create a snapshot on this page')
-            }
+          browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then(() => {
             dispatch(setCreateSnapshotHeaderIsLoading(false))
           })
         }}

@@ -201,7 +201,3 @@ function saveTabData() {
     )
   })
 }
-
-export const useGetCurrentSnapshotId = () => {
-  return useSelector((state) => state.snapshot.snapshotId)
-}

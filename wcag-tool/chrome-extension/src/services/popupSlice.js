@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  createSnapshotHeaderIsLoading: false,
-  createSnapshotBodyIsLoading: false,
+  createSnapshotHeaderButtonIsLoading: false,
+  createSnapshotBodyButtonIsLoading: false,
   snapshotCreationNotAllowed: false,
   lastError: [],
 }
@@ -12,10 +12,10 @@ export const popupSlice = createSlice({
   initialState,
   reducers: {
     setCreateSnapshotHeaderIsLoading: (state, { payload }) => {
-      state.createSnapshotHeaderIsLoading = payload
+      state.createSnapshotHeaderButtonIsLoading = payload
     },
     setCreateSnapshotBodyIsLoading: (state, { payload }) => {
-      state.createSnapshotBodyIsLoading = payload
+      state.createSnapshotBodyButtonIsLoading = payload
     },
     setSnapshotCreationNotAllowed: (state, { payload }) => {
       state.snapshotCreationNotAllowed = payload

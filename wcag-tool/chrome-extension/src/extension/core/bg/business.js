@@ -100,7 +100,6 @@ async function saveTabs(tabs, options = {}) {
     )
   } catch (e) {
     ui.onForbiddenDomain(tabs[0])
-    return { method: 'popup.noAccess' }
   }
 
   runTasks()

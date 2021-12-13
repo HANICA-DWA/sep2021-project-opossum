@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 
+import { useSelector } from 'react-redux'
 import { useGetAnnotationsQuery } from '../services'
-import { useGetCurrentSnapshotId } from './editor.hooks'
 
 // TODO: Is dit de goede plek?
 const ydoc = new Y.Doc()
@@ -22,7 +22,7 @@ export const useYjs = () => {
 }
 
 export const useYAnnotations = () => {
-  const snapshotId = useGetCurrentSnapshotId()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
   const [localAnnotations, setLocalAnnotations] = useState([]) // local React state
   const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(snapshotId, {
     skip: !snapshotId,
