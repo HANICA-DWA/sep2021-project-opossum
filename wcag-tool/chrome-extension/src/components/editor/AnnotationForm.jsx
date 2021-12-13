@@ -135,7 +135,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Title
             <TitleField
-              annotationId={selectedAnnotation?._id}
+              selectedAnnotationId={selectedAnnotation?._id}
               name="title"
               placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
             />
@@ -147,7 +147,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
           <Field
             component={RichTextEditor}
-            annotationId={selectedAnnotation?._id}
+            selectedAnnotationId={selectedAnnotation?._id}
             name="description"
             placeholder="Description"
           />
@@ -179,7 +179,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
 // Depends on successCriterium field.
 // source: https://formik.org/docs/examples/dependent-fields
-const TitleField = ({ name, placeholder, annotationId }) => {
+const TitleField = ({ name, placeholder, selectedAnnotationId }) => {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
@@ -200,7 +200,7 @@ const TitleField = ({ name, placeholder, annotationId }) => {
     <div className="relative">
       <Field
         component={RichTextEditor}
-        annotationId={annotationId}
+        selectedAnnotationId={selectedAnnotationId}
         type="text"
         name={name}
         placeholder={placeholder}

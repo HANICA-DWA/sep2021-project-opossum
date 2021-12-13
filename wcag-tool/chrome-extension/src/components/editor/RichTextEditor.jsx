@@ -9,7 +9,7 @@ import { useYjs } from '../../hooks'
 
 Quill.register('modules/cursors', QuillCursors, false)
 
-const RichTextEditor = function ({ field, placeholder, annotationId }) {
+const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
   const { ydoc, provider } = useYjs()
   const { setFieldValue, setFieldTouched } = useFormikContext()
 
@@ -33,11 +33,13 @@ const RichTextEditor = function ({ field, placeholder, annotationId }) {
 
   useEffect(() => {
     attachRefs()
-    const yId = annotationId ? `${field.name}-${annotationId}` : `${field.name}-${uuid()}`
+    const yId = selectedAnnotationId
+      ? `${field.name}-${selectedAnnotationId}`
+      : `${field.name}-${uuid()}`
     const yText = ydoc.getText(yId)
     const quillBinding = new QuillBinding(yText, quillRef.current, provider.awareness)
 
-    if (annotationId) {
+    if (selectedAnnotationId) {
       const initializeText = () => {
         if (yText.toString() === '') {
           setFieldValue(field.name, field.value)
@@ -55,7 +57,7 @@ const RichTextEditor = function ({ field, placeholder, annotationId }) {
     return () => {
       quillBinding.destroy()
     }
-  }, [ydoc, provider, annotationId])
+  }, [ydoc, provider, selectedAnnotationId])
 
   useEffect(() => {
     // https://stackoverflow.com/questions/38936594/dynamically-change-quill-placeholder LOOOOOOOOOOOOOOOOOOOOOL
