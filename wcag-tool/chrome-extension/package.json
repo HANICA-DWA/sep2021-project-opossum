@@ -6,12 +6,13 @@
   "author": "",
   "scripts": {
     "dev": "webpack --config webpack/webpack.dev.js --watch",
+    "dev:single-file": "npx rollup -c rollup.config.js -w",
     "build": "webpack --config webpack/webpack.prod.js",
+    "build:single-file": "npx rollup -c rollup.config.js",
     "clean": "rimraf dist",
     "test": "jest --passWithNoTests",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "npm run lint -- --fix",
-    "build:single-file": "npx rollup -c rollup.config.js -w",
     "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
