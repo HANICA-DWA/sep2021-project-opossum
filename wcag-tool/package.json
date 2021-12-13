@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "dev": "concurrently  \"cd backend && npm run dev\" \"cd chrome-extension && npm run dev\"  \"cd chrome-extension && npm run remotedev\"",
-    "setup": "concurrently \"cd chrome-extension && npm install\" \"cd backend && npm install\"",
-    "test": "concurrently \"cd chrome-extension && npm test\" \"cd backend && npm test\"",
-    "lint": "concurrently \"cd chrome-extension && npm run lint\" \"cd backend && npm run lint\"",
-    "lint:fix": "concurrently \"cd chrome-extension && npm run lint:fix\" \"cd backend && npm run lint:fix\""
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd chrome-extension && npm run dev\" \"cd chrome-extension && npm run dev:single-file\"  \"cd chrome-extension && npm run remotedev\"",
+    "setup": "concurrently \"cd backend && npm install\" \"cd chrome-extension && npm install && npm run build:single-file\"",
+    "test": "concurrently \"cd backend && npm test\" \"cd chrome-extension && npm test\"",
+    "lint": "concurrently \"cd backend && npm run lint\" \"cd chrome-extension && npm run lint\"",
+    "lint:fix": "concurrently \"cd backend && npm run lint:fix\" \"cd chrome-extension && npm run lint:fix\""
   },
   "dependencies": {
     "concurrently": "^6.4.0"
