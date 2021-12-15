@@ -62,7 +62,7 @@ const Awareness = () => {
 
   const maxUsersVisible = 5
 
-  const firstNClients = clients.slice(0, maxUsersVisible)
+  const clientsToShow = clients.slice(0, maxUsersVisible)
   const excessClients = clients.slice(maxUsersVisible)
 
   useEffect(() => {
@@ -118,7 +118,7 @@ const Awareness = () => {
   return (
     <div className="flex items-center p-2 pl-4">
       <AwarenessUserExcess clients={excessClients} />
-      {firstNClients.map((client, index) => (
+      {clientsToShow.map((client, index) => (
         <AwarenessUserBubble client={client} index={index} />
       ))}
     </div>
