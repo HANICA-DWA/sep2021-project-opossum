@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-
 require('dotenv').config()
 
 const mongoose = require('mongoose')
 const axios = require('axios')
-const { Principle, Guideline, SuccessCriterium } = require('../models')
+const { Principle, Guideline, SuccessCriterium, Snapshot } = require('../models')
 
-async function seed() {
+exports.seedWCAG = async () => {
   console.log('\nSeeding database with WCAG Principles, Guidelines and Success criteria!')
   // Drop collection
   console.log('\nDropping principle, guideline, success criterium collections...')
@@ -128,11 +127,41 @@ async function seed() {
     }
   }
 
-  console.log('\nDatabase seeded! Bye!\n')
+  console.log('\nDatabase seeded with WCAG! Bye!\n')
   return 0
 }
 
-async function main() {
+exports.seedSnapshots = async () => {
+  console.log('\nGenerating dummy snapshots...')
+  const dummySnapshots = []
+
+  for (let i = 1; i <= 10; i += 1)
+    dummySnapshots.push(
+      new Snapshot({
+        name: `Dummy snaphot ${i}`,
+        domain: 'test.com',
+        filename: `dummy-snapshot-file-${i}`,
+      })
+    )
+  console.log('ok!')
+
+  console.log('\nInserting dummy snapshots...')
+  try {
+    await Snapshot.insertMany(dummySnapshots)
+    console.log('ok!')
+  } catch (err) {
+    if (err.code === 11000) {
+      console.log('error: snapshot already exists!') // MongoDB Duplicate key error
+    } else {
+      console.log('Error saving snapshots:', err)
+    }
+  }
+
+  console.log('\nDatabase seeded with dummy snapshots! Bye!')
+  return 0
+}
+
+exports.main = async () => {
   // Connect to MongoDB
   console.log('\nConnecting to MongoDB...')
   await mongoose.connect(
@@ -145,9 +174,7 @@ async function main() {
   console.log('ok!')
 
   // Seed database
-  await seed()
+  await this.seedWCAG()
 
   process.exit(0)
 }
-
-module.exports = { seed, main }

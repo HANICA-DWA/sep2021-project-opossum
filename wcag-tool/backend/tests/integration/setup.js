@@ -1,7 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback, mocha/no-top-level-hooks, mocha/no-hooks-for-single-case */
 const mongoose = require('mongoose')
 const { MongoMemoryServer } = require('mongodb-memory-server')
-const { seed } = require('../../src/utils/seed')
+const { seedWCAG } = require('../../src/utils/seed')
 
 let mongod
 
@@ -16,7 +16,7 @@ async function before() {
     useUnifiedTopology: true,
   })
 
-  await seed()
+  await seedWCAG()
 }
 
 async function after() {
