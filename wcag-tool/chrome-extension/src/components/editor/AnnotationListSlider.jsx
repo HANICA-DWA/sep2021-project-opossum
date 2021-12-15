@@ -8,6 +8,7 @@ import { useYAnnotations, useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
+import Awareness from './Awareness'
 
 const AnnotationListSlider = () => {
   const { annotations } = useYAnnotations()
@@ -70,11 +71,19 @@ const AnnotationListSlider = () => {
         </div>
       }
     >
-      {!annotations || annotations.length === 0 ? (
-        <NoAnnotation openElementSelector={openElementSelector} />
-      ) : (
-        <AnnotationList annotations={annotations} />
-      )}
+      <div className="flex flex-col h-full justify-between">
+        <div className="overflow-y-auto">
+          {!annotations || annotations.length === 0 ? (
+            <NoAnnotation openElementSelector={openElementSelector} />
+          ) : (
+            <AnnotationList annotations={annotations} />
+          )}
+        </div>
+        <div>
+          <hr />
+          <Awareness />
+        </div>
+      </div>
     </SlidingPane>
   )
 }

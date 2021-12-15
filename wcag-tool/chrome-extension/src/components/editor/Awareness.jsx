@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
-import { useSliders } from '../../hooks'
+import AwarenessUserBubble from './AwarenessUserBubble'
+import AwarenessUserExcess from './AwarenessUserExcess'
 
-export function FirstLetterAndCapitalize(str = '') {
-  if (str?.length > 0) return str.charAt(0).toUpperCase()
+import { useYjs } from '../../hooks'
 
-  return ''
-}
-
-const Awareness = ({ provider, clientId }) => {
-  // eslint-disable-next-line no-empty-pattern
-  const [{}, { anySliderOpen, elementSelectorIsOpen }] = useSliders()
-  const position = anySliderOpen ? 'transform-to-right' : 'transform-to-left'
-  const invisible = elementSelectorIsOpen ? 'transparent-and-hide' : ''
-
+const Awareness = () => {
+  const { ydoc, provider } = useYjs()
   const [clients, setClients] = useState([])
+
+  const maxUsersVisible = 5
+
+  const firstNClients = clients.slice(0, maxUsersVisible)
+  const excessClients = clients.slice(maxUsersVisible)
 
   useEffect(() => {
     if (provider) {
@@ -50,7 +48,7 @@ const Awareness = ({ provider, clientId }) => {
 
       // Set awareness information
       provider.awareness.setLocalStateField('user', {
-        id: clientId,
+        id: ydoc.clientID,
         name: names[Math.floor(Math.random() * names.length)], // TODO: Change for real values
         color: colours[Math.floor(Math.random() * colours.length)], // TODO: Change for real values
       })
@@ -63,19 +61,10 @@ const Awareness = ({ provider, clientId }) => {
   }, [provider])
 
   return (
-    <div
-      className={`flex flex-col absolute top-12 p-4 pr-8 pb-8 font-poppins ${position} ${invisible}`}
-    >
-      {clients.map((client) => (
-        <div
-          key={client.id}
-          className="flex justify-center items-center rounded-full my-1 h-8 w-8"
-          style={{ backgroundColor: client.color }}
-        >
-          <p title={client.name} className="text-center text-sm font-poppins-semi cursor-default">
-            {FirstLetterAndCapitalize(client.name)}
-          </p>
-        </div>
+    <div className="flex items-center p-2 pl-4">
+      <AwarenessUserExcess clients={excessClients} />
+      {firstNClients.map((client, index) => (
+        <AwarenessUserBubble client={client} index={index} />
       ))}
     </div>
   )
