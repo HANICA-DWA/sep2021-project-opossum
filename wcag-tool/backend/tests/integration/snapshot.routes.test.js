@@ -11,7 +11,7 @@ const { Snapshot } = require('../../src/models')
 chai.use(chaiHttp)
 const { expect, request } = chai
 
-xdescribe('Snapshot Endpoints', function () {
+describe('Snapshot Endpoints', function () {
   before(async function () {
     await setup.before()
   })
@@ -146,7 +146,7 @@ xdescribe('Snapshot Endpoints', function () {
       expect(response.body.updatedAt).to.exist
     })
 
-    it('Get snapshot with non existing id should fail', async function () {
+    it('Get snapshot with non existent id should fail', async function () {
       const response = await request(app).get('/v1/snapshots/61b7284ded4084fd77ced98b')
 
       expect(response.status).equals(404)
@@ -172,7 +172,7 @@ xdescribe('Snapshot Endpoints', function () {
       expect(response.body.domain).equals('editeddomain.com')
     })
 
-    it('Patch snapshot with non existing id should fail', async function () {
+    it('Patch snapshot with non existent id should fail', async function () {
       const response = await request(app).patch('/v1/snapshots/61b7284ded4084fd77ced98b')
 
       expect(response.status).equals(404)
@@ -197,7 +197,7 @@ xdescribe('Snapshot Endpoints', function () {
       expect(response.body.filename).equals('testfile')
     })
 
-    it('Delete snapshot with non existing id should fail', async function () {
+    it('Delete snapshot with non existent id should fail', async function () {
       const response = await request(app).delete('/v1/snapshots/61b7284ded4084fd77ced98b')
 
       expect(response.status).equals(404)

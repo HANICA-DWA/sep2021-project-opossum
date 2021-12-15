@@ -29,7 +29,8 @@ exports.after = async () => {
 
 exports.afterEach = async () => {
   try {
-    await mongoose.connection.dropCollection('snapshots')
+    await Promise.all([mongoose.connection.dropCollection('snapshots')])
+
     // eslint-disable-next-line no-empty
   } catch (err) {}
 }

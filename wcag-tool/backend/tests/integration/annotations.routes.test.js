@@ -10,7 +10,6 @@ const { expect, request } = chai
 
 describe('Annotation Endpoints', function () {
   let dummySnapshot
-
   const dummySuccessCriterium = {
     _id: '61b9f17dc7208e0d6c24e069',
     successCriteriumId: 'WCAG2:non-text-content',
@@ -73,8 +72,18 @@ describe('Annotation Endpoints', function () {
     await setup.after()
   })
 
+  afterEach(async function () {
+    setup.afterEach()
+
+    dummySnapshot = await new Snapshot({
+      name: 'dummy snapshot',
+      domain: 'test.com',
+      filename: 'dummyfile',
+    }).save()
+  })
+
   describe('Annotation Endpoints', function () {
-    xdescribe('POST Annotation', function () {
+    describe('POST Annotation', function () {
       it('Post annotation successfully', async function () {
         const response = await request(app)
           .post(`/v1/snapshots/${dummySnapshot._id}/annotations`)
@@ -114,7 +123,7 @@ describe('Annotation Endpoints', function () {
       })
     })
 
-    xdescribe('GET Annotation', function () {
+    describe('GET Annotation', function () {
       it('Get annotations successfully', async function () {
         await dummySnapshot.addAnnotation(
           dummyAnnotation.title,
@@ -146,7 +155,7 @@ describe('Annotation Endpoints', function () {
         })
       })
 
-      it('Get annotations with non existing snapshotId should fail', async function () {
+      it('Get annotations with non existent snapshotId should fail', async function () {
         const response = await request(app).get(
           '/v1/snapshots/61b7284ded4084fd77ced9bb/annotations'
         )
@@ -156,7 +165,7 @@ describe('Annotation Endpoints', function () {
       })
     })
 
-    xdescribe('PATCH Annotation', function () {
+    describe('PATCH Annotation', function () {
       it('Patch annotation successfully', async function () {
         const annotation = await dummySnapshot.addAnnotation(
           dummyAnnotation.title,
