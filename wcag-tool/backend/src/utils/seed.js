@@ -135,7 +135,7 @@ exports.seedSnapshots = async () => {
   console.log('\nGenerating dummy snapshots...')
   const dummySnapshots = []
 
-  for (let i = 1; i <= 10; i += 1)
+  for (let i = 0; i < 10; i += 1)
     dummySnapshots.push(
       new Snapshot({
         name: `Dummy snaphot ${i}`,
