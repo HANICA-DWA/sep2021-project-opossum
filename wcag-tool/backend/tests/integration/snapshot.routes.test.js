@@ -66,7 +66,7 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('GET snapshots', function () {
+  describe('GET Snapshots', function () {
     it('Get snapshots without pagination params should return all snapshots', async function () {
       await seedSnapshots()
 
@@ -154,7 +154,7 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('PATCH snapshots', function () {
+  describe('PATCH Snapshots', function () {
     it('Patch snapshot successfully', async function () {
       const dummySnapshot = await new Snapshot({
         name: 'dummy snapshot',
@@ -180,7 +180,7 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('DELETE snapshots', function () {
+  describe('DELETE Snapshots', function () {
     it('Delete snapshot successfully', async function () {
       const dummySnapshot = await new Snapshot({
         name: 'dummy snapshot',
