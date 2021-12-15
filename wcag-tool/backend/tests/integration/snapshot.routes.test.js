@@ -24,19 +24,25 @@ describe('Snapshot Endpoints', function () {
     await setup.afterEach()
   })
 
-  describe('POST snapshot', function () {
+  describe('POST Snapshot', function () {
     it('Post snapshot successfully', async function () {
+      const dummySnapshot = {
+        name: 'dummy snapshot',
+        domain: 'test.com',
+      }
+
       const response = await request(app)
         .post('/v1/snapshots')
         .type('form')
         .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
-        .field('name', 'untitled snapshot')
-        .field('domain', 'test.com')
+        .field('name', dummySnapshot.name)
+        .field('domain', dummySnapshot.domain)
 
       expect(response.status).equals(201)
       expect(response.body._id).to.exist
-      expect(response.body.name).equals('untitled snapshot')
-      expect(response.body.domain).equals('test.com')
+      expect(response.body.filename).to.exist
+      expect(response.body.name).equals(dummySnapshot.name)
+      expect(response.body.domain).equals(dummySnapshot.domain)
     })
 
     it('Post snapshot without a file should fail', async function () {
@@ -57,7 +63,6 @@ describe('Snapshot Endpoints', function () {
         .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
 
       expect(response.status).equals(400)
-      expect(response.body.message.endsWith('not provided!')).equals(true)
     })
   })
 
@@ -69,6 +74,17 @@ describe('Snapshot Endpoints', function () {
 
       expect(response.status).equals(200)
       expect(response.body.length).equals(10)
+      response.body.forEach((annotation) => {
+        expect(annotation).includes.keys([
+          '_id',
+          'name',
+          'domain',
+          'filename',
+          'annotations',
+          'createdAt',
+          'updatedAt',
+        ])
+      })
     })
 
     it('Get snapshots with pagination params successfully', async function () {
@@ -126,6 +142,8 @@ describe('Snapshot Endpoints', function () {
       expect(response.body.name).equals(dummySnapshot.name)
       expect(response.body.domain).equals(dummySnapshot.domain)
       expect(response.body.filename).equals(dummySnapshot.filename)
+      expect(response.body.createdAt).to.exist
+      expect(response.body.updatedAt).to.exist
     })
 
     it('Get snapshot with non existing id should fail', async function () {
