@@ -1,8 +1,9 @@
 /* global webkitRequestFileSystem, TEMPORARY */
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useSliders } from './sliders.hooks'
+import { setSnapshotId } from '../services/snapshotSlice'
 
 let tabData
 let tabDataContents = []
@@ -10,6 +11,7 @@ const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
 export const useRegisterEditorEffects = () => {
+  const dispatch = useDispatch()
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
@@ -46,7 +48,6 @@ export const useRegisterEditorEffects = () => {
       }
       if (message.method === 'onInit') {
         tabData.options.disableFormatPage = !message.formatPageEnabled
-        // formatPageButton.hidden = !message.formatPageEnabled;
         document.title = `[WCAG] ${message.title}`
         if (message.filename) {
           tabData.filename = message.filename
@@ -113,6 +114,9 @@ export const useRegisterEditorEffects = () => {
             tabDataContents = [message.content]
           }
           if (!message.truncated || message.finished) {
+            const urlSearchParams = new URLSearchParams(window.location.search)
+            const snapshotId = urlSearchParams.get('id')
+            dispatch(setSnapshotId(snapshotId))
             tabData = JSON.parse(tabDataContents.join(''))
             tabData.tabId = message.tabId
             tabData.options = message.options

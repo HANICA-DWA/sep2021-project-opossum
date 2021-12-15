@@ -4,13 +4,15 @@ import devToolsEnhancer from 'remote-redux-devtools'
 import { api } from './apiService'
 import { annotationSlice } from './annotationSlice'
 import { sliderSlice } from './slidersSlice'
-import { loadingSlice } from './loadingSlice'
+import { popupSlice } from './popupSlice'
+import { snapshotSlice } from './snapshotSlice'
 
 const store = configureStore({
   reducer: {
     annotation: annotationSlice.reducer,
     sliders: sliderSlice.reducer,
-    loading: loadingSlice.reducer,
+    popup: popupSlice.reducer,
+    snapshot: snapshotSlice.reducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
