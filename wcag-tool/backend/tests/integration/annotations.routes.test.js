@@ -3,7 +3,7 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const { app } = require('../../src/app')
 const setup = require('./setup')
-const { Snapshot, Annotation, SuccessCriterium } = require('../../src/models')
+const { Snapshot } = require('../../src/models')
 
 chai.use(chaiHttp)
 const { expect, request } = chai
