@@ -11,7 +11,7 @@ const { Snapshot } = require('../../src/models')
 chai.use(chaiHttp)
 const { expect, request } = chai
 
-describe('Snapshot Endpoints', function () {
+xdescribe('Snapshot Endpoints', function () {
   before(async function () {
     await setup.before()
   })
