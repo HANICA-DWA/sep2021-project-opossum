@@ -5,7 +5,7 @@ const { seedWCAG } = require('../../src/utils/seed')
 
 let mongod
 
-async function before() {
+exports.before = async () => {
   mongod = await MongoMemoryServer.create()
   const uri = mongod.getUri()
 
@@ -19,7 +19,7 @@ async function before() {
   await seedWCAG()
 }
 
-async function after() {
+exports.after = async () => {
   if (mongod) {
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
@@ -27,8 +27,10 @@ async function after() {
   }
 }
 
-module.exports = {
-  before,
-  after,
-  afterEach,
+exports.afterEach = async () => {
+  try {
+    await mongoose.connection.dropCollection('snapshots')
+  } catch (err) {
+    console.log('After each:', err)
+  }
 }
