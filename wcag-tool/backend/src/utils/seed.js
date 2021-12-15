@@ -13,9 +13,8 @@ exports.seedWCAG = async () => {
       Guideline.collection.drop(),
       SuccessCriterium.collection.drop(),
     ])
-  } catch (err) {
-    console.log('error dropping collections:', err.message)
-  }
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
 
   // Download official wcag quick reference
   let data

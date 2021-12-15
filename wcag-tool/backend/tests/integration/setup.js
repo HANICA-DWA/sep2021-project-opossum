@@ -30,7 +30,6 @@ exports.after = async () => {
 exports.afterEach = async () => {
   try {
     await mongoose.connection.dropCollection('snapshots')
-  } catch (err) {
-    console.log('Error in after each: collections do not exist!')
-  }
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
 }
