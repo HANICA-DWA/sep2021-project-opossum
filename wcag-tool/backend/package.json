@@ -10,8 +10,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test:unit": "mocha --recursive --exit --require dotenv/config tests/unit",
-    "test:integration": "mocha --recursive --exit --require dotenv/config tests/integration",
+    "test:unit": "mocha --timeout 10000 --recursive --exit --require dotenv/config tests/unit",
+    "test:integration": "mocha --timeout 10000 --recursive --exit --require dotenv/config tests/integration",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
     "seed": "node -e 'require(\"./src/utils/seed.js\").main()'"
