@@ -7,6 +7,10 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
         'poppins-semi': ['Poppins-Semi', 'sans-serif'],
       },
+      colors: {
+        'lime-400': '#a3e635',
+        'orange-400': '#fb923c',
+      },
     },
     borderWidth: {
       DEFAULT: '1px',

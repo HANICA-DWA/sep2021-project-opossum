@@ -17,7 +17,11 @@ const AwarenessUserBubble = ({ client, index }) => {
         style={{ backgroundColor: client.color }}
       >
         <img src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`} alt="userIcon" />
-        <div className="h-4 w-4 absolute bottom-0 rounded-full border-3 border-white bg-green-400" />
+        <div
+          className={`h-4 w-4 absolute bottom-0 rounded-full border-3 border-white ${
+            client.idle ? `bg-orange-400` : `bg-lime-400`
+          }`}
+        />
       </div>
 
       {visible && (

@@ -5,6 +5,57 @@ import AwarenessUserExcess from './AwarenessUserExcess'
 
 import { useYjs } from '../../hooks'
 
+export function AwarenessSetUser(provider, id, name, color, idle) {
+  provider.awareness.setLocalStateField('user', {
+    id,
+    name,
+    color,
+    idle,
+  })
+}
+
+export function AwarenessSetUserIdle(provider, isIdle) {
+  const state = provider.awareness.getLocalState()
+
+  if (state) {
+    if (state.user.idle !== isIdle) {
+      AwarenessSetUser(provider, state.user.id, state.user.name, state.user.color, isIdle)
+    }
+  }
+}
+
+//onmousemove (en misschien onmousedown) triggert zeer vaak wat voor veel belasting op de cpu bezorgt. 
+//(letterlijk clearTimeout aanroepen & een if-statement checken kan al 20% cpu belasting bezorgen.) 
+export function UserAction(action) {
+  window.onload = action
+  window.onmousemove = action
+  window.onmousedown = action // catches touchscreen presses as well
+  window.ontouchstart = action // catches touchscreen swipes as well
+  window.onclick = action // catches touchpad clicks as well
+  window.onkeydown = action
+  window.addEventListener('scroll', action, true)
+}
+
+export function IdleUserAction(timeoutDelay, OnUserIdle, OnUserActive) {
+  let t
+  let canUndoTimeoutAction = false
+
+  UserAction(resetTimer)
+
+  function resetTimer() {
+    clearTimeout(t)
+    t = setTimeout(() => {
+      OnUserIdle()
+      canUndoTimeoutAction = true
+    }, timeoutDelay)
+
+    if (canUndoTimeoutAction) {
+      OnUserActive()
+      canUndoTimeoutAction = false
+    }
+  }
+}
+
 const Awareness = () => {
   const { ydoc, provider } = useYjs()
   const [clients, setClients] = useState([])
@@ -44,14 +95,18 @@ const Awareness = () => {
         'Gerda',
         'Jolanda',
       ]
-      const colours = ['red', 'yellow', 'green', 'violet', 'orange', 'pink', 'gray', 'lime']
+      const name = names[Math.floor(Math.random() * names.length)]
+      const colors = ['red', 'yellow', 'green', 'violet', 'orange', 'pink', 'gray', 'lime']
+      const color = colors[Math.floor(Math.random() * colors.length)]
 
       // Set awareness information
-      provider.awareness.setLocalStateField('user', {
-        id: ydoc.clientID,
-        name: names[Math.floor(Math.random() * names.length)], // TODO: Change for real values
-        color: colours[Math.floor(Math.random() * colours.length)], // TODO: Change for real values
-      })
+      AwarenessSetUser(provider, ydoc.clientID, name, color, false)
+
+      IdleUserAction(
+        2000,
+        () => AwarenessSetUserIdle(provider, true),
+        () => AwarenessSetUserIdle(provider, false)
+      )
     }
 
     // Cleanup after unmounting component
