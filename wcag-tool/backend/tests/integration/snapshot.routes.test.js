@@ -97,15 +97,19 @@ describe('Snapshot Endpoints', function () {
       const response = await request(app).get('/v1/snapshots?page=1')
       const response2 = await request(app).get('/v1/snapshots?limit=0')
       const response3 = await request(app).get('/v1/snapshots?page=1&limit=0')
+      const response4 = await request(app).get('/v1/snapshots?page=0&limit=10')
+      const response5 = await request(app).get('/v1/snapshots?page=0&limit=0')
 
       expect(response.status).equals(400)
       expect(response.body.message).equals('Invalid pagination parameters!')
-
       expect(response2.status).equals(400)
       expect(response2.body.message).equals('Invalid pagination parameters!')
-
       expect(response3.status).equals(400)
       expect(response3.body.message).equals('Invalid pagination parameters!')
+      expect(response4.status).equals(400)
+      expect(response4.body.message).equals('Invalid pagination parameters!')
+      expect(response5.status).equals(400)
+      expect(response5.body.message).equals('Invalid pagination parameters!')
     })
 
     it('Get snapshot with id successfully', async function () {
