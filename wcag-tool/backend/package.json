@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "mocha tests --recursive --exit --exclude tests/jest/**/* -r dotenv/config",
+    "test": "mocha --recursive --exit --require dotenv/config tests",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
     "seed": "node -e 'require(\"./src/utils/seed.js\").main()'"
