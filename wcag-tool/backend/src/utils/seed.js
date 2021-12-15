@@ -6,22 +6,18 @@ const axios = require('axios')
 const { Principle, Guideline, SuccessCriterium, Snapshot } = require('../models')
 
 exports.seedWCAG = async () => {
-  console.log('\nSeeding database with WCAG Principles, Guidelines and Success criteria!')
   // Drop collection
-  console.log('\nDropping principle, guideline, success criterium collections...')
   try {
     await Promise.all([
       Principle.collection.drop(),
       Guideline.collection.drop(),
       SuccessCriterium.collection.drop(),
     ])
-    console.log('ok!')
   } catch (err) {
-    console.log('error:', err.message)
+    console.log('error dropping collections:', err.message)
   }
 
   // Download official wcag quick reference
-  console.log('\nDownloading official wcag 2.1 quick reference')
   let data
   try {
     data = (
@@ -29,14 +25,12 @@ exports.seedWCAG = async () => {
         'https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json'
       )
     ).data
-    console.log('ok!')
   } catch (err) {
-    console.log(err)
+    console.log('error downloading wcag rules', err)
     return 1
   }
 
   // Map data to principles, guidelines and success criteria
-  console.log('\nMapping data to Principle, Guideline and SuccessCriterium models...')
   const principles = []
   const guidelines = []
   const successCriteria = []
@@ -86,15 +80,10 @@ exports.seedWCAG = async () => {
 
     currentPrinciple = undefined
   })
-  console.log('ok!')
 
   // Saving all docs
-  console.log('\nSaving all principles, guidelines and success criteria to MongoDB...')
-
-  console.log('inserting principles...')
   try {
     await Principle.insertMany(principles)
-    console.log('ok!')
   } catch (err) {
     if (err.code === 11000) {
       console.log('error: principle already exists!') // MongoDB Duplicate key error
@@ -103,10 +92,8 @@ exports.seedWCAG = async () => {
     }
   }
 
-  console.log('inserting guidelines...')
   try {
     await Guideline.insertMany(guidelines)
-    console.log('ok!')
   } catch (err) {
     if (err.code === 11000) {
       console.log('error: guideline already exists!') // MongoDB Duplicate key error
@@ -115,10 +102,8 @@ exports.seedWCAG = async () => {
     }
   }
 
-  console.log('inserting success criteria...')
   try {
     await SuccessCriterium.insertMany(successCriteria)
-    console.log('ok!')
   } catch (err) {
     if (err.code === 11000) {
       console.log('error: success criterium already exists!') // MongoDB Duplicate key error
@@ -127,12 +112,10 @@ exports.seedWCAG = async () => {
     }
   }
 
-  console.log('\nDatabase seeded with WCAG! Bye!\n')
   return 0
 }
 
 exports.seedSnapshots = async () => {
-  console.log('\nGenerating dummy snapshots...')
   const dummySnapshots = []
 
   for (let i = 0; i < 10; i += 1)
@@ -143,21 +126,17 @@ exports.seedSnapshots = async () => {
         filename: `dummy-snapshot-file-${i}`,
       })
     )
-  console.log('ok!')
 
-  console.log('\nInserting dummy snapshots...')
   try {
     await Snapshot.insertMany(dummySnapshots)
-    console.log('ok!')
   } catch (err) {
     if (err.code === 11000) {
-      console.log('error: snapshot already exists!') // MongoDB Duplicate key error
+      console.log('Error: snapshot already exists!') // MongoDB Duplicate key error
     } else {
       console.log('Error saving snapshots:', err)
     }
   }
 
-  console.log('\nDatabase seeded with dummy snapshots! Bye!')
   return 0
 }
 
@@ -174,7 +153,9 @@ exports.main = async () => {
   console.log('ok!')
 
   // Seed database
+  console.log('\nSeeding database with WCAG')
   await this.seedWCAG()
+  console.log('ok!')
 
   process.exit(0)
 }
