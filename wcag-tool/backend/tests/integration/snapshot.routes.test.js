@@ -154,15 +154,15 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('PUT snapshots', function () {
-    it('Put snapshot successfully', async function () {
+  describe('PATCH snapshots', function () {
+    it('Patch snapshot successfully', async function () {
       const dummySnapshot = await new Snapshot({
         name: 'dummy snapshot',
         domain: 'test.com',
         filename: 'testfile',
       }).save()
 
-      const response = await request(app).put(`/v1/snapshots/${dummySnapshot._id}`).send({
+      const response = await request(app).patch(`/v1/snapshots/${dummySnapshot._id}`).send({
         name: 'edited name',
         domain: 'editeddomain.com',
       })
@@ -172,8 +172,8 @@ describe('Snapshot Endpoints', function () {
       expect(response.body.domain).equals('editeddomain.com')
     })
 
-    it('Put snapshot with non existing id should fail', async function () {
-      const response = await request(app).put('/v1/snapshots/61b7284ded4084fd77ced98b')
+    it('Patch snapshot with non existing id should fail', async function () {
+      const response = await request(app).patch('/v1/snapshots/61b7284ded4084fd77ced98b')
 
       expect(response.status).equals(404)
       expect(response.body.message).equals('Snapshot not found!')
