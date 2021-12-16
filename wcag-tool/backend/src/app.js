@@ -10,7 +10,8 @@ app.disable('x-powered-by')
 // Register middleware
 app.use(cors({ origin: '*' }))
 app.use(express.json())
-app.use(logger)
+
+if (process.env.NODE_ENV !== 'test') app.use(logger)
 
 // Routes
 app.get('/', (req, res) => res.send('Hello World!'))

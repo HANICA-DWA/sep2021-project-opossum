@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "mocha tests --recursive --exit --exclude tests/jest/**/* -r dotenv/config",
+    "test:unit": "mocha --timeout 10000 --recursive --exit --require dotenv/config tests/unit",
+    "test:integration": "cross-env NODE_ENV=test mocha --timeout 10000 --recursive --exit --require dotenv/config tests/integration",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
     "seed": "node -e 'require(\"./src/utils/seed.js\").main()'"
@@ -33,6 +34,7 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
