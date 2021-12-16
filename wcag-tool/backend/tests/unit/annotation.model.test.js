@@ -1,8 +1,9 @@
 /* eslint-disable func-names, prefer-arrow-callback,no-unused-expressions */
 const { expect } = require('chai')
 const mongoose = require('mongoose')
-const setup = require('./setup')
 const { Annotation } = require('../../src/models')
+const setup = require('../setup')
+const dummyFactory = require('../dummyFactory')
 
 describe('Annotation Model', function () {
   before(async function () {
@@ -17,13 +18,54 @@ describe('Annotation Model', function () {
     await setup.afterEach()
   })
 
+  it('Create annotation successfully', async function () {
+    // Arrange
+    const annotation = dummyFactory.annotation()
+
+    // Act
+    const savedAnnotation = await annotation.save()
+
+    // Assert
+    expect(savedAnnotation._id).to.exist
+    expect(savedAnnotation.title).equals(annotation.title)
+    expect(savedAnnotation.description).equals(savedAnnotation.description)
+    expect(savedAnnotation.selector).equals(savedAnnotation.selector)
+    expect(savedAnnotation.successCriterium.successCriteriumId).equals(
+      savedAnnotation.successCriterium.successCriteriumId
+    )
+  })
+
+  it('Create annotation with extra field, field should be undefined', async function () {
+    // Arrange
+    const annotation = dummyFactory.annotation()
+
+    // Act
+    const savedAnnotation = await new Annotation({
+      title: annotation.title,
+      description: annotation.description,
+      selector: annotation.selector,
+      successCriterium: annotation.successCriterium,
+      extraField: 'extra field',
+    }).save()
+
+    // Assert
+    expect(savedAnnotation._id).to.exist
+    expect(savedAnnotation.title).equals(annotation.title)
+    expect(savedAnnotation.description).equals(savedAnnotation.description)
+    expect(savedAnnotation.selector).equals(savedAnnotation.selector)
+    expect(savedAnnotation.successCriterium.successCriteriumId).equals(
+      savedAnnotation.successCriterium.successCriteriumId
+    )
+    expect(savedAnnotation.extraField).to.not.exist
+  })
+
   it('Create annotation without required fields should fail', async function () {
-    const annotation = new Annotation({})
+    // Arrange
     let error
 
     // Act
     try {
-      await annotation.save()
+      await new Annotation({}).save()
     } catch (_error) {
       error = _error
     }
@@ -33,5 +75,6 @@ describe('Annotation Model', function () {
     expect(error.errors.title).to.exist
     expect(error.errors.description).to.exist
     expect(error.errors.selector).to.exist
+    expect(error.errors.successCriterium).to.not.exist
   })
 })
