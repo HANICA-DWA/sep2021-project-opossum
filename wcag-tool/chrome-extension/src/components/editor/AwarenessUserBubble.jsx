@@ -7,18 +7,14 @@ const AwarenessUserBubble = ({ client, index }) => {
     usePopperTooltip({ placement: 'top-start' })
 
   return (
-    <div
-      key={client.id}
-      ref={setTriggerRef}
-      className={`flex justify-center -ml-2 ${`z-${9 - index}`}`}
-    >
+    <div ref={setTriggerRef} className={`flex justify-center -ml-2 ${`z-${9 - index}`}`}>
       <div
-        className="h-9 w-9 flex justify-center rounded-full border-2 border-white"
+        className="h-9 w-9 flex relative justify-center rounded-full border-2 border-white"
         style={{ backgroundColor: client.color }}
       >
         <img src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`} alt="userIcon" />
         <div
-          className={`h-4 w-4 absolute bottom-0 rounded-full border-3 border-white ${
+          className={`h-4 w-4 -mb-2 absolute bottom-0 rounded-full border-3 border-white ${
             client.idle ? `bg-orange-400` : `bg-lime-400`
           }`}
         />

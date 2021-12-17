@@ -5,6 +5,7 @@ import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsIdle } from '../../services/userSlice'
+import { useAwareness } from '../../hooks/awareness.hook'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -42,6 +43,7 @@ const deactivateIdleDetection = () => {
 const App = () => {
   const dispatch = useDispatch()
   const isIdle = useSelector((state) => state.user.isIdle)
+  const { clients, provider } = useAwareness('room') // TODO: room should be a snapshotId
 
   const handleUserIsActive = () => {
     if (isIdle) {
@@ -65,7 +67,7 @@ const App = () => {
   return (
     <>
       <OverlayButton />
-      <AnnotationListSlider />
+      <AnnotationListSlider clients={clients} />
       <AnnotationDetailSlider />
       <CreateAndEditAnnotationSlider />
     </>

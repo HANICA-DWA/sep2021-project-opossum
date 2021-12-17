@@ -10,7 +10,7 @@ import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
 
-const AnnotationListSlider = () => {
+const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
@@ -34,6 +34,7 @@ const AnnotationListSlider = () => {
             <div className="text-base">
               <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
                 Nu.nl Homepage text is way too long for the pane
+                {/* TODO: dynamic title */}
               </p>
             </div>
             <div>
@@ -81,7 +82,7 @@ const AnnotationListSlider = () => {
         </div>
         <div>
           <hr />
-          <Awareness room="room" />
+          <Awareness clients={clients} />
         </div>
       </div>
     </SlidingPane>

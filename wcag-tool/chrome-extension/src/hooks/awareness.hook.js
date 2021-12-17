@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
 
 const ydoc = new Y.Doc()
 
-const setUserAwareness = (provider, name, color, idle) => {
+const setUserAwareness = (provider, name, id, color, idle) => {
   provider.awareness.setLocalStateField('user', {
+    id,
     name,
     color,
     idle,
@@ -55,34 +56,36 @@ const color = getRandomColor()
 export const useAwareness = (room) => {
   const [clients, setClients] = useState([])
   const isIdle = useSelector((state) => state.user.isIdle)
-  const [provider, setprovider] = useState()
+  const providerRef = useRef()
 
   useEffect(() => {
-    if (!provider) {
-      const _provider = joinRoom(room)
-      setprovider(_provider)
+    if (!providerRef.current) {
+      providerRef.current = joinRoom(room)
 
-      _provider.awareness.on('change', () => {
+      providerRef.current.awareness.on('change', () => {
         const _clients = []
-        _provider.awareness.getStates().forEach((state) => {
+        providerRef.current.awareness.getStates().forEach((state) => {
           if (state.user) _clients.push({ ...state.user })
         })
         setClients(_clients)
       })
 
-      setUserAwareness(_provider, name, color, isIdle)
+      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
     }
 
     return () => {
-      if (provider) provider.destroy()
+      if (providerRef.current) {
+        providerRef.current.destroy()
+        providerRef.current = null
+      }
     }
   }, [])
 
   useEffect(() => {
-    if (provider) {
-      setUserAwareness(provider, name, color, isIdle)
+    if (providerRef.current) {
+      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
     }
   }, [isIdle])
 
-  return { provider, clients }
+  return { provider: providerRef.current, clients }
 }
