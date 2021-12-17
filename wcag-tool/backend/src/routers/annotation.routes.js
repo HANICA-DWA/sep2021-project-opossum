@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const { Annotation } = require('../models')
 
 const router = new Router()
 

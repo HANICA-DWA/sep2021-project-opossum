@@ -2,7 +2,8 @@
 const { expect } = require('chai')
 const mongoose = require('mongoose')
 const { Guideline } = require('../../src/models')
-const setup = require('./setup')
+const setup = require('../setup')
+const dummyFactory = require('../dummyFactory')
 
 describe('Guideline Model', function () {
   before(async function () {
@@ -17,51 +18,48 @@ describe('Guideline Model', function () {
     await setup.afterEach()
   })
 
-  it('Create & save guideline successfully', async function () {
+  it('Create guideline successfully', async function () {
     // Arrange
-    const validGuideline = new Guideline({
-      guidelineId: 'guidelineId',
-      num: '1.1',
-      handle: 'example handle',
-      title: 'example title',
-    })
+    const guideline = dummyFactory.guideline()
 
     // Act
-    const savedGuideline = await validGuideline.save()
+    const savedGuideline = await guideline.save()
 
     // Assert
     expect(savedGuideline._id).to.exist
-    expect(savedGuideline.num).to.equal(validGuideline.num)
-    expect(savedGuideline.handle).to.equal(validGuideline.handle)
-    expect(savedGuideline.title).to.equal(validGuideline.title)
+    expect(savedGuideline.num).equals(guideline.num)
+    expect(savedGuideline.handle).equals(guideline.handle)
+    expect(savedGuideline.title).equals(guideline.title)
   })
 
   it('Create guideline with extra field, field should be undefined', async function () {
     // Arrange
-    const guidelineWithExtraField = new Guideline({
-      guidelineId: 'guidelineId',
-      num: '1.1',
-      handle: 'example handle',
-      title: 'example title',
-      extraField: 'example ',
-    })
+    const guideline = dummyFactory.guideline()
 
     // Act
-    const savedGuidelineWithExtraField = await guidelineWithExtraField.save()
+    const savedGuidelineWithExtraField = await new Guideline({
+      guidelineId: guideline.guidelineId,
+      num: guideline.num,
+      handle: guideline.handle,
+      title: guideline.title,
+      extraField: 'extra field',
+    }).save()
 
     // Arrange
     expect(savedGuidelineWithExtraField._id).to.exist
+    expect(savedGuidelineWithExtraField.num).equals(guideline.num)
+    expect(savedGuidelineWithExtraField.handle).equals(guideline.handle)
+    expect(savedGuidelineWithExtraField.title).equals(guideline.title)
     expect(savedGuidelineWithExtraField.extraField).not.to.exist
   })
 
   it('Create guideline without required field should fail', async function () {
     // Arrange
-    const principleWithoutRequiredFields = new Guideline({})
     let error
 
     // Act
     try {
-      await principleWithoutRequiredFields.save()
+      await new Guideline({}).save()
     } catch (_error) {
       error = _error
     }

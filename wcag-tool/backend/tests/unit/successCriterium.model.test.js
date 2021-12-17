@@ -2,21 +2,8 @@
 const { expect } = require('chai')
 const mongoose = require('mongoose')
 const { SuccessCriterium } = require('../../src/models')
-const setup = require('./setup')
-
-const dummyPrinciple = {
-  principleId: 'principleId',
-  num: '1',
-  handle: 'example handle',
-  title: 'example title',
-}
-const dummyGuideline = {
-  guidelineId: 'guidelineId',
-  num: '1.1',
-  handle: 'example handle',
-  title: 'example title',
-  extraField: 'example ',
-}
+const setup = require('../setup')
+const dummyFactory = require('../dummyFactory')
 
 describe('SuccessCriterium Model', function () {
   before(async function () {
@@ -31,66 +18,60 @@ describe('SuccessCriterium Model', function () {
     await setup.afterEach()
   })
 
-  it('Create & save success criterium successfully', async function () {
+  it('Create success criterium successfully', async function () {
     // Arrange
-    const validSuccessCriterium = new SuccessCriterium({
-      principle: dummyPrinciple,
-      guideline: dummyGuideline,
-      successCriteriumId: 'successCriteriumId',
-      num: '1.1.1',
-      level: 'A',
-      handle: 'dummy handle',
-      title: 'dummy title',
-      details: [{ dummy: 'dummy' }],
-    })
+    const successCriterium = dummyFactory.successCriterium()
 
     // Act
-    const savedSuccessCriterium = await validSuccessCriterium.save()
+    const savedSuccessCriterium = await successCriterium.save()
 
     // Assert
     expect(savedSuccessCriterium._id).to.exist
-    expect(savedSuccessCriterium.principle).to.equal(validSuccessCriterium.principle)
-    expect(savedSuccessCriterium.guideline).to.equal(validSuccessCriterium.guideline)
-    expect(savedSuccessCriterium.successCriteriumId).to.equal(
-      validSuccessCriterium.successCriteriumId
-    )
-    expect(savedSuccessCriterium.num).to.equal(validSuccessCriterium.num)
-    expect(savedSuccessCriterium.level).to.equal(validSuccessCriterium.level)
-    expect(savedSuccessCriterium.handle).to.equal(validSuccessCriterium.handle)
-    expect(savedSuccessCriterium.title).to.equal(validSuccessCriterium.title)
-    expect(savedSuccessCriterium.details).to.equal(validSuccessCriterium.details)
+    expect(savedSuccessCriterium.principle).equals(successCriterium.principle)
+    expect(savedSuccessCriterium.guideline).equals(successCriterium.guideline)
+    expect(savedSuccessCriterium.successCriteriumId).equals(successCriterium.successCriteriumId)
+    expect(savedSuccessCriterium.num).equals(successCriterium.num)
+    expect(savedSuccessCriterium.level).equals(successCriterium.level)
+    expect(savedSuccessCriterium.handle).equals(successCriterium.handle)
+    expect(savedSuccessCriterium.title).equals(successCriterium.title)
+    expect(savedSuccessCriterium.details).equals(successCriterium.details)
   })
 
   it('Create success criterium with extra field, field should be undefined', async function () {
     // Arrange
-    const successCriteriumWithExtraField = new SuccessCriterium({
-      principle: dummyPrinciple,
-      guideline: dummyGuideline,
-      successCriteriumId: 'successCriteriumId',
-      num: '1.1.1',
-      level: 'A',
-      handle: 'dummy handle',
-      title: 'dummy title',
-      details: [{ dummy: 'dummy' }],
-      extraField: 'extra field',
-    })
+    const successCriterium = dummyFactory.successCriterium()
 
     // Act
-    const savedSuccessCriteriumWithExtraField = await successCriteriumWithExtraField.save()
+    const savedSuccessCriteriumWithExtraField = await new SuccessCriterium({
+      successCriteriumId: successCriterium.successCriteriumId,
+      num: successCriterium.num,
+      level: successCriterium.level,
+      handle: successCriterium.handle,
+      title: successCriterium.title,
+      details: successCriterium.details,
+      extraField: 'extra field',
+    }).save()
 
     // Arrange
     expect(savedSuccessCriteriumWithExtraField._id).to.exist
+    expect(savedSuccessCriteriumWithExtraField.successCriteriumId).equals(
+      successCriterium.successCriteriumId
+    )
+    expect(savedSuccessCriteriumWithExtraField.num).equals(successCriterium.num)
+    expect(savedSuccessCriteriumWithExtraField.level).equals(successCriterium.level)
+    expect(savedSuccessCriteriumWithExtraField.handle).equals(successCriterium.handle)
+    expect(savedSuccessCriteriumWithExtraField.title).equals(successCriterium.title)
+    expect(savedSuccessCriteriumWithExtraField.details).deep.equals(successCriterium.details)
     expect(savedSuccessCriteriumWithExtraField.extraField).not.to.exist
   })
 
   it('Create successCriterium without required field should fail', async function () {
     // Arrange
-    const successCriteriumWithoutRequiredFields = new SuccessCriterium({})
     let error
 
     // Act
     try {
-      await successCriteriumWithoutRequiredFields.save()
+      await new SuccessCriterium({}).save()
     } catch (_error) {
       error = _error
     }
@@ -106,21 +87,19 @@ describe('SuccessCriterium Model', function () {
 
   it('Create successCriterium with illegal level value should fail', async function () {
     // Arrange
-    const successCriteriumWithoutDetails = new SuccessCriterium({
-      principle: dummyPrinciple,
-      guideline: dummyGuideline,
-      successCriteriumId: 'successCriteriumId',
-      num: '1.1.1',
-      level: 'X',
-      handle: 'dummy handle',
-      title: 'dummy title',
-      details: [],
-    })
+    const successCriterium = dummyFactory.successCriterium()
     let error
 
     // Act
     try {
-      await successCriteriumWithoutDetails.save()
+      await new SuccessCriterium({
+        successCriteriumId: successCriterium.successCriteriumId,
+        num: successCriterium.num,
+        level: 'X',
+        handle: successCriterium.handle,
+        title: successCriterium.title,
+        details: successCriterium.details,
+      }).save()
     } catch (_error) {
       error = _error
     }
@@ -128,6 +107,5 @@ describe('SuccessCriterium Model', function () {
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
     expect(error.errors.level).to.exist
-    // TODO: Check message!
   })
 })
