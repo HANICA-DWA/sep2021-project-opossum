@@ -81,7 +81,7 @@ const AnnotationListSlider = () => {
         </div>
         <div>
           <hr />
-          <Awareness />
+          <Awareness room="snapshot" />
         </div>
       </div>
     </SlidingPane>

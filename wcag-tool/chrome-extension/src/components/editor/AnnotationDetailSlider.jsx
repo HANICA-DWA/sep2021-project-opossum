@@ -3,6 +3,7 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
+import Awareness from './Awareness'
 
 import IconButton from '../common/IconButton'
 

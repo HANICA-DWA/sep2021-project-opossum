@@ -6,6 +6,7 @@ import { annotationSlice } from './annotationSlice'
 import { sliderSlice } from './slidersSlice'
 import { popupSlice } from './popupSlice'
 import { snapshotSlice } from './snapshotSlice'
+import { userSlice } from './userSlice'
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     sliders: sliderSlice.reducer,
     popup: popupSlice.reducer,
     snapshot: snapshotSlice.reducer,
+    user: userSlice.reducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
