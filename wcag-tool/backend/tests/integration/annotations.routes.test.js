@@ -2,70 +2,21 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const { app } = require('../../src/app')
-const setup = require('./setup')
-const { Snapshot } = require('../../src/models')
+const setup = require('../setup')
+const dummyFactory = require('../dummyFactory')
 
 chai.use(chaiHttp)
 const { expect, request } = chai
 
 describe('Annotation Endpoints', function () {
-  let dummySnapshot
-  const dummySuccessCriterium = {
-    _id: '61b9f17dc7208e0d6c24e069',
-    successCriteriumId: 'WCAG2:non-text-content',
-    num: '1.1.1',
-    level: 'A',
-    handle: 'Non-text Content',
-    title:
-      'All non-text content that is presented to the user has a text alternative that serves the equivalent purpose, except for the situations listed below.',
-    details: [
-      {
-        type: 'ulist',
-        items: [
-          {
-            handle: 'Controls, Input',
-            text: 'If non-text content is a control or accepts user input, then it has a name that describes its purpose. (Refer to Success Criterion 4.1.2 for additional requirements for controls and content that accepts user input.)',
-          },
-          {
-            handle: 'Time-Based Media',
-            text: 'If non-text content is time-based media, then text alternatives at least provide descriptive identification of the non-text content. (Refer to Guideline 1.2 for additional requirements for media.)',
-          },
-          {
-            handle: 'Test',
-            text: 'If non-text content is a test or exercise that would be invalid if presented in text, then text alternatives at least provide descriptive identification of the non-text content.',
-          },
-          {
-            handle: 'Sensory',
-            text: 'If non-text content is primarily intended to create a specific sensory experience, then text alternatives at least provide descriptive identification of the non-text content.',
-          },
-          {
-            handle: 'CAPTCHA',
-            text: 'If the purpose of non-text content is to confirm that content is being accessed by a person rather than a computer, then text alternatives that identify and describe the purpose of the non-text content are provided, and alternative forms of CAPTCHA using output modes for different types of sensory perception are provided to accommodate different disabilities.',
-          },
-          {
-            handle: 'Decoration, Formatting, Invisible',
-            text: 'If non-text content is pure decoration, is used only for visual formatting, or is not presented to users, then it is implemented in a way that it can be ignored by assistive technology.',
-          },
-        ],
-      },
-    ],
-    techniques: [],
-  }
-  const dummyAnnotation = {
-    successCriterium: dummySuccessCriterium,
-    title: 'Dummy title',
-    description: 'Dummy description',
-    selector: '.dummy-selector',
-  }
+  let snapshot
+  let annotation
 
   before(async function () {
     await setup.before()
 
-    dummySnapshot = await new Snapshot({
-      name: 'dummy snapshot',
-      domain: 'test.com',
-      filename: 'dummyfile',
-    }).save()
+    snapshot = await dummyFactory.snapshot().save()
+    annotation = dummyFactory.annotation()
   })
 
   after(async function () {
@@ -75,49 +26,47 @@ describe('Annotation Endpoints', function () {
   afterEach(async function () {
     setup.afterEach()
 
-    dummySnapshot = await new Snapshot({
-      name: 'dummy snapshot',
-      domain: 'test.com',
-      filename: 'dummyfile',
-    }).save()
+    snapshot = await dummyFactory.snapshot().save()
   })
 
   describe('Annotation Endpoints', function () {
     describe('POST Annotation', function () {
       it('Post annotation successfully', async function () {
-        const response = await request(app)
-          .post(`/v1/snapshots/${dummySnapshot._id}/annotations`)
-          .send({
-            successCriterium: dummyAnnotation.successCriterium,
-            title: dummyAnnotation.title,
-            description: dummyAnnotation.description,
-            selector: dummyAnnotation.selector,
-          })
+        // Act
+        const response = await request(app).post(`/v1/snapshots/${snapshot._id}/annotations`).send({
+          successCriterium: annotation.successCriterium,
+          title: annotation.title,
+          description: annotation.description,
+          selector: annotation.selector,
+        })
 
+        // Assert
         expect(response.status).equals(201)
         expect(response.body._id).to.exist
-        expect(response.body.title).equals(dummyAnnotation.title)
-        expect(response.body.description).equals(dummyAnnotation.description)
-        expect(response.body.selector).equals(dummyAnnotation.selector)
-        expect(response.body.successCriterium).deep.equals(dummySuccessCriterium)
+        expect(response.body.title).equals(annotation.title)
+        expect(response.body.description).equals(annotation.description)
+        expect(response.body.selector).equals(annotation.selector)
+        expect(response.body.successCriterium.successCriteriumId).equals(
+          annotation.successCriterium.successCriteriumId
+        )
       })
 
       it('Post annotation with invalid success criterium should fail', async function () {
         const response = await request(app)
-          .post(`/v1/snapshots/${dummySnapshot._id}/annotations`)
+          .post(`/v1/snapshots/${snapshot._id}/annotations`)
           .send({
             successCriterium: {
               foo: 'bar',
             },
-            title: dummyAnnotation.title,
-            description: dummyAnnotation.description,
-            selector: dummyAnnotation.selector,
+            title: annotation.title,
+            description: annotation.description,
+            selector: annotation.selector,
           })
         expect(response.status).equals(400)
       })
 
       it('Post annotation without required fields should fail', async function () {
-        const response = await request(app).post(`/v1/snapshots/${dummySnapshot._id}/annotations`)
+        const response = await request(app).post(`/v1/snapshots/${snapshot._id}/annotations`)
 
         expect(response.status).equals(400)
       })
@@ -125,33 +74,21 @@ describe('Annotation Endpoints', function () {
 
     describe('GET Annotation', function () {
       it('Get annotations successfully', async function () {
-        await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
-        )
-        await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
-        )
-        await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
-        )
+        await snapshot.addAnnotation(annotation.title, annotation.description, annotation.selector)
+        await snapshot.addAnnotation(annotation.title, annotation.description, annotation.selector)
+        await snapshot.addAnnotation(annotation.title, annotation.description, annotation.selector)
 
-        const response = await request(app).get(`/v1/snapshots/${dummySnapshot._id}/annotations`)
+        const response = await request(app).get(`/v1/snapshots/${snapshot._id}/annotations`)
 
         expect(response.status).equals(200)
         expect(response.body.length).equals(3)
-        response.body.forEach((annotation) => {
-          expect(annotation._id).to.exist
-          expect(annotation.title).equals(dummyAnnotation.title)
-          expect(annotation.description).equals(dummyAnnotation.description)
-          expect(annotation.selector).equals(dummyAnnotation.selector)
-          expect(annotation.createdAt).to.exist
-          expect(annotation.updatedAt).to.exist
+        response.body.forEach((_annotation) => {
+          expect(_annotation._id).to.exist
+          expect(_annotation.title).equals(annotation.title)
+          expect(_annotation.description).equals(annotation.description)
+          expect(_annotation.selector).equals(annotation.selector)
+          expect(_annotation.createdAt).to.exist
+          expect(_annotation.updatedAt).to.exist
         })
       })
 
@@ -166,11 +103,13 @@ describe('Annotation Endpoints', function () {
     })
 
     describe('PATCH Annotation', function () {
+      // Arrange
       it('Patch annotation successfully', async function () {
-        const annotation = await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
+        const savedAnnotation = await snapshot.addAnnotation(
+          annotation.title,
+          annotation.description,
+          annotation.selector,
+          annotation.successCriterium
         )
         const editedValues = {
           title: 'edited title',
@@ -201,8 +140,9 @@ describe('Annotation Endpoints', function () {
           },
         }
 
+        // Act
         const response = await request(app)
-          .patch(`/v1/snapshots/${dummySnapshot._id}/annotations/${annotation._id}`)
+          .patch(`/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`)
           .send({
             title: editedValues.title,
             description: editedValues.description,
@@ -210,8 +150,9 @@ describe('Annotation Endpoints', function () {
             successCriterium: editedValues.successCriterium,
           })
 
+        // Assert
         expect(response.status).equals(200)
-        expect(response.body._id).equals(annotation._id.toString())
+        expect(response.body._id).equals(savedAnnotation._id.toString())
         expect(response.body.title).equals(editedValues.title)
         expect(response.body.description).equals(editedValues.description)
         expect(response.body.successCriterium.successCriteriumId).equals(
@@ -220,16 +161,20 @@ describe('Annotation Endpoints', function () {
       })
 
       it('Patch annotation without any fields should fail', async function () {
-        const annotation = await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
+        // Arrange
+        const savedAnnotation = await snapshot.addAnnotation(
+          annotation.title,
+          annotation.description,
+          annotation.selector,
+          annotation.successCriterium
         )
 
+        // Act
         const response = await request(app).patch(
-          `/v1/snapshots/${dummySnapshot._id}/annotations/${annotation._id}`
+          `/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`
         )
 
+        // Assert
         expect(response.status).equals(400)
         expect(response.body.message).equals('Invalid patch parameters!')
       })
@@ -237,43 +182,53 @@ describe('Annotation Endpoints', function () {
 
     describe('DELETE Annotation', function () {
       it('Delete annotation successfully', async function () {
-        const annotation = await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
+        // Arrange
+        const savedAnnotation = await snapshot.addAnnotation(
+          annotation.title,
+          annotation.description,
+          annotation.selector,
+          annotation.successCriterium
         )
 
+        // Act
         const response = await request(app).delete(
-          `/v1/snapshots/${dummySnapshot._id}/annotations/${annotation._id}`
+          `/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`
         )
 
+        // Assert
         expect(response.status).equals(200)
-        expect(response.body._id).equals(annotation._id.toString())
-        expect(response.body.title).equals(annotation.title)
-        expect(response.body.description).equals(annotation.description)
-        expect(response.body.selector).equals(annotation.selector)
+        expect(response.body._id).equals(savedAnnotation._id.toString())
+        expect(response.body.title).equals(savedAnnotation.title)
+        expect(response.body.description).equals(savedAnnotation.description)
+        expect(response.body.selector).equals(savedAnnotation.selector)
       })
 
       it('Delete annotation with non existent snapshotid should fail', async function () {
-        const annotation = await dummySnapshot.addAnnotation(
-          dummyAnnotation.title,
-          dummyAnnotation.description,
-          dummyAnnotation.selector
+        // Arrange
+        const savedAnnotation = await snapshot.addAnnotation(
+          annotation.title,
+          annotation.description,
+          annotation.selector,
+          annotation.successCriterium
         )
 
+        // Act
         const response = await request(app).delete(
-          `/v1/snapshots/61b889835c9644ffe3ec32f9/annotations/${annotation._id}`
+          `/v1/snapshots/61b889835c9644ffe3ec32f9/annotations/${savedAnnotation._id}`
         )
 
+        // Assert
         expect(response.status).equals(404)
         expect(response.body.message).equals('Snapshot not found!')
       })
 
       it('Delete annotation with non existent annotationId should fail', async function () {
+        // Act
         const response = await request(app).delete(
-          `/v1/snapshots/${dummySnapshot._id}/annotations/61b889835c9644ffe3ec32f9`
+          `/v1/snapshots/${snapshot._id}/annotations/61b889835c9644ffe3ec32f9`
         )
 
+        // Assert
         expect(response.status).equals(404)
         expect(response.body.message).equals('Annotation not found!')
       })

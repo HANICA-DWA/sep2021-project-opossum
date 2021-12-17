@@ -4,7 +4,7 @@ const path = require('path')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const { app } = require('../../src/app')
-const setup = require('./setup')
+const setup = require('../setup')
 const { seedSnapshots } = require('../../src/utils/seed')
 const { Snapshot } = require('../../src/models')
 
@@ -154,7 +154,7 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('PATCH Snapshots', function () {
+  describe('PATCH Snapshot', function () {
     it('Patch snapshot successfully', async function () {
       const dummySnapshot = await new Snapshot({
         name: 'dummy snapshot',
@@ -180,7 +180,7 @@ describe('Snapshot Endpoints', function () {
     })
   })
 
-  describe('DELETE Snapshots', function () {
+  describe('DELETE Snapshot', function () {
     it('Delete snapshot successfully', async function () {
       const dummySnapshot = await new Snapshot({
         name: 'dummy snapshot',
