@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import AwarenessUserBubble from './AwarenessUserBubble'
 import AwarenessUserExcess from './AwarenessUserExcess'
-import { useAwareness } from '../../hooks/awareness.hook'
 
 const Awareness = ({ clients }) => {
   const maxUsersVisible = 5
