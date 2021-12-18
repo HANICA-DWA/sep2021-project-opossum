@@ -197,6 +197,7 @@ if (typeof globalThis === 'undefined') {
       },
       scripting: {
         executeScript: (injection) => nativeAPI.scripting.executeScript(injection),
+        insertCSS: (injection) => nativeAPI.scripting.insertCSS(injection),
       },
       storage: {
         local: {

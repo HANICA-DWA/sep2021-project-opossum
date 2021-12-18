@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 const { Router } = require('express')
 const { Snapshot } = require('../models')
 const { getUpload } = require('../database')
@@ -15,8 +16,7 @@ router.post('/snapshots', upload.single('file'), async (req, res, next) => {
     const snapshot = await new Snapshot({ name, domain, filename: req.file.filename }).save()
     if (!snapshot) return next({ code: 500, message: 'Snapshot not created!' })
 
-    // TODO: Welke data is belangrijk om te returnen?
-    return res.status(201).json(snapshot)
+    return res.status(201).json(snapshot) // TODO: Which data is necessary? Only meta data or everything?
   } catch (err) {
     return next(err)
   }
@@ -24,10 +24,15 @@ router.post('/snapshots', upload.single('file'), async (req, res, next) => {
 
 router.get('/snapshots', async (req, res, next) => {
   try {
-    const { page, limit } = req.query
-    const skip = page * (limit - 1) > 0 ? page * (limit - 1) : 0
+    const { page: _page, limit: _limit } = req.query
+    if ((_page && _page < 1) || (_limit && _limit < 1) || (_page && !_limit))
+      return next({ code: 400, message: 'Invalid pagination parameters!' })
 
-    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec()
+    const page = _page ? parseInt(_page) : undefined
+    const limit = _limit ? parseInt(_limit) : undefined
+    const skip = page && limit ? (page - 1) * limit : 0
+
+    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec() // TODO: Add projection, only meta data is necessary!
 
     return res.json(snapshots)
   } catch (err) {
@@ -38,7 +43,7 @@ router.get('/snapshots', async (req, res, next) => {
 // Already done by middleware: loadSnapshot!
 router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
 
-router.put('/snapshots/:snapshotId', async (req, res, next) => {
+router.patch('/snapshots/:snapshotId', async (req, res, next) => {
   try {
     const { name, domain } = req.body
     const { snapshot } = req
@@ -48,9 +53,9 @@ router.put('/snapshots/:snapshotId', async (req, res, next) => {
 
     // eslint-disable-next-line no-underscore-dangle
     const _snapshot = await snapshot.save()
-    if (_snapshot) return next({ error: 500, message: 'Snapshot not updated!' })
+    if (!_snapshot) return next({ error: 500, message: 'Snapshot not updated!' })
 
-    return res.json(_snapshot)
+    return res.json(_snapshot) // TODO: Which data is necessary?
   } catch (err) {
     return next(err)
   }
@@ -63,7 +68,7 @@ router.delete('/snapshots/:snapshotId', async (req, res, next) => {
     const snapshot = await Snapshot.findByIdAndRemove(snapshotId).exec()
     if (!snapshot) return next({ error: 500, message: 'Snapshot not deleted!' })
 
-    return res.json(snapshot)
+    return res.json(snapshot) // TODO: Which data is necessary?
   } catch (err) {
     return next(err)
   }

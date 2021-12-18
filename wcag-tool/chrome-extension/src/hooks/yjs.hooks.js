@@ -3,13 +3,12 @@ import { useEffect, useState } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 
+import { useSelector } from 'react-redux'
 import { useGetAnnotationsQuery } from '../services'
 
 // TODO: Is dit de goede plek?
 const ydoc = new Y.Doc()
 const provider = new WebsocketProvider('ws://localhost:5000', 'room', ydoc)
-
-const dummySnapshotId = '61b7284ded4084fd77ced98a' // TODO: Vervangen!
 
 export const useYjs = () => {
   useEffect(() => {
@@ -23,9 +22,12 @@ export const useYjs = () => {
 }
 
 export const useYAnnotations = () => {
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
   const [localAnnotations, setLocalAnnotations] = useState([]) // local React state
-  const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(dummySnapshotId) // remote MongoDB state
-  const sharedAnnotations = ydoc.getArray(`${dummySnapshotId}-annotations`) // shared Yjs state
+  const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(snapshotId, {
+    skip: !snapshotId,
+  }) // remote MongoDB state
+  const sharedAnnotations = ydoc.getArray(`${snapshotId}-annotations`) // shared Yjs state
 
   // Setup synchronisation between shared and local state
   useEffect(() => {

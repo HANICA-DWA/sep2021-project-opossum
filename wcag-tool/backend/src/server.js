@@ -14,6 +14,7 @@ require('./database')
 httpServer.on('upgrade', (req, socket, head) => {
   // TODO authenticate requests here!
 
+  // eslint-disable-next-line no-unused-vars
   wsServer.handleUpgrade(req, socket, head, (ws, _req) => {
     wsServer.emit('connection', ws, req)
   })

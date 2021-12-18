@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const { Annotation } = require('../models')
 
 const router = new Router()
 
@@ -38,6 +37,8 @@ router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res
   try {
     const { annotationId } = req.params
     const { successCriterium, title, description, selector } = req.body
+    if (!successCriterium && !title && !description && !selector)
+      return next({ code: 400, message: 'Invalid patch parameters!' })
 
     const annotation = await req.snapshot.updateAnnotation(annotationId, {
       successCriterium,
@@ -57,7 +58,7 @@ router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res
 router.delete('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
   try {
     const deletedAnnotation = await req.snapshot.deleteAnnotation(req.params.annotationId)
-    if (!deletedAnnotation) return next({ code: 404, message: 'Could not find annotation' })
+    if (!deletedAnnotation) return next({ code: 404, message: 'Annotation not found!' })
 
     return res.json(deletedAnnotation)
   } catch (err) {

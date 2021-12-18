@@ -2,7 +2,6 @@
 
 import * as button from './ui-button.js'
 import * as menus from './ui-menus.js'
-// import * as command from "./ui-commands.js";
 
 export {
   onMessage,
@@ -23,7 +22,6 @@ export {
 function init(businessApi) {
   menus.init(businessApi)
   button.init(businessApi)
-  // command.init(businessApi);
 }
 
 function onMessage(message, sender) {

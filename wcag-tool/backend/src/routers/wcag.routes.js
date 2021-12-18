@@ -10,6 +10,7 @@ router.get('/wcag/principles', async (req, res, next) => {
       {},
       {
         _id: 0,
+        __v: 0,
       }
     )
 
@@ -28,6 +29,7 @@ router.get('/wcag/principles/:principleId', async (req, res, next) => {
       { principleId },
       {
         _id: 0,
+        __v: 0,
       }
     )
     if (!principle || principle.length <= 0)
@@ -46,6 +48,7 @@ router.get('/wcag/guidelines', async (req, res, next) => {
       {},
       {
         _id: 0,
+        __v: 0,
         techniques: 0,
       }
     )
@@ -65,6 +68,7 @@ router.get('/wcag/guidelines/:guidelineId', async (req, res, next) => {
       { guidelineId },
       {
         _id: 0,
+        __v: 0,
         techniques: 0,
       }
     )
@@ -84,6 +88,7 @@ router.get('/wcag/successcriteria', async (req, res, next) => {
       {},
       {
         _id: 0,
+        __v: 0,
         principle: 0,
         guideline: 0,
         techniques: 0,
@@ -105,6 +110,7 @@ router.get('/wcag/successcriteria/:successCriteriumId', async (req, res, next) =
       { successCriteriumId },
       {
         _id: 0,
+        __v: 0,
         principle: 0,
         guideline: 0,
         techniques: 0,

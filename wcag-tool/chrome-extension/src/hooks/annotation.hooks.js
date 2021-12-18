@@ -9,10 +9,9 @@ import {
 } from '../services/apiService'
 import { setNewAnnotationSelector } from '../services/annotationSlice'
 
-const dummySnapshotId = '61b7284ded4084fd77ced98a'
-
 export const useAnnotation = () => {
-  const { data: remoteAnnotations } = useGetAnnotationsQuery(dummySnapshotId)
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
+  const { data: remoteAnnotations } = useGetAnnotationsQuery(snapshotId, { skip: !snapshotId })
   const { selectedAnnotationId } = useSelector((state) => state.annotation)
 
   const selectedAnnotation = remoteAnnotations?.find(
@@ -24,13 +23,15 @@ export const useAnnotation = () => {
 
 export const useCreateAnnotation = () => {
   const dispatch = useDispatch()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
+
   const { newAnnotationSelector: selector } = useSelector((state) => state.annotation) // Selector is obtained and set in IFrameWrapper
   const [_createAnnotation, { error }] = useCreateAnnotationMutation()
   const [{ openDetailsSlider }] = useSliders()
 
   const createAnnotation = (successCriterium, title, description) => {
     _createAnnotation({
-      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
+      snapshotId,
       newAnnotation: { successCriterium, title, description, selector },
     })
       .unwrap()
@@ -48,6 +49,7 @@ export const useCreateAnnotation = () => {
 export const useUpdateAnnotation = () => {
   const [_updateAnnotation, { error }] = useUpdateAnnotationMutation()
   const [{ openDetailsSlider }] = useSliders()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
 
   // TODO: Logic to set new selector for selectedAnnotation
 
@@ -55,7 +57,7 @@ export const useUpdateAnnotation = () => {
     // TODO: filter & sanitize unchanged fields!
 
     _updateAnnotation({
-      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
+      snapshotId,
       annotationId: _id,
       newFields: fields,
     })
@@ -73,10 +75,11 @@ export const useUpdateAnnotation = () => {
 export const useDeleteAnnotation = () => {
   const [_deleteAnnotation, { error }] = useDeleteAnnotationMutation()
   const [{ openListSlider }] = useSliders()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
 
   const deleteAnnotation = (_id) => {
     _deleteAnnotation({
-      snapshotId: dummySnapshotId, // TODO: Replace snapshotId!
+      snapshotId,
       annotationId: _id,
     })
       .unwrap()
