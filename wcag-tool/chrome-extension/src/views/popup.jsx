@@ -25,9 +25,6 @@ const Popup = () => {
           <Header />
           <SnapshotBody />
         </div>
-        <div>
-          <NavigationButtons />
-        </div>
       </div>
       <ToastContainer
         pauseOnFocusLoss={false}

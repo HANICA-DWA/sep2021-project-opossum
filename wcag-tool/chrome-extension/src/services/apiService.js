@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/v1/' }),
-  tagTypes: ['Annotation'],
+  tagTypes: ['Annotation', 'Snapshot'],
   endpoints: (builder) => ({
     getPrinciples: builder.query({
       query: () => '/wcag/principles',
@@ -41,6 +41,10 @@ export const api = createApi({
       }),
       invalidatesTags: ['Annotation'],
     }),
+    getSnapshots: builder.query({
+      query: () => `snapshots/`,
+      providesTags: ['Snapshot'],
+    }),
   }),
 })
 
@@ -53,4 +57,5 @@ export const {
   useCreateAnnotationMutation,
   useUpdateAnnotationMutation,
   useDeleteAnnotationMutation,
+  useGetSnapshotsQuery,
 } = api

@@ -1,10 +1,18 @@
 import React from 'react'
 import NoSnapshotsFound from './noSnapshotsFound'
+import { useGetSnapshotsQuery } from '../../services/apiService'
+import SnapshotList from './SnapshotList'
 
 const SnapshotBody = function () {
+  const { data: snapshots } = useGetSnapshotsQuery()
+
   return (
     <div>
-      <NoSnapshotsFound />
+      {!snapshots || snapshots.length === 0 ? (
+        <NoSnapshotsFound />
+      ) : (
+        <SnapshotList snapshots={snapshots} />
+      )}
     </div>
   )
 }
