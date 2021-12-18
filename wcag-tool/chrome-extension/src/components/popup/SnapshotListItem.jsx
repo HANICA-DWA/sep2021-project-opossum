@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SnapshotListItem = function ({ snapshot }) {
-  const { _id, name, domain, createdAt } = snapshot
+  const { name, domain, createdAt } = snapshot
 
   function getDomainFromUrl(url) {
     const a = document.createElement('a')
