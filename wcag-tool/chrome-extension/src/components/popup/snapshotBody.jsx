@@ -7,7 +7,7 @@ const SnapshotBody = function () {
   const { data: snapshots } = useGetSnapshotsQuery()
 
   return (
-    <div>
+    <div className="mt-12">
       {!snapshots || snapshots.length === 0 ? (
         <NoSnapshotsFound />
       ) : (
