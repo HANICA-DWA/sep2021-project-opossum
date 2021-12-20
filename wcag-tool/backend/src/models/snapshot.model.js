@@ -1,6 +1,11 @@
 const { Schema, model } = require('mongoose')
+const sanitizeHtml = require('sanitize-html')
 const { annotationSchema, Annotation } = require('./annotation.model')
-const { SuccessCriterium } = require('./wcag.model')
+
+const sanitizeOptions = {
+  allowedTags: ['h1', 'h2', 'h3', 'strong', 'i', 'p', 'br'],
+  allowedAttributes: {},
+}
 
 const snapshotSchema = new Schema(
   {
@@ -34,8 +39,8 @@ snapshotSchema.methods.addAnnotation = async function (
 ) {
   const annotation = new Annotation({
     successCriterium,
-    title,
-    description,
+    title: sanitizeHtml(title, sanitizeOptions),
+    description: sanitizeHtml(description, sanitizeOptions),
     selector,
   })
 
@@ -54,8 +59,11 @@ snapshotSchema.methods.updateAnnotation = async function (id, fields) {
   if (!fields || Object.keys(fields).length === 0) throw new Error('Fields not provided!')
 
   annotation.successCriterium = fields?.successCriterium ?? annotation.successCriterium
-  annotation.title = fields?.title ?? annotation.title
-  annotation.description = fields?.description ?? annotation.description
+  annotation.title = sanitizeHtml(fields?.title ?? annotation.title, sanitizeOptions)
+  annotation.description = sanitizeHtml(
+    fields?.description ?? annotation.description,
+    sanitizeOptions
+  )
   annotation.selector = fields?.selector ?? annotation.selector
 
   await this.save()

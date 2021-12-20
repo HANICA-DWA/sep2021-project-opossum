@@ -1,41 +1,45 @@
 /* eslint-disable func-names, prefer-arrow-callback, mocha/no-top-level-hooks, mocha/no-hooks-for-single-case */
 const mongoose = require('mongoose')
-const { MongoMemoryServer } = require('mongodb-memory-server')
+const { getBucket } = require('../src/database')
+// const { seedWCAG } = require('../src/utils/seed')
 
-let mongod
+// Helper functions
+async function clearDatabase() {
+  const { collections } = mongoose.connection
 
-async function before() {
-  mongod = await MongoMemoryServer.create()
-  const uri = mongod.getUri()
+  const promises = []
 
-  await mongoose.connection.close()
+  Object.keys(collections).forEach((key) => {
+    if (!['successcriteria', 'guidelines', 'principles'].includes(key)) {
+      promises.push(collections[key].deleteMany())
+    }
+  })
 
-  await mongoose.connect(uri, {
+  try {
+    const bucket = getBucket('snapshot')
+    if (bucket) await bucket.drop()
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
+
+  return Promise.all(promises)
+}
+
+// Setup functions
+exports.before = async () => {
+  await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
+
+  // await seedWCAG()
 }
 
-async function after() {
-  if (mongod) {
-    await mongoose.connection.dropDatabase()
-    await mongoose.connection.close()
-    await mongod.stop()
-  }
+exports.after = async () => {
+  // await mongoose.connection.dropDatabase()
+  await clearDatabase()
+  await mongoose.connection.close()
 }
 
-async function afterEach() {
-  if (mongod) {
-    const { collections } = mongoose.connection
-
-    Object.keys(collections).forEach((key) => {
-      collections[key].deleteMany()
-    })
-  }
-}
-
-module.exports = {
-  before,
-  after,
-  afterEach,
+exports.afterEach = async () => {
+  await clearDatabase()
 }

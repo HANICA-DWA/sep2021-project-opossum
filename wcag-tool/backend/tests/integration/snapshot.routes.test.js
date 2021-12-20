@@ -101,8 +101,6 @@ describe('Snapshot Endpoints', function () {
         .field('name', dummySnapshot.name)
         .field('domain', dummySnapshot.domain)
 
-      const { collections } = mongoose.connection
-
       // Act
       const response = await request(app).get(
         `/v1/snapshots/${snapshotResponse.body._id}/${snapshotResponse.body.filename}`
@@ -110,7 +108,30 @@ describe('Snapshot Endpoints', function () {
 
       // Assert
       expect(response.status).equals(200)
-      expect(response.body).to.exist
+      expect(response.text).to.exist
+    })
+
+    it('Get snapshot file with fake filename', async function () {
+      // Arrange
+      const dummySnapshot = {
+        name: 'dummy snapshot',
+        domain: 'test.com',
+      }
+
+      const snapshotResponse = await request(app)
+        .post('/v1/snapshots')
+        .type('form')
+        .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
+        .field('name', dummySnapshot.name)
+        .field('domain', dummySnapshot.domain)
+
+      // Act
+      const response = await request(app).get(
+        `/v1/snapshots/${snapshotResponse.body._id}/fakeFileName.html`
+      )
+
+      // Assert
+      expect(response.status).equals(404)
     })
 
     it('Get snapshots with pagination params successfully', async function () {

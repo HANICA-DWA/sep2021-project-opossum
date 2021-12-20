@@ -1,5 +1,4 @@
-require('dotenv/config')
-
+require('../env')
 const { createServer } = require('http')
 
 const { app } = require('./app')
