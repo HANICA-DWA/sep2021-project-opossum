@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 const { Router } = require('express')
 const { Snapshot } = require('../models')
-const { getUpload } = require('../database')
+const { getUpload, getBucket } = require('../database')
 
 const router = new Router()
 
@@ -42,6 +42,17 @@ router.get('/snapshots', async (req, res, next) => {
 
 // Already done by middleware: loadSnapshot!
 router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
+
+router.get('/snapshots/:snapshotId/:filename', (req, res, next) => {
+  try {
+    const gfs = getBucket('snapshot')
+
+    const readstream = gfs.openDownloadStreamByName(req.params.filename)
+    return readstream.pipe(res)
+  } catch (err) {
+    return next(err)
+  }
+})
 
 router.patch('/snapshots/:snapshotId', async (req, res, next) => {
   try {
