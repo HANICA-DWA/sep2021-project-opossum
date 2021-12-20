@@ -1,7 +1,7 @@
 /* eslint-disable radix */
 const { Router } = require('express')
 const { Snapshot } = require('../models')
-const { getUpload, mongoose, getBucket } = require('../database')
+const { getUpload, getBucket } = require('../database')
 
 const router = new Router()
 
