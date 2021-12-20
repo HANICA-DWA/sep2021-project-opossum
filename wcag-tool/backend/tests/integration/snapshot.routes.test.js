@@ -87,32 +87,6 @@ describe('Snapshot Endpoints', function () {
       })
     })
 
-    it('Get snapshot file successfully', async function () {
-      // Arrange
-      const dummySnapshot = {
-        name: 'dummy snapshot',
-        domain: 'test.com',
-      }
-
-      const snapshotResponse = await request(app)
-        .post('/v1/snapshots')
-        .type('form')
-        .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
-        .field('name', dummySnapshot.name)
-        .field('domain', dummySnapshot.domain)
-
-      const { collections } = mongoose.connection
-
-      // Act
-      const response = await request(app).get(
-        `/v1/snapshots/${snapshotResponse.body._id}/${snapshotResponse.body.filename}`
-      )
-
-      // Assert
-      expect(response.status).equals(200)
-      expect(response.body).to.exist
-    })
-
     it('Get snapshots with pagination params successfully', async function () {
       await seedSnapshots()
 

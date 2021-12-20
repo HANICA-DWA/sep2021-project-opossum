@@ -5,6 +5,9 @@ const { app } = require('../../src/app')
 const setup = require('../setup')
 const dummyFactory = require('../dummyFactory')
 
+const mongoose = require('mongoose')
+const { Snapshot } = require('../../src/models')
+
 chai.use(chaiHttp)
 const { expect, request } = chai
 
@@ -24,7 +27,7 @@ describe('Annotation Endpoints', function () {
   })
 
   afterEach(async function () {
-    setup.afterEach()
+    await setup.afterEach()
 
     snapshot = await dummyFactory.snapshot().save()
   })
@@ -33,12 +36,14 @@ describe('Annotation Endpoints', function () {
     describe('POST Annotation', function () {
       it('Post annotation successfully', async function () {
         // Act
-        const response = await request(app).post(`/v1/snapshots/${snapshot._id}/annotations`).send({
-          successCriterium: annotation.successCriterium,
-          title: annotation.title,
-          description: annotation.description,
-          selector: annotation.selector,
-        })
+        const response = await request(app)
+          .post(`/v1/snapshots/${snapshot._id.toString()}/annotations`)
+          .send({
+            successCriterium: annotation.successCriterium,
+            title: annotation.title,
+            description: annotation.description,
+            selector: annotation.selector,
+          })
 
         // Assert
         expect(response.status).equals(201)
@@ -53,7 +58,7 @@ describe('Annotation Endpoints', function () {
 
       it('Post annotation with invalid success criterium should fail', async function () {
         const response = await request(app)
-          .post(`/v1/snapshots/${snapshot._id}/annotations`)
+          .post(`/v1/snapshots/${snapshot._id.toString()}/annotations`)
           .send({
             successCriterium: {
               foo: 'bar',
@@ -66,7 +71,9 @@ describe('Annotation Endpoints', function () {
       })
 
       it('Post annotation without required fields should fail', async function () {
-        const response = await request(app).post(`/v1/snapshots/${snapshot._id}/annotations`)
+        const response = await request(app).post(
+          `/v1/snapshots/${snapshot._id.toString()}/annotations`
+        )
 
         expect(response.status).equals(400)
       })
@@ -78,12 +85,14 @@ describe('Annotation Endpoints', function () {
         await snapshot.addAnnotation(annotation.title, annotation.description, annotation.selector)
         await snapshot.addAnnotation(annotation.title, annotation.description, annotation.selector)
 
-        const response = await request(app).get(`/v1/snapshots/${snapshot._id}/annotations`)
+        const response = await request(app).get(
+          `/v1/snapshots/${snapshot._id.toString()}/annotations`
+        )
 
         expect(response.status).equals(200)
         expect(response.body.length).equals(3)
         response.body.forEach((_annotation) => {
-          expect(_annotation._id).to.exist
+          expect(_annotation._id.toString()).to.exist
           expect(_annotation.title).equals(annotation.title)
           expect(_annotation.description).equals(annotation.description)
           expect(_annotation.selector).equals(annotation.selector)
@@ -103,14 +112,15 @@ describe('Annotation Endpoints', function () {
     })
 
     describe('PATCH Annotation', function () {
-      // Arrange
       it('Patch annotation successfully', async function () {
+        // Arrange
         const savedAnnotation = await snapshot.addAnnotation(
           annotation.title,
           annotation.description,
           annotation.selector,
           annotation.successCriterium
         )
+
         const editedValues = {
           title: 'edited title',
           description: 'edited description',
@@ -142,7 +152,7 @@ describe('Annotation Endpoints', function () {
 
         // Act
         const response = await request(app)
-          .patch(`/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`)
+          .patch(`/v1/snapshots/${snapshot._id.toString()}/annotations/${savedAnnotation._id}`)
           .send({
             title: editedValues.title,
             description: editedValues.description,
@@ -152,7 +162,7 @@ describe('Annotation Endpoints', function () {
 
         // Assert
         expect(response.status).equals(200)
-        expect(response.body._id).equals(savedAnnotation._id.toString())
+        expect(response.body._id.toString()).equals(savedAnnotation._id.toString())
         expect(response.body.title).equals(editedValues.title)
         expect(response.body.description).equals(editedValues.description)
         expect(response.body.successCriterium.successCriteriumId).equals(
@@ -171,7 +181,7 @@ describe('Annotation Endpoints', function () {
 
         // Act
         const response = await request(app).patch(
-          `/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`
+          `/v1/snapshots/${snapshot._id.toString()}/annotations/${savedAnnotation._id.toString()}`
         )
 
         // Assert
@@ -192,7 +202,7 @@ describe('Annotation Endpoints', function () {
 
         // Act
         const response = await request(app).delete(
-          `/v1/snapshots/${snapshot._id}/annotations/${savedAnnotation._id}`
+          `/v1/snapshots/${snapshot._id.toString()}/annotations/${savedAnnotation._id.toString()}`
         )
 
         // Assert
@@ -204,17 +214,9 @@ describe('Annotation Endpoints', function () {
       })
 
       it('Delete annotation with non existent snapshotid should fail', async function () {
-        // Arrange
-        const savedAnnotation = await snapshot.addAnnotation(
-          annotation.title,
-          annotation.description,
-          annotation.selector,
-          annotation.successCriterium
-        )
-
         // Act
         const response = await request(app).delete(
-          `/v1/snapshots/61b889835c9644ffe3ec32f9/annotations/${savedAnnotation._id}`
+          `/v1/snapshots/507f1f77bcf86cd799439011/annotations/fake-annotation-id`
         )
 
         // Assert
@@ -225,7 +227,7 @@ describe('Annotation Endpoints', function () {
       it('Delete annotation with non existent annotationId should fail', async function () {
         // Act
         const response = await request(app).delete(
-          `/v1/snapshots/${snapshot._id}/annotations/61b889835c9644ffe3ec32f9`
+          `/v1/snapshots/${snapshot._id.toString()}/annotations/507f1f77bcf86cd799439011`
         )
 
         // Assert
