@@ -1,35 +1,47 @@
-[![Build](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml)
-[![SonarCloud](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml)
-[![Lint](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml)
+# Installation guide
 
-## Branchnaam strategie
+Execute the following steps in order to setup the development environment for this application. 
 
-[type issue]/[issue-nummer]-[issue-naam]  
-task/61-naam-van-issue
+## Required software:
 
-# [sep2021-project-opossum](https://en.wikipedia.org/wiki/Opossum)
+- Install Node.js 16+ 
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Didelphis_virginiana_with_young.JPG/1920px-Didelphis_virginiana_with_young.JPG" alt="opossum" width="400"/>
+## Configuring MongoDB Atlas
 
-## Opdracht
+1. Go to https://www.mongodb.com/cloud/atlas/register and register an account
 
-De A11y Annotatie-tool
+2. Login and create an organization (pick MongoDB Atlas as cloud service).
 
-## Leden
+3. Create a new project (pick the free option with a cloud provider & region near you). 
 
-- Ruben Eppink
-- Mark Jansen
-- Iliass ElKaddouri
-- Stefan Oude Lohuis
+4. Add a new username and password. 
 
-## Product Owner
+5. Add your own IP adress to the IP access list
 
-Robert Holwerda
+6. Click on the connect button on your cluster.  
 
-## Coach
+7. Click 'connect your application'. 
 
-Lars Tijsma
+8. pick the latest Node.js driver
 
-## Skills
+9. Copy the connection string, it should look like this `mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
-Helen Visser
+   `admin` is the username you added to the project. `myFirstDatabase` is het database name you're going to be using.
+
+**Bonus:** to allow other users to connect to your database go to network access and click on 'add IP address'. You can choose to everything or add a specific IP.
+
+## Configuring environment 
+
+1. Navigate to `../wcag-tool/backend/env`
+
+2. Create 2 files: `test.env` and `development.env`
+
+3. Add the following content to both files: 
+
+   ```
+   PORT=5000
+   MONGO_URI=mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+   ```
+
+Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES
+
