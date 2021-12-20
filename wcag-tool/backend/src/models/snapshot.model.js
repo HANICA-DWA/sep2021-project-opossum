@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose')
 const sanitizeHtml = require('sanitize-html')
 const { annotationSchema, Annotation } = require('./annotation.model')
-const { SuccessCriterium } = require('./wcag.model')
 
 const sanitizeOptions = {
   allowedTags: ['h1', 'h2', 'h3', 'strong', 'i', 'p', 'br'],

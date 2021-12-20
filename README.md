@@ -4,8 +4,8 @@
 
 ## Branchnaam strategie
 
-[type issue]-[issue-nummer]-[issue-naam]  
-task-61-naam-van-issue
+[type issue]/[issue-nummer]-[issue-naam]  
+task/61-naam-van-issue
 
 # [sep2021-project-opossum](https://en.wikipedia.org/wiki/Opossum)
 

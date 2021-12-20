@@ -10,7 +10,7 @@ const Header = () => {
   const snapshotCreationNotAllowed = useSelector((state) => state.popup.snapshotCreationNotAllowed)
 
   return (
-    <div className="flex mt-0.5 p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300">
+    <div className="flex p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300 cursor-default">
       <p>Name</p>
       <p>Site</p>
       <DefaultButton

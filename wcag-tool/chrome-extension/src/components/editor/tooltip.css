@@ -17,6 +17,24 @@
   z-index: 9999;
 }
 
+.tooltip-container.scrollableContainer {
+  --tooltipBackground: rgba(255, 255, 255, 1);
+  --tooltipTextColor: rgb(0, 0, 0);
+
+  background-color: var(--tooltipBackground);
+  border-radius: 5px;
+  border: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  color: var(--tooltipTextColor);
+  font-family: Poppins-Semi, serif;
+  display: flex;
+  white-space: nowrap;
+  flex-direction: row;
+  padding: 0;
+  transition: opacity 0.3s;
+  z-index: 9999;
+}
+
 .tooltip-container[data-popper-interactive='false'] {
   pointer-events: none;
 }

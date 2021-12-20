@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
+import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 
 const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
@@ -25,7 +25,7 @@ const AnnotationListItem = function ({ annotation }) {
           <div className="col-span-5">
             <div>
               <p title={title} className="text-base truncate font-poppins-semi">
-                {title}
+                {stripHtml(title)}
               </p>
             </div>
             <div className="text-md">
@@ -37,7 +37,9 @@ const AnnotationListItem = function ({ annotation }) {
           </div>
         </div>
         <div className="pt-4">
-          <p className="overflowWrap text-md">{truncateStringAndCapitalize(110, description)}</p>
+          <p className="overflowWrap text-md">
+            {truncateStringAndCapitalize(110, stripHtml(description))}
+          </p>
         </div>
       </div>
     </div>
