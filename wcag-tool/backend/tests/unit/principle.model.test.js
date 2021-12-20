@@ -2,7 +2,8 @@
 const { expect } = require('chai')
 const mongoose = require('mongoose')
 const { Principle } = require('../../src/models')
-const setup = require('./setup')
+const setup = require('../setup')
+const dummyFactory = require('../dummyFactory')
 
 describe('Principle Model', function () {
   before(async function () {
@@ -17,51 +18,48 @@ describe('Principle Model', function () {
     await setup.afterEach()
   })
 
-  it('Create & save principle successfully', async function () {
+  it('Create principle successfully', async function () {
     // Arrange
-    const validPrinciple = new Principle({
-      principleId: 'principleId',
-      num: '1',
-      handle: 'example handle',
-      title: 'example title',
-    })
+    const principle = dummyFactory.principle()
 
     // Act
-    const savedPrinciple = await validPrinciple.save()
+    const savedPrinciple = await principle.save()
 
     // Assert
     expect(savedPrinciple._id).to.exist
-    expect(savedPrinciple.num).to.equal(validPrinciple.num)
-    expect(savedPrinciple.handle).to.equal(validPrinciple.handle)
-    expect(savedPrinciple.title).to.equal(validPrinciple.title)
+    expect(savedPrinciple.num).to.equal(principle.num)
+    expect(savedPrinciple.handle).to.equal(principle.handle)
+    expect(savedPrinciple.title).to.equal(principle.title)
   })
 
   it('Create principle with extra field, field should be undefined', async function () {
     // Arrange
-    const principleWithExtraField = new Principle({
-      principleId: 'dummy id',
-      num: '1',
-      handle: 'dummy handle',
-      title: 'dummy title',
-      extraField: 'example ',
-    })
+    const principle = dummyFactory.principle()
 
     // Act
-    const savedPrincipleWithExtraField = await principleWithExtraField.save()
+    const savedPrincipleWithExtraField = await new Principle({
+      principleId: principle.principleId,
+      num: principle.num,
+      handle: principle.handle,
+      title: principle.title,
+      extraField: 'extra field',
+    }).save()
 
     // Arrange
     expect(savedPrincipleWithExtraField._id).to.exist
+    expect(savedPrincipleWithExtraField.num).to.equal(principle.num)
+    expect(savedPrincipleWithExtraField.handle).to.equal(principle.handle)
+    expect(savedPrincipleWithExtraField.title).to.equal(principle.title)
     expect(savedPrincipleWithExtraField.extraField).not.to.exist
   })
 
   it('Create principle without required field should fail', async function () {
     // Arrange
-    const principleWithoutRequiredFields = new Principle({})
     let error
 
     // Act
     try {
-      await principleWithoutRequiredFields.save()
+      await new Principle({}).save()
     } catch (_error) {
       error = _error
     }

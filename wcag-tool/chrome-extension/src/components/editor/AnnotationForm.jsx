@@ -1,12 +1,14 @@
 import React from 'react'
-import { Formik, Field, Form, useField, useFormikContext } from 'formik'
-import * as Yup from 'yup'
+import { Formik, Field, Form, useFormikContext } from 'formik'
 import ActionButton from '../common/ActionButton'
+import RichTextEditor from './RichTextEditor'
 import {
   useGetSuccessCriteriaQuery,
   useGetGuidelinesQuery,
   useGetPrinciplesQuery,
 } from '../../services/apiService'
+
+import { stripHtml } from '../../utils'
 
 const SelectField = ({ field, form, ...props }) => {
   return (
@@ -35,11 +37,27 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
     description: selectedAnnotation?.description || '',
   }
 
-  const validationSchema = Yup.object().shape({
-    successCriteriumId: Yup.string(),
-    title: Yup.string().max(60, 'Too Long! Max 60 characters.').required('Required'),
-    description: Yup.string().max(1000, 'Too Long! Max 1000 characters.').required('Required'),
-  })
+  const validate = (values) => {
+    const errors = {}
+
+    const title = stripHtml(values.title)
+
+    if (!title) {
+      errors.title = 'Required'
+    } else if (title.length < 5 || title.length > 60) {
+      errors.title = 'Title must be between 5 and 60 characters.'
+    }
+
+    const description = stripHtml(values.description)
+
+    if (!description) {
+      errors.description = 'Required'
+    } else if (description.length < 10 || description.length > 1000) {
+      errors.description = 'Description must be between 10 and 1000 characters.'
+    }
+
+    return errors
+  }
 
   const getSuccesCriteriumTitleFromId = (id) => {
     const successCriterium = successCriteria?.find((el) => el.successCriteriumId === id)
@@ -60,8 +78,8 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
   return (
     <Formik
+      validate={(values) => validate(values)}
       initialValues={initialValues}
-      validationSchema={validationSchema}
       onSubmit={async ({ successCriteriumId, title, description }) => {
         handleSubmit(successCriteriumId, title, description)
       }}
@@ -117,33 +135,29 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Title
             <TitleField
-              type="text"
+              selectedAnnotationId={selectedAnnotation?._id}
               name="title"
               placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
-              className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
           {errors.title && touched.title && (
             <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>
           )}
 
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Description
-            <Field
-              as="textarea"
-              name="description"
-              placeholder="Description"
-              rows="10"
-              className="mt-1 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+          <Field
+            component={RichTextEditor}
+            selectedAnnotationId={selectedAnnotation?._id}
+            name="description"
+            placeholder="Description"
+          />
           {errors.description && touched.description && (
-            <div className="text-red-700 -mt-2 mx-1">{errors.description}</div>
+            <div className="text-red-700 mx-1">{errors.description}</div>
           )}
 
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
-              <ActionButton disabled={!(dirty && isValid)} type="submit">
+              <ActionButton disabled={!isValid || !dirty} type="submit">
                 Create Annotation
               </ActionButton>
             </div>
@@ -152,7 +166,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               <ActionButton onClick={closeEditor} type="button">
                 Cancel
               </ActionButton>
-              <ActionButton disabled={!(dirty && isValid)} type="submit">
+              <ActionButton disabled={!(errors && isValid)} type="submit">
                 Save
               </ActionButton>
             </div>
@@ -165,13 +179,12 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
 // Depends on successCriterium field.
 // source: https://formik.org/docs/examples/dependent-fields
-const TitleField = (props) => {
+const TitleField = ({ name, placeholder, selectedAnnotationId }) => {
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
     setFieldValue,
   } = useFormikContext()
-  const [field] = useField(props)
 
   const copyWcagToTitle = () => {
     if (successCriteriumId) {
@@ -179,29 +192,36 @@ const TitleField = (props) => {
         (el) => el.successCriteriumId === successCriteriumId
       )
       // eslint-disable-next-line react/destructuring-assignment
-      setFieldValue(props.name, `${successCriterium?.num} ${successCriterium?.handle}`)
+      setFieldValue(name, `${successCriterium?.num} ${successCriterium?.handle}`)
     }
   }
 
   return (
     <div className="relative">
-      <Field {...props} {...field} />
-      <button title="Set WCAG as title" type="button" onClick={copyWcagToTitle}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 absolute right-3 top-2.5 text-gray-600"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-          />
-        </svg>
-      </button>
+      <Field
+        component={RichTextEditor}
+        selectedAnnotationId={selectedAnnotationId}
+        type="text"
+        name={name}
+        placeholder={placeholder}
+      />
+
+      <svg
+        onClick={copyWcagToTitle}
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 absolute right-3 top-2.5 text-gray-600 cursor-pointer"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <title>Copy WCAG to title</title>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+        />
+      </svg>
     </div>
   )
 }
