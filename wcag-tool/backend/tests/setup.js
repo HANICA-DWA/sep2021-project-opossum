@@ -1,7 +1,9 @@
 /* eslint-disable func-names, prefer-arrow-callback, mocha/no-top-level-hooks, mocha/no-hooks-for-single-case */
 const mongoose = require('mongoose')
 const { getBucket } = require('../src/database')
+// const { seedWCAG } = require('../src/utils/seed')
 
+// Helper functions
 async function clearDatabase() {
   const { collections } = mongoose.connection
 
@@ -22,11 +24,14 @@ async function clearDatabase() {
   return Promise.all(promises)
 }
 
+// Setup functions
 exports.before = async () => {
   await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
+
+  // await seedWCAG()
 }
 
 exports.after = async () => {
