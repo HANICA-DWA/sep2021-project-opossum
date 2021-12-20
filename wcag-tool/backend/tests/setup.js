@@ -1,7 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback, mocha/no-top-level-hooks, mocha/no-hooks-for-single-case */
 const mongoose = require('mongoose')
 const { getBucket } = require('../src/database')
-const { seedWCAG } = require('../src/utils/seed')
+// const { seedWCAG } = require('../src/utils/seed')
 
 // Helper functions
 async function clearDatabase() {
