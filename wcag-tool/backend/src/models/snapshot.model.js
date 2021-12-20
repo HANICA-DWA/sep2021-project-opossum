@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose')
 const { annotationSchema, Annotation } = require('./annotation.model')
-const { SuccessCriterium } = require('./wcag.model')
 
 const snapshotSchema = new Schema(
   {

@@ -31,8 +31,8 @@ const storage = new GridFsStorage({
   },
 })
 
-const getUpload = (fileTypes) => {
-  return multer({
+const getUpload = (fileTypes) =>
+  multer({
     storage,
     fileFilter: (req, file, cb) => {
       // if file is not html dont upload
@@ -43,7 +43,6 @@ const getUpload = (fileTypes) => {
       }
     },
   })
-}
 
 const getBucket = (bucketName) => {
   const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {

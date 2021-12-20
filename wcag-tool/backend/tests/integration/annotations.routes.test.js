@@ -5,9 +5,6 @@ const { app } = require('../../src/app')
 const setup = require('../setup')
 const dummyFactory = require('../dummyFactory')
 
-const mongoose = require('mongoose')
-const { Snapshot } = require('../../src/models')
-
 chai.use(chaiHttp)
 const { expect, request } = chai
 

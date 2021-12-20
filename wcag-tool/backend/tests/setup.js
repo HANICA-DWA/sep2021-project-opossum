@@ -16,6 +16,7 @@ async function clearDatabase() {
   try {
     const bucket = getBucket('snapshot')
     if (bucket) await bucket.drop()
+    // eslint-disable-next-line no-empty
   } catch (err) {}
 
   return Promise.all(promises)
