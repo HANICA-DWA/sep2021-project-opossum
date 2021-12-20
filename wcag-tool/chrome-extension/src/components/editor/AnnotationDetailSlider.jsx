@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
+import ReactHtmlParser from 'react-html-parser'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
-
+import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
-
-export function truncateStringAndCapitalize(num, str = '') {
-  const newString = str.charAt(0).toUpperCase() + str.slice(1)
-
-  if (newString.length <= num) {
-    return newString
-  }
-
-  return `${str.slice(0, num)}...`
-}
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
@@ -52,7 +43,7 @@ const AnnotationDetailSlider = function () {
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
             <p title={selectedAnnotation?.title} className="text-base font-poppins-semi">
-              {truncateStringAndCapitalize(70, selectedAnnotation?.title)}
+              {truncateStringAndCapitalize(70, stripHtml(selectedAnnotation?.title))}
             </p>
           </div>
           <div className="flex justify-end">
@@ -71,8 +62,8 @@ const AnnotationDetailSlider = function () {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden">
-          {selectedAnnotation?.description}
+        <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden annotation-details">
+          {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
         <div className="flex justify-center border-t border-gray-400">
           <button
