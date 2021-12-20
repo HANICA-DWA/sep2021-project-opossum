@@ -4,7 +4,7 @@ const initialState = {
   createSnapshotHeaderButtonIsLoading: false,
   createSnapshotBodyButtonIsLoading: false,
   snapshotCreationNotAllowed: false,
-  lastError: [],
+  snapshotIsOpening: false,
 }
 
 export const popupSlice = createSlice({
@@ -20,8 +20,8 @@ export const popupSlice = createSlice({
     setSnapshotCreationNotAllowed: (state, { payload }) => {
       state.snapshotCreationNotAllowed = payload
     },
-    setLastError: (state, { payload }) => {
-      state.lastError.push(payload)
+    setSnapshotIsOpening: (state, { payload }) => {
+      state.snapshotIsOpening = payload
     },
   },
 })
@@ -30,4 +30,5 @@ export const {
   setSnapshotCreationNotAllowed,
   setCreateSnapshotHeaderIsLoading,
   setCreateSnapshotBodyIsLoading,
+  setSnapshotIsOpening,
 } = popupSlice.actions
