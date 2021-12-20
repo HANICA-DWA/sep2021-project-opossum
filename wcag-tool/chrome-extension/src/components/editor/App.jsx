@@ -9,7 +9,7 @@ import { useAwareness } from '../../hooks/awareness.hook'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
-  timer = setTimeout(handleIdle, 2000)
+  timer = setTimeout(handleIdle, 30000)
   handleActive()
   return timer
 }
