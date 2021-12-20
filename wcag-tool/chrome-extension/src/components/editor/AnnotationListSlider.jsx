@@ -8,8 +8,9 @@ import { useYAnnotations, useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
+import Awareness from './Awareness'
 
-const AnnotationListSlider = () => {
+const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
 
@@ -33,6 +34,7 @@ const AnnotationListSlider = () => {
             <div className="text-base">
               <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
                 Nu.nl Homepage text is way too long for the pane
+                {/* TODO: dynamic title */}
               </p>
             </div>
             <div>
@@ -70,11 +72,19 @@ const AnnotationListSlider = () => {
         </div>
       }
     >
-      {!annotations || annotations.length === 0 ? (
-        <NoAnnotation openElementSelector={openElementSelector} />
-      ) : (
-        <AnnotationList annotations={annotations} />
-      )}
+      <div className="flex flex-col h-full justify-between">
+        <div className="overflow-y-auto">
+          {!annotations || annotations.length === 0 ? (
+            <NoAnnotation openElementSelector={openElementSelector} />
+          ) : (
+            <AnnotationList annotations={annotations} />
+          )}
+        </div>
+        <div>
+          <hr />
+          <Awareness clients={clients} />
+        </div>
+      </div>
     </SlidingPane>
   )
 }
