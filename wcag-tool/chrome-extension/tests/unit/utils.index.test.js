@@ -1,6 +1,6 @@
 import { stripHtml, truncateStringAndCapitalize } from '../../src/utils'
 
-describe('utils truncateStringAndCapitalize', () => {
+describe('unit truncateStringAndCapitalize', () => {
   it('should truncate and capitalize this string', () => {
     expect(truncateStringAndCapitalize(5, 'Hello world')).toBe('Hello...')
   })
@@ -23,7 +23,7 @@ describe('utils truncateStringAndCapitalize', () => {
   })
 })
 
-describe('utils stripHtml', () => {
+describe('unit stripHtml', () => {
   it('should strip html', () => {
     expect(stripHtml('<p>Hello</p>')).toBe('Hello')
   })
