@@ -1,6 +1,7 @@
 /* eslint-disable func-names, prefer-arrow-callback,no-unused-expressions */
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const mongoose = require('mongoose')
 const { app } = require('../../src/app')
 const setup = require('../setup')
 const dummyFactory = require('../dummyFactory')
