@@ -1,6 +1,6 @@
 # Installation guide
 
-Execute the following steps in order to setup the development environment for this application. 
+Execute the following steps in the given order to setup the development environment for this application. 
 
 ## Required software:
 
@@ -26,13 +26,13 @@ Execute the following steps in order to setup the development environment for th
 
 9. Copy the connection string, it should look like this `mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
-   `admin` is the username you added to the project. `myFirstDatabase` is het database name you're going to be using.
+   `admin` is the username you added to the project. `myFirstDatabase` is the database name you're going to be using.
 
-**Bonus:** to allow other users to connect to your database go to network access and click on 'add IP address'. You can choose to everything or add a specific IP.
+**Bonus:** to allow other users to connect to your database go to network access and click on 'add IP address'. You can choose to allow everything or add a specific IP.
 
-## Configuring environment 
+## Configuring backend environment 
 
-1. Navigate to `../wcag-tool/backend/env`
+1. Navigate to `\wcag-tool\backend\env`
 
 2. Create 2 files: `test.env` and `development.env`
 
@@ -43,5 +43,39 @@ Execute the following steps in order to setup the development environment for th
    MONGO_URI=mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
    ```
 
-Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES
+Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.
+
+## Deploying to the chrome store
+
+1. Navigate to `\wcag-tool`
+2. Run `npm run setup`
+3. Run `npm run dev`
+4. Open a chrome browser and browse to `chrome://extensions/`
+5. Make sure developer mode is checked. 
+6. Click on `Load unpacked`
+7. Select the following folder `\wcag-tool\chrome-extension\dist` 
+
+The extension should now be added to your browser and ready to use.
+
+## Project scripts
+
+There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
+
+**npm run dev**
+Starts up the backend and frontend. Hot reloading is enabled on both projects.
+
+**npm run setup**
+Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. 
+
+**npm run test:unit**
+Run all unit tests for both front- and backend. 
+
+**npm run test:integration**
+Run all unit integration tests for both front- and backend. 
+
+**npm run lint**
+Run eslint on all .js and .jsx files for both front- and backend. 
+
+**npm run lint:fix**
+Run eslint on all .js and .jsx files for both front- and backend and fixes all automatically fixable issues. 
 
