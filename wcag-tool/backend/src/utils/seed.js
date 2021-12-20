@@ -1,22 +1,33 @@
 /* eslint-disable no-console */
-require('../../env')
-
 const mongoose = require('mongoose')
 const axios = require('axios')
 const { Principle, Guideline, SuccessCriterium, Snapshot } = require('../models')
 
+const print = (string, object = '') => {
+  if (process.env.NODE_ENV !== 'test') console.log(string, object)
+}
+
 exports.seedWCAG = async () => {
+  print(`\nSeeding ${process.env.NODE_ENV} database with WCAG data:`)
+
   // Drop collection
+  print('\tStep 1: Deleting existing Principles, Guidelines and SuccessCriteria...')
   try {
     await Promise.all([
       Principle.collection.drop(),
       Guideline.collection.drop(),
       SuccessCriterium.collection.drop(),
     ])
+
+    print('\t\tok!')
+
     // eslint-disable-next-line no-empty
-  } catch (err) {}
+  } catch (err) {
+    print('\t\terror!', err.message)
+  }
 
   // Download official wcag quick reference
+  print('\tStep 2: Downloading wcag data from official source...')
   let data
   try {
     data = (
@@ -24,12 +35,14 @@ exports.seedWCAG = async () => {
         'https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json'
       )
     ).data
+    print('\t\tok!')
   } catch (err) {
-    console.log('error downloading wcag rules', err)
+    print('\t\terror!', err.message)
     return 1
   }
 
   // Map data to principles, guidelines and success criteria
+  print('\tStep 3: Mapping official wcag data to mongoose models...')
   const principles = []
   const guidelines = []
   const successCriteria = []
@@ -79,42 +92,55 @@ exports.seedWCAG = async () => {
 
     currentPrinciple = undefined
   })
+  print('\t\tok!')
 
   // Saving all docs
+  print(`\tStep 4: Saving all mongoose models to ${process.env.NODE_ENV} database...`)
+  print(`\t\tsaving principles...`)
   try {
     await Principle.insertMany(principles)
+    print('\t\tok!')
   } catch (err) {
     if (err.code === 11000) {
-      console.log('error: principle already exists!') // MongoDB Duplicate key error
+      print('\t\terror! principle already exists!') // MongoDB Duplicate key error
     } else {
-      console.log('Error saving principles:', err)
+      print('\t\terror! saving principles:', err)
     }
   }
 
+  print(`\t\tsaving guidelines...`)
   try {
     await Guideline.insertMany(guidelines)
+    print('\t\tok!')
   } catch (err) {
     if (err.code === 11000) {
-      console.log('error: guideline already exists!') // MongoDB Duplicate key error
+      print('\t\terror! guideline already exists!') // MongoDB Duplicate key error
     } else {
-      console.log('Error saving guidelines:', err)
+      print('\t\terror! saving guidelines:', err)
     }
   }
 
+  print(`\t\tsaving success criteria...`)
   try {
     await SuccessCriterium.insertMany(successCriteria)
+    print('\t\tok!')
   } catch (err) {
     if (err.code === 11000) {
-      console.log('error: success criterium already exists!') // MongoDB Duplicate key error
+      print('\t\terror! success criterium already exists!') // MongoDB Duplicate key error
     } else {
-      console.log('Error saving success criteria:', err)
+      print('\t\terror! saving success criteria:', err)
     }
   }
+
+  print(`\nSeeding ${process.env.NODE_ENV} database with wcag data finished! Goodbye!\n`)
 
   return 0
 }
 
 exports.seedSnapshots = async () => {
+  print(`\nSeeding ${process.env.NODE_ENV} database with 10 dummy snapshots`)
+
+  print('\tStep 1: Create 10 dummy snapshots...')
   const dummySnapshots = []
 
   for (let i = 0; i < 10; i += 1)
@@ -125,23 +151,28 @@ exports.seedSnapshots = async () => {
         filename: `dummy-snapshot-file-${i}`,
       })
     )
+  print('\tok!')
 
+  print(`\tStep 2: Saving all dummy snapshot to ${process.env.NODE_ENV} database...`)
   try {
     await Snapshot.insertMany(dummySnapshots)
+    print('\tok!')
   } catch (err) {
     if (err.code === 11000) {
-      console.log('Error: snapshot already exists!') // MongoDB Duplicate key error
+      print('\terror! snapshot already exists!') // MongoDB Duplicate key error
     } else {
-      console.log('Error saving snapshots:', err)
+      print('\terror! saving snapshots:', err)
     }
   }
+
+  print(`\nSeeding ${process.env.NODE_ENV} with dummy snapshots finished! Goodbye!\n`)
 
   return 0
 }
 
 exports.main = async () => {
   // Connect to MongoDB
-  console.log('\nConnecting to MongoDB...')
+  print('\nConnecting to MongoDB...')
   await mongoose.connect(
     process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -149,12 +180,10 @@ exports.main = async () => {
       if (err) throw new Error('Could not connect to MongoDB!')
     }
   )
-  console.log('ok!')
+  print('ok!')
 
   // Seed database
-  console.log('\nSeeding database with WCAG')
   await this.seedWCAG()
-  console.log('ok!')
 
   process.exit(0)
 }

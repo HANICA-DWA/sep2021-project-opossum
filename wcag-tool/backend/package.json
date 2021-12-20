@@ -10,11 +10,11 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test:unit": "cross-env NODE_ENV=test mocha --timeout 5000 --recursive --exit --require env tests/unit",
-    "test:integration": "cross-env NODE_ENV=test mocha --timeout 10000 --recursive --exit --require env tests/integration",
+    "test:unit": "cross-env NODE_ENV=test mocha --timeout 5000 --recursive --exit --require ./env tests/unit",
+    "test:integration": "cross-env NODE_ENV=test mocha --timeout 10000 --recursive --exit --require ./env tests/integration",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
-    "seed": "node -e 'require(\"./src/utils/seed.js\").main()'"
+    "seed": "cross-env NODE_ENV=development node --require ./env -e 'require(\"./src/utils/seed.js\").main()'"
   },
   "author": "",
   "license": "ISC",
