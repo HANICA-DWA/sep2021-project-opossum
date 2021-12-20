@@ -115,6 +115,34 @@ describe('Snapshot Model', function () {
       expect(Object.keys(error.errors)).includes('annotations.0.selector')
       expect(Object.keys(error.errors)).not.includes('annotations.0.successCriterium')
     })
+
+    it('Add annotation to snapshot with allowed html tags in description and title', async function () {
+      // Act
+      const savedAnnotation = await snapshot.addAnnotation(
+        '<h1>title</h1> <h2>title</h2> <h3>title</h3>',
+        '<strong>strong</strong> <i>italic</i> <p>paragraph</p> <br />',
+        annotation.selector
+      )
+
+      // Assert
+      expect(savedAnnotation.title).equals('<h1>title</h1> <h2>title</h2> <h3>title</h3>')
+      expect(savedAnnotation.description).equals(
+        '<strong>strong</strong> <i>italic</i> <p>paragraph</p> <br />'
+      )
+    })
+
+    it('Add annotation to snapshot with disallowed html tags in description and title', async function () {
+      // Act
+      const savedAnnotation = await snapshot.addAnnotation(
+        '<h1>title</h1> <h2>title</h2> <h3>title</h3>',
+        '<script>alert("hello")</script> <p>paragraph</p> <br />',
+        annotation.selector
+      )
+
+      // Assert
+      expect(savedAnnotation.title).equals('<h1>title</h1> <h2>title</h2> <h3>title</h3>')
+      expect(savedAnnotation.description).equals(' <p>paragraph</p> <br />')
+    })
   })
 
   describe('updateAnnotation method', function () {
@@ -192,6 +220,48 @@ describe('Snapshot Model', function () {
       expect(updatedAnnotation.description).equals('updated description')
       expect(updatedAnnotation.selector).equals('updated selector')
       expect(updatedAnnotation.extraField).to.not.exist
+    })
+
+    it('Update annotation in snapshot with allowed html tags in description and title', async function () {
+      // Arrange
+      const savedAnnotation = await snapshot.addAnnotation(
+        annotation.title,
+        annotation.description,
+        annotation.selector,
+        annotation.successCriterium
+      )
+
+      // Act
+      const updatedAnnotation = await snapshot.updateAnnotation(savedAnnotation._id, {
+        title: '<h1>title</h1> <h2>title</h2> <h3>title</h3>',
+        description: '<strong>strong</strong> <i>italic</i> <p>paragraph</p> <br />',
+      })
+
+      // Assert
+      expect(updatedAnnotation.title).equals('<h1>title</h1> <h2>title</h2> <h3>title</h3>')
+      expect(updatedAnnotation.description).equals(
+        '<strong>strong</strong> <i>italic</i> <p>paragraph</p> <br />'
+      )
+    })
+
+    it('Update annotation in snapshot with disallowed html tags in description and title', async function () {
+      // Arrange
+      const savedAnnotation = await snapshot.addAnnotation(
+        annotation.title,
+        annotation.description,
+        annotation.selector,
+        annotation.successCriterium
+      )
+
+      // Act
+      const updatedAnnotation = await snapshot.updateAnnotation(savedAnnotation._id, {
+        title: '<h1>title</h1> <h2>title</h2> <h3>title</h3>',
+        description: '<script>alert("hello")</script> <p>paragraph</p> <br />',
+      })
+
+      // Assert
+      expect(updatedAnnotation.title).equals('<h1>title</h1> <h2>title</h2> <h3>title</h3>')
+      expect(updatedAnnotation.description).equals(' <p>paragraph</p> <br />')
     })
   })
 

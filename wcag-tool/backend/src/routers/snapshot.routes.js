@@ -47,7 +47,11 @@ router.get('/snapshots/:snapshotId/:filename', (req, res, next) => {
   try {
     const gfs = getBucket('snapshot')
 
-    const readstream = gfs.openDownloadStreamByName(req.params.filename)
+    const readstream = gfs.openDownloadStreamByName(req.params.filename).on('error', (err) => {
+      if (err.code === 'ENOENT') return next({ code: 404, message: 'File not found!' })
+      return next(err)
+    })
+
     return readstream.pipe(res)
   } catch (err) {
     return next(err)

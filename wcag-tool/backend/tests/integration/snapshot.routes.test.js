@@ -87,6 +87,53 @@ describe('Snapshot Endpoints', function () {
       })
     })
 
+    it('Get snapshot file successfully', async function () {
+      // Arrange
+      const dummySnapshot = {
+        name: 'dummy snapshot',
+        domain: 'test.com',
+      }
+
+      const snapshotResponse = await request(app)
+        .post('/v1/snapshots')
+        .type('form')
+        .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
+        .field('name', dummySnapshot.name)
+        .field('domain', dummySnapshot.domain)
+
+      // Act
+      const response = await request(app).get(
+        `/v1/snapshots/${snapshotResponse.body._id}/${snapshotResponse.body.filename}`
+      )
+
+      // Assert
+      expect(response.status).equals(200)
+      expect(response.text).to.exist
+    })
+
+    it('Get snapshot file with fake filename', async function () {
+      // Arrange
+      const dummySnapshot = {
+        name: 'dummy snapshot',
+        domain: 'test.com',
+      }
+
+      const snapshotResponse = await request(app)
+        .post('/v1/snapshots')
+        .type('form')
+        .attach('file', fs.readFileSync(path.join(__dirname, 'snapshot.html')), 'filename.html')
+        .field('name', dummySnapshot.name)
+        .field('domain', dummySnapshot.domain)
+
+      // Act
+      const response = await request(app).get(
+        `/v1/snapshots/${snapshotResponse.body._id}/fakeFileName.html`
+      )
+
+      // Assert
+      expect(response.status).equals(404)
+    })
+
     it('Get snapshots with pagination params successfully', async function () {
       await seedSnapshots()
 
