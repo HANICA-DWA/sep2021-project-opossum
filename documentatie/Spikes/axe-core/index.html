@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div role="main">
+      <h1>H1</h1>
+      <p>Paragraph!</p>
+      <img src="" />
+    </div>
+
+    <iframe
+      id="iframeWrapper"
+      class="editor"
+      srcdoc='<html>
+        <head>
+          <meta charset="UTF-8" />
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Document</title>
+        </head>
+        <body>
+          <div role="main">
+            <h1>H1</h1>
+            <p>Paragraph!</p>
+            <img src="" alt="test" />
+          </div>
+        </body>
+      </html>      
+      '
+    ></iframe>
+
+    <script src="node_modules/axe-core/axe.min.js"></script>
+    <script lang="text/javascript" src="./main.js"></script>
+  </body>
+</html>
