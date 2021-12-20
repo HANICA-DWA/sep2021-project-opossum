@@ -6,7 +6,6 @@ import { cssTransition, ToastContainer } from 'react-toastify'
 import store from '../services/store'
 import Header from '../components/popup/header'
 import SnapshotBody from '../components/popup/snapshotBody'
-import NavigationButtons from '../components/popup/navigationButtons'
 import '../extension/lib/single-file/browser-polyfill/chrome-browser-polyfill'
 import 'react-toastify/dist/ReactToastify.css'
 import { useRegisterPopupEffects } from '../hooks/popup.hooks'
@@ -20,14 +19,9 @@ const Popup = () => {
   useRegisterPopupEffects()
   return (
     <>
-      <div className="customSize flex flex-col justify-between text-sm text-gray-500 font-poppins">
-        <div>
-          <Header />
-          <SnapshotBody />
-        </div>
-        <div>
-          <NavigationButtons />
-        </div>
+      <div className="mt-0.5 mx-0.5 customSize flex flex-col text-sm text-gray-500 font-poppins overflow-hidden">
+        <Header />
+        <SnapshotBody />
       </div>
       <ToastContainer
         pauseOnFocusLoss={false}
