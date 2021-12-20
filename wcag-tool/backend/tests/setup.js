@@ -9,7 +9,11 @@ async function clearDatabase() {
 
   const promises = []
 
-  Object.keys(collections).forEach((key) => promises.push(collections[key].deleteMany()))
+  Object.keys(collections).forEach((key) => {
+    if (!['successcriteria', 'guidelines', 'principles'].includes(key)) {
+      promises.push(collections[key].deleteMany())
+    }
+  })
 
   try {
     const bucket = getBucket('snapshot')
@@ -27,7 +31,7 @@ exports.before = async () => {
     useUnifiedTopology: true,
   })
 
-  await seedWCAG()
+  // await seedWCAG()
 }
 
 exports.after = async () => {
