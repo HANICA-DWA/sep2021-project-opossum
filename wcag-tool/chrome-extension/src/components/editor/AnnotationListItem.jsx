@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { truncateStringAndCapitalize } from './AnnotationDetailSlider'
+import { truncateStringAndCapitalize } from "../../utils";
 
 const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
