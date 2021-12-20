@@ -1,13 +1,13 @@
 import React from 'react'
 import NoSnapshotsFound from './noSnapshotsFound'
-import { useGetSnapshotsQuery } from '../../services/apiService'
+import { useGetSnapshotsQuery } from '../../services'
 import SnapshotList from './SnapshotList'
 
 const SnapshotBody = function () {
   const { data: snapshots } = useGetSnapshotsQuery()
 
   return (
-    <div className="mt-12">
+    <div className="overflow-auto">
       {!snapshots || snapshots.length === 0 ? (
         <NoSnapshotsFound />
       ) : (

@@ -19,11 +19,9 @@ const Popup = () => {
   useRegisterPopupEffects()
   return (
     <>
-      <div className="customSize flex flex-col justify-between text-sm text-gray-500 font-poppins">
-        <div>
-          <Header />
-          <SnapshotBody />
-        </div>
+      <div className="mt-0.5 mx-0.5 customSize flex flex-col text-sm text-gray-500 font-poppins overflow-hidden">
+        <Header />
+        <SnapshotBody />
       </div>
       <ToastContainer
         pauseOnFocusLoss={false}
