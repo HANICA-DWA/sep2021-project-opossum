@@ -10,7 +10,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test:unit": "cross-env NODE_ENV=test mocha --timeout 5000 --recursive --exit --require ./env tests/unit",
+    "test:unit": "cross-env NODE_ENV=test mocha --timeout 10000 --recursive --exit --require ./env tests/unit",
     "test:integration": "cross-env NODE_ENV=test mocha --timeout 10000 --recursive --exit --require ./env tests/integration",
     "lint": "eslint --ext .js .",
     "lint:fix": "npm run lint -- --fix",
