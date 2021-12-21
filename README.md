@@ -87,5 +87,5 @@ The extension should now be added to your browser and ready to use.
 
 ## Documentation
 
-Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Software-Guidebook/Spikes)
+Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Spikes)
 
