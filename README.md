@@ -83,5 +83,5 @@ Both `\wcag-tool\backend` and  `\wcag-tool\chrome-extension` have their own READ
 
 ## Documentation
 
-Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Software-Guidebook/Spikes)
+Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Spikes)
 
