@@ -7,7 +7,7 @@ import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation }) {
-  const { _id, successCriterium, title, description, selector, createdAt } = annotation
+  const { _id, successCriterium, title, description, selector } = annotation
 
   // TODO: replace with label system in backend
   const labels = ['Auto analysis', 'Draft']
