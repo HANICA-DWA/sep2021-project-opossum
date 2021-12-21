@@ -43,7 +43,7 @@ Execute the following steps in the given order to setup the development environm
    MONGO_URI=mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
    ```
 
-Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.
+Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
 
 ## Deploying to the chrome store
 
@@ -62,7 +62,7 @@ The extension should now be added to your browser and ready to use.
 There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
 
 **npm run dev**
-Starts up the backend and frontend. Hot reloading is enabled on both projects.
+Starts up the backend and frontend. Hot reloading is enabled on both projects. A remote server will be started on port 8000 so you can utilize Redux development tools. 
 
 **npm run setup**
 Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. 
@@ -78,4 +78,10 @@ Run eslint on all .js and .jsx files for both front- and backend.
 
 **npm run lint:fix**
 Run eslint on all .js and .jsx files for both front- and backend and fixes all automatically fixable issues. 
+
+Both `\wcag-tool\backend` and  `\wcag-tool\chrome-extension` have their own README.md files with extra information about scripts. They can be found here: [chrome-extension README](./wcag-tool/chrome-extension/README.md) & [backend README](./wcag-tool/backend/README.md) 
+
+## Documentation
+
+Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Software-Guidebook/Spikes)
 
