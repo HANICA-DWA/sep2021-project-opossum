@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSnapshotNotAllowed } from '../../services/popupSlice'
 
 const SnapshotListItem = function ({ snapshot }) {
-  const { name, domain, createdAt } = snapshot
+  const { _id, filename, name, domain, createdAt } = snapshot
 
   function getDomainFromUrl(url) {
     const a = document.createElement('a')
     a.href = url
     return a.hostname
   }
-
   const [loading, setLoading] = useState(false)
   const snapshotNotAllowed = useSelector((state) => state.popup.snapshotNotAllowed)
   const dispatch = useDispatch()
@@ -33,9 +32,18 @@ const SnapshotListItem = function ({ snapshot }) {
           loading ? 'bg-gray-200' : 'disabled:opacity-50 disabled:bg-transparent'
         }`}
         disabled={snapshotNotAllowed}
-        onClick={() => {
+        onClick={async () => {
           setLoading(true)
           dispatch(setSnapshotNotAllowed(true))
+          const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+          await browser.runtime.sendMessage({
+            method: 'downloads.downloadSnapshot',
+            snapshotId: _id,
+            filename,
+            tab,
+          })
+          setLoading(false)
+          dispatch(setSnapshotNotAllowed(false))
         }}
       >
         {!loading ? (

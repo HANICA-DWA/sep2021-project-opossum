@@ -64,7 +64,7 @@ export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
   setLoading(true)
   dispatch(setSnapshotNotAllowed(true))
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-  browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then(() => {
+  browser.runtime.sendMessage({ method: 'tabs.createSnapshot', tab }).then(() => {
     setLoading(false)
     dispatch(setSnapshotNotAllowed(false))
   })
