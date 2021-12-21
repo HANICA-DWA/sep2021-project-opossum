@@ -4,9 +4,10 @@ import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
 import { truncateStringAndCapitalize, stripHtml } from '../../utils'
+import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation }) {
-  const { _id, successCriterium, title, description, selector } = annotation
+  const { _id, successCriterium, title, description, selector, createdAt } = annotation
 
   // TODO: replace with label system in backend
   const labels = ['Auto analysis', 'Draft']
@@ -15,14 +16,6 @@ const AnnotationListItem = function ({ annotation }) {
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
-
-  const labelColors = {
-    'Auto analysis': 'bg-yellow-900',
-    Draft: 'bg-yellow-500',
-    'Level A': 'bg-green-400',
-    'Level AA': 'bg-green-600',
-    'Level AAA': 'bg-green-800',
-  }
 
   return (
     <div
@@ -42,14 +35,7 @@ const AnnotationListItem = function ({ annotation }) {
               </p>
             </div>
             <div className="text-md mt-2.5">
-              {labels.map((label) => (
-                <span
-                  key={label}
-                  className={`text-sm font-medium mr-2 ${labelColors[label]} px-2 py-0.5 rounded text-gray-50 align-middle`}
-                >
-                  {label}
-                </span>
-              ))}
+              <LabelList labels={labels} />
             </div>
           </div>
           <div className="flex justify-end pt-1">
