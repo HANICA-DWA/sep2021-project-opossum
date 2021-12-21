@@ -10,6 +10,8 @@ const AnnotationListItem = function ({ annotation }) {
 
   // TODO: replace with label system in backend
   const labels = ['Auto analysis', 'Draft']
+  labels.push(`Level ${successCriterium?.level}`)
+  console.log(labels)
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
@@ -17,6 +19,9 @@ const AnnotationListItem = function ({ annotation }) {
   const labelColors = {
     'Auto analysis': 'bg-yellow-900',
     Draft: 'bg-yellow-500',
+    'Level A': 'bg-green-400',
+    'Level AA': 'bg-green-600',
+    'Level AAA': 'bg-green-800',
   }
 
   return (
@@ -37,7 +42,7 @@ const AnnotationListItem = function ({ annotation }) {
               </p>
             </div>
             <div className="text-md mt-2.5">
-              {labels.map((label, index) => (
+              {labels.map((label) => (
                 <span
                   key={label}
                   className={`text-sm font-medium mr-2 ${labelColors[label]} px-2 py-0.5 rounded text-gray-50 align-middle`}
