@@ -50,9 +50,7 @@ const Options = function () {
             onClick={saveOptions}
             type="button"
             className={`py-1 px-4 inline-grid grid-flow-col grid-cols-2  ${
-              saved
-                ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200'
-                : 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200'
+              saved ? 'bg-green-600 cursor-default' : 'bg-blue-600 hover:bg-blue-700 '
             } text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-r-lg`}
           >
             {!saved ? (
