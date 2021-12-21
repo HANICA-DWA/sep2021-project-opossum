@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from '../services/store'
 import '../css/styles.css'
-import { useState } from 'react'
 
 const Options = function () {
   const [username, setUsername] = useState('')
 
   useEffect(() => {
-    chrome.storage.sync.get(['username'], function (result) {
+    chrome.storage.sync.get(['username'], (result) => {
       setUsername(result.username)
     })
   }, [])
 
-  const saveOptions = (e) => {
+  const saveOptions = () => {
     chrome.storage.sync.set({
       username,
     })
