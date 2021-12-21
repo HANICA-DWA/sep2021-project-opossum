@@ -5,7 +5,16 @@ import { useSelector } from 'react-redux'
 
 const ydoc = new Y.Doc()
 
-const setUserAwareness = (provider, name, id, color, idle) => {
+const getUsername = () => {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(['username'], function (result) {
+      resolve(result.username)
+    })
+  })
+}
+
+const setUserAwareness = async (provider, id, color, idle) => {
+  const name = await getUsername()
   provider.awareness.setLocalStateField('user', {
     id,
     name,
@@ -21,36 +30,12 @@ const joinRoom = (room) => {
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF'
   let color = '#'
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)]
   }
   return color
 }
 
-const getRandomName = () => {
-  const names = [
-    'Bob',
-    'James',
-    'Jessie',
-    'Rob',
-    'Harry',
-    'Henk',
-    'Jan',
-    'Alfred',
-    'Xenos',
-    'Siegmeyer',
-    'Ifrit',
-    'Peter',
-    'May',
-    'Yvonne',
-    'Frank',
-    'Gerda',
-    'Jolanda',
-  ]
-  return names[Math.floor(Math.random() * names.length)]
-}
-
-const name = getRandomName()
 const color = getRandomColor()
 
 export const useAwareness = (room) => {
@@ -70,7 +55,7 @@ export const useAwareness = (room) => {
         setClients(_clients)
       })
 
-      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, ydoc.clientID, color, isIdle)
     }
 
     return () => {
@@ -83,7 +68,7 @@ export const useAwareness = (room) => {
 
   useEffect(() => {
     if (providerRef.current) {
-      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, ydoc.clientID, color, isIdle)
     }
   }, [isIdle])
 
