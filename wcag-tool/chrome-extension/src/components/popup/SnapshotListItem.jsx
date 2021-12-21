@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSnapshotIsOpening } from '../../services/popupSlice'
+import { setSnapshotNotAllowed } from '../../services/popupSlice'
 
 const SnapshotListItem = function ({ snapshot }) {
   const { name, domain, createdAt } = snapshot
@@ -12,10 +12,8 @@ const SnapshotListItem = function ({ snapshot }) {
   }
 
   const [loading, setLoading] = useState(false)
-  const snapshotIsOpening = useSelector((state) => state.popup.snapshotIsOpening)
+  const snapshotNotAllowed = useSelector((state) => state.popup.snapshotNotAllowed)
   const dispatch = useDispatch()
-
-
 
   return (
     <div className="border-b border-gray-300 hover:bg-gray-50 px-3 py-6 grid grid-flow-col justify-start items-center grid-cols-5 gap-x-2 cursor-default">
@@ -34,10 +32,10 @@ const SnapshotListItem = function ({ snapshot }) {
         className={`fill-current text-gray-500 justify-self-end mr-3 px-2 py-1 hover:bg-gray-200 rounded-md disabled:cursor-default ${
           loading ? 'bg-gray-200' : 'disabled:opacity-50 disabled:bg-transparent'
         }`}
-        disabled={snapshotIsOpening}
+        disabled={snapshotNotAllowed}
         onClick={() => {
           setLoading(true)
-          dispatch(setSnapshotIsOpening(true))
+          dispatch(setSnapshotNotAllowed(true))
         }}
       >
         {!loading ? (

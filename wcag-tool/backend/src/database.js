@@ -52,13 +52,6 @@ const getBucket = (bucketName) => {
   return gfs
 }
 
-const getBucket = (bucketName) => {
-  const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-    bucketName,
-  })
-  return gfs
-}
-
 module.exports = {
   getUpload,
   getBucket,

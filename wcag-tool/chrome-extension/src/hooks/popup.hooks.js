@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { setSnapshotCreationNotAllowed } from '../services/popupSlice'
+import { setSnapshotNotAllowed } from '../services/popupSlice'
 
 export const useRegisterPopupEffects = () => {
   const dispatch = useDispatch()
@@ -46,7 +46,7 @@ export const useRegisterPopupEffects = () => {
       const isOpenOnChromePage = await getIsOpenOnChromePage()
 
       dispatch(
-        setSnapshotCreationNotAllowed(
+        setSnapshotNotAllowed(
           isSnapshotCreationInProgress || isOpenOnEditorPage || isOpenOnChromePage
         )
       )
@@ -58,4 +58,14 @@ export const useRegisterPopupEffects = () => {
       }
     })()
   }, [])
+}
+
+export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
+  setLoading(true)
+  dispatch(setSnapshotNotAllowed(true))
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+  browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then(() => {
+    setLoading(false)
+    dispatch(setSnapshotNotAllowed(false))
+  })
 }
