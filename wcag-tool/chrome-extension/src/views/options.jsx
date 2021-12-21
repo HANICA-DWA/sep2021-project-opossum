@@ -25,12 +25,12 @@ const Options = function () {
     )
   }
   return (
-    <div className={'m-6'}>
+    <div className="m-6">
       <h1 className="text-xl font-poppins mb-3">Options</h1>
       <label className="block font-poppins text-gray-700 text-sm font-bold mb-1" htmlFor="username">
         Username
       </label>
-      <div className={'grid grid-cols-2 -ml-2'}>
+      <div className="grid grid-cols-2 -ml-2">
         <input
           className="shadow font-poppins appearance-none border border-gray-300 rounded-l-lg py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
           id="username"
@@ -71,15 +71,15 @@ const Options = function () {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 inline"
+                className="h-6 w-6 inline"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M5 13l4 4L19 7"
                 />
               </svg>
