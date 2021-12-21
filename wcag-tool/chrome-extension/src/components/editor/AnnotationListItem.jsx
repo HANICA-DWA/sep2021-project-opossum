@@ -8,8 +8,16 @@ import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
 
+  // TODO: replace with label system in backend
+  const labels = ['Auto analysis', 'Draft']
+
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
+
+  const labelColors = {
+    'Auto analysis': 'bg-yellow-900',
+    Draft: 'bg-yellow-500',
+  }
 
   return (
     <div
@@ -28,8 +36,15 @@ const AnnotationListItem = function ({ annotation }) {
                 {stripHtml(title)}
               </p>
             </div>
-            <div className="text-md">
-              <p>{successCriterium && `LEVEL ${successCriterium.level}`}</p>
+            <div className="text-md mt-2.5">
+              {labels.map((label, index) => (
+                <span
+                  key={label}
+                  className={`text-sm font-medium mr-2 ${labelColors[label]} px-2 py-0.5 rounded text-gray-50 align-middle`}
+                >
+                  {label}
+                </span>
+              ))}
             </div>
           </div>
           <div className="flex justify-end pt-1">
