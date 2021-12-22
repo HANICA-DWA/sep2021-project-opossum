@@ -19,10 +19,10 @@ export const ButtonWithDropdown = ({ className, children }) => {
           <div {...getArrowProps({ className: 'tooltip-arrow' })} />
           <div className="max-h-40 overflow-y-auto p-3">
             <div className="flex items-center p-1">
-              <div style={{ backgroundColor: 'red' }}>
+              <div className="px-3" style={{ backgroundColor: 'red' }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-10 w-10"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -43,7 +43,7 @@ export const ButtonWithDropdown = ({ className, children }) => {
                   />
                 </svg>
               </div>
-              <div className="flex items-center pl-2">
+              <div className="flex items-center px-3 text-xl">
                 <p>Auto analysis</p>
               </div>
             </div>
