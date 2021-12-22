@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSnapshotNotAllowed } from '../../services/popupSlice'
-import { formatCreateAtString } from "../../utils";
+import { setOpenSnapshotNotAllowed } from '../../services/popupSlice'
+import { formatCreateAtString } from '../../utils'
 
 const SnapshotListItem = function ({ snapshot }) {
   const { _id, filename, name, domain, createdAt } = snapshot
@@ -38,7 +38,7 @@ const SnapshotListItem = function ({ snapshot }) {
         disabled={openSnapshotNotAllowed}
         onClick={async () => {
           setLoading(true)
-          dispatch(setSnapshotNotAllowed(true))
+          dispatch(setOpenSnapshotNotAllowed(true))
           const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
           await browser.runtime.sendMessage({
             method: 'downloads.downloadSnapshot',
@@ -47,7 +47,7 @@ const SnapshotListItem = function ({ snapshot }) {
             tab,
           })
           setLoading(false)
-          dispatch(setSnapshotNotAllowed(false))
+          dispatch(setOpenSnapshotNotAllowed(false))
         }}
       >
         {!loading ? (

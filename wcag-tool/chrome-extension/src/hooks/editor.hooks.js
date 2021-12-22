@@ -107,6 +107,9 @@ export const useRegisterEditorEffects = () => {
   useEffect(() => {
     const eventListener = (message) => {
       if (message.method === 'editor.setTabData') {
+        const urlSearchParams = new URLSearchParams(window.location.search)
+        const snapshotId = urlSearchParams.get('id')
+        dispatch(setSnapshotId(snapshotId))
         if (message.content) {
           if (message.truncated) {
             tabDataContents.push(message.content)
@@ -114,9 +117,6 @@ export const useRegisterEditorEffects = () => {
             tabDataContents = [message.content]
           }
           if (!message.truncated || message.finished) {
-            const urlSearchParams = new URLSearchParams(window.location.search)
-            const snapshotId = urlSearchParams.get('id')
-            dispatch(setSnapshotId(snapshotId))
             tabData = JSON.parse(tabDataContents.join(''))
             tabData.tabId = message.tabId
             tabData.options = message.options
@@ -130,13 +130,17 @@ export const useRegisterEditorEffects = () => {
           }
         } else {
           tabData = { tabId: message.tabId }
-          loadTabData().then(() => {
-            editorIframe.contentWindow.postMessage(
-              JSON.stringify({ method: 'init', content: tabData.content }),
-              '*'
-            )
-            editorIframe.contentWindow.focus()
-          })
+          loadTabData()
+            .then(() => {
+              editorIframe.contentWindow.postMessage(
+                JSON.stringify({ method: 'init', content: tabData.content }),
+                '*'
+              )
+              editorIframe.contentWindow.focus()
+            })
+            .catch(() => {
+              console.log('Failed to load tab data') // todo fetch snapshot here to enable snapshot opening with just a link
+            })
         }
         return Promise.resolve({})
       }

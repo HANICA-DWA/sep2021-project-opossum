@@ -6,7 +6,7 @@ import { onClickCreateSnapshot } from '../../hooks/popup.hooks'
 const NoSnapshotsFound = () => {
   const dispatch = useDispatch()
   const createSnapshotNotAllowed = useSelector((state) => state.popup.createSnapshotNotAllowed)
-  const createSnapshotErrorMessage = useSelector((state) => state.popup.createSnapshotErrorMessage)
+  const createSnapshotMessage = useSelector((state) => state.popup.createSnapshotMessage)
   const [loading, setLoading] = useState(false)
 
   return (
@@ -16,7 +16,7 @@ const NoSnapshotsFound = () => {
         <p className="text-xl m-2 font-poppins-semi">No snapshots</p>
         <p className="m-2">Create a snapshot and start analysis</p>
         <DefaultButton
-          title={createSnapshotErrorMessage}
+          title={createSnapshotMessage}
           disabled={createSnapshotNotAllowed}
           loading={loading}
           onClick={onClickCreateSnapshot(setLoading, dispatch)}

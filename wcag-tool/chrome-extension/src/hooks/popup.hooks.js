@@ -1,7 +1,16 @@
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { setCreateSnapshotNotAllowed, setSnapshotNotAllowed } from '../services/popupSlice'
+import { setCreateSnapshotNotAllowed } from '../services/popupSlice'
+
+const snapshotCreationInProgressPleaseWait = 'Snapshot creation in progress, please wait...'
+const createSnapshotMessage = 'Create snapshot'
+
+const getIsSnapshotCreationInProgress = async () => {
+  const taskList = await browser.runtime.sendMessage({
+    method: 'downloads.getInfo',
+  })
+  return taskList.length > 0
+}
 
 export const useRegisterPopupEffects = () => {
   const dispatch = useDispatch()
@@ -9,13 +18,6 @@ export const useRegisterPopupEffects = () => {
   const getCurrentActiveTab = async () => {
     const [activeTab] = await browser.tabs.query({ currentWindow: true, active: true })
     return activeTab
-  }
-
-  const getIsSnapshotCreationInProgress = async () => {
-    const taskList = await browser.runtime.sendMessage({
-      method: 'downloads.getInfo',
-    })
-    return taskList.length > 0
   }
 
   const getIsOpenOnEditorPage = async () => {
@@ -45,17 +47,29 @@ export const useRegisterPopupEffects = () => {
       const isOpenOnEditorPage = await getIsOpenOnEditorPage()
       const isOpenOnChromePage = await getIsOpenOnChromePage()
 
-      let errorMessage
       if (isSnapshotCreationInProgress) {
-        errorMessage = 'Snapshot creation in progress, please wait...'
-        dispatch(setSnapshotNotAllowed(isSnapshotCreationInProgress))
-        toast.info(errorMessage)
+        dispatch(
+          setCreateSnapshotNotAllowed({
+            status: isSnapshotCreationInProgress,
+            message: snapshotCreationInProgressPleaseWait,
+          })
+        )
+        setInterval(async () => {
+          const creationInProgress = await getIsSnapshotCreationInProgress()
+          if (!creationInProgress) {
+            dispatch(
+              setCreateSnapshotNotAllowed({
+                status: false,
+                message: createSnapshotMessage,
+              })
+            )
+          }
+        }, 500)
       } else if (isOpenOnEditorPage || isOpenOnChromePage) {
-        errorMessage = 'Creating a snapshot is not allowed on this page'
         dispatch(
           setCreateSnapshotNotAllowed({
             status: isOpenOnEditorPage || isOpenOnChromePage,
-            errorMessage,
+            message: 'Creating a snapshot is not allowed on this page',
           })
         )
       }
@@ -64,11 +78,25 @@ export const useRegisterPopupEffects = () => {
 }
 
 export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
-  setLoading(true);
-  dispatch(setSnapshotNotAllowed(true));
-  const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
-  browser.runtime.sendMessage({ method: "tabs.createSnapshot", tab }).then(() => {
-    setLoading(false);
-    dispatch(setSnapshotNotAllowed(false));
-  });
-};
+  setLoading(true)
+  dispatch(
+    setCreateSnapshotNotAllowed({
+      status: true,
+      message: snapshotCreationInProgressPleaseWait,
+    })
+  )
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
+  browser.runtime.sendMessage({ method: 'tabs.createSnapshot', tab })
+  setInterval(async () => {
+    const creationInProgress = await getIsSnapshotCreationInProgress()
+    if (!creationInProgress) {
+      dispatch(
+        setCreateSnapshotNotAllowed({
+          status: false,
+          message: createSnapshotMessage,
+        })
+      )
+      setLoading(false)
+    }
+  }, 500)
+}

@@ -17,7 +17,9 @@ const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
   const snapshotId = useSelector((state) => state.snapshot.snapshotId)
-  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
+  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId, {
+    skip: !snapshotId,
+  })
   const [shortDate, longDate] = formatCreateAtString(snapshotInfo?.createdAt)
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -43,7 +45,9 @@ const AnnotationListSlider = ({ clients }) => {
               </p>
             </div>
             <div>
-              <p title={longDate} className="mt-1 text-sm text-gray-500">{shortDate}</p>
+              <p title={longDate} className="mt-1 text-sm text-gray-500">
+                {shortDate}
+              </p>
             </div>
           </div>
           <div className="flex justify-end">

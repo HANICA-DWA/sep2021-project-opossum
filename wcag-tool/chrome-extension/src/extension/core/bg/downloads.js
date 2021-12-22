@@ -32,7 +32,7 @@ async function onMessage(message, sender) {
     return {}
   }
   if (message.method.endsWith('.downloadSnapshot')) {
-    return await fetchSnapshot(message.snapshotId, message.filename, message.tab)
+    return fetchSnapshot(message.snapshotId, message.filename, message.tab)
   }
 }
 
