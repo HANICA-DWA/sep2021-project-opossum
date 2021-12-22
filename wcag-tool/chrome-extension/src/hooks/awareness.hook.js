@@ -13,8 +13,33 @@ const getUsername = () => {
   })
 }
 
+const getRandomName = () => {
+  const names = [
+    'Bob',
+    'James',
+    'Jessie',
+    'Rob',
+    'Harry',
+    'Henk',
+    'Jan',
+    'Alfred',
+    'Xenos',
+    'Siegmeyer',
+    'Ifrit',
+    'Peter',
+    'May',
+    'Yvonne',
+    'Frank',
+    'Gerda',
+    'Jolanda',
+  ]
+  return names[Math.floor(Math.random() * names.length)]
+}
+
+const randomName = getRandomName()
+
 const setUserAwareness = async (provider, id, color, idle) => {
-  const name = await getUsername()
+  const name = (await getUsername()) || randomName
   provider.awareness.setLocalStateField('user', {
     id,
     name,

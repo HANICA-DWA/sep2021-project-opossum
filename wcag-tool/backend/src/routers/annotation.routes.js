@@ -5,13 +5,14 @@ const router = new Router()
 // add new annotation to the list of annotations in a snapshot
 router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
-    const { successCriterium, title, description, selector } = req.body
+    const { successCriterium, title, description, selector, labels } = req.body
 
     const annotation = await req.snapshot.addAnnotation(
       title,
       description,
       selector,
-      successCriterium
+      successCriterium,
+      labels
     )
 
     if (!annotation) return next({ code: 500, message: 'Annotation could not be added' })
@@ -22,6 +23,7 @@ router.post('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   }
 })
 
+// get all annotations for a snapshot
 router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
   try {
     const { annotations } = req.snapshot // Snapshot already loaded through middleware
@@ -36,8 +38,8 @@ router.get('/snapshots/:snapshotId/annotations', async (req, res, next) => {
 router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res, next) => {
   try {
     const { annotationId } = req.params
-    const { successCriterium, title, description, selector } = req.body
-    if (!successCriterium && !title && !description && !selector)
+    const { successCriterium, title, description, selector, labels } = req.body
+    if (!successCriterium && !title && !description && !selector && !labels)
       return next({ code: 400, message: 'Invalid patch parameters!' })
 
     const annotation = await req.snapshot.updateAnnotation(annotationId, {
@@ -45,6 +47,7 @@ router.patch('/snapshots/:snapshotId/annotations/:annotationId', async (req, res
       title,
       description,
       selector,
+      labels,
     })
     if (!annotation) return next({ code: 500, message: 'Annotation could not be updated' })
 
