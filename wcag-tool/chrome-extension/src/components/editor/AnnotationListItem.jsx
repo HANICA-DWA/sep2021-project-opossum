@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
@@ -10,21 +10,12 @@ const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
 
   // TODO: replace with label system in backend
-  const labels = [
-    'auto analysis',
-    'draft',
-    'level A',
-    'level AA',
-    'level AAA',
-    'minor',
-    'moderate',
-    'serious',
-    'critical',
-  ]
-  // successCriterium?.level && labels.push(`level ${successCriterium?.level}`)
+  const labels = ['auto analysis', 'draft', 'minor', 'moderate', 'serious', 'critical']
+  successCriterium?.level && labels.push(`level ${successCriterium?.level}`)
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
+  const [expandLabels, setExpandLabels] = useState(false)
 
   return (
     <div
@@ -43,7 +34,17 @@ const AnnotationListItem = function ({ annotation }) {
                 {stripHtml(title)}
               </p>
             </div>
-            <div className="text-md mt-2.5">
+
+            <div
+              onMouseEnter={() => {
+                setExpandLabels(true)
+              }}
+              onMouseLeave={() => {
+                setExpandLabels(false)
+              }}
+              id="labelContainer"
+              className={`text-md mt-2.5 ${!expandLabels ? 'truncate' : ''}`}
+            >
               <LabelList labels={labels} />
             </div>
           </div>
