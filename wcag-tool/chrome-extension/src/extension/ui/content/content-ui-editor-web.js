@@ -1,7 +1,6 @@
 /* global globalThis, window, document, fetch, DOMParser, getComputedStyle, setTimeout, clearTimeout, NodeFilter, Readability, isProbablyReaderable, matchMedia, TextDecoder, Node */
 
 import unique from '../../../../node_modules/unique-selector/src/index.js'
-
 ;(() => {
   const NOTE_TAGNAME = 'single-file-note'
   const NOTE_MASK_CLASS = 'note-mask'
@@ -34,9 +33,15 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
     if (message.method === 'highlightElement') {
       highlightElement(message.content)
     }
+    if (message.method === 'analyse') {
+      console.log('ANALYSE')
+      return analyse()
+    }
     return {}
   }
+
   document.ondragover = (event) => event.preventDefault()
+
   document.ondrop = async (event) => {
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       const file = event.dataTransfer.files[0]
@@ -44,6 +49,37 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
       const content = new TextDecoder().decode(await file.arrayBuffer())
       await init(content, { filename: file.name })
     }
+  }
+
+  function axecoreAnnotationMapper(violations) {
+    // Axe Core does not use WCAG2.1! So we cannot use their rules in our annotation model...
+    // https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md
+
+    const annotations = []
+
+    violations.forEach((v) => {
+      v.nodes.forEach((n) => {
+        annotations.push({
+          title: v.help,
+          description: v.description,
+          selector: n.target[0],
+          labels: [n.impact, 'Auto Analysis', 'Draft'],
+        })
+      })
+    })
+
+    return annotations
+  }
+
+  async function analyse() {
+    const results = await axe.run()
+
+    const annotations = axecoreAnnotationMapper(results.violations)
+
+    annotations.forEach((el) => console.log(el))
+    alert('Check console for result! (Ctrl+Shift+K)')
+
+    return results.violations
   }
 
   async function init(content, { filename, reset } = {}) {

@@ -10,6 +10,33 @@ let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
+export const useAnalyse = () => {
+  let data
+  let loading
+  let error
+
+  const analyse = async () => {
+    loading = true
+
+    try {
+      data = await editorIframe.contentWindow.postMessage(
+        JSON.stringify({
+          method: 'analyse',
+          content: false,
+        }),
+        '*'
+      )
+      loading = false
+    } catch (_error) {
+      error = _error
+    }
+  }
+
+  // useEffect(() => {})
+
+  return [analyse, { data, loading, error }]
+}
+
 export const useRegisterEditorEffects = () => {
   const dispatch = useDispatch()
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
