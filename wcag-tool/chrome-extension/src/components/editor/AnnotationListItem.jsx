@@ -11,7 +11,9 @@ const AnnotationListItem = function ({ annotation }) {
 
   // TODO: replace with label system in backend
   const labels = ['auto analysis', 'draft', 'minor', 'moderate', 'serious', 'critical']
-  successCriterium?.level && labels.push(`level ${successCriterium?.level}`)
+  if (successCriterium) {
+    labels.push(`level ${successCriterium?.level}`)
+  }
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
