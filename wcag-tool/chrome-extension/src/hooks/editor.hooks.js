@@ -55,11 +55,12 @@ export const useAnalyse = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   console.log('data', data)
-  //   console.log('error', error)
-  //   console.log('loading', loading)
-  // }, [data, error, loading])
+  useEffect(() => {
+    console.log('==================')
+    console.log('data', data)
+    console.log('error', error)
+    console.log('loading', loading)
+  }, [data, error, loading])
 
   return [analyse, { data, loading, error }]
 }
