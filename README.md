@@ -41,8 +41,8 @@ We choose to use MongoDB Atlas as described in the [software guidebook](./docume
 3. Add the following content to both files: 
 
    ```
-   PORT=5000
-   MONGO_URI=mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+   PORT=<port number>
+   MONGO_URI=<mongo connection uri>
    ```
 
 Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
