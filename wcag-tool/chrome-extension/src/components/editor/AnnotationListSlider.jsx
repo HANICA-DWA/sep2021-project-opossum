@@ -1,10 +1,9 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
-import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
 import IconButton from '../common/IconButton'
-import { useYAnnotations, useSliders, useAnalyse } from '../../hooks'
+import { useAnalyse, useYAnnotations, useSliders } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
@@ -12,11 +11,12 @@ import Awareness from './Awareness'
 
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
+import { Icon } from '../common/Icon'
 
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
-  const [analyse, { data, error, loading }] = useAnalyse()
+  const [analyse] = useAnalyse()
 
   return (
     <SlidingPane
@@ -48,39 +48,18 @@ const AnnotationListSlider = ({ clients }) => {
               toolTipText="Create Annotation"
               className="text-gray-700 border border-gray-500 p-2 hover:bg-gray-200 rounded-l-lg"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <Icon name="plus" />
             </ButtonWithTooltip>
             <ButtonWithDropdown
-              onClick={async () => {
-                const result = await analyse()
-                console.log(result)
-              }}
-              className="text-gray-700 border border-gray-500 p-2 hover:bg-gray-200 rounded-r-lg"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </ButtonWithDropdown>
+              className="text-gray-700 border border-gray-500 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
+              dropdownItems={[
+                {
+                  onClick: analyse,
+                  name: 'Auto analysis',
+                  icon: <Icon name="chart-pie" />,
+                },
+              ]}
+            />
           </div>
         </div>
       }

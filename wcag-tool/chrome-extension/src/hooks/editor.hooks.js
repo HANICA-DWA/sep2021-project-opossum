@@ -1,9 +1,10 @@
 /* global webkitRequestFileSystem, TEMPORARY */
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
+import { axecoreAnnotationMapper } from '../utils'
 
 let tabData
 let tabDataContents = []
@@ -11,28 +12,54 @@ const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
 export const useAnalyse = () => {
-  let data
-  let loading
-  let error
+  const [data, setData] = useState(undefined)
+  const [loading, setLoading] = useState(undefined)
+  const [error, setError] = useState(undefined)
 
   const analyse = async () => {
-    loading = true
+    setLoading(true)
 
     try {
-      data = await editorIframe.contentWindow.postMessage(
+      await editorIframe.contentWindow.postMessage(
         JSON.stringify({
           method: 'analyse',
           content: false,
         }),
         '*'
       )
-      loading = false
     } catch (_error) {
-      error = _error
+      setError(_error.message)
+      setLoading(false)
     }
   }
 
-  // useEffect(() => {})
+  useEffect(() => {
+    const eventListener = (event) => {
+      const message = JSON.parse(event.data)
+
+      if (message.method === 'onAnalyse') {
+        setData(axecoreAnnotationMapper(message.data.violations))
+        setError(undefined)
+        setLoading(false)
+      }
+      if (message.method === 'onAnalyseError') {
+        setError(message.data)
+        setLoading(false)
+      }
+    }
+
+    addEventListener('message', eventListener)
+
+    return () => {
+      removeEventListener('message', eventListener)
+    }
+  }, [])
+
+  // useEffect(() => {
+  //   console.log('data', data)
+  //   console.log('error', error)
+  //   console.log('loading', loading)
+  // }, [data, error, loading])
 
   return [analyse, { data, loading, error }]
 }

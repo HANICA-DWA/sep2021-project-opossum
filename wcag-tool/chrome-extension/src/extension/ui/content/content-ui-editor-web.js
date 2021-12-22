@@ -34,8 +34,7 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
       highlightElement(message.content)
     }
     if (message.method === 'analyse') {
-      console.log('ANALYSE')
-      return analyse()
+      analyse(event)
     }
     return {}
   }
@@ -51,35 +50,16 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
     }
   }
 
-  function axecoreAnnotationMapper(violations) {
-    // Axe Core does not use WCAG2.1! So we cannot use their rules in our annotation model...
-    // https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md
-
-    const annotations = []
-
-    violations.forEach((v) => {
-      v.nodes.forEach((n) => {
-        annotations.push({
-          title: v.help,
-          description: v.description,
-          selector: n.target[0],
-          labels: [n.impact, 'Auto Analysis', 'Draft'],
-        })
+  async function analyse(event) {
+    try {
+      axe.configure({
+        allowedOrigins: ['<unsafe_all_origins>'],
       })
-    })
-
-    return annotations
-  }
-
-  async function analyse() {
-    const results = await axe.run()
-
-    const annotations = axecoreAnnotationMapper(results.violations)
-
-    annotations.forEach((el) => console.log(el))
-    alert('Check console for result! (Ctrl+Shift+K)')
-
-    return results.violations
+      const result = await axe.run()
+      event.source.postMessage(JSON.stringify({ method: 'onAnalyse', data: result }), '*')
+    } catch (error) {
+      event.source.postMessage(JSON.stringify({ method: 'onAnalyseError', data: error }), '*')
+    }
   }
 
   async function init(content, { filename, reset } = {}) {
