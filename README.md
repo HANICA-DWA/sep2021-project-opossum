@@ -42,11 +42,11 @@ We choose to use MongoDB Atlas as described in the [software guidebook](./docume
 
    ```
    PORT=<port number>
-   MONGO_URI=<mongo connection uri>
+   MONGO_URI=<mongo uri>
    ```
 
-> Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
-> Instead of using a local MongoDB instance we strongly recommend using MongoDB Atlas, follow the instructions [here](#configuring-mongodb-atlas)
+Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
+
 ## Project scripts
 
 There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
@@ -55,7 +55,7 @@ There are various custom scripts to help with development. In `\wcag-tool` you c
 Starts up the backend and frontend. Hot reloading is enabled on both projects. A remote server will be started on port 8000 so you can utilize Redux development tools. 
 
 **npm run setup**
-Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. This command also builds the co-dependency`single-file`.
+Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. 
 
 **npm run test:unit**
 Run all unit tests for both front- and backend. 
