@@ -4,7 +4,7 @@ Execute the following steps in the given order to setup the development environm
 
 ## Required software:
 
-- Install Node.js 16+ 
+- [Install Node.js LTS](https://nodejs.org/en/)
 
 ## Configuring MongoDB Atlas
 
@@ -61,7 +61,7 @@ Installs all dependencies for the backend and frontend. Bundles all the files fo
 Run all unit tests for both front- and backend. 
 
 **npm run test:integration**
-Run all integration tests for the backend.
+Run all integration tests for both front- and backend. 
 
 **npm run lint**
 Run eslint on all .js and .jsx files for both front- and backend. 
@@ -73,8 +73,6 @@ Both `\wcag-tool\backend` and  `\wcag-tool\chrome-extension` have their own READ
 
 ## Deploying to the chrome store
 
-Before deploying you should make sure you built the project properly. This ensures you have the latest changes and the dist folder is up to date. More about this can be found in the [chrome-extension README](./wcag-tool/chrome-extension/README.md).
-
 1. Navigate to `\wcag-tool`
 2. Run `npm run setup`
 3. Run `npm run dev`
@@ -84,6 +82,8 @@ Before deploying you should make sure you built the project properly. This ensur
 7. Select the following folder `\wcag-tool\chrome-extension\dist` 
 
 The extension should now be added to your browser and ready to use.
+
+> Before deploying you should make sure you built the project properly. This ensures you have the latest changes and the dist folder is up to date. More about this can be found in the [chrome-extension README](./wcag-tool/chrome-extension/README.md).
 
 ## Documentation
 
