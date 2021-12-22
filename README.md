@@ -46,7 +46,7 @@ We choose to use MongoDB Atlas as described in the [software guidebook](./docume
    ```
 
 > Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
-
+> Instead of using a local MongoDB instance we strongly recommend using MongoDB Atlas, follow the instructions [here](#configuring-mongodb-atlas)
 ## Project scripts
 
 There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
