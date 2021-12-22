@@ -6,15 +6,17 @@ import { onClickCreateSnapshot } from '../../hooks/popup.hooks'
 const Header = () => {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
-  const snapshotNotAllowed = useSelector((state) => state.popup.snapshotNotAllowed)
+  const createSnapshotNotAllowed = useSelector((state) => state.popup.createSnapshotNotAllowed)
+  const createSnapshotErrorMessage = useSelector((state) => state.popup.createSnapshotErrorMessage)
 
   return (
     <div className="flex p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300 cursor-default">
       <p>Name</p>
       <p>Site</p>
       <DefaultButton
+        title={createSnapshotErrorMessage}
         loading={loading}
-        disabled={snapshotNotAllowed}
+        disabled={createSnapshotNotAllowed}
         onClick={onClickCreateSnapshot(setLoading, dispatch)}
       >
         Create

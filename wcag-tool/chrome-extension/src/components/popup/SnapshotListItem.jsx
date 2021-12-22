@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSnapshotNotAllowed } from '../../services/popupSlice'
+import { formatCreateAtString } from "../../utils";
 
 const SnapshotListItem = function ({ snapshot }) {
   const { _id, filename, name, domain, createdAt } = snapshot
@@ -11,8 +12,9 @@ const SnapshotListItem = function ({ snapshot }) {
     return a.hostname
   }
   const [loading, setLoading] = useState(false)
-  const snapshotNotAllowed = useSelector((state) => state.popup.snapshotNotAllowed)
+  const openSnapshotNotAllowed = useSelector((state) => state.popup.openSnapshotNotAllowed)
   const dispatch = useDispatch()
+  const [formattedDate, formattedDatetime] = formatCreateAtString(createdAt)
 
   return (
     <div className="border-b border-gray-300 hover:bg-gray-50 px-3 py-6 grid grid-flow-col justify-start items-center grid-cols-5 gap-x-2 cursor-default">
@@ -20,7 +22,9 @@ const SnapshotListItem = function ({ snapshot }) {
         <span title={name} className="text-gray-700 truncate">
           {name}
         </span>
-        <span className="text-gray-400 text-xs">{createdAt.slice(0, 10)}</span>
+        <span title={formattedDatetime} className="text-gray-400 text-xs">
+          {formattedDate}
+        </span>
       </div>
       <span title={domain} className="truncate text-gray-700  col-span-2">
         {getDomainFromUrl(domain)}
@@ -31,7 +35,7 @@ const SnapshotListItem = function ({ snapshot }) {
         className={`fill-current text-gray-500 justify-self-end mr-3 px-2 py-1 hover:bg-gray-200 rounded-md disabled:cursor-default ${
           loading ? 'bg-gray-200' : 'disabled:opacity-50 disabled:bg-transparent'
         }`}
-        disabled={snapshotNotAllowed}
+        disabled={openSnapshotNotAllowed}
         onClick={async () => {
           setLoading(true)
           dispatch(setSnapshotNotAllowed(true))

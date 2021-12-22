@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { setSnapshotNotAllowed } from '../services/popupSlice'
+import { setCreateSnapshotNotAllowed, setSnapshotNotAllowed } from '../services/popupSlice'
 
 export const useRegisterPopupEffects = () => {
   const dispatch = useDispatch()
@@ -45,27 +45,30 @@ export const useRegisterPopupEffects = () => {
       const isOpenOnEditorPage = await getIsOpenOnEditorPage()
       const isOpenOnChromePage = await getIsOpenOnChromePage()
 
-      dispatch(
-        setSnapshotNotAllowed(
-          isSnapshotCreationInProgress || isOpenOnEditorPage || isOpenOnChromePage
-        )
-      )
+      let errorMessage
       if (isSnapshotCreationInProgress) {
-        toast.info('Snapshot creation in progress, please wait...')
-      }
-      if (isOpenOnEditorPage || isOpenOnChromePage) {
-        toast.info('Creating a snapshot is not allowed on this page')
+        errorMessage = 'Snapshot creation in progress, please wait...'
+        dispatch(setSnapshotNotAllowed(isSnapshotCreationInProgress))
+        toast.info(errorMessage)
+      } else if (isOpenOnEditorPage || isOpenOnChromePage) {
+        errorMessage = 'Creating a snapshot is not allowed on this page'
+        dispatch(
+          setCreateSnapshotNotAllowed({
+            status: isOpenOnEditorPage || isOpenOnChromePage,
+            errorMessage,
+          })
+        )
       }
     })()
   }, [])
 }
 
 export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
-  setLoading(true)
-  dispatch(setSnapshotNotAllowed(true))
-  const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-  browser.runtime.sendMessage({ method: 'tabs.createSnapshot', tab }).then(() => {
-    setLoading(false)
-    dispatch(setSnapshotNotAllowed(false))
-  })
-}
+  setLoading(true);
+  dispatch(setSnapshotNotAllowed(true));
+  const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+  browser.runtime.sendMessage({ method: "tabs.createSnapshot", tab }).then(() => {
+    setLoading(false);
+    dispatch(setSnapshotNotAllowed(false));
+  });
+};

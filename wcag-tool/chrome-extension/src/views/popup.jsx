@@ -27,7 +27,8 @@ const Popup = () => {
         pauseOnFocusLoss={false}
         pauseOnHover={false}
         autoClose={false}
-        position="top-center"
+        position="top-left"
+        toastClassName="bottom-3"
         draggable={false}
         transition={customTransition}
       />

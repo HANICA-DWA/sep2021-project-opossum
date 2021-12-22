@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  snapshotNotAllowed: false,
+  createSnapshotNotAllowed: false,
+  openSnapshotNotAllowed: false,
+  createSnapshotErrorMessage: '',
 }
 
 export const popupSlice = createSlice({
@@ -9,9 +11,18 @@ export const popupSlice = createSlice({
   initialState,
   reducers: {
     setSnapshotNotAllowed: (state, { payload }) => {
-      state.snapshotNotAllowed = payload
+      state.createSnapshotNotAllowed = payload
+      state.openSnapshotNotAllowed = payload
+    },
+    setCreateSnapshotNotAllowed: (state, { payload }) => {
+      state.createSnapshotNotAllowed = payload.status
+      state.createSnapshotErrorMessage = payload.message
+    },
+    setOpenSnapshotNotAllowed: (state, { payload }) => {
+      state.openSnapshotNotAllowed = payload
     },
   },
 })
 
-export const { setSnapshotNotAllowed } = popupSlice.actions
+export const { setSnapshotNotAllowed, setCreateSnapshotNotAllowed, setOpenSnapshotNotAllowed } =
+  popupSlice.actions
