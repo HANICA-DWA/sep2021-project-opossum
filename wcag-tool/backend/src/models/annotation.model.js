@@ -22,7 +22,7 @@ const annotationSchema = new Schema(
     labels: {
       type: [String],
       required: false,
-      enum: ['Draft', 'Auto analysis'],
+      enum: ['draft', 'auto analysis', 'minor', 'moderate', 'serious', 'critical'],
     },
   },
   { timestamps: true }

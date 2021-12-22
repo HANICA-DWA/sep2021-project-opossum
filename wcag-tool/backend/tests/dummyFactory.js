@@ -66,7 +66,7 @@ exports.annotation = () =>
     title: 'Dummy annotation',
     description: 'Dummy description',
     selector: '.dummy-selector',
-    labels: ['Draft'],
+    labels: ['draft'],
   })
 
 exports.snapshot = () =>
