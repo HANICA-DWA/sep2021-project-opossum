@@ -1,35 +1,91 @@
-[![Build](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Build.yaml)
-[![SonarCloud](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/SonarCloud.yaml)
-[![Lint](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml/badge.svg)](https://github.com/HANICA-DWA/sep2021-project-opossum/actions/workflows/Lint.yaml)
+# Installation guide
 
-## Branchnaam strategie
+Execute the following steps in the given order to setup the development environment for this application. 
 
-[type issue]/[issue-nummer]-[issue-naam]  
-task/61-naam-van-issue
+## Required software:
 
-# [sep2021-project-opossum](https://en.wikipedia.org/wiki/Opossum)
+- [Install Node.js LTS](https://nodejs.org/en/)
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Didelphis_virginiana_with_young.JPG/1920px-Didelphis_virginiana_with_young.JPG" alt="opossum" width="400"/>
+## Configuring MongoDB Atlas
 
-## Opdracht
+We choose to use MongoDB Atlas as described in the [software guidebook](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). You are also free to use a local instance of MongoDB (this can be useful for a local development environment). If you want to do this skip the next steps and instead of using the connection string from Atlas use your local connection string going forward.
 
-De A11y Annotatie-tool
+1. Go to https://www.mongodb.com/cloud/atlas/register and register an account
 
-## Leden
+2. Login and create an organization (pick MongoDB Atlas as cloud service).
 
-- Ruben Eppink
-- Mark Jansen
-- Iliass ElKaddouri
-- Stefan Oude Lohuis
+3. Create a new project (pick the free option with a cloud provider & region near you). 
 
-## Product Owner
+4. Add a new username and password. 
 
-Robert Holwerda
+5. Add your own IP adress to the IP access list
 
-## Coach
+6. Click on the connect button on your cluster.  
 
-Lars Tijsma
+7. Click 'connect your application'. 
 
-## Skills
+8. pick the latest Node.js driver
 
-Helen Visser
+9. Copy the connection string, it should look like this `mongodb+srv://admin:<password>@cluster0.t2xwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+
+   `admin` is the username you added to the project. `myFirstDatabase` is the database name you're going to be using.
+
+**Bonus:** to allow other users to connect to your database go to network access and click on 'add IP address'. You can choose to allow everything or add a specific IP.
+
+## Configuring backend environment 
+
+1. Navigate to `\wcag-tool\backend\env`
+
+2. Create 2 files: `test.env` and `development.env`
+
+3. Add the following content to both files: 
+
+   ```
+   PORT=<port number>
+   MONGO_URI=<mongo uri>
+   ```
+
+Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
+
+## Project scripts
+
+There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
+
+**npm run dev**
+Starts up the backend and frontend. Hot reloading is enabled on both projects. A remote server will be started on port 8000 so you can utilize Redux development tools. 
+
+**npm run setup**
+Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. 
+
+**npm run test:unit**
+Run all unit tests for both front- and backend. 
+
+**npm run test:integration**
+Run all integration tests for both front- and backend. 
+
+**npm run lint**
+Run eslint on all .js and .jsx files for both front- and backend. 
+
+**npm run lint:fix**
+Run eslint on all .js and .jsx files for both front- and backend and fixes all automatically fixable issues. 
+
+Both `\wcag-tool\backend` and  `\wcag-tool\chrome-extension` have their own README.md files with extra information about scripts. They can be found here: [chrome-extension README](./wcag-tool/chrome-extension/README.md) & [backend README](./wcag-tool/backend/README.md) 
+
+## Deploying to the chrome store
+
+1. Navigate to `\wcag-tool`
+2. Run `npm run setup`
+3. Run `npm run dev`
+4. Open a chrome browser and browse to `chrome://extensions/`
+5. Make sure developer mode is checked. 
+6. Click on `Load unpacked`
+7. Select the following folder `\wcag-tool\chrome-extension\dist` 
+
+The extension should now be added to your browser and ready to use.
+
+> Before deploying you should make sure you built the project properly. This ensures you have the latest changes and the dist folder is up to date. More about this can be found in the [chrome-extension README](./wcag-tool/chrome-extension/README.md).
+
+## Documentation
+
+Documentation can be found [here](./documentatie/Software-Guidebook/Software-Guidebook-WCAG-Tool.md). The results of our spikes can be found [here](./documentatie/Spikes)
+
