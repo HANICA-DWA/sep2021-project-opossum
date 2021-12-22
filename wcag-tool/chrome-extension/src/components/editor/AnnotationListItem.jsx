@@ -10,8 +10,18 @@ const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
 
   // TODO: replace with label system in backend
-  const labels = ['Auto analysis', 'Draft']
-  labels.push(`Level ${successCriterium?.level}`)
+  const labels = [
+    'auto analysis',
+    'draft',
+    'level A',
+    'level AA',
+    'level AAA',
+    'minor',
+    'moderate',
+    'serious',
+    'critical',
+  ]
+  // successCriterium?.level && labels.push(`level ${successCriterium?.level}`)
   console.log(labels)
 
   const dispatch = useDispatch()
