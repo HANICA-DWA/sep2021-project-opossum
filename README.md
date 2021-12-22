@@ -61,7 +61,7 @@ Installs all dependencies for the backend and frontend. Bundles all the files fo
 Run all unit tests for both front- and backend. 
 
 **npm run test:integration**
-Run all unit integration tests for both front- and backend. 
+Run all integration tests for the backend.
 
 **npm run lint**
 Run eslint on all .js and .jsx files for both front- and backend. 
