@@ -15,7 +15,7 @@ export default function LabelListItem({ label }) {
   return (
     <span
       key={label}
-      className={`text-sm mb-2 mr-2 inline-block font-medium ${labelColors[label]} px-2 py-0.5 rounded text-white align-middle`}
+      className={`text-xs mb-2 mr-2 inline-block font-medium ${labelColors[label]} px-2 py-0.5 rounded text-white align-middle`}
     >
       {label}
     </span>

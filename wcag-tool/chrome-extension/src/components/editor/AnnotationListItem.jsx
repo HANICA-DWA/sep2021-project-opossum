@@ -22,7 +22,6 @@ const AnnotationListItem = function ({ annotation }) {
     'critical',
   ]
   // successCriterium?.level && labels.push(`level ${successCriterium?.level}`)
-  console.log(labels)
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
@@ -52,7 +51,7 @@ const AnnotationListItem = function ({ annotation }) {
             <p className="text-gray-600 text-xs">1d ago</p>
           </div>
         </div>
-        <div className="pt-4">
+        <div className="pt-1">
           <p className="overflowWrap text-md">
             {truncateStringAndCapitalize(110, stripHtml(description))}
           </p>
