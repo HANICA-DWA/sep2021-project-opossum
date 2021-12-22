@@ -48,7 +48,6 @@ const setUserAwareness = async (provider, id, color, idle) => {
   })
 }
 
-
 const joinRoom = (room) => {
   return new WebsocketProvider('ws://localhost:5000', room, ydoc)
 }
