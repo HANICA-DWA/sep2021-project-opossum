@@ -55,7 +55,7 @@ There are various custom scripts to help with development. In `\wcag-tool` you c
 Starts up the backend and frontend. Hot reloading is enabled on both projects. A remote server will be started on port 8000 so you can utilize Redux development tools. 
 
 **npm run setup**
-Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. 
+Installs all dependencies for the backend and frontend. Bundles all the files for the chrome extension. This command also builds the co-dependency`single-file`.
 
 **npm run test:unit**
 Run all unit tests for both front- and backend. 
