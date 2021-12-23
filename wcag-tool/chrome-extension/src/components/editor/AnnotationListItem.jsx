@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
 import { truncateStringAndCapitalize, stripHtml } from '../../utils'
+import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation }) {
   const { _id, successCriterium, title, description, selector } = annotation
 
+  // TODO: replace with label system in backend
+  const labels = ['auto analysis', 'draft', 'minor', 'moderate', 'serious', 'critical']
+  if (successCriterium) {
+    labels.push(`level ${successCriterium?.level}`)
+  }
+
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
+  const [expandLabels, setExpandLabels] = useState(false)
 
   return (
     <div
@@ -28,15 +36,25 @@ const AnnotationListItem = function ({ annotation }) {
                 {stripHtml(title)}
               </p>
             </div>
-            <div className="text-md">
-              <p>{successCriterium && `LEVEL ${successCriterium.level}`}</p>
+
+            <div
+              onMouseEnter={() => {
+                setExpandLabels(true)
+              }}
+              onMouseLeave={() => {
+                setExpandLabels(false)
+              }}
+              id="labelContainer"
+              className={`text-md mt-2.5 ${!expandLabels ? 'truncate' : ''}`}
+            >
+              <LabelList labels={labels} />
             </div>
           </div>
           <div className="flex justify-end pt-1">
             <p className="text-gray-600 text-xs">1d ago</p>
           </div>
         </div>
-        <div className="pt-4">
+        <div className="pt-1">
           <p className="overflowWrap text-md">
             {truncateStringAndCapitalize(110, stripHtml(description))}
           </p>
