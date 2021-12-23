@@ -19,6 +19,12 @@ const annotationSchema = new Schema(
       type: successCriteriumSchema,
       required: false,
     },
+    labels: {
+      type: [String],
+      required: false,
+      enum: ['draft', 'auto analysis', 'minor', 'moderate', 'serious', 'critical'],
+      default: [],
+    },
   },
   { timestamps: true }
 )

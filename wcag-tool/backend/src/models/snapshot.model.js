@@ -35,13 +35,15 @@ snapshotSchema.methods.addAnnotation = async function (
   title,
   description,
   selector,
-  successCriterium
+  successCriterium,
+  labels
 ) {
   const annotation = new Annotation({
     successCriterium,
     title: sanitizeHtml(title, sanitizeOptions),
     description: sanitizeHtml(description, sanitizeOptions),
     selector,
+    labels,
   })
 
   this.annotations.push(annotation)
@@ -65,6 +67,7 @@ snapshotSchema.methods.updateAnnotation = async function (id, fields) {
     sanitizeOptions
   )
   annotation.selector = fields?.selector ?? annotation.selector
+  annotation.labels = fields?.labels ?? annotation.labels
 
   await this.save()
 
