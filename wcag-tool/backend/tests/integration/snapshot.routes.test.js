@@ -103,7 +103,7 @@ describe('Snapshot Endpoints', function () {
 
       // Act
       const response = await request(app).get(
-        `/v1/snapshots/${snapshotResponse.body._id}/${snapshotResponse.body.filename}`
+        `/v1/snapshots/${snapshotResponse.body._id}/file`
       )
 
       // Assert
