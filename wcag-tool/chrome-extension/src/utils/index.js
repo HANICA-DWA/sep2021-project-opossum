@@ -12,7 +12,7 @@ export function stripHtml(html) {
   return html?.replace(/<(?:.|\n)*?>/gm, '')
 }
 
-export const formatCreateAtString = (createdAt) => {
+export const formatCreatedAtString = (createdAt) => {
   const dateObject = new Date(createdAt)
 
   return [

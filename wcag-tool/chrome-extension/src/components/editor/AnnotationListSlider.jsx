@@ -3,7 +3,6 @@ import SlidingPane from 'react-sliding-pane'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
-import { useSelector } from 'react-redux'
 import IconButton from '../common/IconButton'
 import { useSliders, useYAnnotations } from '../../hooks'
 
@@ -11,16 +10,15 @@ import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
 import { useGetSnapshotQuery } from '../../services'
-import { formatCreateAtString } from '../../utils'
+import { formatCreatedAtString } from '../../utils'
+import { useGetSnapshotId } from '../../hooks/editor.hooks'
 
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
-  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
-  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId, {
-    skip: !snapshotId,
-  })
-  const [shortDate, longDate] = formatCreateAtString(snapshotInfo?.createdAt)
+  const snapshotId = useGetSnapshotId()
+  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
+  const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })

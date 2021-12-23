@@ -6,7 +6,6 @@ import store from '../services/store'
 import Header from '../components/popup/header'
 import SnapshotBody from '../components/popup/snapshotBody'
 import '../extension/lib/single-file/browser-polyfill/chrome-browser-polyfill'
-import 'react-toastify/dist/ReactToastify.css'
 import { useRegisterPopupEffects } from '../hooks/popup.hooks'
 import '../components/popup/animate.css'
 

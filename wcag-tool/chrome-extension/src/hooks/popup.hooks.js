@@ -54,7 +54,7 @@ export const useRegisterPopupEffects = () => {
             message: snapshotCreationInProgressPleaseWait,
           })
         )
-        setInterval(async () => {
+        const intervalId = setInterval(async () => {
           const creationInProgress = await getIsSnapshotCreationInProgress()
           if (!creationInProgress) {
             dispatch(
@@ -63,6 +63,7 @@ export const useRegisterPopupEffects = () => {
                 message: createSnapshotMessage,
               })
             )
+            clearInterval(intervalId)
           }
         }, 500)
       } else if (isOpenOnEditorPage || isOpenOnChromePage) {
@@ -87,7 +88,7 @@ export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
   )
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
   browser.runtime.sendMessage({ method: 'tabs.createSnapshot', tab })
-  setInterval(async () => {
+  const intervalId = setInterval(async () => {
     const creationInProgress = await getIsSnapshotCreationInProgress()
     if (!creationInProgress) {
       dispatch(
@@ -97,6 +98,7 @@ export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
         })
       )
       setLoading(false)
+      clearInterval(intervalId)
     }
   }, 500)
 }

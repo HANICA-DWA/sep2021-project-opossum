@@ -10,8 +10,19 @@ let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
-export const useRegisterEditorEffects = () => {
+export const useGetSnapshotId = () => {
   const dispatch = useDispatch()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
+  if (!snapshotId) {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const id = urlSearchParams.get('id')
+    dispatch(setSnapshotId(id))
+    return id
+  }
+  return snapshotId
+}
+
+export const useRegisterEditorEffects = () => {
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
@@ -107,9 +118,6 @@ export const useRegisterEditorEffects = () => {
   useEffect(() => {
     const eventListener = (message) => {
       if (message.method === 'editor.setTabData') {
-        const urlSearchParams = new URLSearchParams(window.location.search)
-        const snapshotId = urlSearchParams.get('id')
-        dispatch(setSnapshotId(snapshotId))
         if (message.content) {
           if (message.truncated) {
             tabDataContents.push(message.content)
