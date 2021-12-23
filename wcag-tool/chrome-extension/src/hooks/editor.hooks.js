@@ -138,7 +138,7 @@ export const useRegisterEditorEffects = () => {
             saveTabData()
           }
         } else {
-          tabData = { tabId: message.tabId }
+          tabData = { tabId: message.tabId, options: {} }
           loadTabData()
             .then(() => {
               editorIframe.contentWindow.postMessage(
@@ -150,9 +150,9 @@ export const useRegisterEditorEffects = () => {
             .catch(async () => {
               const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
               if (response.ok) {
-                const content = await response.text()
+                tabData.content = await response.text()
                 editorIframe.contentWindow.postMessage(
-                  JSON.stringify({ method: 'init', content }),
+                  JSON.stringify({ method: 'init', content: tabData.content }),
                   '*'
                 )
                 editorIframe.contentWindow.focus()
