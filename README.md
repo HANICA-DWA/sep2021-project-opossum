@@ -47,6 +47,22 @@ We choose to use MongoDB Atlas as described in the [software guidebook](./docume
 
 Make sure the MONGO_URI is on one line, without line breaks. Replace `admin` and `<password>` with your own username and password. Replace `myFirstDatabase` with the corresponding database name you are going to use for your development and test database. **WARNING: YOUR TEST AND DEVELOPMENT DATABASES NEED TO HAVE DIFFERENT NAMES.**
 
+## Uploading to the chrome store
+
+In this step we will be uploading our extension to the chrome store. Do not confuse this with deploying to the chrome store. Uploading the extension will just be for your local use only.
+
+1. Navigate to `\wcag-tool`
+2. Run `npm run setup`
+3. Run `npm run dev`
+4. Open a chrome browser and browse to `chrome://extensions/`
+5. Make sure developer mode is checked. 
+6. Click on `Load unpacked`
+7. Select the following folder `\wcag-tool\chrome-extension\dist` 
+
+The extension should now be added to your browser and ready to use.
+
+> Before deploying you should make sure you built the project properly. This ensures you have the latest changes and the dist folder is up to date. More about this can be found in the [chrome-extension README](./wcag-tool/chrome-extension/README.md).
+
 ## Project scripts
 
 There are various custom scripts to help with development. In `\wcag-tool` you can execute the following scripts.
@@ -70,20 +86,6 @@ Run eslint on all .js and .jsx files for both front- and backend.
 Run eslint on all .js and .jsx files for both front- and backend and fixes all automatically fixable issues. 
 
 Both `\wcag-tool\backend` and  `\wcag-tool\chrome-extension` have their own README.md files with extra information about scripts. They can be found here: [chrome-extension README](./wcag-tool/chrome-extension/README.md) & [backend README](./wcag-tool/backend/README.md) 
-
-## Deploying to the chrome store
-
-1. Navigate to `\wcag-tool`
-2. Run `npm run setup`
-3. Run `npm run dev`
-4. Open a chrome browser and browse to `chrome://extensions/`
-5. Make sure developer mode is checked. 
-6. Click on `Load unpacked`
-7. Select the following folder `\wcag-tool\chrome-extension\dist` 
-
-The extension should now be added to your browser and ready to use.
-
-> Before deploying you should make sure you built the project properly. This ensures you have the latest changes and the dist folder is up to date. More about this can be found in the [chrome-extension README](./wcag-tool/chrome-extension/README.md).
 
 ## Documentation
 

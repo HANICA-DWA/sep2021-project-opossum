@@ -2,13 +2,14 @@
 import { useEffect, useState } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
+import config from '../../config.js'
 
 import { useSelector } from 'react-redux'
 import { useGetAnnotationsQuery } from '../services'
 
 // TODO: Is dit de goede plek?
 const ydoc = new Y.Doc()
-const provider = new WebsocketProvider('ws://localhost:5000', 'room', ydoc)
+const provider = new WebsocketProvider(config.WEBSOCKET_URL, 'room', ydoc)
 
 export const useYjs = () => {
   useEffect(() => {

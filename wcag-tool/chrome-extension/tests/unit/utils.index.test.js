@@ -18,7 +18,7 @@ describe('unit truncateStringAndCapitalize', () => {
   })
   it('should not work with null', () => {
     expect(() => truncateStringAndCapitalize(0, null)).toThrow(
-      "Cannot read properties of null (reading 'charAt')"
+      "Cannot read property 'charAt' of null"
     )
   })
 })

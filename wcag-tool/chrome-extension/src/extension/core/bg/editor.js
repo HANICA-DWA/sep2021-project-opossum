@@ -2,6 +2,7 @@
 
 import * as config from './config.js'
 import * as ui from '../../ui/bg/index.js'
+import extensionConfig from '../../../../config.js'
 
 const MAX_CONTENT_SIZE = 32 * (1024 * 1024)
 const EDITOR_PAGE_URL = '/editor.html'
@@ -20,7 +21,7 @@ async function open({ tabIndex, content, filename }) {
         createTabProperties.index = tabIndex
       }
       const tab = await browser.tabs.create(createTabProperties)
-      tabsData.set(tab.id, { content, filename})
+      tabsData.set(tab.id, { content, filename })
     } else {
       onServerError()
     }
@@ -37,9 +38,9 @@ async function createNewSnapshot(content) {
   formData.append('name', 'untitled snapshot')
   formData.append('domain', url)
 
-  const response = await fetch('http://localhost:5000/v1/snapshots', {
+  const response = await fetch(`${extensionConfig.SERVER_URL}/snapshots`, {
     method: 'POST',
-    body: formData
+    body: formData,
   })
   return response.json()
 }
