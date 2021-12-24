@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import { Icon } from './Icon'
 
 export const ButtonWithDropdown = ({ className, dropdownItems }) => {
+  const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
+      visible: tooltipIsVisible,
+      onVisibleChange: setTooltipIsVisible,
       placement: 'bottom-end',
-      trigger: ['click'],
-      interactive: true,
+      closeOnOutsideClick: true,
+      trigger: 'click',
     })
 
   return (
@@ -20,21 +23,22 @@ export const ButtonWithDropdown = ({ className, dropdownItems }) => {
         <div
           ref={setTooltipRef}
           {...getTooltipProps({
-            className: 'tooltip-container scrollableContainer',
+            className: 'tooltip-container tooltip-interactive scrollableContainer',
           })}
         >
           <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-          <div className="overflow-y-auto p-2">
+          <div className="overflow-y-auto px-0.5">
             {dropdownItems.map((item) => (
               <div
                 key={item.name}
-                onClick={item.onClick}
-                className="flex items-center justify-start px-3 py-2 hover:bg-gray-100 rounded-md"
+                onClick={() => {
+                  item.onClick()
+                  setTooltipIsVisible(false)
+                }}
+                className="flex items-center justify-start hover:border border-gray-500 px-3 py-3 hover:bg-gray-100 rounded-md font-poppins text-sm hover:border cursor-pointer text-gray-700"
               >
-                <div className="mr-1">{item.icon}</div>
-                <div className="ml-1 flex items-center font-poppins text-lg">
-                  <p>{item.name}</p>
-                </div>
+                <div className="mr-3">{item.icon}</div>
+                <span>{item.name}</span>
               </div>
             ))}
           </div>

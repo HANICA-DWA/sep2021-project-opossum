@@ -35,7 +35,6 @@ export const useAnalyse = () => {
       await editorIframe.contentWindow.postMessage(
         JSON.stringify({
           method: 'analyse',
-          content: false,
         }),
         '*'
       )
@@ -142,23 +141,13 @@ export const useRegisterEditorEffects = () => {
   }, [openCreateAndEditSlider])
 
   useEffect(() => {
-    if (elementSelectorIsOpen) {
-      editorIframe.contentWindow.postMessage(
-        JSON.stringify({
-          method: 'elementSelectionMode',
-          content: true,
-        }),
-        '*'
-      )
-    } else {
-      editorIframe.contentWindow.postMessage(
-        JSON.stringify({
-          method: 'elementSelectionMode',
-          content: false,
-        }),
-        '*'
-      )
-    }
+    editorIframe.contentWindow.postMessage(
+      JSON.stringify({
+        method: 'elementSelectionMode',
+        content: elementSelectorIsOpen,
+      }),
+      '*'
+    )
   }, [elementSelectorIsOpen])
 
   useEffect(() => {

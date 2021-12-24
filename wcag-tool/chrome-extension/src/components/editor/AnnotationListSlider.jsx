@@ -35,33 +35,38 @@ const AnnotationListSlider = ({ clients }) => {
       closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
       isOpen={listSliderIsOpen}
       title={
-        <>
+        <div className="grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
-            <span className="text-base font-medium text-gray-900 self-end truncate" title={snapshotInfo?.name}>
+            <span
+              className="text-base font-medium text-gray-900 self-end truncate"
+              title={snapshotInfo?.name}
+            >
               {snapshotInfo?.name}
             </span>
-            <span className="mt-1 text-sm text-gray-500 self-start truncate" title={longDate}>{shortDate}</span>
+            <span className="mt-1 text-sm text-gray-500 self-start truncate" title={longDate}>
+              {shortDate}
+            </span>
           </div>
           <div className="self-center flex flex-nowrap">
             <ButtonWithTooltip
               onClick={openElementSelector}
               toolTipText="Create Annotation"
-              className="text-gray-700 border border-gray-500 p-2 hover:bg-gray-200 rounded-l-lg"
+              className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
-              <Icon name="plus" />
+              <Icon className="text-gray-600" name="plus" />
             </ButtonWithTooltip>
             <ButtonWithDropdown
-              className="text-gray-700 border border-gray-500 border-l-0 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
+              className="text-gray-600 border border-gray-300 border-l-0 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
               dropdownItems={[
                 {
                   onClick: analyse,
                   name: 'Auto analysis',
-                  icon: <Icon name="chart-pie" />,
+                  icon: <Icon className="text-gray-600" size={4} name="chart-pie" />,
                 },
               ]}
             />
           </div>
-        </>
+        </div>
       }
     >
       <div className="flex flex-col h-full justify-between">
