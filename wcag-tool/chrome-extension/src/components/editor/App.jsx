@@ -6,6 +6,7 @@ import CreateAndEditAnnotationSlider from './CreateAndEditAnnotationSlider'
 import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
+import { useGetSnapshotId } from '../../hooks/editor.hooks'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -39,8 +40,6 @@ const deactivateIdleDetection = () => {
   window.onkeydown = null
   window.onscroll = null
 }
-
-import { useGetSnapshotId } from '../../hooks/editor.hooks'
 
 const App = () => {
   const dispatch = useDispatch()
