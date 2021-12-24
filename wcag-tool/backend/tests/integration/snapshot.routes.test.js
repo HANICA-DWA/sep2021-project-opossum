@@ -102,9 +102,7 @@ describe('Snapshot Endpoints', function () {
         .field('domain', dummySnapshot.domain)
 
       // Act
-      const response = await request(app).get(
-        `/v1/snapshots/${snapshotResponse.body._id}/${snapshotResponse.body.filename}`
-      )
+      const response = await request(app).get(`/v1/snapshots/${snapshotResponse.body._id}/file`)
 
       // Assert
       expect(response.status).equals(200)

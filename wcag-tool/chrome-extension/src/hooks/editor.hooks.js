@@ -27,6 +27,7 @@ export const useRegisterEditorEffects = () => {
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
   )
+  const snapshotId = useGetSnapshotId()
 
   useEffect(() => {
     const eventListener = () => {
@@ -137,7 +138,7 @@ export const useRegisterEditorEffects = () => {
             saveTabData()
           }
         } else {
-          tabData = { tabId: message.tabId }
+          tabData = { tabId: message.tabId, options: {} }
           loadTabData()
             .then(() => {
               editorIframe.contentWindow.postMessage(
@@ -146,8 +147,19 @@ export const useRegisterEditorEffects = () => {
               )
               editorIframe.contentWindow.focus()
             })
-            .catch(() => {
-              console.log('Failed to load tab data') // todo fetch snapshot here to enable snapshot opening with just a link
+            .catch(async () => {
+              const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
+              if (response.ok) {
+                tabData.content = await response.text()
+                editorIframe.contentWindow.postMessage(
+                  JSON.stringify({ method: 'init', content: tabData.content }),
+                  '*'
+                )
+                editorIframe.contentWindow.focus()
+                saveTabData()
+              } else {
+                console.error('Could not fetch snapshot file')
+              }
             })
         }
         return Promise.resolve({})

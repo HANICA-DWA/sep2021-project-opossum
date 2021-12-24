@@ -45,7 +45,7 @@ async function fetchSnapshot(snapshotId, filename, tab) {
   const errorMessage = 'Unable to fetch snapshot from server. Please try again'
   ui.onStart(tab.id, 1)
   try {
-    const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/${filename}`)
+    const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
     if (response.ok) {
       const snapshotContent = await response.text()
       const message = {
