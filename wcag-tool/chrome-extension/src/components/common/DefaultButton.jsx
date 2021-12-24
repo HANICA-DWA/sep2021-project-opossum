@@ -1,11 +1,12 @@
 import React from 'react'
 
-const DefaultButton = ({ children, onClick, loading, disabled }) => {
+const DefaultButton = ({ children, onClick, loading, disabled, title }) => {
   const defaultStyle = 'bg-gray-50 hover:bg-gray-200 text-gray-700'
   const disabledStyle = 'bg-gray-200 text-gray-400 cursor-default'
   return (
     <button
       type="button"
+      title={title}
       className={`px-4 py-1 border border-gray-400 rounded-full font-poppins ${
         !loading && !disabled ? defaultStyle : disabledStyle
       }`}

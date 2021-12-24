@@ -4,15 +4,21 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
 import IconButton from '../common/IconButton'
-import { useYAnnotations, useSliders } from '../../hooks'
+import { useSliders, useYAnnotations } from '../../hooks'
 
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
+import { useGetSnapshotQuery } from '../../services'
+import { formatCreatedAtString } from '../../utils'
+import { useGetSnapshotId } from '../../hooks/editor.hooks'
 
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+  const snapshotId = useGetSnapshotId()
+  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
+  const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({ placement: 'bottom' })
@@ -32,13 +38,14 @@ const AnnotationListSlider = ({ clients }) => {
         <div className="grid grid-cols-6 items-center pr-3">
           <div className="col-span-5">
             <div className="text-base">
-              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
-                Nu.nl Homepage text is way too long for the pane
-                {/* TODO: dynamic title */}
+              <p className="truncate" title={snapshotInfo?.name}>
+                {snapshotInfo?.name}
               </p>
             </div>
             <div>
-              <p className="mt-1 text-sm text-gray-500">1 Jan 2021</p>
+              <p title={longDate} className="mt-1 text-sm text-gray-500">
+                {shortDate}
+              </p>
             </div>
           </div>
           <div className="flex justify-end">

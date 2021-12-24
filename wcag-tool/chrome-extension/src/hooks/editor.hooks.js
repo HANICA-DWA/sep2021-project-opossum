@@ -10,8 +10,19 @@ let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
-export const useRegisterEditorEffects = () => {
+export const useGetSnapshotId = () => {
   const dispatch = useDispatch()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
+  if (!snapshotId) {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const id = urlSearchParams.get('id')
+    dispatch(setSnapshotId(id))
+    return id
+  }
+  return snapshotId
+}
+
+export const useRegisterEditorEffects = () => {
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
@@ -114,9 +125,6 @@ export const useRegisterEditorEffects = () => {
             tabDataContents = [message.content]
           }
           if (!message.truncated || message.finished) {
-            const urlSearchParams = new URLSearchParams(window.location.search)
-            const snapshotId = urlSearchParams.get('id')
-            dispatch(setSnapshotId(snapshotId))
             tabData = JSON.parse(tabDataContents.join(''))
             tabData.tabId = message.tabId
             tabData.options = message.options
@@ -130,13 +138,17 @@ export const useRegisterEditorEffects = () => {
           }
         } else {
           tabData = { tabId: message.tabId }
-          loadTabData().then(() => {
-            editorIframe.contentWindow.postMessage(
-              JSON.stringify({ method: 'init', content: tabData.content }),
-              '*'
-            )
-            editorIframe.contentWindow.focus()
-          })
+          loadTabData()
+            .then(() => {
+              editorIframe.contentWindow.postMessage(
+                JSON.stringify({ method: 'init', content: tabData.content }),
+                '*'
+              )
+              editorIframe.contentWindow.focus()
+            })
+            .catch(() => {
+              console.log('Failed to load tab data') // todo fetch snapshot here to enable snapshot opening with just a link
+            })
         }
         return Promise.resolve({})
       }
