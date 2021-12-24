@@ -30,19 +30,14 @@ const AnnotationListSlider = ({ clients }) => {
       closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
       isOpen={listSliderIsOpen}
       title={
-        <div className="grid grid-cols-6 items-center pr-3">
-          <div className="col-span-5">
-            <div className="text-base">
-              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
-                Nu.nl Homepage text is...
-                {/* TODO: dynamic title */}
-              </p>
-            </div>
-            <div>
-              <p className="mt-1 text-sm text-gray-500">1 Jan 2021</p>
-            </div>
+        <>
+          <div className="grid grid-flow-row">
+            <span className="text-base font-medium text-gray-900 self-end truncate">
+              Nu.nl Homepage text is way too long for the pane
+            </span>
+            <span className="mt-1 text-sm text-gray-500 self-start truncate">1 Jan 2021</span>
           </div>
-          <div className="inline-flex justify-end rounded-md shadow-sm" role="group">
+          <div className="self-center flex flex-nowrap">
             <ButtonWithTooltip
               onClick={openElementSelector}
               toolTipText="Create Annotation"
@@ -51,7 +46,7 @@ const AnnotationListSlider = ({ clients }) => {
               <Icon name="plus" />
             </ButtonWithTooltip>
             <ButtonWithDropdown
-              className="text-gray-700 border border-gray-500 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
+              className="text-gray-700 border border-gray-500 border-l-0 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
               dropdownItems={[
                 {
                   onClick: analyse,
@@ -61,7 +56,7 @@ const AnnotationListSlider = ({ clients }) => {
               ]}
             />
           </div>
-        </div>
+        </>
       }
     >
       <div className="flex flex-col h-full justify-between">
