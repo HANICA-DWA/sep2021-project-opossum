@@ -40,10 +40,14 @@ const deactivateIdleDetection = () => {
   window.onscroll = null
 }
 
+import { useGetSnapshotId } from '../../hooks/editor.hooks'
+
 const App = () => {
   const dispatch = useDispatch()
   const isIdle = useSelector((state) => state.user.isIdle)
-  const { clients } = useAwareness('room') // TODO: room should be a snapshotId
+  const snapshotId = useGetSnapshotId()
+
+  const { clients } = useAwareness(snapshotId)
 
   const handleUserIsActive = () => {
     if (isIdle) {
