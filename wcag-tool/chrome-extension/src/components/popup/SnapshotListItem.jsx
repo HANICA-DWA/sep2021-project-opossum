@@ -26,7 +26,7 @@ const SnapshotListItem = function ({ snapshot }) {
           {formattedDate}
         </span>
       </div>
-      <span title={domain} className="truncate text-gray-700  col-span-2">
+      <span title={domain} className="truncate text-gray-700 col-span-2">
         {getDomainFromUrl(domain)}
       </span>
       <button
