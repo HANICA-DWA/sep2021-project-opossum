@@ -6,6 +6,7 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
+import LabelList from './LabelList'
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
@@ -13,6 +14,18 @@ const AnnotationDetailSlider = function () {
   const [deleteAnnotation] = useDeleteAnnotation()
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
+
+  const labels = [
+    'auto analysis',
+    'draft',
+    'level A',
+    'level AA',
+    'level AAA',
+    'minor',
+    'moderate',
+    'serious',
+    'critical',
+  ]
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
@@ -62,7 +75,10 @@ const AnnotationDetailSlider = function () {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        <div className="pl-5 pr-8 py-5 overflow-y-auto overflow-x-hidden annotation-details">
+        <div className="pl-5 pr-8 py-3 overflow-y-auto overflow-x-hidden annotation-details">
+          <div className="text-md">
+            <LabelList labels={labels} />
+          </div>
           {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
         <div className="flex justify-center border-t border-gray-400">

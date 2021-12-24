@@ -43,11 +43,11 @@ router.get('/snapshots', async (req, res, next) => {
 // Already done by middleware: loadSnapshot!
 router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
 
-router.get('/snapshots/:snapshotId/:filename', (req, res, next) => {
+router.get('/snapshots/:snapshotId/file', (req, res, next) => {
   try {
     const gfs = getBucket('snapshot')
 
-    const readstream = gfs.openDownloadStreamByName(req.params.filename).on('error', (err) => {
+    const readstream = gfs.openDownloadStreamByName(req.snapshot.filename).on('error', (err) => {
       if (err.code === 'ENOENT') return next({ code: 404, message: 'File not found!' })
       return next(err)
     })

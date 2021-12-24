@@ -8,7 +8,9 @@ import { useAnalyse, useYAnnotations, useSliders } from '../../hooks'
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
-
+import { useGetSnapshotQuery } from '../../services'
+import { formatCreatedAtString } from '../../utils'
+import { useGetSnapshotId } from '../../hooks/editor.hooks'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { Icon } from '../common/Icon'
@@ -16,6 +18,9 @@ import { Icon } from '../common/Icon'
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+  const snapshotId = useGetSnapshotId()
+  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
+  const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
   const [analyse] = useAnalyse()
 
   return (
@@ -32,10 +37,10 @@ const AnnotationListSlider = ({ clients }) => {
       title={
         <>
           <div className="grid grid-flow-row">
-            <span className="text-base font-medium text-gray-900 self-end truncate">
-              Nu.nl Homepage text is way too long for the pane
+            <span className="text-base font-medium text-gray-900 self-end truncate" title={snapshotInfo?.name}>
+              {snapshotInfo?.name}
             </span>
-            <span className="mt-1 text-sm text-gray-500 self-start truncate">1 Jan 2021</span>
+            <span className="mt-1 text-sm text-gray-500 self-start truncate" title={longDate}>{shortDate}</span>
           </div>
           <div className="self-center flex flex-nowrap">
             <ButtonWithTooltip

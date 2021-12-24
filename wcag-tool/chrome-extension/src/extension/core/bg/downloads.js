@@ -1,17 +1,12 @@
 /* global browser, Blob */
 
-import * as bookmarks from './bookmarks.js'
 import * as business from './business.js'
 import * as editor from './editor.js'
 import * as ui from '../../ui/bg/index.js'
-import { download } from './download-util.js'
 
 const partialContents = new Map()
-const CONFLICT_ACTION_SKIP = 'skip'
-const CONFLICT_ACTION_UNIQUIFY = 'uniquify'
-const REGEXP_ESCAPE = /([{}()^$&.*?/+|[\\\\]|\]|-)/g
 
-export { onMessage, downloadPage }
+export { onMessage }
 
 async function onMessage(message, sender) {
   if (message.method.endsWith('.download')) {
@@ -36,6 +31,55 @@ async function onMessage(message, sender) {
     business.saveUrls(message.urls)
     return {}
   }
+  if (message.method.endsWith('.downloadSnapshot')) {
+    return fetchSnapshot(message.snapshotId, message.filename, message.tab)
+  }
+}
+
+const onServerError = async (message) => {
+  const [tab] = await browser.tabs.query({ currentWindow: true, active: true })
+  ui.onError(tab.id, message, 'no-link')
+}
+
+async function fetchSnapshot(snapshotId, filename, tab) {
+  const errorMessage = 'Unable to fetch snapshot from server. Please try again'
+  ui.onStart(tab.id, 1)
+  try {
+    const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
+    if (response.ok) {
+      const snapshotContent = await response.text()
+      const message = {
+        openEditor: true,
+        content: snapshotContent,
+        filename,
+        snapshotId,
+      }
+      await downloadTabPage(message, tab)
+    } else {
+      onServerError(errorMessage)
+    }
+  } catch (e) {
+    onServerError(errorMessage)
+  }
+  return {}
+}
+
+async function postNewSnapshot(content) {
+  const formData = new FormData()
+  const { url } = content.match(/url: (?<url>.+) \n saved date/).groups
+
+  formData.append('file', new Blob([content], { type: 'text/html' }))
+  formData.append('name', 'untitled snapshot')
+  formData.append('domain', url)
+
+  const response = await fetch('http://localhost:5000/v1/snapshots', {
+    method: 'POST',
+    body: formData,
+  })
+  if (!response.ok) {
+    throw new Error()
+  }
+  return response.json()
 }
 
 async function downloadTabPage(message, tab) {
@@ -54,88 +98,23 @@ async function downloadTabPage(message, tab) {
     contents = [message.content]
   }
   if (!message.truncated || message.finished) {
-    if (message.openEditor) {
+    if (!message.snapshotId) {
+      try {
+        const { _id } = await postNewSnapshot(contents.join(''))
+        message.snapshotId = _id
+      } catch (e) {
+        onServerError('Unable to save snapshot on server. Please try again')
+      }
+    }
+    if (message.openEditor && message.snapshotId) {
       ui.onEdit(tab.id)
       await editor.open({
         tabIndex: tab.index + 1,
         filename: message.filename,
         content: contents.join(''),
+        snapshotId: message.snapshotId,
       })
-    } else if (message.saveToClipboard) {
-      ui.onEnd(tab.id)
-    } else {
-      await downloadContent(contents, tab, tab.incognito, message)
     }
   }
   return {}
-}
-
-async function downloadContent(contents, tab, incognito, message) {
-  try {
-    message.url = `data:text/html,${encodeURIComponent(contents.join(''))}`
-    await downloadPage(message, {
-      confirmFilename: message.confirmFilename,
-      incognito,
-      filenameConflictAction: message.filenameConflictAction,
-      filenameReplacementCharacter: message.filenameReplacementCharacter,
-      includeInfobar: message.includeInfobar,
-    })
-    ui.onEnd(tab.id)
-    if (message.openSavedPage) {
-      const createTabProperties = {
-        active: true,
-        url: `data:text/html,${encodeURIComponent(contents.join(''))}`,
-      }
-      if (tab.index != null) {
-        createTabProperties.index = tab.index + 1
-      }
-      browser.tabs.create(createTabProperties)
-    }
-  } catch (error) {
-    if (!error.message || error.message !== 'upload_cancelled') {
-      console.error(error) // eslint-disable-line no-console
-      ui.onError(tab.id, error.message, error.link)
-    }
-  }
-}
-
-function getRegExp(string) {
-  return string.replace(REGEXP_ESCAPE, '\\$1')
-}
-
-async function downloadPage(pageData, options) {
-  const { filenameConflictAction } = options
-  let skipped
-  if (filenameConflictAction === CONFLICT_ACTION_SKIP) {
-    const downloadItems = await browser.downloads.search({
-      filenameRegex: `(\\\\|/)${getRegExp(pageData.filename)}$`,
-      exists: true,
-    })
-    if (downloadItems.length) {
-      skipped = true
-    } else {
-      options.filenameConflictAction = CONFLICT_ACTION_UNIQUIFY
-    }
-  }
-  if (!skipped) {
-    const downloadInfo = {
-      url: pageData.url,
-      saveAs: options.confirmFilename,
-      filename: pageData.filename,
-      conflictAction: options.filenameConflictAction,
-    }
-    if (options.incognito) {
-      downloadInfo.incognito = true
-    }
-    const downloadData = await download(downloadInfo, options.filenameReplacementCharacter)
-    if (downloadData.filename && pageData.bookmarkId && pageData.replaceBookmarkURL) {
-      if (!downloadData.filename.startsWith('file:')) {
-        if (downloadData.filename.startsWith('/')) {
-          downloadData.filename = downloadData.filename.substring(1)
-        }
-        downloadData.filename = `file:///${downloadData.filename.replace(/#/g, '%23')}`
-      }
-      await bookmarks.update(pageData.bookmarkId, { url: downloadData.filename })
-    }
-  }
 }
