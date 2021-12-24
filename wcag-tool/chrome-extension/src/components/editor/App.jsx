@@ -45,7 +45,6 @@ const App = () => {
   const dispatch = useDispatch()
   const isIdle = useSelector((state) => state.user.isIdle)
   const snapshotId = useGetSnapshotId()
-
   const { clients } = useAwareness(snapshotId)
 
   const handleUserIsActive = () => {
