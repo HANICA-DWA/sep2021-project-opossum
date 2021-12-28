@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 
 export default function BadgeListItem({ annotation, index, iframeDoc }) {
+  const dispatch = useDispatch()
   const [{ openDetailsSlider }] = useSliders()
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
@@ -37,18 +38,24 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
   const handlePositionChange = () => {
     const el = iframeDoc.querySelector(annotation.selector)
     setTooltipIsVisible(false)
+
     if (el) {
-      const rect = el && el.getBoundingClientRect()
+      const rect = el.getBoundingClientRect()
       setPosition({
         top: rect.y,
         left: rect.x,
       })
     }
   }
-
   useEffect(() => {
     iframeDoc.addEventListener('scroll', handlePositionChange)
     window.addEventListener('resize', handlePositionChange)
+
+    // wait for iframe content to load before setting position
+    setTimeout(() => {
+      handlePositionChange()
+    }, 300)
+
     return () => {
       iframeDoc.removeEventListener('scroll', handlePositionChange)
       window.removeEventListener('resize', handlePositionChange)
@@ -58,8 +65,14 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
   return position.top === 0 && position.left === 0 ? null : (
     <>
       <div
+        onMouseEnter={() => {
+          dispatch(setHighlightedElementSelector(annotation.selector))
+        }}
+        onMouseLeave={() => {
+          dispatch(setHighlightedElementSelector(''))
+        }}
         ref={setTriggerRef}
-        className="absolute cursor-pointer"
+        className="absolute cursor-pointer animate-pulse"
         badge={index + 1}
         style={position}
       />
