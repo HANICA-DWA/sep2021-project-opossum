@@ -7,6 +7,7 @@ import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
+import BadgeList from './BadgeList'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -68,6 +69,7 @@ const App = () => {
 
   return (
     <>
+      <BadgeList />
       <OverlayButton />
       <AnnotationListSlider clients={clients} />
       <AnnotationDetailSlider />
