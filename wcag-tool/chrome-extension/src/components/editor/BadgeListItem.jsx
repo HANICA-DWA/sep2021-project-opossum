@@ -43,7 +43,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
       const rect = el.getBoundingClientRect()
       setPosition({
         top: rect.y,
-        left: rect.x,
+        left: rect.x + (annotation.count - 1) * 25,
       })
     }
   }
