@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
-import { stripHtml, truncateStringAndCapitalize } from '../../utils'
 import ReactHtmlParser from 'react-html-parser'
+import { useDispatch } from 'react-redux'
+import { stripHtml, truncateStringAndCapitalize } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders } from '../../hooks'
-import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 
 export default function BadgeListItem({ annotation, index, iframeDoc }) {
