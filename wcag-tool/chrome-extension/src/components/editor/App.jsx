@@ -7,6 +7,8 @@ import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
+import { useSliders } from '../../hooks'
+import { getOptions } from '../../utils/index'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -65,6 +67,24 @@ const App = () => {
       deactivateIdleDetection()
     }
   }, [isIdle])
+
+  const [{}, { anySliderOpen }] = useSliders()
+
+  useEffect(async () => {
+    const sideBySide = await getOptions('sideBySide')
+
+    const iframeDocument = window.document.getElementById('editor').contentWindow.document
+    if (!iframeDocument) return
+
+    iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
+    if (anySliderOpen) {
+      if (sideBySide) {
+        iframeDocument.body.style.transform = 'translateX(400px)'
+      }
+    } else {
+      iframeDocument.body.style.transform = 'translateX(0px)'
+    }
+  }, [anySliderOpen])
 
   return (
     <>
