@@ -18,7 +18,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      borderColor: ['checked'],
+      inset: ['checked'],
+      backgroundColor: ['responsive', 'checked', 'hover', 'focus', 'active', 'disabled'],
       opacity: ['responsive', 'hover', 'focus', 'active', 'disabled'],
       cursor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
       color: ['responsive', 'hover', 'focus', 'active', 'disabled'],

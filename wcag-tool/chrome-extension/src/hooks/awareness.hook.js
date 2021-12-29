@@ -2,16 +2,17 @@ import { useEffect, useState, useRef } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
+import { getOptions } from '../utils'
 
 const ydoc = new Y.Doc()
 
-const getUsername = () => {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(['username'], (result) => {
-      resolve(result.username)
-    })
-  })
-}
+// const getUsername = () => {
+//   return new Promise((resolve) => {
+//     chrome.storage.sync.get(['username'], (result) => {
+//       resolve(result.username)
+//     })
+//   })
+// }
 
 const getRandomName = () => {
   const names = [
@@ -39,7 +40,8 @@ const getRandomName = () => {
 const randomName = getRandomName()
 
 const setUserAwareness = async (provider, id, color, idle) => {
-  const name = (await getUsername()) || randomName
+  const name = (await getOptions('username')) || randomName
+  console.log('name', name)
   provider.awareness.setLocalStateField('user', {
     id,
     name,
