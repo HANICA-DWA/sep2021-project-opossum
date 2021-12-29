@@ -21,7 +21,7 @@ export default function ToggleOption({ value, labelName, infoTitle, id, onChange
           <label
             htmlFor={id}
             className="block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"
-          ></label>
+          />
         </div>
       </div>
     </div>

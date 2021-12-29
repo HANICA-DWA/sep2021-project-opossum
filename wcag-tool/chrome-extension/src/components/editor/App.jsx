@@ -68,22 +68,27 @@ const App = () => {
     }
   }, [isIdle])
 
+  // eslint-disable-next-line no-empty-pattern
   const [{}, { anySliderOpen }] = useSliders()
 
-  useEffect(async () => {
-    const sideBySide = await getOptions('sideBySide')
+  useEffect(() => {
+    async function manageSlider() {
+      const sideBySide = await getOptions('sideBySide')
 
-    const iframeDocument = window.document.getElementById('editor').contentWindow.document
-    if (!iframeDocument) return
+      const iframeDocument = window.document.getElementById('editor').contentWindow.document
+      if (!iframeDocument) return
 
-    iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
-    if (anySliderOpen) {
-      if (sideBySide) {
-        iframeDocument.body.style.transform = 'translateX(400px)'
+      iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
+      if (anySliderOpen) {
+        if (sideBySide) {
+          iframeDocument.body.style.transform = 'translateX(400px)'
+        }
+      } else {
+        iframeDocument.body.style.transform = 'translateX(0px)'
       }
-    } else {
-      iframeDocument.body.style.transform = 'translateX(0px)'
     }
+
+    manageSlider()
   }, [anySliderOpen])
 
   return (
