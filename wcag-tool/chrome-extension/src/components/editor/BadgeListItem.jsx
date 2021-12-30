@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import ReactHtmlParser from 'react-html-parser'
 import { useDispatch } from 'react-redux'
 import { stripHtml, truncateStringAndCapitalize } from '../../utils'
 import LabelList from './LabelList'
-import { useSliders } from '../../hooks'
+import { useSliders, useOptions } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 
 export default function BadgeListItem({ annotation, index, iframeDoc }) {
   const dispatch = useDispatch()
-  const [{ openDetailsSlider }] = useSliders()
-  const [position, setPosition] = useState({ top: 0, left: 0 })
+  const elementRef = useRef()
+  const options = useOptions()
+  const [{ openDetailsSlider }, { anySliderOpen }] = useSliders()
+  const [style, setStyle] = useState({
+    top: 0,
+    left: 0,
+    transition: 'transform 0.5s ease-in-out',
+    transform: 'translateX(0px)',
+  })
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
@@ -36,25 +43,48 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
   ]
 
   const handlePositionChange = () => {
-    const el = iframeDoc.querySelector(annotation.selector)
     setTooltipIsVisible(false)
 
-    if (el) {
-      const rect = el.getBoundingClientRect()
-      setPosition({
+    if (elementRef.current) {
+      const rect = elementRef.current.getBoundingClientRect()
+
+      setStyle((prevState) => ({
+        ...prevState,
         top: rect.y,
-        left: rect.x + (annotation.count - 1) * 25,
-      })
+        left:
+          rect.x +
+          (annotation.count - 1) * 25 -
+          (window.sliderIsOpen && window.sideBySide ? 400 : 0),
+      }))
     }
   }
+
+  useEffect(() => {
+    if (anySliderOpen && options.sideBySide) {
+      setStyle((prevState) => ({
+        ...prevState,
+        transform: 'translateX(400px)',
+      }))
+    } else {
+      setStyle((prevState) => ({
+        ...prevState,
+        transform: 'translateX(0px)',
+      }))
+    }
+
+    window.sliderIsOpen = anySliderOpen
+    window.sideBySide = options.sideBySide
+  }, [anySliderOpen])
+
   useEffect(() => {
     iframeDoc.addEventListener('scroll', handlePositionChange)
     window.addEventListener('resize', handlePositionChange)
 
-    // wait for iframe content to load before setting position
+    // wait for iframe content to load before setting position and element ref
     setTimeout(() => {
+      elementRef.current = iframeDoc.querySelector(annotation.selector)
       handlePositionChange()
-    }, 300)
+    }, 500)
 
     return () => {
       iframeDoc.removeEventListener('scroll', handlePositionChange)
@@ -62,7 +92,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
     }
   }, [])
 
-  return position.top === 0 && position.left === 0 ? null : (
+  return style.top === 0 && style.left === 0 ? null : (
     <>
       <div
         onMouseEnter={() => {
@@ -74,7 +104,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
         ref={setTriggerRef}
         className="absolute cursor-pointer animate-pulse"
         badge={index + 1}
-        style={position}
+        style={style}
       />
 
       {visible && (

@@ -19,7 +19,7 @@ export default function BadgeList() {
   })
 
   return (
-    <div className="page-mask">
+    <div>
       {annotationsWithCount.map((annotation, index) => (
         <BadgeListItem
           key={annotation._id}
