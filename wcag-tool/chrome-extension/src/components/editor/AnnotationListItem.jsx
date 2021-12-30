@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { truncateStringAndCapitalize, stripHtml } from '../../utils'
+import { truncateStringAndCapitalize, stripHtml, timeSince } from '../../utils'
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation }) {
-  const { _id, successCriterium, title, description, selector } = annotation
+  const { _id, successCriterium, title, description, selector, createdAt } = annotation
 
   // TODO: replace with label system in backend
   const labels = ['auto analysis', 'draft', 'minor', 'moderate', 'serious', 'critical']
@@ -51,7 +51,7 @@ const AnnotationListItem = function ({ annotation }) {
             </div>
           </div>
           <div className="flex justify-end pt-1">
-            <p className="text-gray-600 text-xs">1d ago</p>
+            <p className="text-gray-600 text-xs">{timeSince(createdAt)}</p>
           </div>
         </div>
         <div className="pt-1">
