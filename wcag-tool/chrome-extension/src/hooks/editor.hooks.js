@@ -31,17 +31,19 @@ export const useAnalyse = () => {
   const analyse = async () => {
     setLoading(true)
 
-    try {
-      await editorIframe.contentWindow.postMessage(
-        JSON.stringify({
-          method: 'analyse',
-        }),
-        '*'
-      )
-    } catch (_error) {
-      setError(_error.message)
-      setLoading(false)
-    }
+    setTimeout(async () => {
+      try {
+        await editorIframe.contentWindow.postMessage(
+          JSON.stringify({
+            method: 'analyse',
+          }),
+          '*'
+        )
+      } catch (_error) {
+        setError(_error.message)
+        setLoading(false)
+      }
+    }, 100)
   }
 
   useEffect(() => {

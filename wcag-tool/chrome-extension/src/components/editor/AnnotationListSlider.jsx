@@ -21,7 +21,7 @@ const AnnotationListSlider = ({ clients }) => {
   const snapshotId = useGetSnapshotId()
   const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
   const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
-  const [analyse] = useAnalyse()
+  const [analyse, { error, loading }] = useAnalyse()
 
   return (
     <SlidingPane
@@ -53,7 +53,17 @@ const AnnotationListSlider = ({ clients }) => {
               toolTipText="Create Annotation"
               className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
-              <Icon className="text-gray-600" name="plus" />
+              {loading ? (
+                <Icon
+                  name="broken-circle"
+                  type="outline"
+                  className="animate-spin"
+                  viewBox="0 0 100 100"
+                  color="blue"
+                />
+              ) : (
+                <Icon className="text-gray-600" name="plus" />
+              )}
             </ButtonWithTooltip>
             <ButtonWithDropdown
               className="text-gray-600 border border-gray-300 border-l-0 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
@@ -61,7 +71,7 @@ const AnnotationListSlider = ({ clients }) => {
                 {
                   onClick: analyse,
                   name: 'Auto analysis',
-                  icon: <Icon className="text-gray-600" size={4} name="chart-pie" />,
+                  icon: <Icon color="text-gray-700" size={4} name="chart-pie" />,
                 },
               ]}
             />
@@ -70,6 +80,16 @@ const AnnotationListSlider = ({ clients }) => {
       }
     >
       <div className="flex flex-col h-full justify-between">
+        {!error && (
+          <div
+            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+            role="alert"
+          >
+            <p className="font-bold">Be Warned</p>
+            <p>Something not ideal might be happening.</p>
+          </div>
+        )}
+
         <div className="overflow-y-auto">
           {!annotations || annotations.length === 0 ? (
             <NoAnnotation openElementSelector={openElementSelector} />

@@ -3,7 +3,7 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import { Icon } from './Icon'
 
 export const ButtonWithDropdown = ({ className, dropdownItems }) => {
-  const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
+  const [tooltipIsVisible, setTooltipIsVisible] = useState(true) // DEBUG
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       visible: tooltipIsVisible,
@@ -27,15 +27,15 @@ export const ButtonWithDropdown = ({ className, dropdownItems }) => {
           })}
         >
           <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-          <div className="overflow-y-auto px-0.5">
+          <div className="overflow-y-auto p-1">
             {dropdownItems.map((item) => (
               <div
                 key={item.name}
                 onClick={() => {
-                  item.onClick()
                   setTooltipIsVisible(false)
+                  item.onClick()
                 }}
-                className="flex items-center justify-start hover:border border-gray-500 px-3 py-3 hover:bg-gray-100 rounded-md font-poppins text-sm hover:border cursor-pointer text-gray-700"
+                className="flex items-center justify-start p-3 rounded-md font-poppins text-sm cursor-pointer text-gray-700 hover:bg-gray-100"
               >
                 <div className="mr-3">{item.icon}</div>
                 <span>{item.name}</span>

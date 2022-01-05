@@ -3,7 +3,14 @@ import React from 'react'
 // Ctrl + F is your friend! First check if icon already exists!
 // Copy the inside of any <svg> tag from https://heroicons.com to the switch statement. Don't forget to properly name is!
 
-export const Icon = ({ name, type = 'solid', size = 5, className }) => {
+export const Icon = ({
+  name,
+  type = 'solid',
+  size = 5,
+  color = 'currentColor',
+  className,
+  viewBox = '0 0 20 20',
+}) => {
   function path() {
     switch (`${name}-${type}`) {
       case 'chart-pie-solid':
@@ -55,6 +62,26 @@ export const Icon = ({ name, type = 'solid', size = 5, className }) => {
         return (
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         )
+      case 'three-dots-outline':
+        return (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        )
+      case 'broken-circle-outline':
+        return (
+          <circle
+            cx="50"
+            cy="50"
+            strokeWidth="10"
+            r="35"
+            strokeDasharray="164.93361431346415 56.97787143782138"
+            transform="matrix(1,0,0,1,0,0)"
+          />
+        )
       default:
         // Puzzle icon
         return (
@@ -67,9 +94,10 @@ export const Icon = ({ name, type = 'solid', size = 5, className }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className={`${className} h-${size} w-${size}`}
-      viewBox="0 0 20 20"
-      fill={`${type === 'solid' ? 'currentColor' : 'none'}`}
-      stroke={type === 'solid' ? 'none' : 'currentColor'}
+      viewBox={viewBox}
+      fill={`${type === 'solid' ? color : 'none'}`}
+      stroke={type === 'solid' ? 'none' : color}
+      preserveAspectRatio="xMidYMid"
     >
       {path()}
     </svg>
