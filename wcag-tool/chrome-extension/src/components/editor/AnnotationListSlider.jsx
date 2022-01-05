@@ -80,13 +80,13 @@ const AnnotationListSlider = ({ clients }) => {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        {!error && (
+        {error && (
           <div
-            className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-            role="alert"
+            className="bg-red-100 border-l-4 border-red-700 text-red-700 p-3"
+            // role="alert"
           >
-            <p className="font-bold">Be Warned</p>
-            <p>Something not ideal might be happening.</p>
+            <p className="font-bold text-base">Error</p>
+            <p>{error}</p>
           </div>
         )}
 

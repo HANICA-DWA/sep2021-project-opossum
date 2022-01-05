@@ -40,7 +40,7 @@ export const useAnalyse = () => {
           '*'
         )
       } catch (_error) {
-        setError(_error.message)
+        setError('Cannot not analyse snapshot!')
         setLoading(false)
       }
     }, 100)
@@ -56,7 +56,7 @@ export const useAnalyse = () => {
         setLoading(false)
       }
       if (message.method === 'onAnalyseError') {
-        setError(message.data)
+        setError('Could not analyse snapshot!')
         setLoading(false)
       }
     }

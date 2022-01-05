@@ -56,6 +56,8 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
         allowedOrigins: ['<unsafe_all_origins>'],
       })
       const result = await axe.run()
+      if (!result) throw new Error('No results!')
+
       event.source.postMessage(JSON.stringify({ method: 'onAnalyse', data: result }), '*')
     } catch (error) {
       event.source.postMessage(JSON.stringify({ method: 'onAnalyseError', data: error }), '*')
