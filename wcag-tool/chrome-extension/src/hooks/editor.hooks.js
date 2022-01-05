@@ -1,7 +1,7 @@
 /* global webkitRequestFileSystem, TEMPORARY */
 
-import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
 import { axecoreAnnotationMapper } from '../utils'
