@@ -3,7 +3,7 @@ import { usePopperTooltip } from 'react-popper-tooltip'
 import { Icon } from './Icon'
 
 export const ButtonWithDropdown = ({ className, dropdownItems }) => {
-  const [tooltipIsVisible, setTooltipIsVisible] = useState(true) // DEBUG
+  const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       visible: tooltipIsVisible,
