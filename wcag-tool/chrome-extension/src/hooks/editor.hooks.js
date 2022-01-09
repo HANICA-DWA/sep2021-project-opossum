@@ -23,7 +23,7 @@ export const useGetSnapshotId = () => {
   return snapshotId
 }
 
-export const useAnalyse = () => {
+export const useAxeCore = () => {
   const [data, setData] = useState(undefined)
   const [loading, setLoading] = useState(undefined)
   const [error, setError] = useState(undefined)

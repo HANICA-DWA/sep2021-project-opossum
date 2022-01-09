@@ -3,8 +3,7 @@ import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
 import IconButton from '../common/IconButton'
-import { useAnalyse, useYAnnotations, useSliders } from '../../hooks'
-
+import { useAxeCore, useYAnnotations, useSliders } from '../../hooks'
 import AnnotationList from './AnnotationList'
 import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
@@ -14,6 +13,7 @@ import { useGetSnapshotId } from '../../hooks/editor.hooks'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { Icon } from '../common/Icon'
+import Alert from './Alert'
 
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
@@ -21,11 +21,16 @@ const AnnotationListSlider = ({ clients }) => {
   const snapshotId = useGetSnapshotId()
   const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
   const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
+
+  const [analyse, { data: axeData, error: axeError, loading: axeLoading }] = useAxeCore()
   const [
     createAnnotations,
-    { error: createAnnotationsError, isLoading: createAnnotationsLoading },
+    {
+      data: createdAnnotationsData,
+      error: createAnnotationsError,
+      isLoading: createAnnotationsLoading,
+    },
   ] = useCreateAnnotationsMutation(snapshotId)
-  const [analyse, { data: analyseAnnotations, error, loading }] = useAnalyse()
 
   return (
     <SlidingPane
@@ -57,7 +62,7 @@ const AnnotationListSlider = ({ clients }) => {
               toolTipText="Create Annotation"
               className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
-              {loading ? (
+              {axeLoading ? (
                 <Icon
                   name="broken-circle"
                   type="outline"
@@ -84,38 +89,44 @@ const AnnotationListSlider = ({ clients }) => {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        {error && (
-          <div className="bg-red-100 border-l-4 border-red-700 text-red-700 p-3" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
+        <div>
+          {axeError && (
+            <Alert
+              color="red"
+              title="Error"
+              message="Error analysing snapshot! Please try again."
+            />
+          )}
 
-        {createAnnotationsError && (
-          <div className="bg-red-100 border-l-4 border-red-700 text-red-700 p-3" role="alert">
-            <p>{createAnnotationsError}</p>
-          </div>
-        )}
+          {axeData && (
+            <Alert
+              color="green"
+              title="Snapshot analysed"
+              message={`Axe found ${axeData?.length || 0} problems!`}
+              action={{
+                name: 'Publish',
+                method: () => createAnnotations({ snapshotId, annotations: axeData }),
+                disabled: createAnnotationsLoading,
+              }}
+            />
+          )}
 
-        {!analyseAnnotations && (
-          <div
-            className="bg-green-100 border-l-4 border-green-700 text-green-700 p-3 flex justify-between"
-            role="alert"
-          >
-            <div>
-              {' '}
-              <p className="font-bold">Snapshot analysed</p>
-              <p>{analyseAnnotations?.length || 0} problems found!</p>
-            </div>
-            <button
-              type="button"
-              className="py-1 px-3 border-green-400 bg-green-700 hover:bg-green-800 text-gray-100  rounded-lg focus:border-4"
-              onClick={() => createAnnotations({ snapshotId, annotation: analyseAnnotations })}
-              disabled={createAnnotationsLoading}
-            >
-              Publish
-            </button>
-          </div>
-        )}
+          {createAnnotationsError && (
+            <Alert
+              color="red"
+              title="Error"
+              message="Error posting axe annotatons! Please try again."
+            />
+          )}
+
+          {createdAnnotationsData && (
+            <Alert
+              color="green"
+              title="Axe Annotations added"
+              message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            />
+          )}
+        </div>
 
         <div className="overflow-y-auto">
           {!annotations || annotations.length === 0 ? (
