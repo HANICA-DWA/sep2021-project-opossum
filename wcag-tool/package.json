@@ -5,7 +5,7 @@
     "start": "concurrently \"cd backend && npm start \"  \"cd chrome-extension && npm run build && npm run build:single-file \"",
     "test:unit": "concurrently \"cd backend && npm run test:unit\" \"cd chrome-extension && npm run test:unit\"",
     "seed:dev": "cd backend && npm run seed:dev",
-    "seed:test": "cd backend && npm run seed:dev",
+    "seed:test": "cd backend && npm run seed:test",
     "test:integration": "cd backend && npm run test:integration",
     "test:e2e": "cd chrome-extension && npm run test:e2e",
     "lint": "concurrently \"cd backend && npm run lint\" \"cd chrome-extension && npm run lint\"",
