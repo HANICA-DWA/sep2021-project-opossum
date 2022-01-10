@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
 export const useOptions = () => {
-  const [options, setOptions] = useState({})
+  const [options, setOptions] = useState({ username: '', sideBySide: false })
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-      setOptions(result.options)
+      if (result.options) setOptions(result.options)
     })
 
     chrome.storage.onChanged.addListener((changes) => {
