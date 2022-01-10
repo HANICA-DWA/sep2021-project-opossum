@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import DefaultButton from '../common/DefaultButton'
-import { setCreateSnapshotBodyIsLoading } from '../../services/popupSlice'
+import { onClickCreateSnapshot } from '../../hooks/popup.hooks'
 
 const NoSnapshotsFound = () => {
   const dispatch = useDispatch()
-  const loadingHeader = useSelector((state) => state.popup.createSnapshotHeaderButtonIsLoading)
-  const loading = useSelector((state) => state.popup.createSnapshotBodyButtonIsLoading)
-  const snapshotCreationNotAllowed = useSelector((state) => state.popup.snapshotCreationNotAllowed)
+  const createSnapshotNotAllowed = useSelector((state) => state.popup.createSnapshotNotAllowed)
+  const createSnapshotMessage = useSelector((state) => state.popup.createSnapshotMessage)
+  const [loading, setLoading] = useState(false)
 
   return (
     <div className="p-1 text-black">
@@ -16,15 +16,10 @@ const NoSnapshotsFound = () => {
         <p className="text-xl m-2 font-poppins-semi">No snapshots</p>
         <p className="m-2">Create a snapshot and start analysis</p>
         <DefaultButton
-          disabled={loadingHeader || snapshotCreationNotAllowed}
+          title={createSnapshotMessage}
+          disabled={createSnapshotNotAllowed}
           loading={loading}
-          onClick={async () => {
-            dispatch(setCreateSnapshotBodyIsLoading(true))
-            const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
-            browser.runtime.sendMessage({ method: 'tabs.snapshot', tab }).then(() => {
-              dispatch(setCreateSnapshotBodyIsLoading(false))
-            })
-          }}
+          onClick={onClickCreateSnapshot(setLoading, dispatch)}
         >
           Create Snapshot
         </DefaultButton>

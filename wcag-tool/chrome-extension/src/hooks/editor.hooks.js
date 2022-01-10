@@ -10,12 +10,24 @@ let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024
 const editorIframe = document.querySelector('.editor')
 
-export const useRegisterEditorEffects = () => {
+export const useGetSnapshotId = () => {
   const dispatch = useDispatch()
+  const snapshotId = useSelector((state) => state.snapshot.snapshotId)
+  if (!snapshotId) {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const id = urlSearchParams.get('id')
+    dispatch(setSnapshotId(id))
+    return id
+  }
+  return snapshotId
+}
+
+export const useRegisterEditorEffects = () => {
   const [{ openCreateAndEditSlider }, { elementSelectorIsOpen }] = useSliders()
   const highlightedElementSelector = useSelector(
     (state) => state.annotation.highlightedElementSelector
   )
+  const snapshotId = useGetSnapshotId()
 
   useEffect(() => {
     const eventListener = () => {
@@ -114,9 +126,6 @@ export const useRegisterEditorEffects = () => {
             tabDataContents = [message.content]
           }
           if (!message.truncated || message.finished) {
-            const urlSearchParams = new URLSearchParams(window.location.search)
-            const snapshotId = urlSearchParams.get('id')
-            dispatch(setSnapshotId(snapshotId))
             tabData = JSON.parse(tabDataContents.join(''))
             tabData.tabId = message.tabId
             tabData.options = message.options
@@ -129,14 +138,29 @@ export const useRegisterEditorEffects = () => {
             saveTabData()
           }
         } else {
-          tabData = { tabId: message.tabId }
-          loadTabData().then(() => {
-            editorIframe.contentWindow.postMessage(
-              JSON.stringify({ method: 'init', content: tabData.content }),
-              '*'
-            )
-            editorIframe.contentWindow.focus()
-          })
+          tabData = { tabId: message.tabId, options: {} }
+          loadTabData()
+            .then(() => {
+              editorIframe.contentWindow.postMessage(
+                JSON.stringify({ method: 'init', content: tabData.content }),
+                '*'
+              )
+              editorIframe.contentWindow.focus()
+            })
+            .catch(async () => {
+              const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
+              if (response.ok) {
+                tabData.content = await response.text()
+                editorIframe.contentWindow.postMessage(
+                  JSON.stringify({ method: 'init', content: tabData.content }),
+                  '*'
+                )
+                editorIframe.contentWindow.focus()
+                saveTabData()
+              } else {
+                console.error('Could not fetch snapshot file')
+              }
+            })
         }
         return Promise.resolve({})
       }

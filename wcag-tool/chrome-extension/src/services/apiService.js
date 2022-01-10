@@ -46,6 +46,9 @@ export const api = createApi({
       query: () => `snapshots/`,
       providesTags: ['Snapshot'],
     }),
+    getSnapshot: builder.query({
+      query: (id) => `snapshots/${id}`,
+    }),
   }),
 })
 
@@ -59,4 +62,5 @@ export const {
   useUpdateAnnotationMutation,
   useDeleteAnnotationMutation,
   useGetSnapshotsQuery,
+  useGetSnapshotQuery,
 } = api
