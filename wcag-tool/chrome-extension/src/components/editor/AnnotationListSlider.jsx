@@ -90,42 +90,38 @@ const AnnotationListSlider = ({ clients }) => {
     >
       <div className="flex flex-col h-full justify-between">
         <div>
-          {axeError && (
-            <Alert
-              color="red"
-              title="Error"
-              message="Error analysing snapshot! Please try again."
-            />
-          )}
+          <Alert
+            color="red"
+            title="Error"
+            message="Error analysing snapshot! Please try again."
+            hidden={!axeError}
+          />
 
-          {axeData && (
-            <Alert
-              color="green"
-              title="Snapshot analysed"
-              message={`Axe found ${axeData?.length || 0} problems!`}
-              action={{
-                name: 'Publish',
-                method: () => createAnnotations({ snapshotId, annotations: axeData }),
-                disabled: createAnnotationsLoading,
-              }}
-            />
-          )}
+          <Alert
+            color="green"
+            title="Snapshot analysed"
+            message={`Axe found ${axeData?.length || 0} problems!`}
+            action={{
+              name: 'Publish',
+              method: () => createAnnotations({ snapshotId, annotations: axeData }),
+              disabled: createAnnotationsLoading,
+            }}
+            hidden={!axeData}
+          />
 
-          {createAnnotationsError && (
-            <Alert
-              color="red"
-              title="Error"
-              message="Error posting axe annotatons! Please try again."
-            />
-          )}
+          <Alert
+            color="red"
+            title="Error"
+            message="Error posting axe annotatons! Please try again."
+            hidden={!createAnnotationsError}
+          />
 
-          {createdAnnotationsData && (
-            <Alert
-              color="green"
-              title="Axe Annotations added"
-              message={`${createdAnnotationsData?.length || 0} annotations added!`}
-            />
-          )}
+          <Alert
+            color="green"
+            title="Axe Annotations added"
+            message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            hidden={!createdAnnotationsData}
+          />
         </div>
 
         <div className="overflow-y-auto">
