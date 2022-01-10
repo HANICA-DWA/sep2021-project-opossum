@@ -2,17 +2,9 @@ import { useEffect, useState, useRef } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
-import { getOptions } from '../utils'
+import { useOptions } from '.'
 
 const ydoc = new Y.Doc()
-
-// const getUsername = () => {
-//   return new Promise((resolve) => {
-//     chrome.storage.sync.get(['username'], (result) => {
-//       resolve(result.username)
-//     })
-//   })
-// }
 
 const getRandomName = () => {
   const names = [
@@ -39,9 +31,9 @@ const getRandomName = () => {
 
 const randomName = getRandomName()
 
-const setUserAwareness = async (provider, id, color, idle) => {
-  const name = (await getOptions('username')) || randomName
-  console.log('name', name)
+const setUserAwareness = async (provider, name, id, color, idle) => {
+  name = name || randomName
+
   provider.awareness.setLocalStateField('user', {
     id,
     name,
@@ -67,6 +59,7 @@ const color = getRandomColor()
 
 export const useAwareness = (room) => {
   const [clients, setClients] = useState([])
+  const options = useOptions()
   const isIdle = useSelector((state) => state.user.isIdle)
   const providerRef = useRef()
 
@@ -82,7 +75,7 @@ export const useAwareness = (room) => {
         setClients(_clients)
       })
 
-      setUserAwareness(providerRef.current, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, options.username, ydoc.clientID, color, isIdle)
     }
 
     return () => {
@@ -95,9 +88,9 @@ export const useAwareness = (room) => {
 
   useEffect(() => {
     if (providerRef.current) {
-      setUserAwareness(providerRef.current, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, options.username, ydoc.clientID, color, isIdle)
     }
-  }, [isIdle])
+  }, [isIdle, options])
 
   return { provider: providerRef.current, clients }
 }
