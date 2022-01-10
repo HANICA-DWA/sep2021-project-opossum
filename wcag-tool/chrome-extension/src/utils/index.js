@@ -31,11 +31,3 @@ export const formatCreatedAtString = (createdAt) => {
     }),
   ]
 }
-
-export const getOptions = async (field) => {
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(['options'], (result) => {
-      return field ? resolve(result.options[field]) : resolve(result.options)
-    })
-  })
-}
