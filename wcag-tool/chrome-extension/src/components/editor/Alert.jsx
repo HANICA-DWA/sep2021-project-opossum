@@ -1,9 +1,14 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { Icon } from '../common/Icon'
 
 const Alert = ({ title, message, color, action, hidden }) => {
   const [show, setShow] = useState(true)
+
+  useEffect(() => {
+    setShow(true)
+  }, [hidden])
 
   return (
     <div
