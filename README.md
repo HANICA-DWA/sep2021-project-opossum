@@ -75,7 +75,7 @@ In this step we're going to be unpacking our chrome-extension into chrome. Note 
 5. Make sure developer mode is checked. 
 6. Click on `Load unpacked`
 7. Select the following folder `\wcag-tool\chrome-extension\dist` 
-7. Make sure you database instance is running if you're using a local Mongo instance.
+7. Make sure your database instance is running if you're using a local Mongo instance.
 
 The extension should now be added to your browser and ready to use.
 
