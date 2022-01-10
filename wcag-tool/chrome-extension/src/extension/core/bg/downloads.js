@@ -3,6 +3,7 @@
 import * as business from './business.js'
 import * as editor from './editor.js'
 import * as ui from '../../ui/bg/index.js'
+import config from '../../../../config'
 
 const partialContents = new Map()
 
@@ -45,7 +46,7 @@ async function fetchSnapshot(snapshotId, filename, tab) {
   const errorMessage = 'Unable to fetch snapshot from server. Please try again'
   ui.onStart(tab.id, 1)
   try {
-    const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
+    const response = await fetch(`${config.SERVER_URL}/snapshots/${snapshotId}/file`)
     if (response.ok) {
       const snapshotContent = await response.text()
       const message = {
@@ -72,7 +73,7 @@ async function postNewSnapshot(content) {
   formData.append('name', 'untitled snapshot')
   formData.append('domain', url)
 
-  const response = await fetch('http://localhost:5000/v1/snapshots', {
+  const response = await fetch(`${config.SERVER_URL}/snapshots`, {
     method: 'POST',
     body: formData,
   })

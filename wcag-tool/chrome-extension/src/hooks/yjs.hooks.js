@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
-import config from '../../config.js'
+import config from '../../config'
 
 import { useGetAnnotationsQuery } from '../services'
 import { useGetSnapshotId } from './editor.hooks'
