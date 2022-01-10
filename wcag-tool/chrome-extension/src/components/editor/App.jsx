@@ -68,8 +68,7 @@ const App = () => {
     }
   }, [isIdle])
 
-  // eslint-disable-next-line no-empty-pattern
-  const [{}, { anySliderOpen }] = useSliders()
+  const [_, { anySliderOpen }] = useSliders()
 
   useEffect(() => {
     async function manageSlider() {
