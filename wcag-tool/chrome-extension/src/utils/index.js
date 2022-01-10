@@ -41,9 +41,9 @@ export function timeSince(date) {
   if (interval > 1) {
     return `${Math.floor(interval)}y ago`
   }
-  interval = seconds / 2592000
+  interval = seconds / 604800
   if (interval > 1) {
-    return `${Math.floor(interval)}m ago`
+    return `${Math.floor(interval)}w ago`
   }
   interval = seconds / 86400
   if (interval > 1) {

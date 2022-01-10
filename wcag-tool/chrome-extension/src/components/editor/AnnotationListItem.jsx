@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { truncateStringAndCapitalize, stripHtml, timeSince } from '../../utils'
+import {
+  truncateStringAndCapitalize,
+  stripHtml,
+  timeSince,
+  formatCreatedAtString,
+} from '../../utils'
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation }) {
@@ -51,7 +56,9 @@ const AnnotationListItem = function ({ annotation }) {
             </div>
           </div>
           <div className="flex justify-end pt-1">
-            <p className="text-gray-600 text-xs">{timeSince(createdAt)}</p>
+            <p title={formatCreatedAtString(createdAt)[1]} className="text-gray-600 text-xs">
+              {timeSince(createdAt)}
+            </p>
           </div>
         </div>
         <div className="pt-1">
