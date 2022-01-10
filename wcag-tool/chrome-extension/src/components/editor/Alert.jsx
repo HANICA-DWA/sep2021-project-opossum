@@ -1,6 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from '../common/Icon'
 
 const Alert = ({ title, message, color, action, hidden }) => {
@@ -16,7 +14,6 @@ const Alert = ({ title, message, color, action, hidden }) => {
         (hidden || !show) && 'hidden'
       } bg-${color}-100 border-l-4 border-${color}-700 text-${color}-700 p-3 mb-0.5 flex justify-between`}
       role="alert"
-      onClick={() => setShow(false)}
     >
       <div>
         <p className="font-bold">{title}</p>
