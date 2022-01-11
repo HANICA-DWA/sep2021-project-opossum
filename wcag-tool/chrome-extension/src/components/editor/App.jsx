@@ -74,7 +74,8 @@ const App = () => {
 
   useEffect(() => {
     async function manageSlider() {
-      const iframeDocument = window.document.getElementById('editor').contentWindow.document
+      const iframeDocument =
+        window.document.getElementById('snapshot-iframe').contentWindow.document
       if (!iframeDocument) return
 
       iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'

@@ -4,7 +4,7 @@ import BadgeListItem from './BadgeListItem'
 
 export default function BadgeList() {
   const { annotations } = useYAnnotations()
-  const iframeDocument = window.document.getElementById('editor').contentWindow.document
+  const iframeDocument = window.document.getElementById('snapshot-iframe').contentWindow.document
 
   // keeping track of any duplicate selectors so we can position badges correctly
   const map = new Map()

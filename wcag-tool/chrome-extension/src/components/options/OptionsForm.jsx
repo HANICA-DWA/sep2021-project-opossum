@@ -61,7 +61,7 @@ const OptionsForm = function () {
             type="outline"
             className="inline"
             size={6}
-            viewBox={24}
+            viewBox={'0 0 24 24'}
           />
 
           {saved ? 'Saved' : 'Save'}

@@ -8,8 +8,9 @@ export const Icon = ({
   type = 'solid',
   size = 5,
   color = 'currentColor',
+  viewBox = '0 0 20 20',
   className,
-  title
+  title,
 }) => {
   function path() {
     switch (`${name}-${type}`) {
