@@ -1,5 +1,5 @@
 const URL_PREFIX = 'chrome-extension://'
-const CHROME_EXTENSION_ID = 'pgbgjjpnamegjneochnocdnjehicdfal'
+const CHROME_EXTENSION_ID = 'pgbgjjpnamegjneochnocdnjehicdfal' // change with your own chrome extension id
 
 const SLIDER_TRANSITION_DURATION = 600
 let firstTab
@@ -31,6 +31,8 @@ async function newTabDefaultState(page) {
 }
 
 async function openExistingSnapshot() {
+  // used open the puppeteer chrome browser without running the rest of the tests. This is useful for getting the chrome extension id.
+  // await page.waitForSelector('xxx')
   await page.goto(`${URL_PREFIX}${CHROME_EXTENSION_ID}/popup.html`)
   await page.waitForSelector('button.rounded-full')
   const createButtonIsDisabled = await page.$eval('button.rounded-full', (el) => el.disabled)

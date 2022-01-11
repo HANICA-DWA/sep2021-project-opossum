@@ -1,7 +1,5 @@
 # WCAG Tool Chrome extension
 
-Description...
-
 ## Prerequisites
 
 Before you can jump into learning developing Chrome Extensions knowledge of the following items is necessary:
@@ -77,6 +75,15 @@ Single-file is used to create snapshots of pages.
 
 `npm run test:unit`
 `npm run test:e2e`
+
+Before you can run the end to end tests you need to change the chrome extension id in tests/e2e/index.test.js file.
+You can configure the correct id with the following steps:
+1. Open tests/e2e/index.test.js file with an editor
+2. Uncomment line 35 of the file
+3. Run the test with `npm run test:e2e`
+4. A chrome browser will open and the extension will be loaded
+5. Go to the options page of the extension and copy the extension id from the url bar
+6. Go back to the tests/e2e/index.test.js file and replace the id at line 25 with the copied id
 
 ## Clean
 
