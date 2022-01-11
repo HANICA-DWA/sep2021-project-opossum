@@ -111,6 +111,10 @@ describe('e2e crud annotations', () => {
     )
     expect(annotation).toBeNull()
   })
+
+  afterAll(async () => {
+    await firstTab.close()
+  })
 })
 
 describe('e2e Collaboration', () => {
@@ -192,5 +196,10 @@ describe('e2e Collaboration', () => {
     await secondTab.bringToFront()
     const actualTitle = await secondTab.$eval('.slide-pane__title p', (el) => el.innerText)
     expect(actualTitle).toBe('Collaboration Annotation Changed')
+  })
+
+  afterAll(async () => {
+    await firstTab.close()
+    await secondTab.close()
   })
 })

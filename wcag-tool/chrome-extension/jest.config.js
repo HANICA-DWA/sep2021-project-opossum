@@ -3,7 +3,6 @@
 const config = {
   rootDir: 'tests',
   preset: 'jest-puppeteer',
-  setupFilesAfterEnv: ['expect-puppeteer'],
   testTimeout: 1000000,
 }
 
