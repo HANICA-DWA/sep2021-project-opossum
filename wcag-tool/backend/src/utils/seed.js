@@ -155,7 +155,10 @@ exports.seedSnapshots = async () => {
 
   print(`\tStep 2: Saving all dummy snapshot to ${process.env.NODE_ENV} database...`)
   try {
-    await Snapshot.insertMany(dummySnapshots)
+    for (let i = 0; i < 10; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await dummySnapshots[i].save()
+    }
     print('\tok!')
   } catch (err) {
     if (err.code === 11000) {
