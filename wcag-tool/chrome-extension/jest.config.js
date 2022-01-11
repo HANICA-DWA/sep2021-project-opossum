@@ -4,7 +4,7 @@ const config = {
   rootDir: 'tests',
   preset: 'jest-puppeteer',
   setupFilesAfterEnv: ['expect-puppeteer'],
-  testTimeout: 60000,
+  testTimeout: 1000000,
 }
 
 module.exports = config
