@@ -7,6 +7,7 @@ import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
+import { useSliders, useOptions } from '../../hooks'
 import '../../utils/i18n'
 
 function resetTimer(timer, handleIdle, handleActive) {
@@ -47,6 +48,7 @@ const App = () => {
   const isIdle = useSelector((state) => state.user.isIdle)
   const snapshotId = useGetSnapshotId()
   const { clients } = useAwareness(snapshotId)
+  const options = useOptions()
 
   const handleUserIsActive = () => {
     if (isIdle) {
@@ -66,6 +68,26 @@ const App = () => {
       deactivateIdleDetection()
     }
   }, [isIdle])
+
+  const [_, { anySliderOpen }] = useSliders()
+
+  useEffect(() => {
+    async function manageSlider() {
+      const iframeDocument = window.document.getElementById('editor').contentWindow.document
+      if (!iframeDocument) return
+
+      iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
+      if (anySliderOpen) {
+        if (options.sideBySide) {
+          iframeDocument.body.style.transform = 'translateX(400px)'
+        }
+      } else {
+        iframeDocument.body.style.transform = 'translateX(0px)'
+      }
+    }
+
+    manageSlider()
+  }, [anySliderOpen])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
