@@ -100,6 +100,7 @@ There are various custom scripts to help with development. In `\wcag-tool` you c
 
 > **npm run test:e2e**
 > Run all e2e tests.
+
 > **npm run lint**
 > Run eslint on all .js and .jsx files for both front- and backend. 
 
