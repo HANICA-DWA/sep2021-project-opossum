@@ -1,7 +1,7 @@
 const URL_PREFIX = 'chrome-extension://'
 const CHROME_EXTENSION_ID = 'pgbgjjpnamegjneochnocdnjehicdfal'
 
-const SLIDER_TRANSITION_DURATION = 1000
+const SLIDER_TRANSITION_DURATION = 600
 let firstTab
 let secondTab
 
@@ -164,8 +164,40 @@ describe('e2e Collaboration', () => {
     expect(annotationCount).toBe(2)
   })
 
-  it('should count annotations in list after deleting an annotation', async () => {
+  it('should see a description change while editing', async () => {
+    await secondTab.click('.slide-pane__content div.overflow-y-auto > div:nth-child(2)')
+    await secondTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
+    await secondTab.click('.slide-pane__title button.pencilIcon')
+    await secondTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
+
     await firstTab.bringToFront()
+    await firstTab.click('.slide-pane__title button.pencilIcon')
+    await firstTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
+
+    await firstTab.click('#description-editor div.ql-editor p', { clickCount: 3 })
+    await firstTab.waitForTimeout(200)
+    const description = 'Making changes live'
+    await firstTab.keyboard.type(description)
+
+    await secondTab.bringToFront()
+    const actualDescription = await secondTab.$eval(
+      '#description-editor div.ql-editor p',
+      (el) => el.innerText
+    )
+    // expected description
+    expect(actualDescription).toBe(description)
+  })
+
+  it('should count annotations in list after deleting an annotation', async () => {
+    await secondTab.click("button[type='submit']")
+    await secondTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
+
+    await secondTab.click('button.crossIcon')
+    await secondTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
+
+    await firstTab.bringToFront()
+    await firstTab.click("button[type='submit']")
+    await firstTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
     await firstTab.click('.slide-pane__content button')
     await firstTab.waitForSelector('.tooltip-container button span.trashIcon')
     await firstTab.click('.tooltip-container button span.trashIcon')
