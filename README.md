@@ -99,7 +99,7 @@ There are various custom scripts to help with development. In `\wcag-tool` you c
 > Run all integration tests for backend.  
 
 > **npm run test:e2e**
-> Run all e2e tests. (required some setup, info found in wcag-tool/chrome-extension/README.md)
+> Run all e2e tests. (requires some setup, info found in wcag-tool/chrome-extension/README.md)
 
 > **npm run lint**
 > Run eslint on all .js and .jsx files for both front- and backend. 
