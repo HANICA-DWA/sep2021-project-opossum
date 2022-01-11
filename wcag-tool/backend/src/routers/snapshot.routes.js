@@ -32,7 +32,7 @@ router.get('/snapshots', async (req, res, next) => {
     const limit = _limit ? parseInt(_limit) : undefined
     const skip = page && limit ? (page - 1) * limit : 0
 
-    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec() // TODO: Add projection, only meta data is necessary!
+    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).sort({ createdAt: -1 }).exec() // TODO: Add projection, only meta data is necessary!
 
     return res.json(snapshots)
   } catch (err) {
