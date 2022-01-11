@@ -1,4 +1,11 @@
 {
   "CREATE_SNAPSHOT": "Maak snapshot",
-  "OPEN_MENU": "Open annotatie menu"
+  "OPEN_MENU": "Open annotatie menu",
+  "LANGUAGE": "Taal",
+  "LANGUAGE_EN": "Engels",
+  "LANGUAGE_NL": "Nederlands",
+  "OPTIONS": "Opties",
+  "USERNAME": "Gebruikersnaam",
+  "SIDE_BY_SIDE": "Bewerkpaneel zij-aan-zij",
+  "SIDE_BY_SIDE_INFO": "Wanneer dit geactiveerd is, wordt het bewerkpaneel zij-aan-zij getoond met de webpagina.\nStandaard wordt deze over de webpagina heen getoond."
 }

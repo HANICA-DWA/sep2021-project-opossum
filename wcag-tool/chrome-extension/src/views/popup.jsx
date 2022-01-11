@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import '../css/styles.css'
 import { Provider } from 'react-redux'
@@ -8,6 +8,7 @@ import SnapshotBody from '../components/popup/snapshotBody'
 import '../extension/lib/single-file/browser-polyfill/chrome-browser-polyfill'
 import { useRegisterPopupEffects } from '../hooks/popup.hooks'
 import '../components/popup/animate.css'
+import '../utils/i18n'
 
 const Popup = () => {
   useRegisterPopupEffects()
@@ -22,7 +23,9 @@ const Popup = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Popup />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Popup />
+      </Suspense>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

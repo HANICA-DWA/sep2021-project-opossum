@@ -1,20 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import DefaultButton from '../common/DefaultButton'
 import { Icon } from '../common/Icon'
+import DropdownOption from './DropdownOption'
 import TextOption from './TextOption'
 import ToggleOption from './ToggleOption'
+import { useTranslation } from 'react-i18next'
 
 const OptionsForm = function () {
-  const [options, setOptions] = useState({ username: '', sideBySide: false })
+  const [options, setOptions] = useState({ username: '', sideBySide: false, language: 'en' })
   const [saved, setSaved] = useState(true)
+  const { i18n, t } = useTranslation()
+
+  const languageOptions = [
+    {
+      language: t('LANGUAGE_EN'),
+      value: 'en',
+    },
+    {
+      language: t('LANGUAGE_NL'),
+      value: 'nl',
+    },
+  ]
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
+      i18n.changeLanguage(result.options.language)
       setOptions((prevState) => ({ ...prevState, ...result.options }))
     })
   }, [])
 
   const saveOptions = () => {
+    i18n.changeLanguage(options.language)
     chrome.storage.sync.set(
       {
         options,
@@ -32,23 +48,30 @@ const OptionsForm = function () {
 
   return (
     <div className="m-6">
-      <h1 className="text-xl font-poppins mb-3">Options</h1>
+      <h1 className="text-xl font-poppins mb-3">{t('OPTIONS')}</h1>
       <TextOption
         value={options.username}
         id="username"
-        labelName="Username"
+        labelName={t('USERNAME')}
         onChange={handleChange}
       />
       <ToggleOption
-        labelName="Editor side-by-side"
-        infoTitle="When activated enables the sliding editor to be side-by-side with the snapshot.
-        By default the editor slides over the page."
+        labelName={t('SIDE_BY_SIDE')}
+        infoTitle={t('SIDE_BY_SIDE_INFO')}
         id="sideBySide"
         value={options.sideBySide}
         onChange={handleChange}
       />
 
-      <div className="flex justify-center">
+      <DropdownOption
+        labelName={t('LANGUAGE')}
+        id="language"
+        options={languageOptions}
+        value={options.language}
+        onChange={handleChange}
+      />
+
+      <div className="flex justify-center my-2">
         <DefaultButton disabled={!options.username || saved} onClick={saveOptions} type="button">
           <Icon
             name={`${!saved ? 'save' : 'check'}`}

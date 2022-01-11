@@ -3,7 +3,15 @@ import React from 'react'
 // Ctrl + F is your friend! First check if icon already exists!
 // Copy the inside of any <svg> tag from https://heroicons.com to the switch statement. Don't forget to properly name is!
 
-export const Icon = ({ name, type = 'solid', size = 5, className, title, viewBox = '0 0 20 20' }) => {
+export const Icon = ({
+  name,
+  type = 'solid',
+  size = 5,
+  color = 'currentColor',
+  className,
+  title,
+  viewBox = '0 0 20 20',
+}) => {
   function path() {
     switch (`${name}-${type}`) {
       case 'chart-pie-solid':

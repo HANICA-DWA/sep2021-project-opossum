@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import OverlayButton from './OverlayButton'
 import AnnotationListSlider from './AnnotationListSlider'
@@ -8,7 +8,6 @@ import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
 import { useSliders, useOptions } from '../../hooks'
-import '../../utils/i18n'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -73,7 +72,8 @@ const App = () => {
 
   useEffect(() => {
     async function manageSlider() {
-      const iframeDocument = window.document.getElementById('editor').contentWindow.document
+      const iframeDocument =
+        window.document.getElementById('snapshot-iframe').contentWindow.document
       if (!iframeDocument) return
 
       iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
@@ -90,12 +90,12 @@ const App = () => {
   }, [anySliderOpen])
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       <OverlayButton />
       <AnnotationListSlider clients={clients} />
       <AnnotationDetailSlider />
       <CreateAndEditAnnotationSlider />
-    </Suspense>
+    </>
   )
 }
 
