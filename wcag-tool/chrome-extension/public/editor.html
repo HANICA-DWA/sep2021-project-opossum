@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Loading Editor...</title>
-        <script src="js/vendor.js"></script>
-    </head>
-    <body>
-        <div>
-            <div id="root"></div>
-            <iframe class='editor'
-                    srcdoc='&lt;!DOCTYPE html&gt;&lt;body&gt;&lt;script src=/single-file/web/editor/editor-helper-web.js&gt;&lt;/script&gt;&lt;script src=/single-file/web/editor/editor-web.js&gt;&lt;/script&gt;&lt;script src=/extension/lib/readability/Readability.js&gt;&lt;/script&gt;&lt;/script&gt;&lt;script src=/extension/lib/readability/Readability-readerable.js&gt;&lt;/script&gt;&lt;/body&gt;'
-                    sandbox='allow-scripts allow-modals'></iframe>
-        </div>
-        <script src="/single-file/chrome-browser-polyfill.js"></script>
-        <script src="/single-file/single-file.js"></script>
-        <script src="/single-file/infobar.js"></script>
-        <script src="js/editor.js"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading Editor...</title>
+    <script src="js/vendor.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="root"></div>
+      <iframe
+        id="snapshot-iframe"
+        class="editor"
+        srcdoc="&lt;!DOCTYPE html&gt;
+                    &lt;body&gt;
+                      &lt;script src=/single-file/web/editor/editor-helper-web.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/single-file/web/editor/editor-web.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/extension/lib/readability/Readability.js&gt;
+                      &lt;/script&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/extension/lib/readability/Readability-readerable.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/js/axe.min.js&gt;
+                      &lt;/script&gt;
+                    &lt;/body&gt;
+                    "
+        sandbox="allow-scripts allow-modals"
+      ></iframe>
+    </div>
+    <script src="/single-file/chrome-browser-polyfill.js"></script>
+    <script src="/single-file/single-file.js"></script>
+    <script src="/single-file/infobar.js"></script>
+    <script src="js/editor.js"></script>
+  </body>
 </html>
