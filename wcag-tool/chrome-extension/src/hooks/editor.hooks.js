@@ -1,10 +1,12 @@
 /* global webkitRequestFileSystem, TEMPORARY */
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
 import config from '../../config'
+import { axecoreAnnotationMapper } from '../utils'
+
 
 let tabData
 let tabDataContents = []
@@ -21,6 +23,54 @@ export const useGetSnapshotId = () => {
     return id
   }
   return snapshotId
+}
+
+export const useAnalyse = () => {
+  const [data, setData] = useState(undefined)
+  const [loading, setLoading] = useState(undefined)
+  const [error, setError] = useState(undefined)
+
+  const analyse = async () => {
+    setLoading(true)
+
+    setTimeout(async () => {
+      try {
+        await editorIframe.contentWindow.postMessage(
+          JSON.stringify({
+            method: 'analyse',
+          }),
+          '*'
+        )
+      } catch (_error) {
+        setError('Cannot analyse snapshot!')
+        setLoading(false)
+      }
+    }, 100)
+  }
+
+  useEffect(() => {
+    const eventListener = (event) => {
+      const message = JSON.parse(event.data)
+
+      if (message.method === 'onAnalyse') {
+        setData(axecoreAnnotationMapper(message.data.violations))
+        setError(undefined)
+        setLoading(false)
+      }
+      if (message.method === 'onAnalyseError') {
+        setError('Could not analyse snapshot!')
+        setLoading(false)
+      }
+    }
+
+    addEventListener('message', eventListener)
+
+    return () => {
+      removeEventListener('message', eventListener)
+    }
+  }, [])
+
+  return [analyse, { data, loading, error }]
 }
 
 export const useRegisterEditorEffects = () => {
@@ -88,23 +138,13 @@ export const useRegisterEditorEffects = () => {
   }, [openCreateAndEditSlider])
 
   useEffect(() => {
-    if (elementSelectorIsOpen) {
-      editorIframe.contentWindow.postMessage(
-        JSON.stringify({
-          method: 'elementSelectionMode',
-          content: true,
-        }),
-        '*'
-      )
-    } else {
-      editorIframe.contentWindow.postMessage(
-        JSON.stringify({
-          method: 'elementSelectionMode',
-          content: false,
-        }),
-        '*'
-      )
-    }
+    editorIframe.contentWindow.postMessage(
+      JSON.stringify({
+        method: 'elementSelectionMode',
+        content: elementSelectorIsOpen,
+      }),
+      '*'
+    )
   }, [elementSelectorIsOpen])
 
   useEffect(() => {

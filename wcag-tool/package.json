@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "dev": "concurrently \"cd backend && npm run dev\" \"cd chrome-extension && npm run dev\" \"cd chrome-extension && npm run dev:single-file\"  \"cd chrome-extension && npm run remotedev\"",
     "setup": "concurrently \"npm install\" \"cd backend && npm install\" \"cd chrome-extension && npm install\"",

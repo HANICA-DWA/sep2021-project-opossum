@@ -1,7 +1,6 @@
 /* global globalThis, window, document, fetch, DOMParser, getComputedStyle, setTimeout, clearTimeout, NodeFilter, Readability, isProbablyReaderable, matchMedia, TextDecoder, Node */
 
 import unique from '../../../../node_modules/unique-selector/src/index.js'
-
 ;(() => {
   const NOTE_TAGNAME = 'single-file-note'
   const NOTE_MASK_CLASS = 'note-mask'
@@ -34,15 +33,34 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
     if (message.method === 'highlightElement') {
       highlightElement(message.content)
     }
+    if (message.method === 'analyse') {
+      analyse(event)
+    }
     return {}
   }
+
   document.ondragover = (event) => event.preventDefault()
+
   document.ondrop = async (event) => {
     if (event.dataTransfer.files && event.dataTransfer.files[0]) {
       const file = event.dataTransfer.files[0]
       event.preventDefault()
       const content = new TextDecoder().decode(await file.arrayBuffer())
       await init(content, { filename: file.name })
+    }
+  }
+
+  async function analyse(event) {
+    try {
+      axe.configure({
+        allowedOrigins: ['<unsafe_all_origins>'],
+      })
+      const result = await axe.run()
+      if (!result) throw new Error('No results!')
+
+      event.source.postMessage(JSON.stringify({ method: 'onAnalyse', data: result }), '*')
+    } catch (error) {
+      event.source.postMessage(JSON.stringify({ method: 'onAnalyseError', data: error }), '*')
     }
   }
 
