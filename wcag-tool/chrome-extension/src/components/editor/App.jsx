@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import OverlayButton from './OverlayButton'
 import AnnotationListSlider from './AnnotationListSlider'
@@ -7,6 +7,7 @@ import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
+import '../../utils/i18n'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -67,12 +68,12 @@ const App = () => {
   }, [isIdle])
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <OverlayButton />
       <AnnotationListSlider clients={clients} />
       <AnnotationDetailSlider />
       <CreateAndEditAnnotationSlider />
-    </>
+    </Suspense>
   )
 }
 
