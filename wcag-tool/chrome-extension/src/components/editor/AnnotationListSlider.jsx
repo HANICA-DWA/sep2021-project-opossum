@@ -88,49 +88,49 @@ const AnnotationListSlider = ({ clients }) => {
         </div>
       }
     >
+      <div>
+        <Alert
+          color="red"
+          title="Error"
+          message="Error analysing snapshot! Please try again."
+          hidden={!axeError}
+        />
+
+        <Alert
+          color="green"
+          title="Snapshot analysed"
+          message={`Axe found ${axeData?.length || 0} problems!`}
+          action={{
+            name: 'Publish',
+            method: () => createAnnotations({ snapshotId, annotations: axeData }),
+            disabled: createAnnotationsLoading,
+          }}
+          hidden={!axeData}
+        />
+
+        <Alert
+          color="red"
+          title="Error"
+          message="Error posting axe annotatons! Please try again."
+          hidden={!createAnnotationsError}
+        />
+
+        <Alert
+          color="green"
+          title="Axe Annotations added"
+          message={`${createdAnnotationsData?.length || 0} annotations added!`}
+          hidden={!createdAnnotationsData}
+        />
+      </div>
+
+      <div className="overflow-y-auto">
+        {!annotations || annotations.length === 0 ? (
+          <NoAnnotation openElementSelector={openElementSelector} />
+        ) : (
+          <AnnotationList annotations={annotations} />
+        )}
+      </div>
       <div className="flex flex-col h-full justify-between">
-        <div>
-          <Alert
-            color="red"
-            title="Error"
-            message="Error analysing snapshot! Please try again."
-            hidden={!axeError}
-          />
-
-          <Alert
-            color="green"
-            title="Snapshot analysed"
-            message={`Axe found ${axeData?.length || 0} problems!`}
-            action={{
-              name: 'Publish',
-              method: () => createAnnotations({ snapshotId, annotations: axeData }),
-              disabled: createAnnotationsLoading,
-            }}
-            hidden={!axeData}
-          />
-
-          <Alert
-            color="red"
-            title="Error"
-            message="Error posting axe annotatons! Please try again."
-            hidden={!createAnnotationsError}
-          />
-
-          <Alert
-            color="green"
-            title="Axe Annotations added"
-            message={`${createdAnnotationsData?.length || 0} annotations added!`}
-            hidden={!createdAnnotationsData}
-          />
-        </div>
-
-        <div className="overflow-y-auto">
-          {!annotations || annotations.length === 0 ? (
-            <NoAnnotation openElementSelector={openElementSelector} />
-          ) : (
-            <AnnotationList annotations={annotations} />
-          )}
-        </div>
         <div>
           <hr />
           <Awareness clients={clients} />

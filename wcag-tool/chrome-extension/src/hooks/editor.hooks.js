@@ -1,5 +1,4 @@
 /* global webkitRequestFileSystem, TEMPORARY */
-
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSliders } from './sliders.hooks'
@@ -40,7 +39,7 @@ export const useAxeCore = () => {
           '*'
         )
       } catch (_error) {
-        setError('Cannot not analyse snapshot!')
+        setError('Cannot analyse snapshot!')
         setLoading(false)
       }
     }, 100)
@@ -67,13 +66,6 @@ export const useAxeCore = () => {
       removeEventListener('message', eventListener)
     }
   }, [])
-
-  useEffect(() => {
-    console.log('==================')
-    console.log('data', data)
-    console.log('error', error)
-    console.log('loading', loading)
-  }, [data, error, loading])
 
   return [analyse, { data, loading, error }]
 }
