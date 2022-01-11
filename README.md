@@ -96,7 +96,7 @@ There are various custom scripts to help with development. In `\wcag-tool` you c
 > Run all unit tests for both front- and backend. 
 
 > **npm run test:integration**
-> Run all integration tests for both front- and backend.  
+> Run all integration tests for backend.  
 
 > **npm run lint**
 > Run eslint on all .js and .jsx files for both front- and backend. 
