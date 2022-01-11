@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
+import config from '../../config'
 import { axecoreAnnotationMapper } from '../utils'
+
 
 let tabData
 let tabDataContents = []
@@ -187,7 +189,7 @@ export const useRegisterEditorEffects = () => {
               editorIframe.contentWindow.focus()
             })
             .catch(async () => {
-              const response = await fetch(`http://localhost:5000/v1/snapshots/${snapshotId}/file`)
+              const response = await fetch(`${config.SERVER_URL}/snapshots/${snapshotId}/file`)
               if (response.ok) {
                 tabData.content = await response.text()
                 editorIframe.contentWindow.postMessage(
