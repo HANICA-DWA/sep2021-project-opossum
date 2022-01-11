@@ -55,7 +55,8 @@ Use the following command to enable hot reloading
 `npm run dev`
 
 ## Single-file
-Building single-file. Use dev command to build with watch.
+Build single-file. Use dev command to build with watch.
+Single-file is used to create snapshots of pages.
 
 `npm run dev:single-file`
 `npm run build:single-file`
