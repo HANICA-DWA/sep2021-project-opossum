@@ -54,11 +54,15 @@ A typical chrome extension exists of the following three files:
 Use the following command to enable hot reloading  
 `npm run dev`
 
-## Build single-file
-The files that are part of single-file need to be build before the extension can be run.
-Run this command prior to starting the extension or if you're making changes to single-file source files.
+## Single-file
+Building single-file. Use dev command to build with watch.
 
+`npm run dev:single-file`
 `npm run build:single-file`
+
+## Remotedev
+
+`npm run remotedev`
 
 ## Lint
 
@@ -70,7 +74,8 @@ Run this command prior to starting the extension or if you're making changes to 
 
 ## Test
 
-`npm run test`
+`npm run test:unit`
+`npm run test:e2e`
 
 ## Clean
 
@@ -79,9 +84,6 @@ Run this command prior to starting the extension or if you're making changes to 
 ## Build
 
 `npm run build`
-
-## Remotedev
-`npm run remotedev`
 
 ## Installation
 

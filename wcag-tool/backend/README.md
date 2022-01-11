@@ -10,7 +10,8 @@
 
 ## test
 
-`npm test`
+`npm run test:unit`
+`npm run test:integration`
 
 ## lint
 
