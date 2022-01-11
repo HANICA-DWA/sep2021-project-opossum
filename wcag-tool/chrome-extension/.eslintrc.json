@@ -41,7 +41,6 @@
     "jsx-a11y/label-has-associated-control": "off",
     "no-use-before-define": "off",
     "no-restricted-globals": "off",
-    "no-undef": "off",
     "prettier/prettier": [
       "error",
       {
