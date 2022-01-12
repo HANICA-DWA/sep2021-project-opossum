@@ -55,8 +55,11 @@ const AnnotationDetailSlider = function () {
       title={
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
-            <p title={selectedAnnotation?.title} className="text-base font-poppins-semi">
-              {truncateStringAndCapitalize(70, stripHtml(selectedAnnotation?.title))}
+            <p
+              title={stripHtml(selectedAnnotation?.title)}
+              className="text-base font-poppins-semi truncate"
+            >
+              {stripHtml(selectedAnnotation?.title)}
             </p>
           </div>
           <div className="flex justify-end">

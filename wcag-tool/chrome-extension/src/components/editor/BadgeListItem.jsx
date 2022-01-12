@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import ReactHtmlParser from 'react-html-parser'
 import { useDispatch } from 'react-redux'
-import { stripHtml, truncateStringAndCapitalize } from '../../utils'
+import { stripHtml } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders, useOptions } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
+import { Icon } from "../common/Icon";
 
 export default function BadgeListItem({ annotation, index, iframeDoc }) {
   const dispatch = useDispatch()
@@ -24,9 +25,9 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
       visible: tooltipIsVisible,
       onVisibleChange: setTooltipIsVisible,
       closeOnOutsideClick: true,
-      placement: 'bottom',
+      placement: 'auto-start',
       trigger: 'click',
-      offset: [0, 10],
+      offset: [0, 20],
     })
 
   // TODO: replace with real labels from annotation
@@ -102,50 +103,64 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
           dispatch(setHighlightedElementSelector(''))
         }}
         ref={setTriggerRef}
-        className="absolute cursor-pointer animate-pulse"
-        badge={index + 1}
+        className="absolute cursor-pointer text-center "
         style={style}
-      />
+      >
+        <Icon
+          type="outline"
+          name="location"
+          viewBox="0 0 24 24"
+          size={8}
+          className="text-red-600 bg-opacity-70 bg-white rounded-full"
+        />
+        {index + 1}
+      </div>
 
       {visible && (
         <div
           ref={setTooltipRef}
           {...getTooltipProps({
-            className: 'tooltip-container tooltip-interactive ',
+            className: 'tooltip-container tooltip-interactive annotation-popup',
           })}
         >
-          <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+          <div {...getArrowProps({ className: 'bg-white text-black' })} />
 
-          <div className="w-80">
-            <div className="">
-              <p title={annotation?.title} className="text-base font-poppins-semi truncate">
-                {truncateStringAndCapitalize(70, stripHtml(annotation?.title))}
+          <div className="grid grid-flow-row gap-y-1">
+            <div className="grid grid-flow-col justify-between items-center">
+              <p
+                title={stripHtml(annotation?.title)}
+                className="text-base font-poppins-semi truncate"
+              >
+                {stripHtml(annotation?.title)}
               </p>
+              <div>
+                <button
+                  onClick={() => {
+                    setTooltipIsVisible(false)
+                  }}
+                  className="text-md rounded-lg focus:border-4 py-1 px-2 text-gray-400 font-poppins hover:bg-gray-100 "
+                >
+                  X
+                </button>
+              </div>
             </div>
             <div className="truncate">
-              <LabelList labels={labels} />
+              <LabelList small labels={labels} />
             </div>
-            <div className=" overflow-y-auto overflow-x-hidden whitespace-normal annotation-details">
+            <div className="whitespace-normal truncate-2 font-poppins">
               {ReactHtmlParser(annotation?.description)}
             </div>
-
-            <button
-              onClick={() => {
-                setTooltipIsVisible(false)
-              }}
-              className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-2 px-2 text-gray-400 font-poppins hover:bg-gray-800 "
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => {
-                setTooltipIsVisible(false)
-                openDetailsSlider(annotation._id)
-              }}
-              className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-2 px-2 text-gray-400 font-poppins hover:bg-gray-800 "
-            >
-              Full details
-            </button>
+            <div>
+              <button
+                onClick={() => {
+                  setTooltipIsVisible(false)
+                  openDetailsSlider(annotation._id)
+                }}
+                className="text-md rounded-lg focus:border-4 py-1 px-2 text-gray-400 font-poppins hover:bg-gray-100"
+              >
+                Full details
+              </button>
+            </div>
           </div>
         </div>
       )}

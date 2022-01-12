@@ -37,7 +37,7 @@ const AnnotationListItem = function ({ annotation }) {
         <div className="grid grid-cols-6">
           <div className="col-span-5">
             <div>
-              <p title={title} className="text-base truncate font-poppins-semi">
+              <p title={stripHtml(title)} className="text-base truncate font-poppins-semi">
                 {stripHtml(title)}
               </p>
             </div>
