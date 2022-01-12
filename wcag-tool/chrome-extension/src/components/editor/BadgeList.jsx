@@ -1,5 +1,6 @@
 import React from 'react'
 import BadgeListItem from './BadgeListItem'
+import { useSliders } from '../../hooks'
 
 export default function BadgeList({ annotations }) {
   const iframeDocument = window.document.getElementById('snapshot-iframe').contentWindow.document
@@ -16,12 +17,18 @@ export default function BadgeList({ annotations }) {
     return { ...annotation, count: map.get(annotation.selector) }
   })
 
-  return annotationsWithCount.map((annotation, index) => (
-    <BadgeListItem
-      key={annotation._id}
-      annotation={annotation}
-      index={index}
-      iframeDoc={iframeDocument}
-    />
-  ))
+  const [, { anySliderOpen }] = useSliders()
+
+  return (
+    <div className={`absolute transition-left ${anySliderOpen && 'left-400'}`}>
+      {annotationsWithCount.map((annotation, index) => (
+        <BadgeListItem
+          key={annotation._id}
+          annotation={annotation}
+          index={index}
+          iframeDoc={iframeDocument}
+        />
+      ))}
+    </div>
+  )
 }

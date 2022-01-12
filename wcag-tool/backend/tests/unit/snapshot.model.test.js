@@ -112,8 +112,8 @@ describe('Snapshot Model', function () {
 
       // Assert
       expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
-      expect(Object.keys(error.errors)).includes('annotations.0.title')
-      expect(Object.keys(error.errors)).includes('annotations.0.description')
+      expect(Object.keys(error.errors)).not.includes('annotations.0.title')
+      expect(Object.keys(error.errors)).not.includes('annotations.0.description')
       expect(Object.keys(error.errors)).includes('annotations.0.selector')
       expect(Object.keys(error.errors)).not.includes('annotations.0.successCriterium')
     })

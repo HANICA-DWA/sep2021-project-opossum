@@ -22,6 +22,18 @@ body {
     border-top-color: #cccccc;
 }
 
+#root {
+    transition: width 0.5s ease;
+}
+
+.transition-left {
+    transition: left 0.5s ease;
+}
+
+.left-400 {
+    left: 400px;
+}
+
 @media (orientation: portrait) {
     body {
         flex-direction: row;

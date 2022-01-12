@@ -59,26 +59,26 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
     }
   }
 
-  useEffect(() => {
-    if (anySliderOpen && options.sideBySide) {
-      setStyle((prevState) => ({
-        ...prevState,
-        transform: 'translateX(400px)',
-      }))
-    } else {
-      setStyle((prevState) => ({
-        ...prevState,
-        transform: 'translateX(0px)',
-      }))
-    }
-
-    window.sliderIsOpen = anySliderOpen
-    window.sideBySide = options.sideBySide
-  }, [anySliderOpen])
+  // useEffect(() => {
+  //   if (anySliderOpen && options.sideBySide) {
+  //     setStyle((prevState) => ({
+  //       ...prevState,
+  //       transform: 'translateX(400px)',
+  //     }))
+  //   } else {
+  //     setStyle((prevState) => ({
+  //       ...prevState,
+  //       transform: 'translateX(0px)',
+  //     }))
+  //   }
+  //
+  //   window.sliderIsOpen = anySliderOpen
+  //   window.sideBySide = options.sideBySide
+  // }, [anySliderOpen])
 
   useEffect(() => {
     iframeDoc.addEventListener('scroll', handlePositionChange)
-    window.addEventListener('resize', handlePositionChange)
+    iframeDoc.addEventListener('resize', handlePositionChange)
 
     // wait for iframe content to load before setting position and element ref
     setTimeout(() => {
@@ -122,10 +122,10 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
           <div className="grid grid-flow-row gap-y-1">
             <div className="grid grid-flow-col justify-between items-center">
               <p
-                title={stripHtml(annotation?.title)}
+                title={stripHtml(annotation?.title) || 'No title'}
                 className="text-base font-poppins-semi truncate capitalize"
               >
-                {stripHtml(annotation?.title)}
+                {stripHtml(annotation?.title) || 'Untitled'}
               </p>
               <div>
                 <button
@@ -142,7 +142,10 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
               <LabelList small labels={labels} />
             </div>
             <div className="whitespace-normal truncate-2 font-poppins">
-              {ReactHtmlParser(annotation?.description)}
+              {annotation?.description === undefined ||
+              stripHtml(annotation?.description).length === 0
+                ? null
+                : ReactHtmlParser(annotation?.description)}
             </div>
             <div>
               <button

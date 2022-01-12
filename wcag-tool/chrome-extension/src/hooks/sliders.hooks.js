@@ -45,7 +45,7 @@ export const useSliders = () => {
   }
 
   const openListSlider = () => {
-    dispatch(setSelectedAnnotationId({ id: '', index: 0 }))
+    dispatch(setSelectedAnnotationId({ id: '' }))
     dispatch(setHighlightedElementSelector(''))
 
     dispatch(setListSliderIsOpen(true))
