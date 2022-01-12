@@ -3,6 +3,7 @@ import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
 import { useOptions } from '.'
+import config from '../../config'
 
 const ydoc = new Y.Doc()
 
@@ -31,9 +32,8 @@ const getRandomName = () => {
 
 const randomName = getRandomName()
 
-const setUserAwareness = async (provider, name, id, color, idle) => {
+const setUserAwareness = (provider, name, id, color, idle) => {
   name = name || randomName
-
   provider.awareness.setLocalStateField('user', {
     id,
     name,
@@ -43,7 +43,7 @@ const setUserAwareness = async (provider, name, id, color, idle) => {
 }
 
 const joinRoom = (room) => {
-  return new WebsocketProvider('ws://localhost:5000', room, ydoc)
+  return new WebsocketProvider(config.WEBSOCKET_URL, room, ydoc)
 }
 
 const getRandomColor = () => {

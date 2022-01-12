@@ -9,9 +9,23 @@
     <div>
       <div id="root"></div>
       <iframe
+        id="snapshot-iframe"
         class="editor"
-        id="editor"
-        srcdoc="&lt;!DOCTYPE html&gt;&lt;body&gt;&lt;script src=/single-file/web/editor/editor-helper-web.js&gt;&lt;/script&gt;&lt;script src=/single-file/web/editor/editor-web.js&gt;&lt;/script&gt;&lt;script src=/extension/lib/readability/Readability.js&gt;&lt;/script&gt;&lt;/script&gt;&lt;script src=/extension/lib/readability/Readability-readerable.js&gt;&lt;/script&gt;&lt;/body&gt;"
+        srcdoc="&lt;!DOCTYPE html&gt;
+                    &lt;body&gt;
+                      &lt;script src=/single-file/web/editor/editor-helper-web.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/single-file/web/editor/editor-web.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/extension/lib/readability/Readability.js&gt;
+                      &lt;/script&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/extension/lib/readability/Readability-readerable.js&gt;
+                      &lt;/script&gt;
+                      &lt;script src=/js/axe.min.js&gt;
+                      &lt;/script&gt;
+                    &lt;/body&gt;
+                    "
         sandbox="allow-scripts allow-modals allow-same-origin"
       ></iframe>
     </div>

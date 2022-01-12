@@ -5,13 +5,14 @@
   "private": true,
   "author": "",
   "scripts": {
+    "postinstall": "node ./postinstall.js",
     "dev": "webpack --config webpack/webpack.dev.js --watch",
     "dev:single-file": "npx rollup -c rollup.config.js -w",
     "build": "webpack --config webpack/webpack.prod.js",
     "build:single-file": "npx rollup -c rollup.config.js",
     "clean": "rimraf dist",
     "test:unit": "jest --passWithNoTests tests/unit",
-    "test:e2e": "jest --passWithNoTests tests/e2e",
+    "test:e2e": "jest --passWithNoTests tests/e2e --config tests/e2e/jest.config.js",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "remotedev": "remotedev --hostname=localhost --port=8000"
@@ -45,6 +46,7 @@
     "@babel/preset-react": "^7.16.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "autoprefixer": "^10.4.0",
+    "axe-core": "^4.3.5",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.5.1",

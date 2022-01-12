@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "serve": "http-server ."
+  },
+  "devDependencies": {
+    "axe-core": "^4.3.5",
+    "http-server": "^14.0.0"
+  }
+}

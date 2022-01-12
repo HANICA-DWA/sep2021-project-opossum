@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function LabelListItem({ label }) {
+export default function LabelListItem({ label, small }) {
   const labelColors = {
     'auto analysis': 'bg-yellow-900',
     draft: 'bg-purple-500',
@@ -15,7 +15,9 @@ export default function LabelListItem({ label }) {
   return (
     <span
       key={label}
-      className={`text-xs mb-2 mr-2 inline-block font-medium ${labelColors[label]} px-2 py-0.5 rounded text-white align-middle`}
+      className={`font-poppins text-xs inline-block ${
+        labelColors[label]
+      } rounded text-white align-middle ${small ? 'px-1.5 mb-1 mr-1.5' : 'mb-2 mr-2 px-2 py-0.5'}`}
     >
       {label}
     </span>
