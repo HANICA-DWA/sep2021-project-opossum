@@ -4,13 +4,13 @@ import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
-import { truncateStringAndCapitalize, stripHtml } from '../../utils'
+import { stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
 import LabelList from './LabelList'
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
-  const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
+  const { selectedAnnotation, selectedAnnotationId, annotationIndex } = useAnnotation()
   const [deleteAnnotation] = useDeleteAnnotation()
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
@@ -55,8 +55,18 @@ const AnnotationDetailSlider = function () {
       title={
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
-            <p title={selectedAnnotation?.title} className="text-base font-poppins-semi">
-              {truncateStringAndCapitalize(70, stripHtml(selectedAnnotation?.title))}
+            <p
+              title={stripHtml(selectedAnnotation?.title)}
+              className="text-base font-poppins-semi truncate capitalize"
+            >
+              {annotationIndex !== -1 ? (
+                <span className="bg-red-600 rounded-full mr-1">
+                  <span className="text-white text-xs font-poppins-semi p-2 pt-2">
+                    {annotationIndex + 1}
+                  </span>
+                </span>
+              ) : null}
+              {stripHtml(selectedAnnotation?.title)}
             </p>
           </div>
           <div className="flex justify-end">

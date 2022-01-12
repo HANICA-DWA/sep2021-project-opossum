@@ -47,12 +47,12 @@ const AnnotationListSlider = ({ clients }) => {
         <div className="grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
             <span
-              className="text-base font-medium text-gray-900 self-end truncate"
+              className="text-base font-medium text-gray-900 self-end truncate capitalize"
               title={snapshotInfo?.name}
             >
               {snapshotInfo?.name}
             </span>
-            <span className="mt-1 text-sm text-gray-500 self-start truncate" title={longDate}>
+            <span className="mt-1 text-sm text-gray-500 self-start" title={longDate}>
               {shortDate}
             </span>
           </div>
