@@ -56,7 +56,7 @@ const AnnotationDetailSlider = function () {
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
             <p
-              title={stripHtml(selectedAnnotation?.title)}
+              title={stripHtml(selectedAnnotation?.title) || 'No title'}
               className="text-base font-poppins-semi truncate capitalize"
             >
               {annotationIndex !== -1 ? (
@@ -66,7 +66,7 @@ const AnnotationDetailSlider = function () {
                   </span>
                 </span>
               ) : null}
-              {stripHtml(selectedAnnotation?.title)}
+              {stripHtml(selectedAnnotation?.title) || 'Untitled'}
             </p>
           </div>
           <div className="flex justify-end">

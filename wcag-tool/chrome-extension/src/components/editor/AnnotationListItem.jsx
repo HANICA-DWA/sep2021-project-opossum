@@ -32,13 +32,13 @@ const AnnotationListItem = function ({ annotation, index }) {
           <div className="col-span-5">
             <div>
               <p
-                title={stripHtml(title)}
+                title={stripHtml(title) || 'No title'}
                 className="text-base truncate capitalize font-poppins-semi mb-1"
               >
                 <span className="bg-red-600 rounded-full mr-1">
                   <span className="text-white text-xs font-poppins-semi p-2 pt-2">{index + 1}</span>
                 </span>
-                {stripHtml(title)}
+                {stripHtml(title) || 'Untitled'}
               </p>
             </div>
             <div className="truncate">

@@ -42,18 +42,14 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
     const title = stripHtml(values.title)
 
-    if (!title) {
-      errors.title = 'Required'
-    } else if (title.length < 5 || title.length > 60) {
-      errors.title = 'Title must be between 5 and 60 characters.'
+    if (title.length > 60) {
+      errors.title = 'Title allows a maximum 60 characters.'
     }
 
     const description = stripHtml(values.description)
 
-    if (!description) {
-      errors.description = 'Required'
-    } else if (description.length < 10 || description.length > 1000) {
-      errors.description = 'Description must be between 10 and 1000 characters.'
+    if (description.length > 1000) {
+      errors.description = 'Description allows a maximum 1000 characters.'
     }
 
     return errors
@@ -140,9 +136,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
             />
           </label>
-          {errors.title && touched.title && (
-            <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>
-          )}
+          {errors.title && <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>}
 
           <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
           <Field
@@ -157,7 +151,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
-              <ActionButton disabled={!isValid || !dirty} type="submit">
+              <ActionButton disabled={!isValid || !errors} type="submit">
                 Create Annotation
               </ActionButton>
             </div>

@@ -1,9 +1,7 @@
 import React from 'react'
-import { useYAnnotations } from '../../hooks'
 import BadgeListItem from './BadgeListItem'
 
-export default function BadgeList() {
-  const { annotations } = useYAnnotations()
+export default function BadgeList({ annotations }) {
   const iframeDocument = window.document.getElementById('snapshot-iframe').contentWindow.document
 
   // keeping track of any duplicate selectors so we can position badges correctly
@@ -18,16 +16,12 @@ export default function BadgeList() {
     return { ...annotation, count: map.get(annotation.selector) }
   })
 
-  return (
-    <div>
-      {annotationsWithCount.map((annotation, index) => (
-        <BadgeListItem
-          key={annotation._id}
-          annotation={annotation}
-          index={index}
-          iframeDoc={iframeDocument}
-        />
-      ))}
-    </div>
-  )
+  return annotationsWithCount.map((annotation, index) => (
+    <BadgeListItem
+      key={annotation._id}
+      annotation={annotation}
+      index={index}
+      iframeDoc={iframeDocument}
+    />
+  ))
 }

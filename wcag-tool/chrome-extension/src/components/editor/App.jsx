@@ -7,8 +7,9 @@ import AnnotationDetailSlider from './AnnotationDetailSlider'
 import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
-import { useSliders, useOptions } from '../../hooks'
+import { useSliders, useOptions, useYAnnotations } from "../../hooks";
 import BadgeList from './BadgeList'
+import { setListSliderIsOpen } from "../../services/slidersSlice";
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -48,6 +49,7 @@ const App = () => {
   const isIdle = useSelector((state) => state.user.isIdle)
   const snapshotId = useGetSnapshotId()
   const { clients } = useAwareness(snapshotId)
+  const { annotations } = useYAnnotations()
   const options = useOptions()
 
   const handleUserIsActive = () => {
@@ -70,32 +72,32 @@ const App = () => {
   }, [isIdle])
 
   // eslint-disable-next-line no-empty-pattern
-  const [{}, { anySliderOpen }] = useSliders()
+  // const [{}, { anySliderOpen }] = useSliders()
 
-  useEffect(() => {
-    async function manageSlider() {
-      const iframeDocument =
-        window.document.getElementById('snapshot-iframe').contentWindow.document
-      if (!iframeDocument) return
-
-      iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
-      if (anySliderOpen) {
-        if (options.sideBySide) {
-          iframeDocument.body.style.transform = 'translateX(400px)'
-        }
-      } else {
-        iframeDocument.body.style.transform = 'translateX(0px)'
-      }
-    }
-
-    manageSlider()
-  }, [anySliderOpen])
+  // useEffect(() => {
+  //   async function manageSlider() {
+  //     const iframeDocument =
+  //       window.document.getElementById('snapshot-iframe').contentWindow.document
+  //     if (!iframeDocument) return
+  //
+  //     iframeDocument.body.style.transition = 'transform 0.5s ease-in-out'
+  //     if (anySliderOpen) {
+  //       if (options.sideBySide) {
+  //         iframeDocument.body.style.transform = 'translateX(400px)'
+  //       }
+  //     } else {
+  //       iframeDocument.body.style.transform = 'translateX(0px)'
+  //     }
+  //   }
+  //
+  //   manageSlider()
+  // }, [anySliderOpen])
 
   return (
     <>
-      <BadgeList />
+      {annotations ? <BadgeList annotations={annotations} /> : null}
       <OverlayButton />
-      <AnnotationListSlider clients={clients} />
+      <AnnotationListSlider annotations={annotations} clients={clients} />
       <AnnotationDetailSlider />
       <CreateAndEditAnnotationSlider />
     </>
