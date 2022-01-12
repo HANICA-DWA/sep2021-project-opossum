@@ -12,14 +12,11 @@ import unique from '../../../../node_modules/unique-selector/src/index.js'
   const DISABLED_NOSCRIPT_ATTRIBUTE_NAME = 'data-single-file-disabled-noscript'
   const COMMENT_HEADER = 'Snapshot WCAG Tool'
 
-  // eslint-disable-next-line no-unused-vars
-  let NOTES_WEB_STYLESHEET
   let MASK_WEB_STYLESHEET
   let HIGHLIGHTS_WEB_STYLESHEET
   let anchorElement
   let maskNoteElement
   let maskPageElement
-  // eslint-disable-next-line no-unused-vars
   let initScriptContent
 
   window.onmessage = async (event) => {

@@ -12,7 +12,7 @@
     "build:single-file": "npx rollup -c rollup.config.js",
     "clean": "rimraf dist",
     "test:unit": "jest --passWithNoTests tests/unit",
-    "test:e2e": "jest --passWithNoTests tests/e2e",
+    "test:e2e": "jest --passWithNoTests tests/e2e --config tests/e2e/jest.config.js",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "npm run lint -- --fix",
     "remotedev": "remotedev --hostname=localhost --port=8000"
