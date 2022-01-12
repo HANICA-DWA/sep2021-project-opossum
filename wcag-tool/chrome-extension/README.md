@@ -1,7 +1,5 @@
 # WCAG Tool Chrome extension
 
-Description...
-
 ## Prerequisites
 
 Before you can jump into learning developing Chrome Extensions knowledge of the following items is necessary:
@@ -54,11 +52,16 @@ A typical chrome extension exists of the following three files:
 Use the following command to enable hot reloading  
 `npm run dev`
 
-## Build single-file
-The files that are part of single-file need to be build before the extension can be run.
-Run this command prior to starting the extension or if you're making changes to single-file source files.
+## Single-file
+Build single-file. Use dev command to build with watch.
+Single-file is used to create snapshots of pages.
 
+`npm run dev:single-file`
 `npm run build:single-file`
+
+## Remotedev
+
+`npm run remotedev`
 
 ## Lint
 
@@ -70,7 +73,17 @@ Run this command prior to starting the extension or if you're making changes to 
 
 ## Test
 
-`npm run test`
+`npm run test:unit`
+`npm run test:e2e`
+
+Before you can run the end to end tests you need to change the chrome extension id in tests/e2e/index.test.js file.
+You can configure the correct id with the following steps:
+1. Open tests/e2e/index.test.js file with an editor
+2. Uncomment line 35 of the file
+3. Run the test with `npm run test:e2e`
+4. A chrome browser will open and the extension will be loaded
+5. Go to the options page of the extension and copy the extension id from the url bar
+6. Go back to the tests/e2e/index.test.js file and replace the id at line 25 with the copied id
 
 ## Clean
 
@@ -79,9 +92,6 @@ Run this command prior to starting the extension or if you're making changes to 
 ## Build
 
 `npm run build`
-
-## Remotedev
-`npm run remotedev`
 
 ## Installation
 

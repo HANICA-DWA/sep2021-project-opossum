@@ -2,17 +2,17 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
-import IconButton from '../common/IconButton'
-import { useAnalyse, useYAnnotations, useSliders } from '../../hooks'
-
-import AnnotationList from './AnnotationList'
-import NoAnnotation from './NoAnnotation'
-import Awareness from './Awareness'
-import { useGetSnapshotQuery } from '../../services'
 import { formatCreatedAtString } from '../../utils'
-import { useGetSnapshotId } from '../../hooks/editor.hooks'
-import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
+import { useAxeCore, useYAnnotations, useSliders, useGetSnapshotId } from '../../hooks'
+import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
+
+import Alert from './Alert'
+import AnnotationList from './AnnotationList'
+import Awareness from './Awareness'
+import IconButton from '../common/IconButton'
+import NoAnnotation from './NoAnnotation'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
+import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { Icon } from '../common/Icon'
 
 const AnnotationListSlider = ({ clients }) => {
@@ -21,7 +21,16 @@ const AnnotationListSlider = ({ clients }) => {
   const snapshotId = useGetSnapshotId()
   const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
   const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
-  const [analyse, { error, loading }] = useAnalyse()
+
+  const [analyse, { data: axeData, error: axeError, loading: axeLoading }] = useAxeCore()
+  const [
+    createAnnotations,
+    {
+      data: createdAnnotationsData,
+      error: createAnnotationsError,
+      isLoading: createAnnotationsLoading,
+    },
+  ] = useCreateAnnotationsMutation(snapshotId)
 
   return (
     <SlidingPane
@@ -53,7 +62,7 @@ const AnnotationListSlider = ({ clients }) => {
               toolTipText="Create Annotation"
               className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
-              {loading ? (
+              {axeLoading ? (
                 <Icon
                   name="broken-circle"
                   type="outline"
@@ -80,13 +89,42 @@ const AnnotationListSlider = ({ clients }) => {
       }
     >
       <div className="flex flex-col h-full justify-between">
-        {error && (
-          <div className="bg-red-100 border-l-4 border-red-700 text-red-700 p-3" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
+        <div>
+          <Alert
+            color="red"
+            title="Error"
+            message="Error analysing snapshot! Please try again."
+            hidden={!axeError}
+          />
 
-        <div className="overflow-y-auto">
+          <Alert
+            color="green"
+            title="Snapshot analysed"
+            message={`Axe found ${axeData?.length || 0} problems!`}
+            action={{
+              name: 'Publish',
+              method: () => createAnnotations({ snapshotId, annotations: axeData }),
+              disabled: createAnnotationsLoading,
+            }}
+            hidden={!axeData}
+          />
+
+          <Alert
+            color="red"
+            title="Error"
+            message="Error posting axe annotatons! Please try again."
+            hidden={!createAnnotationsError}
+          />
+
+          <Alert
+            color="green"
+            title="Axe Annotations added"
+            message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            hidden={!createdAnnotationsData}
+          />
+        </div>
+
+        <div className="overflow-y-auto mb-auto">
           {!annotations || annotations.length === 0 ? (
             <NoAnnotation openElementSelector={openElementSelector} />
           ) : (

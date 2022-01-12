@@ -53,6 +53,25 @@ snapshotSchema.methods.addAnnotation = async function (
   return annotation
 }
 
+snapshotSchema.methods.addAnnotations = async function (annotations) {
+  const _annotations = annotations.map(
+    ({ title, description, selector, successCriterium, labels }) =>
+      new Annotation({
+        title: sanitizeHtml(title, sanitizeOptions),
+        description: sanitizeHtml(description, sanitizeOptions),
+        selector,
+        successCriterium,
+        labels,
+      })
+  )
+
+  _annotations.forEach((annotation) => this.annotations.push(annotation))
+
+  await this.save()
+
+  return _annotations
+}
+
 // eslint-disable-next-line func-names
 snapshotSchema.methods.updateAnnotation = async function (id, fields) {
   const annotation = this.annotations.id(id)

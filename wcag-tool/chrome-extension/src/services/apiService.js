@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import config from '../../config'
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/v1/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: config.SERVER_URL }),
   tagTypes: ['Annotation', 'Snapshot'],
   endpoints: (builder) => ({
     getPrinciples: builder.query({
@@ -23,6 +24,14 @@ export const api = createApi({
         url: `snapshots/${snapshotId}/annotations`,
         method: 'POST',
         body: newAnnotation,
+      }),
+      invalidatesTags: ['Annotation'],
+    }),
+    createAnnotations: builder.mutation({
+      query: ({ snapshotId, annotations }) => ({
+        url: `snapshots/${snapshotId}/annotations`,
+        method: 'POST',
+        body: annotations,
       }),
       invalidatesTags: ['Annotation'],
     }),
@@ -58,6 +67,7 @@ export const {
   useGetSuccessCriteriaQuery,
   useGetAnnotationsQuery,
   useCreateAnnotationMutation,
+  useCreateAnnotationsMutation,
   useUpdateAnnotationMutation,
   useDeleteAnnotationMutation,
   useGetSnapshotsQuery,

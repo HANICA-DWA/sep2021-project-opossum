@@ -3,6 +3,7 @@ import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
 import { useOptions } from '.'
+import config from '../../config'
 
 const ydoc = new Y.Doc()
 
@@ -42,7 +43,7 @@ const setUserAwareness = (provider, name, id, color, idle) => {
 }
 
 const joinRoom = (room) => {
-  return new WebsocketProvider('ws://localhost:5000', room, ydoc)
+  return new WebsocketProvider(config.WEBSOCKET_URL, room, ydoc)
 }
 
 const getRandomColor = () => {
