@@ -2,18 +2,18 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
-import IconButton from '../common/IconButton'
-import { useAxeCore, useYAnnotations, useSliders } from '../../hooks'
-import AnnotationList from './AnnotationList'
-import NoAnnotation from './NoAnnotation'
-import Awareness from './Awareness'
-import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 import { formatCreatedAtString } from '../../utils'
-import { useGetSnapshotId } from '../../hooks/editor.hooks'
-import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
-import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
-import { Icon } from '../common/Icon'
+import { useAxeCore, useYAnnotations, useSliders, useGetSnapshotId } from '../../hooks'
+import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
+
 import Alert from './Alert'
+import AnnotationList from './AnnotationList'
+import Awareness from './Awareness'
+import IconButton from '../common/IconButton'
+import NoAnnotation from './NoAnnotation'
+import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
+import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
+import { Icon } from '../common/Icon'
 
 const AnnotationListSlider = ({ clients }) => {
   const { annotations } = useYAnnotations()
@@ -88,49 +88,49 @@ const AnnotationListSlider = ({ clients }) => {
         </div>
       }
     >
-      <div>
-        <Alert
-          color="red"
-          title="Error"
-          message="Error analysing snapshot! Please try again."
-          hidden={!axeError}
-        />
-
-        <Alert
-          color="green"
-          title="Snapshot analysed"
-          message={`Axe found ${axeData?.length || 0} problems!`}
-          action={{
-            name: 'Publish',
-            method: () => createAnnotations({ snapshotId, annotations: axeData }),
-            disabled: createAnnotationsLoading,
-          }}
-          hidden={!axeData}
-        />
-
-        <Alert
-          color="red"
-          title="Error"
-          message="Error posting axe annotatons! Please try again."
-          hidden={!createAnnotationsError}
-        />
-
-        <Alert
-          color="green"
-          title="Axe Annotations added"
-          message={`${createdAnnotationsData?.length || 0} annotations added!`}
-          hidden={!createdAnnotationsData}
-        />
-      </div>
-
-      <div className="overflow-y-auto">
-        {!annotations || annotations.length === 0 ? (
-          <NoAnnotation openElementSelector={openElementSelector} />
-        ) : (
-          <AnnotationList annotations={annotations} />
-        )}
-      </div>
       <div className="flex flex-col h-full justify-between">
+        <div>
+          <Alert
+            color="red"
+            title="Error"
+            message="Error analysing snapshot! Please try again."
+            hidden={!axeError}
+          />
+
+          <Alert
+            color="green"
+            title="Snapshot analysed"
+            message={`Axe found ${axeData?.length || 0} problems!`}
+            action={{
+              name: 'Publish',
+              method: () => createAnnotations({ snapshotId, annotations: axeData }),
+              disabled: createAnnotationsLoading,
+            }}
+            hidden={!axeData}
+          />
+
+          <Alert
+            color="red"
+            title="Error"
+            message="Error posting axe annotatons! Please try again."
+            hidden={!createAnnotationsError}
+          />
+
+          <Alert
+            color="green"
+            title="Axe Annotations added"
+            message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            hidden={!createdAnnotationsData}
+          />
+        </div>
+
+        <div className="overflow-y-auto mb-auto">
+          {!annotations || annotations.length === 0 ? (
+            <NoAnnotation openElementSelector={openElementSelector} />
+          ) : (
+            <AnnotationList annotations={annotations} />
+          )}
+        </div>
         <div>
           <hr />
           <Awareness clients={clients} />
