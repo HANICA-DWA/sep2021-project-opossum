@@ -22,6 +22,12 @@ const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
     quillRef.current = reactQuillRef.current.getEditor()
   }
 
+  // TODO Set cursor and username from Options Hook!:
+  provider.awareness.setLocalStateField('user', {
+    name: 'Henkie',
+    color: 'pink',
+  })
+
   // Quill modules
   const modules = {
     toolbar: field.name === 'title' ? false : [[{ header: [1, 2, 3, false] }], ['bold', 'italic']],
