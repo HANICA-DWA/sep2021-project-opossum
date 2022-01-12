@@ -1,7 +1,6 @@
 /* global webkitRequestFileSystem, TEMPORARY */
-
-import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
 import config from '../../config'
@@ -25,7 +24,7 @@ export const useGetSnapshotId = () => {
   return snapshotId
 }
 
-export const useAnalyse = () => {
+export const useAxeCore = () => {
   const [data, setData] = useState(undefined)
   const [loading, setLoading] = useState(undefined)
   const [error, setError] = useState(undefined)

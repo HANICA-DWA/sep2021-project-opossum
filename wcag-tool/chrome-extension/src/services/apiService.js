@@ -27,6 +27,14 @@ export const api = createApi({
       }),
       invalidatesTags: ['Annotation'],
     }),
+    createAnnotations: builder.mutation({
+      query: ({ snapshotId, annotations }) => ({
+        url: `snapshots/${snapshotId}/annotations`,
+        method: 'POST',
+        body: annotations,
+      }),
+      invalidatesTags: ['Annotation'],
+    }),
     updateAnnotation: builder.mutation({
       query: ({ snapshotId, annotationId, newFields }) => ({
         url: `snapshots/${snapshotId}/annotations/${annotationId}`,
@@ -59,6 +67,7 @@ export const {
   useGetSuccessCriteriaQuery,
   useGetAnnotationsQuery,
   useCreateAnnotationMutation,
+  useCreateAnnotationsMutation,
   useUpdateAnnotationMutation,
   useDeleteAnnotationMutation,
   useGetSnapshotsQuery,
