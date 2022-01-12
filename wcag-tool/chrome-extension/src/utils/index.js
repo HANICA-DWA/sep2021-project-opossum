@@ -59,11 +59,15 @@ export function timeSince(date, t) {
   let interval = seconds / 31536000
 
   if (interval > 1) {
-    return `${Math.floor(interval)}${t('Y_AGO')}`
+    return t('Y_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 604800
   if (interval > 1) {
-    return `${Math.floor(interval)}${t('W_AGO')}`
+    return t('W_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 86400
   if (interval > 1) {
@@ -79,11 +83,15 @@ export function timeSince(date, t) {
   }
   interval = seconds / 60
   if (interval > 1) {
-    return `${Math.floor(interval)}${t('M_AGO')}`
+    return t('M_AGO', {
+      time: Math.floor(interval),
+    })
   }
   if (seconds < 30) {
     return t('NOW')
   }
 
-  return `${Math.floor(seconds)}${t('S_AGO')}`
+  return t('S_AGO', {
+    time: Math.floor(interval),
+  })
 }

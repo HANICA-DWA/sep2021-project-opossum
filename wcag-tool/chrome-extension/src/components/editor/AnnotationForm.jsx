@@ -162,16 +162,16 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
               <ActionButton disabled={!isValid || !dirty} type="submit">
-                Create Annotation
+                {t('CREATE_ANNOTATION')}
               </ActionButton>
             </div>
           ) : (
             <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
               <ActionButton onClick={closeEditor} type="button">
-                Cancel
+                {t('CANCEL')}
               </ActionButton>
               <ActionButton disabled={!(errors && isValid)} type="submit">
-                Save
+                {t('SAVE')}
               </ActionButton>
             </div>
           )}

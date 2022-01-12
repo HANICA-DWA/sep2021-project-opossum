@@ -7,6 +7,12 @@
   "LANGUAGE_PT": "Portuguese",
   "LANGUAGE_FR": "French",
   "LANGUAGE_ES": "Spanish",
+  "LANGUAGE_IT": "Italian",
+  "LANGUAGE_DE": "German",
+  "LANGUAGE_NO": "Norwegian",
+  "LANGUAGE_SV": "Swedish",
+  "LANGUAGE_FI": "Finnish",
+  "LANGUAGE_PL": "Polish",
   "OPTIONS": "Options",
   "USERNAME": "Username",
   "SIDE_BY_SIDE": "Editor side-by-side",
@@ -40,5 +46,8 @@
   "COPY_WCAG": "Copy WCAG to title",
   "TITLE": "Title",
   "DESCRIPTION": "Description",
-  "EXIT_SELECTION": "Exit selection mode"
+  "EXIT_SELECTION": "Exit selection mode",
+  "SAVED": "Saved",
+  "SAVE": "Save",
+  "CANCEL": "Cancel"
 }

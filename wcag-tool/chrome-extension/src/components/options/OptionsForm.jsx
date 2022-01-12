@@ -40,6 +40,30 @@ const OptionsForm = function () {
       language: t('LANGUAGE_GR'),
       value: 'gr',
     },
+    {
+      language: t('LANGUAGE_DE'),
+      value: 'de',
+    },
+    {
+      language: t('LANGUAGE_NO'),
+      value: 'no',
+    },
+    {
+      language: t('LANGUAGE_SV'),
+      value: 'sv',
+    },
+    {
+      language: t('LANGUAGE_IT'),
+      value: 'it',
+    },
+    {
+      language: t('LANGUAGE_FI'),
+      value: 'fi',
+    },
+    {
+      language: t('LANGUAGE_PL'),
+      value: 'pl',
+    },
   ]
 
   useEffect(() => {
@@ -102,7 +126,7 @@ const OptionsForm = function () {
             viewBox={24}
           />
 
-          {saved ? 'Saved' : 'Save'}
+          {saved ? t('SAVED') : t('SAVE')}
         </DefaultButton>
       </div>
     </div>
