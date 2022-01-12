@@ -13,13 +13,13 @@ import { useGetSnapshotId } from './editor.hooks'
 export const useAnnotation = () => {
   const snapshotId = useGetSnapshotId()
   const { data: remoteAnnotations } = useGetAnnotationsQuery(snapshotId)
-  const { selectedAnnotationId } = useSelector((state) => state.annotation)
+  const { selectedAnnotationId, annotationIndex } = useSelector((state) => state.annotation)
 
   const selectedAnnotation = remoteAnnotations?.find(
     (annotation) => annotation._id === selectedAnnotationId
   )
 
-  return { selectedAnnotation, selectedAnnotationId }
+  return { selectedAnnotation, selectedAnnotationId, annotationIndex }
 }
 
 export const useCreateAnnotation = () => {
@@ -38,7 +38,7 @@ export const useCreateAnnotation = () => {
       .unwrap()
       .then((createdAnnotation) => {
         dispatch(setNewAnnotationSelector('')) // unset new annotation css selector
-        openDetailsSlider(createdAnnotation._id)
+        openDetailsSlider(createdAnnotation._id, -1)
       })
       // eslint-disable-next-line no-console
       .catch((e) => console.log(e))

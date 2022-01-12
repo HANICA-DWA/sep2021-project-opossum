@@ -43,7 +43,7 @@ const setUserAwareness = async (provider, name, id, color, idle) => {
 }
 
 const joinRoom = (room) => {
-  return new WebsocketProvider('ws://localhost:5000', room, ydoc)
+  return new WebsocketProvider(config.WEBSOCKET_URL, room, ydoc)
 }
 
 const getRandomColor = () => {

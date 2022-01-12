@@ -8,6 +8,7 @@ import { setIsIdle } from '../../services/userSlice'
 import { useAwareness } from '../../hooks/awareness.hook'
 import { useGetSnapshotId } from '../../hooks/editor.hooks'
 import { useSliders, useOptions } from '../../hooks'
+import BadgeList from './BadgeList'
 
 function resetTimer(timer, handleIdle, handleActive) {
   clearTimeout(timer)
@@ -68,7 +69,8 @@ const App = () => {
     }
   }, [isIdle])
 
-  const [_, { anySliderOpen }] = useSliders()
+  // eslint-disable-next-line no-empty-pattern
+  const [{}, { anySliderOpen }] = useSliders()
 
   useEffect(() => {
     async function manageSlider() {
@@ -91,6 +93,7 @@ const App = () => {
 
   return (
     <>
+      <BadgeList />
       <OverlayButton />
       <AnnotationListSlider clients={clients} />
       <AnnotationDetailSlider />

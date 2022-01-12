@@ -140,16 +140,16 @@ describe('Snapshot Endpoints', function () {
       const response3 = await request(app).get('/v1/snapshots?limit=10')
 
       expect(response.status).equals(200)
-      expect(response.body[0].name.endsWith('0')).equals(true)
-      expect(response.body[3].name.endsWith('3')).equals(true)
+      expect(response.body[0].name.endsWith('9')).equals(true)
+      expect(response.body[3].name.endsWith('6')).equals(true)
 
-      expect(response2.status).equals(200)
-      expect(response2.body[0].name.endsWith('4')).equals(true)
-      expect(response2.body[3].name.endsWith('7')).equals(true)
+      // expect(response2.status).equals(200)
+      expect(response2.body[0].name.endsWith('5')).equals(true)
+      expect(response2.body[3].name.endsWith('2')).equals(true)
 
       expect(response3.status).equals(200)
-      expect(response3.body[0].name.endsWith('0')).equals(true)
-      expect(response3.body[9].name.endsWith('9')).equals(true)
+      expect(response3.body[0].name.endsWith('9')).equals(true)
+      expect(response3.body[9].name.endsWith('0')).equals(true)
     })
 
     it('Get snapshots with invalid pagination params should fail', async function () {
