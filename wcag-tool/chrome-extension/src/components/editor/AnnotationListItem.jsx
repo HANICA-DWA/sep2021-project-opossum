@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import {
-  truncateStringAndCapitalize,
-  stripHtml,
-  timeSince,
-  formatCreatedAtString,
-} from '../../utils'
+import { stripHtml, timeSince, formatCreatedAtString } from '../../utils'
 import LabelList from './LabelList'
 
-const AnnotationListItem = function ({ annotation }) {
+const AnnotationListItem = function ({ annotation, index }) {
   const { _id, successCriterium, title, description, selector, createdAt } = annotation
 
   // TODO: replace with label system in backend
@@ -22,7 +17,6 @@ const AnnotationListItem = function ({ annotation }) {
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
-  const [expandLabels, setExpandLabels] = useState(false)
 
   return (
     <div
@@ -30,29 +24,25 @@ const AnnotationListItem = function ({ annotation }) {
       onMouseLeave={() => {
         if (!detailsSliderIsOpen) dispatch(setHighlightedElementSelector(''))
       }}
-      onClick={() => openDetailsSlider(_id)}
+      onClick={() => openDetailsSlider(_id, index)}
       className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer"
     >
       <div className="pl-5 pr-3 pt-3 pb-4">
         <div className="grid grid-cols-6">
           <div className="col-span-5">
             <div>
-              <p title={stripHtml(title)} className="text-base truncate font-poppins-semi">
+              <p
+                title={stripHtml(title)}
+                className="text-base truncate capitalize font-poppins-semi mb-1"
+              >
+                <span className="bg-red-600 rounded-full mr-1">
+                  <span className="text-white text-xs font-poppins-semi p-2 pt-2">{index + 1}</span>
+                </span>
                 {stripHtml(title)}
               </p>
             </div>
-
-            <div
-              onMouseEnter={() => {
-                setExpandLabels(true)
-              }}
-              onMouseLeave={() => {
-                setExpandLabels(false)
-              }}
-              id="labelContainer"
-              className={`text-md mt-2.5 ${!expandLabels ? 'truncate' : ''}`}
-            >
-              <LabelList labels={labels} />
+            <div className="truncate">
+              <LabelList small labels={labels} />
             </div>
           </div>
           <div className="flex justify-end pt-1">
@@ -62,9 +52,7 @@ const AnnotationListItem = function ({ annotation }) {
           </div>
         </div>
         <div className="pt-1">
-          <p className="overflowWrap text-md">
-            {truncateStringAndCapitalize(110, stripHtml(description))}
-          </p>
+          <p className="overflowWrap truncate-2 capitalize text-md">{stripHtml(description)}</p>
         </div>
       </div>
     </div>

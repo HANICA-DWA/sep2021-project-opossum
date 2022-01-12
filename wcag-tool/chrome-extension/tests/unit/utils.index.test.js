@@ -1,27 +1,4 @@
-import { stripHtml, truncateStringAndCapitalize } from '../../src/utils'
-
-describe('unit truncateStringAndCapitalize', () => {
-  it('should truncate and capitalize this string', () => {
-    expect(truncateStringAndCapitalize(5, 'Hello world')).toBe('Hello...')
-  })
-  it('should not truncate a short string under truncate treshold', () => {
-    expect(truncateStringAndCapitalize(5, 'Hello')).toBe('Hello')
-  })
-  it('should work with empty string', () => {
-    expect(truncateStringAndCapitalize(0, '')).toBe('')
-  })
-  it('should work without string', () => {
-    expect(truncateStringAndCapitalize(0)).toBe('')
-  })
-  it('should work with undefined string', () => {
-    expect(truncateStringAndCapitalize(0, undefined)).toBe('')
-  })
-  it('should not work with null', () => {
-    expect(() => truncateStringAndCapitalize(0, null)).toThrow(
-      "Cannot read properties of null (reading 'charAt')"
-    )
-  })
-})
+import { stripHtml } from '../../src/utils'
 
 describe('unit stripHtml', () => {
   it('should strip html', () => {

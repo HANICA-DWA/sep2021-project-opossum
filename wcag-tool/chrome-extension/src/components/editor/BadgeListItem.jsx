@@ -6,7 +6,6 @@ import { stripHtml } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders, useOptions } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
-import { Icon } from "../common/Icon";
 
 export default function BadgeListItem({ annotation, index, iframeDoc }) {
   const dispatch = useDispatch()
@@ -27,7 +26,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
       closeOnOutsideClick: true,
       placement: 'auto-start',
       trigger: 'click',
-      offset: [0, 20],
+      offset: [0, 10],
     })
 
   // TODO: replace with real labels from annotation
@@ -95,7 +94,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
 
   return style.top === 0 && style.left === 0 ? null : (
     <>
-      <div
+      <span
         onMouseEnter={() => {
           dispatch(setHighlightedElementSelector(annotation.selector))
         }}
@@ -103,18 +102,13 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
           dispatch(setHighlightedElementSelector(''))
         }}
         ref={setTriggerRef}
-        className="absolute cursor-pointer text-center "
+        className="absolute cursor-pointer flex justify-center content-center bg-white rounded-bl-none rounded-full p-1.5 shadow shadow-lg border border-gray-300"
         style={style}
       >
-        <Icon
-          type="outline"
-          name="location"
-          viewBox="0 0 24 24"
-          size={8}
-          className="text-red-600 bg-opacity-70 bg-white rounded-full"
-        />
-        {index + 1}
-      </div>
+        <div className="bg-red-600 rounded-full">
+          <span className="text-white font-poppins-semi p-2 pt-2">{index + 1}</span>
+        </div>
+      </span>
 
       {visible && (
         <div
@@ -129,7 +123,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
             <div className="grid grid-flow-col justify-between items-center">
               <p
                 title={stripHtml(annotation?.title)}
-                className="text-base font-poppins-semi truncate"
+                className="text-base font-poppins-semi truncate capitalize"
               >
                 {stripHtml(annotation?.title)}
               </p>
@@ -154,7 +148,7 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
               <button
                 onClick={() => {
                   setTooltipIsVisible(false)
-                  openDetailsSlider(annotation._id)
+                  openDetailsSlider(annotation._id, index)
                 }}
                 className="text-md rounded-lg focus:border-4 py-1 px-2 text-gray-400 font-poppins hover:bg-gray-100"
               >
