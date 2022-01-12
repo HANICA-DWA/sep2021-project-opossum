@@ -31,7 +31,7 @@
   "CREATE_ANNOTATION": "Crear anotación",
   "AUTO_ANALYSIS": "Análisis automático",
   "Y_AGO": "hace {{time}}a",
-  "W_AGO": "hace {{time}}s",
+  "W_AGO": "hace {{time}}sem",
   "D_AGO": "hace {{time}}d",
   "H_AGO": "hace {{time}}h",
   "M_AGO": "hace {{time}}m",
