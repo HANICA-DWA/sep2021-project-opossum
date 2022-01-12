@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import config from '../../config'
@@ -24,11 +23,9 @@ export const useYjs = () => {
 
 export const useYAnnotations = () => {
   const snapshotId = useGetSnapshotId()
-  const [localAnnotations, setLocalAnnotations] = useState([]) // local React state
   const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
-  const sharedAnnotations = ydoc.getArray(`${snapshotId}-annotations`) // shared Yjs state
+  const sharedState = ydoc.getText(snapshotId) // shared Yjs state
 
-  // Setup synchronisation between shared and local state
   useEffect(() => {
     // Initial sync
     if (provider.synced) {
@@ -37,33 +34,19 @@ export const useYAnnotations = () => {
       provider.once('synced', refetch)
     }
 
-    sharedAnnotations.observe(() => {
+    sharedState.observe(() => {
       refetch()
-      setLocalAnnotations(sharedAnnotations.toArray())
     })
 
     return () => {
-      sharedAnnotations.unobserve()
+      sharedState.unobserve()
     }
   }, [])
 
   // Sync remote, shared and local states when database changes
   useEffect(() => {
-    if (!remoteAnnotations) return
-
-    // 2. Merge remote state with shared state
-    sharedAnnotations.delete(0, sharedAnnotations.length) // reset shared state
-    sharedAnnotations.push(remoteAnnotations) // set shared state with remote state
-    setLocalAnnotations(sharedAnnotations.toArray()) // set local state with shared state
+    sharedState.insert(0, 'a')
   }, [remoteAnnotations])
 
-  const resetSharedState = () => {
-    sharedAnnotations.delete(0, sharedAnnotations.length)
-  }
-
-  const insertSharedState = () => {
-    sharedAnnotations.push([{ title: 'dummy insert', description: 'test', selector: '.dummy' }])
-  }
-
-  return { annotations: localAnnotations, resetSharedState, insertSharedState }
+  return { annotations: remoteAnnotations }
 }
