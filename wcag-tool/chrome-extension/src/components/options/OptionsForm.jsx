@@ -20,6 +20,26 @@ const OptionsForm = function () {
       language: t('LANGUAGE_NL'),
       value: 'nl',
     },
+    {
+      language: t('LANGUAGE_BG'),
+      value: 'bg',
+    },
+    {
+      language: t('LANGUAGE_FR'),
+      value: 'fr',
+    },
+    {
+      language: t('LANGUAGE_ES'),
+      value: 'es',
+    },
+    {
+      language: t('LANGUAGE_PT'),
+      value: 'pt',
+    },
+    {
+      language: t('LANGUAGE_GR'),
+      value: 'gr',
+    },
   ]
 
   useEffect(() => {
@@ -54,6 +74,7 @@ const OptionsForm = function () {
         id="username"
         labelName={t('USERNAME')}
         onChange={handleChange}
+        placeholder={t('USERNAME')}
       />
       <ToggleOption
         labelName={t('SIDE_BY_SIDE')}

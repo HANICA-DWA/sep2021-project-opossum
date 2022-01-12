@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpenSnapshotNotAllowed } from '../../services/popupSlice'
 import { formatCreatedAtString } from '../../utils'
+import { useTranslation } from 'react-i18next'
 
 const SnapshotListItem = function ({ snapshot }) {
   const { _id, filename, name, domain, createdAt } = snapshot
+  const { t } = useTranslation()
 
   function getDomainFromUrl(url) {
     const a = document.createElement('a')
@@ -31,7 +33,7 @@ const SnapshotListItem = function ({ snapshot }) {
       </span>
       <button
         type="button"
-        title="Open Snapshot"
+        title={t('OPEN_SNAPSHOT')}
         className={`fill-current text-gray-500 justify-self-end mr-3 px-2 py-1 hover:bg-gray-200 rounded-md disabled:cursor-default ${
           loading ? 'bg-gray-200' : 'disabled:opacity-50 disabled:bg-transparent'
         }`}

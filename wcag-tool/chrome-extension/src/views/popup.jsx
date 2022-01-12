@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import '../css/styles.css'
 import { Provider } from 'react-redux'
@@ -9,9 +9,18 @@ import '../extension/lib/single-file/browser-polyfill/chrome-browser-polyfill'
 import { useRegisterPopupEffects } from '../hooks/popup.hooks'
 import '../components/popup/animate.css'
 import '../utils/i18n'
+import { useTranslation } from 'react-i18next'
+import { useOptions } from '../hooks/options.hook'
 
 const Popup = () => {
   useRegisterPopupEffects()
+  const options = useOptions()
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    i18n.changeLanguage(options.language)
+  }, [options.language])
+
   return (
     <div className="mt-0.5 mx-0.5 customSize flex flex-col text-sm text-gray-500 font-poppins overflow-hidden">
       <Header />

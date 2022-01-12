@@ -14,8 +14,10 @@ import { useGetSnapshotId } from '../../hooks/editor.hooks'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { Icon } from '../common/Icon'
+import { useTranslation } from 'react-i18next'
 
 const AnnotationListSlider = ({ clients }) => {
+  const { t } = useTranslation()
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
   const snapshotId = useGetSnapshotId()
@@ -32,7 +34,7 @@ const AnnotationListSlider = ({ clients }) => {
       shouldCloseOnEsc
       from="left"
       onRequestClose={closeAllSliders}
-      closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
+      closeIcon={<IconButton title={t('CLOSE_MENU')} className="arrowLeftIcon" />}
       isOpen={listSliderIsOpen}
       title={
         <div className="grid grid-flow-col justify-between">
@@ -50,7 +52,7 @@ const AnnotationListSlider = ({ clients }) => {
           <div className="self-center flex flex-nowrap">
             <ButtonWithTooltip
               onClick={openElementSelector}
-              toolTipText="Create Annotation"
+              toolTipText={t('CREATE_ANNOTATION')}
               className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
               {loading ? (
@@ -70,7 +72,7 @@ const AnnotationListSlider = ({ clients }) => {
               dropdownItems={[
                 {
                   onClick: analyse,
-                  name: 'Auto analysis',
+                  name: t('AUTO_ANALYSIS'),
                   icon: <Icon color="text-gray-700" size={4} name="chart-pie" />,
                 },
               ]}

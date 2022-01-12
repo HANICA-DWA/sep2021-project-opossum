@@ -52,34 +52,38 @@ export function axecoreAnnotationMapper(violations) {
   return annotations
 }
 
-export function timeSince(date) {
+export function timeSince(date, t) {
   date = new Date(date)
   const seconds = Math.floor((new Date() - date) / 1000)
 
   let interval = seconds / 31536000
 
   if (interval > 1) {
-    return `${Math.floor(interval)}y ago`
+    return `${Math.floor(interval)}${t('Y_AGO')}`
   }
   interval = seconds / 604800
   if (interval > 1) {
-    return `${Math.floor(interval)}w ago`
+    return `${Math.floor(interval)}${t('W_AGO')}`
   }
   interval = seconds / 86400
   if (interval > 1) {
-    return `${Math.floor(interval)}d ago`
+    return t('D_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 3600
   if (interval > 1) {
-    return `${Math.floor(interval)}h ago`
+    return t('H_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 60
   if (interval > 1) {
-    return `${Math.floor(interval)}m ago`
+    return `${Math.floor(interval)}${t('M_AGO')}`
   }
   if (seconds < 30) {
-    return 'just now'
+    return t('NOW')
   }
 
-  return `${Math.floor(seconds)}s ago`
+  return `${Math.floor(seconds)}${t('S_AGO')}`
 }

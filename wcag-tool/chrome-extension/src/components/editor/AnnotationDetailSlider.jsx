@@ -7,11 +7,13 @@ import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 import { truncateStringAndCapitalize, stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
 import LabelList from './LabelList'
+import { useTranslation } from 'react-i18next'
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()
   const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
   const [deleteAnnotation] = useDeleteAnnotation()
+  const { t } = useTranslation()
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
 
@@ -61,12 +63,12 @@ const AnnotationDetailSlider = function () {
           </div>
           <div className="flex justify-end">
             <IconButton
-              title="Edit annotation"
+              title={t('EDIT_ANNOTATION')}
               className="pencilIcon p-0.5 mr-1"
               onClick={() => openCreateAndEditSlider()}
             />
             <IconButton
-              title="Close annotation"
+              title={t('CLOSE_ANNOTATION')}
               className="crossIcon p-0.5 ml-1"
               onClick={openListSlider}
             />
@@ -87,7 +89,7 @@ const AnnotationDetailSlider = function () {
             className="inline-flex items-center p-2 my-6 pl-3 pr-5 gap-x-2 bg-white hover:bg-red-50 border-red-500 text-red-500 border text-lg rounded-lg focus:border-4"
           >
             <span className="trashIcon" />
-            Delete annotation
+            {t('DELETE_ANNOTATION')}
           </button>
           <div className="self-center">
             {visible && (
@@ -98,13 +100,13 @@ const AnnotationDetailSlider = function () {
                 })}
               >
                 <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-                Permanently delete this annotation
+                {t('DELETE_ANNOTATION_CONFIRM')}
                 <button
                   onClick={() => {
                     deleteAnnotation(selectedAnnotationId)
                     setTooltipIsVisible(false)
                   }}
-                  className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-4 border border-red-500"
+                  className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-2 border border-red-500"
                 >
                   <span className="trashIcon text-xs" />
                 </button>
@@ -112,7 +114,7 @@ const AnnotationDetailSlider = function () {
                   onClick={() => {
                     setTooltipIsVisible(false)
                   }}
-                  className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-2 px-2 text-gray-400 font-poppins hover:bg-gray-800 "
+                  className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-1 text-gray-400 font-poppins hover:bg-gray-800 "
                 >
                   Cancel
                 </button>

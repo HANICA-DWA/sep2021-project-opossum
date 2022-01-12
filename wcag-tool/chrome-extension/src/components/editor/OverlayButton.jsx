@@ -38,7 +38,7 @@ const OverlayButton = function () {
         </svg>
       </FloatButton>
       <FloatButton
-        tooltipText="Exit Selection Mode"
+        tooltipText={t('EXIT_SELECTION')}
         toolTipPosition="bottom-start"
         onClick={openListSlider}
         hidden={!elementSelectorIsOpen}

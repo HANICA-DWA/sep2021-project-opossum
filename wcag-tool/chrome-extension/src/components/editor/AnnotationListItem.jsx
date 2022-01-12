@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
+import { useTranslation } from 'react-i18next'
 
 import {
   truncateStringAndCapitalize,
@@ -23,6 +24,7 @@ const AnnotationListItem = function ({ annotation }) {
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
   const [expandLabels, setExpandLabels] = useState(false)
+  const { t } = useTranslation()
 
   return (
     <div
@@ -57,7 +59,7 @@ const AnnotationListItem = function ({ annotation }) {
           </div>
           <div className="flex justify-end pt-1">
             <p title={formatCreatedAtString(createdAt)[1]} className="text-gray-600 text-xs">
-              {timeSince(createdAt)}
+              {timeSince(createdAt, t)}
             </p>
           </div>
         </div>

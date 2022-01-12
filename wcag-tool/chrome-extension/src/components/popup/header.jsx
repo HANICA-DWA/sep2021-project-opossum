@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import DefaultButton from '../common/DefaultButton'
 import { onClickCreateSnapshot } from '../../hooks/popup.hooks'
+import { useTranslation } from 'react-i18next'
 
 const Header = () => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const createSnapshotNotAllowed = useSelector((state) => state.popup.createSnapshotNotAllowed)
@@ -11,16 +13,16 @@ const Header = () => {
 
   return (
     <div className="flex p-2 px-4 justify-between items-center border rounded-t-lg bg-gray-100 border-gray-300 cursor-default">
-      <p>Name</p>
-      <p>Site</p>
+      <p>{t('NAME')}</p>
+      <p>{t('SITE')}</p>
       <div>
         <DefaultButton
           title={createSnapshotMessage}
           loading={loading}
           disabled={createSnapshotNotAllowed}
-          onClick={onClickCreateSnapshot(setLoading, dispatch)}
+          onClick={onClickCreateSnapshot(setLoading, dispatch, t)}
         >
-          Create
+          {t('CREATE')}
         </DefaultButton>
         <svg
           onClick={() => {
@@ -48,7 +50,7 @@ const Header = () => {
             strokeWidth={2}
             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
           />
-          <title>Options</title>
+          <title>{t('OPTIONS')}</title>
         </svg>
       </div>
     </div>
