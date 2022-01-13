@@ -77,7 +77,9 @@ In this step we're going to be unpacking our chrome-extension into chrome. Note 
 7. Select the following folder `\wcag-tool\chrome-extension\dist` 
 7. Make sure your database instance is running if you're using a local Mongo instance.
 
-The extension should now be added to your browser and ready to use.
+The extension should now be added to your browser and ready to use. The result will look like this: 
+
+![Result](https://media.giphy.com/media/ivAyXWGHRtKsENdyps/giphy.gif)
 
 ## Project scripts
 
