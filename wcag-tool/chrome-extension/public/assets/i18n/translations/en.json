@@ -54,5 +54,19 @@
   "MARK_PROBLEMS": "Create an annotation and mark problems",
   "PUBLISH": "Publish",
   "SNAPSHOT_ANALYSED": "Snapshot analysed",
-  "AXE_PROBLEMS": "Axe found {{count}} problems!"
+  "AXE_PROBLEMS": "Axe found {{count}} problems!",
+  "ANNOTATIONS_ADDED": "{{count}} Annotations added!",
+  "AXE_ADDED": "Axe Annotations added",
+  "ERROR": "Error",
+  "ERROR_ANALYSING_SNAPSHOT": "Error analysing snapshot! Please try again.",
+  "ERROR_POSTING_AXE_ANNOTATIONS": "Error posting Axe annotations! Please try again.",
+  "auto analysis": "auto analysis",
+  "draft": "draft",
+  "level A": "level A",
+  "level AA": "level AA",
+  "level AAA": "level AAA",
+  "minor": "minor",
+  "moderate": "moderate",
+  "serious": "serious",
+  "critical": "critical"
 }
