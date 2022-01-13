@@ -26,7 +26,7 @@ export const useYAnnotations = () => {
   console.log('test');
 
   const ydocRef = useRef(new Y.Doc())
-  const providerRef = useRef(new WebsocketProvider(config.WEBSOCKET_URL, 'room', ydocRef.current))
+  const providerRef = useRef(new WebsocketProvider(config.WEBSOCKET_URL, snapshotId, ydocRef.current))
 
   const { data: remoteAnnotations = [], refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
   const sharedState = ydocRef.current.getText(snapshotId) // shared Yjs state
