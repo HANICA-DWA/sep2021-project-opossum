@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
-import { useTranslation } from 'react-i18next'
 
 import { stripHtml, timeSince, formatCreatedAtString } from '../../utils'
 import LabelList from './LabelList'

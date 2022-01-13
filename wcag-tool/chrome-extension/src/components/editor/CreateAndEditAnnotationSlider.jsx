@@ -1,8 +1,8 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
-import { AnnotationForm } from './AnnotationForm'
 import { useTranslation } from 'react-i18next'
+import { AnnotationForm } from './AnnotationForm'
 
 import { useCreateAnnotation, useUpdateAnnotation, useSliders, useAnnotation } from '../../hooks'
 

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { setCreateSnapshotNotAllowed } from '../services/popupSlice'
 import { useTranslation } from 'react-i18next'
+import { setCreateSnapshotNotAllowed } from '../services/popupSlice'
 
 const getIsSnapshotCreationInProgress = async () => {
   const taskList = await browser.runtime.sendMessage({

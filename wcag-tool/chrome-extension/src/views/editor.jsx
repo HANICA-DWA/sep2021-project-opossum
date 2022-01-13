@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import '../css/styles.css'
 import './editor.css'
+import { useTranslation } from 'react-i18next'
 import App from '../components/editor/App'
 import store from '../services/store'
 import { useRegisterEditorEffects } from '../hooks/editor.hooks'
 import '../utils/i18n'
-import { useTranslation } from 'react-i18next'
 import { useOptions } from '../hooks/options.hooks'
 
 const Editor = () => {

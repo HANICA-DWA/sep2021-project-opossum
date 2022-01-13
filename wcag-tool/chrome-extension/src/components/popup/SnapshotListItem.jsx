@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { setOpenSnapshotNotAllowed } from '../../services/popupSlice'
 import { formatCreatedAtString } from '../../utils'
-import { useTranslation } from 'react-i18next'
 
 const SnapshotListItem = function ({ snapshot }) {
   const { _id, filename, name, domain, createdAt } = snapshot

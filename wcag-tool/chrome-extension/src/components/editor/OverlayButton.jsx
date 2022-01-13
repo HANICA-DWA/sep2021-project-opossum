@@ -1,7 +1,7 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSliders } from '../../hooks'
 import FloatButton from '../common/FloatButton'
-import { useTranslation } from 'react-i18next'
 
 const OverlayButton = function () {
   const { t } = useTranslation()

@@ -2,6 +2,7 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
+import { useTranslation } from 'react-i18next'
 import { formatCreatedAtString } from '../../utils'
 import { useAxeCore, useYAnnotations, useSliders, useGetSnapshotId } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
@@ -14,7 +15,6 @@ import NoAnnotation from './NoAnnotation'
 import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { Icon } from '../common/Icon'
-import { useTranslation } from 'react-i18next'
 
 const AnnotationListSlider = ({ clients }) => {
   const { t } = useTranslation()

@@ -3,11 +3,11 @@ import ReactHtmlParser from 'react-html-parser'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
+import { useTranslation } from 'react-i18next'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
 import { stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
 import LabelList from './LabelList'
-import { useTranslation } from 'react-i18next'
 
 const AnnotationDetailSlider = function () {
   const [{ openListSlider, openCreateAndEditSlider }, { detailsSliderIsOpen }] = useSliders()

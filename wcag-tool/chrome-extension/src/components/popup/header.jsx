@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import DefaultButton from '../common/DefaultButton'
 import { onClickCreateSnapshot } from '../../hooks/popup.hooks'
-import { useTranslation } from 'react-i18next'
 
 const Header = () => {
   const { t } = useTranslation()

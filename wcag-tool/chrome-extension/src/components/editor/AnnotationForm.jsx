@@ -1,5 +1,6 @@
 import React from 'react'
 import { Formik, Field, Form, useFormikContext } from 'formik'
+import { useTranslation } from 'react-i18next'
 import ActionButton from '../common/ActionButton'
 import RichTextEditor from './RichTextEditor'
 import {
@@ -7,7 +8,6 @@ import {
   useGetGuidelinesQuery,
   useGetPrinciplesQuery,
 } from '../../services/apiService'
-import { useTranslation } from 'react-i18next'
 
 import { stripHtml } from '../../utils'
 

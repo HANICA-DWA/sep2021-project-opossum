@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import DefaultButton from '../common/DefaultButton'
 import { Icon } from '../common/Icon'
 import DropdownOption from './DropdownOption'
 import TextOption from './TextOption'
 import ToggleOption from './ToggleOption'
-import { useTranslation } from 'react-i18next'
 
 const OptionsForm = function () {
   const [options, setOptions] = useState({ username: '', sideBySide: false, language: 'en' })

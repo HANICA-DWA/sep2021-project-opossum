@@ -1,6 +1,6 @@
 import React from 'react'
-import DefaultButton from '../common/DefaultButton'
 import { useTranslation } from 'react-i18next'
+import DefaultButton from '../common/DefaultButton'
 
 const NoAnnotation = function ({ openElementSelector }) {
   const { t } = useTranslation()
