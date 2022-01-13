@@ -81,7 +81,7 @@ export default function BadgeListItem({ annotation, index }) {
   }, [])
 
   return style.top === 0 && style.left === 0 ? null : (
-    <div className={'pointer-events-auto'}>
+    <div className="pointer-events-auto">
       <span
         onMouseEnter={() => {
           dispatch(setHighlightedElementSelector(annotation.selector))

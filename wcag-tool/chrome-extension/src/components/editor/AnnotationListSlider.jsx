@@ -2,7 +2,7 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
-import { capitalizeFirstLetter, formatCreatedAtString } from "../../utils";
+import { formatCreatedAtString } from '../../utils'
 import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 

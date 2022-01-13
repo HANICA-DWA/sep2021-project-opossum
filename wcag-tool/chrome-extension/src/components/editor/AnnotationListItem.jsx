@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { stripHtml, timeSince, formatCreatedAtString, capitalizeFirstLetter } from "../../utils";
+import { stripHtml, timeSince, formatCreatedAtString, capitalizeFirstLetter } from '../../utils'
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation, index }) {

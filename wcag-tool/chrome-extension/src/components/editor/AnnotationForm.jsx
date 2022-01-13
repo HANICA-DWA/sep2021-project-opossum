@@ -80,7 +80,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
         handleSubmit(successCriteriumId, title, description)
       }}
     >
-      {({ values, errors, touched, dirty, isValid }) => (
+      {({ values, errors, touched, isValid }) => (
         <Form>
           <label className="block text-gray-700 text-sm font-bold mb-2">
             WCAG
