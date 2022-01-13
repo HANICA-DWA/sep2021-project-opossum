@@ -73,8 +73,8 @@ describe('Annotation Model', function () {
 
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.title).to.exist
-    expect(error.errors.description).to.exist
+    expect(error.errors.title).to.not.exist
+    expect(error.errors.description).to.not.exist
     expect(error.errors.selector).to.exist
     expect(error.errors.successCriterium).to.not.exist
   })

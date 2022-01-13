@@ -1,3 +1,12 @@
+export function getRandomColor() {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (let i = 0; i < 6; i += 1) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
 export function stripHtml(html) {
   return html?.replace(/<(?:.|\n)*?>/gm, '')
 }
@@ -84,4 +93,8 @@ export function timeSince(date, t) {
   return t('S_AGO', {
     time: Math.floor(interval),
   })
+}
+
+export const capitalizeFirstLetter = (string = '') => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }

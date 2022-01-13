@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import ReactHtmlParser from 'react-html-parser'
 import { useDispatch } from 'react-redux'
-import { stripHtml } from '../../utils'
+import { capitalizeFirstLetter, stripHtml } from '../../utils'
 import LabelList from './LabelList'
-import { useSliders, useOptions } from '../../hooks'
+import { useSliders } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 
-export default function BadgeListItem({ annotation, index, iframeDoc }) {
+export default function BadgeListItem({ annotation, index }) {
   const dispatch = useDispatch()
   const elementRef = useRef()
-  const options = useOptions()
-  const [{ openDetailsSlider }, { anySliderOpen }] = useSliders()
+  const [{ openDetailsSlider }] = useSliders()
   const [style, setStyle] = useState({
     top: 0,
     left: 0,
-    transition: 'transform 0.5s ease-in-out',
-    transform: 'translateX(0px)',
   })
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
@@ -51,49 +48,40 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
       setStyle((prevState) => ({
         ...prevState,
         top: rect.y,
-        left:
-          rect.x +
-          (annotation.count - 1) * 25 -
-          (window.sliderIsOpen && window.sideBySide ? 400 : 0),
+        left: rect.x + (annotation.count - 1) * 25,
       }))
     }
   }
 
   useEffect(() => {
-    if (anySliderOpen && options.sideBySide) {
-      setStyle((prevState) => ({
-        ...prevState,
-        transform: 'translateX(400px)',
-      }))
-    } else {
-      setStyle((prevState) => ({
-        ...prevState,
-        transform: 'translateX(0px)',
-      }))
+    const iframe = document.getElementById('snapshot-iframe').contentWindow
+
+    const initialLoad = () => {
+      const timeOutHandler = () => {
+        elementRef.current = iframe.document.documentElement.querySelector(annotation.selector)
+
+        if (elementRef.current) {
+          handlePositionChange()
+        } else {
+          setTimeout(timeOutHandler, 5)
+        }
+        handlePositionChange()
+      }
+      setTimeout(timeOutHandler, 5)
     }
 
-    window.sliderIsOpen = anySliderOpen
-    window.sideBySide = options.sideBySide
-  }, [anySliderOpen])
-
-  useEffect(() => {
-    iframeDoc.addEventListener('scroll', handlePositionChange)
-    window.addEventListener('resize', handlePositionChange)
-
-    // wait for iframe content to load before setting position and element ref
-    setTimeout(() => {
-      elementRef.current = iframeDoc.querySelector(annotation.selector)
-      handlePositionChange()
-    }, 500)
+    iframe.document.addEventListener('scroll', handlePositionChange)
+    iframe.window.addEventListener('resize', handlePositionChange)
+    initialLoad()
 
     return () => {
-      iframeDoc.removeEventListener('scroll', handlePositionChange)
-      window.removeEventListener('resize', handlePositionChange)
+      iframe.document.removeEventListener('scroll', handlePositionChange)
+      iframe.window.removeEventListener('resize', handlePositionChange)
     }
   }, [])
 
   return style.top === 0 && style.left === 0 ? null : (
-    <>
+    <div className="pointer-events-auto">
       <span
         onMouseEnter={() => {
           dispatch(setHighlightedElementSelector(annotation.selector))
@@ -122,10 +110,10 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
           <div className="grid grid-flow-row gap-y-1">
             <div className="grid grid-flow-col justify-between items-center">
               <p
-                title={stripHtml(annotation?.title)}
-                className="text-base font-poppins-semi truncate capitalize"
+                title={capitalizeFirstLetter(stripHtml(annotation?.title)) || 'No title'}
+                className="text-base font-poppins-semi truncate"
               >
-                {stripHtml(annotation?.title)}
+                {capitalizeFirstLetter(stripHtml(annotation?.title)) || 'Untitled'}
               </p>
               <div>
                 <button
@@ -142,7 +130,10 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
               <LabelList small labels={labels} />
             </div>
             <div className="whitespace-normal truncate-2 font-poppins">
-              {ReactHtmlParser(annotation?.description)}
+              {annotation?.description === undefined ||
+              stripHtml(annotation?.description).length === 0
+                ? null
+                : ReactHtmlParser(annotation?.description)}
             </div>
             <div>
               <button
@@ -158,6 +149,6 @@ export default function BadgeListItem({ annotation, index, iframeDoc }) {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }

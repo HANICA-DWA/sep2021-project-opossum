@@ -1,11 +1,8 @@
 import React from 'react'
-import { useYAnnotations } from '../../hooks'
 import BadgeListItem from './BadgeListItem'
+import { useSliders, useOptions } from '../../hooks'
 
-export default function BadgeList() {
-  const { annotations } = useYAnnotations()
-  const iframeDocument = window.document.getElementById('snapshot-iframe').contentWindow.document
-
+export default function BadgeList({ annotations }) {
   // keeping track of any duplicate selectors so we can position badges correctly
   const map = new Map()
   const annotationsWithCount = annotations.map((annotation) => {
@@ -18,15 +15,17 @@ export default function BadgeList() {
     return { ...annotation, count: map.get(annotation.selector) }
   })
 
+  const [, { anySliderOpen }] = useSliders()
+  const options = useOptions()
+
   return (
-    <div>
+    <div
+      className={`pointer-events-none absolute transition-left w-full h-full ${
+        anySliderOpen && options.sideBySide ? 'left-400' : 'left-0'
+      }`}
+    >
       {annotationsWithCount.map((annotation, index) => (
-        <BadgeListItem
-          key={annotation._id}
-          annotation={annotation}
-          index={index}
-          iframeDoc={iframeDocument}
-        />
+        <BadgeListItem key={annotation._id} annotation={annotation} index={index} />
       ))}
     </div>
   )

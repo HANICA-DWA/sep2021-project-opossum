@@ -5,10 +5,15 @@ export const useOptions = () => {
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-      if (result.options) setOptions(result.options)
+      if (result.options) {
+        setOptions(result.options)
+      } else {
+        chrome.storage.sync.set({ username: '', sideBySide: true, language: 'en' })
+        setOptions({ username: '', sideBySide: true, language: 'en' })
+      }
     })
-
-    chrome.storage.onChanged.addListener((changes) => {
+    
+        chrome.storage.onChanged.addListener((changes) => {
       // eslint-disable-next-line no-restricted-syntax
       for (const [key, { newValue }] of Object.entries(changes)) {
         if (key === 'options') {

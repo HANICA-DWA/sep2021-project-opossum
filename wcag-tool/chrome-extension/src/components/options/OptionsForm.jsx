@@ -72,8 +72,13 @@ const OptionsForm = function () {
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-      i18n.changeLanguage(result.options.language)
-      setOptions((prevState) => ({ ...prevState, ...result.options }))
+    
+      if (result.options) {
+        i18n.changeLanguage(result.options.language)
+        setOptions((prevState) => ({ ...prevState, ...result.options }))
+      } else {
+        chrome.storage.sync.set(options)
+      }
     })
   }, [])
 

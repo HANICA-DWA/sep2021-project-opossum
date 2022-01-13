@@ -1,14 +1,14 @@
 html,
 body,
-body > div {
+body {
     height: 100%;
     overflow: hidden;
 }
 
-body > div {
+body {
     margin: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     user-select: none;
     background-color: #efefef;
 }
@@ -20,6 +20,18 @@ body > div {
     border-top-width: 1px;
     border-top-style: solid;
     border-top-color: #cccccc;
+}
+
+#root {
+    transition: width 0.5s ease;
+}
+
+.transition-left {
+    transition: left 0.5s ease;
+}
+
+.left-400 {
+    left: 400px;
 }
 
 @media (orientation: portrait) {

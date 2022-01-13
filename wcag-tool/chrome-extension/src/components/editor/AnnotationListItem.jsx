@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
-import { stripHtml, timeSince, formatCreatedAtString } from '../../utils'
+import { stripHtml, timeSince, formatCreatedAtString, capitalizeFirstLetter } from '../../utils'
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation, index }) {
@@ -34,13 +34,13 @@ const AnnotationListItem = function ({ annotation, index }) {
           <div className="col-span-5">
             <div>
               <p
-                title={stripHtml(title)}
-                className="text-base truncate capitalize font-poppins-semi mb-1"
+                title={capitalizeFirstLetter(stripHtml(title)) || 'No title'}
+                className="text-base truncate font-poppins-semi mb-1"
               >
                 <span className="bg-red-600 rounded-full mr-1">
                   <span className="text-white text-xs font-poppins-semi p-2 pt-2">{index + 1}</span>
                 </span>
-                {stripHtml(title)}
+                {capitalizeFirstLetter(stripHtml(title)) || 'Untitled'}
               </p>
             </div>
             <div className="truncate">
@@ -54,7 +54,9 @@ const AnnotationListItem = function ({ annotation, index }) {
           </div>
         </div>
         <div className="pt-1">
-          <p className="overflowWrap truncate-2 capitalize text-md">{stripHtml(description)}</p>
+          <p className="overflowWrap truncate-2 text-md">
+            {capitalizeFirstLetter(stripHtml(description))}
+          </p>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import 'react-sliding-pane/dist/react-sliding-pane.css'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import { useTranslation } from 'react-i18next'
 import { useAnnotation, useDeleteAnnotation, useSliders } from '../../hooks'
-import { stripHtml } from '../../utils'
+import { capitalizeFirstLetter, stripHtml } from '../../utils'
 import IconButton from '../common/IconButton'
 import LabelList from './LabelList'
 
@@ -58,8 +58,8 @@ const AnnotationDetailSlider = function () {
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
             <p
-              title={stripHtml(selectedAnnotation?.title)}
-              className="text-base font-poppins-semi truncate capitalize"
+              title={capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || 'No title'}
+              className="text-base font-poppins-semi truncate"
             >
               {annotationIndex !== -1 ? (
                 <span className="bg-red-600 rounded-full mr-1">
@@ -68,7 +68,7 @@ const AnnotationDetailSlider = function () {
                   </span>
                 </span>
               ) : null}
-              {stripHtml(selectedAnnotation?.title)}
+              {capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || 'Untitled'}
             </p>
           </div>
           <div className="flex justify-end">

@@ -4,7 +4,7 @@ import './react-sliding-pane.css'
 
 import { useTranslation } from 'react-i18next'
 import { formatCreatedAtString } from '../../utils'
-import { useAxeCore, useYAnnotations, useSliders, useGetSnapshotId } from '../../hooks'
+import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
 import Alert from './Alert'
@@ -49,7 +49,7 @@ const AnnotationListSlider = ({ clients }) => {
         <div className="grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
             <span
-              className="text-base font-medium text-gray-900 self-end truncate capitalize"
+              className="text-base font-medium text-gray-900 self-end truncate"
               title={snapshotInfo?.name}
             >
               {snapshotInfo?.name}
