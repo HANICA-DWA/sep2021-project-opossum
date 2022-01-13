@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import ReactHtmlParser from 'react-html-parser'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { capitalizeFirstLetter, stripHtml } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
-import { useTranslation } from 'react-i18next'
 
 export default function BadgeListItem({ annotation, index }) {
   const { t } = useTranslation()

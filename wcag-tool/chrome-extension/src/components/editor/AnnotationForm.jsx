@@ -155,7 +155,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
-              <ActionButton disabled={!isValid || !dirty} type="submit">
+              <ActionButton disabled={!isValid} type="submit">
                 {t('CREATE_ANNOTATION')}
               </ActionButton>
             </div>

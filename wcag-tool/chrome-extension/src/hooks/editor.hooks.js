@@ -8,7 +8,6 @@ import { axecoreAnnotationMapper } from '../utils'
 import { setIsIdle } from '../services/userSlice'
 import { useOptions } from './options.hooks'
 
-
 let tabData
 let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024

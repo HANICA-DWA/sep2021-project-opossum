@@ -72,7 +72,6 @@ const OptionsForm = function () {
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-    
       if (result.options) {
         i18n.changeLanguage(result.options.language)
         setOptions((prevState) => ({ ...prevState, ...result.options }))
