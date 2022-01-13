@@ -1,6 +1,6 @@
 import React from 'react'
 import BadgeListItem from './BadgeListItem'
-import { useSliders } from '../../hooks'
+import { useSliders, useOptions } from '../../hooks'
 
 export default function BadgeList({ annotations }) {
   // keeping track of any duplicate selectors so we can position badges correctly
@@ -16,9 +16,14 @@ export default function BadgeList({ annotations }) {
   })
 
   const [, { anySliderOpen }] = useSliders()
+  const options = useOptions()
 
   return (
-    <div className={`pointer-events-none absolute transition-left w-full h-full ${anySliderOpen ? 'left-400' : 'left-0'}`}>
+    <div
+      className={`pointer-events-none absolute transition-left w-full h-full ${
+        anySliderOpen && options.sideBySide ? 'left-400' : 'left-0'
+      }`}
+    >
       {annotationsWithCount.map((annotation, index) => (
         <BadgeListItem key={annotation._id} annotation={annotation} index={index} />
       ))}

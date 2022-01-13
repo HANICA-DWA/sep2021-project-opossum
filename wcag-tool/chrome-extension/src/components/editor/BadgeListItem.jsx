@@ -72,13 +72,11 @@ export default function BadgeListItem({ annotation, index }) {
 
     iframe.document.addEventListener('scroll', handlePositionChange)
     iframe.window.addEventListener('resize', handlePositionChange)
-    iframe.document.addEventListener('DOMContentLoaded', initialLoad)
+    initialLoad()
 
     return () => {
       iframe.document.removeEventListener('scroll', handlePositionChange)
       iframe.window.removeEventListener('resize', handlePositionChange)
-      iframe.document.removeEventListener('DOMContentLoaded', initialLoad)
-
     }
   }, [])
 
