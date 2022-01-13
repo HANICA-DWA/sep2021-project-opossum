@@ -40,7 +40,8 @@ const OptionsForm = function () {
       />
       <ToggleOption
         labelName="Editor side-by-side"
-        infoTitle="When activated enables the menu to be side-by-side with the page snapshot. Deactivate to have the menu slide over the page snapshot."
+        infoTitle="When activated enables the menu to be side-by-side with the page snapshot. 
+        Deactivate to have the menu slide over the page snapshot."
         id="sideBySide"
         value={options.sideBySide}
         onChange={handleChange}
