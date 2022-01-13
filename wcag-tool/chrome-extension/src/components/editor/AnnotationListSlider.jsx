@@ -4,7 +4,7 @@ import './react-sliding-pane.css'
 
 import { useTranslation } from 'react-i18next'
 import { formatCreatedAtString } from '../../utils'
-import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
+import { useAxeCore, useSliders, useGetSnapshotId, useYAnnotations } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
 import Alert from './Alert'

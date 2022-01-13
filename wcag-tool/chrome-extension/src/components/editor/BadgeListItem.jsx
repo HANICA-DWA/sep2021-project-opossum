@@ -6,8 +6,10 @@ import { capitalizeFirstLetter, stripHtml } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
+import { useTranslation } from 'react-i18next'
 
 export default function BadgeListItem({ annotation, index }) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const elementRef = useRef()
   const [{ openDetailsSlider }] = useSliders()
@@ -93,8 +95,8 @@ export default function BadgeListItem({ annotation, index }) {
         className="absolute cursor-pointer flex justify-center content-center bg-white rounded-bl-none rounded-full p-1.5 shadow shadow-lg border border-gray-300"
         style={style}
       >
-        <div className="bg-red-600 rounded-full">
-          <span className="text-white font-poppins-semi p-2 pt-2">{index + 1}</span>
+        <div className="bg-red-600  rounded-full">
+          <span className="text-white font-poppins-semi  p-2 pt-2">{index + 1}</span>
         </div>
       </span>
 
@@ -143,7 +145,7 @@ export default function BadgeListItem({ annotation, index }) {
                 }}
                 className="text-md rounded-lg focus:border-4 py-1 px-2 text-gray-400 font-poppins hover:bg-gray-100"
               >
-                Full details
+                {t('FULL_DETAILS')}
               </button>
             </div>
           </div>

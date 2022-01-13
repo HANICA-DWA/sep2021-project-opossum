@@ -69,5 +69,6 @@
   "minor": "μικρό",
   "moderate": "μεσαίο",
   "serious": "επίθετο",
-  "critical": "κρίσιμο"
+  "critical": "κρίσιμο",
+  "FULL_DETAILS": "Πλήρες λεπτομέρειες"
 }

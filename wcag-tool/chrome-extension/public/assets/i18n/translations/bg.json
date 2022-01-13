@@ -69,5 +69,6 @@
   "minor": "минор",
   "moderate": "модернизиране",
   "serious": "сериозен",
-  "critical": "критичен"
+  "critical": "критичен",
+  "FULL_DETAILS": "Пълни детайли"
 }

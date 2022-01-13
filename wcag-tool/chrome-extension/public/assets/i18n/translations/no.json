@@ -69,5 +69,6 @@
   "minor": "minor",
   "moderate": "moderat",
   "serious": "seriøst",
-  "critical": "kritisk"
+  "critical": "kritisk",
+  "FULL_DETAILS": "Detaljer"
 }

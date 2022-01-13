@@ -69,5 +69,6 @@
   "minor": "pieni",
   "moderate": "keskisuuri",
   "serious": "vaarallinen",
-  "critical": "kriittinen"
+  "critical": "kriittinen",
+  "FULL_DETAILS": "Täydet tiedot"
 }

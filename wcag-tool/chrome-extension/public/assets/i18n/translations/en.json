@@ -70,5 +70,6 @@
   "minor": "minor",
   "moderate": "moderate",
   "serious": "serious",
-  "critical": "critical"
+  "critical": "critical",
+  "FULL_DETAILS": "Full details"
 }

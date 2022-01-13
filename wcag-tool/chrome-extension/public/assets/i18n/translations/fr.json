@@ -69,5 +69,6 @@
   "minor": "mineur",
   "moderate": "modéré",
   "serious": "serieux",
-  "critical": "critique"
+  "critical": "critique",
+  "FULL_DETAILS": "Détails"
 }
