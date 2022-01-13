@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import config from '../../config'
@@ -7,10 +7,10 @@ import { useGetAnnotationsQuery } from '../services'
 import { useGetSnapshotId } from './editor.hooks'
 
 // TODO: Is dit de goede plek?
-const ydoc = new Y.Doc()
-const provider = new WebsocketProvider(config.WEBSOCKET_URL, 'room', ydoc)
-
 export const useYjs = () => {
+  const ydocRef = useRef(new Y.Doc())
+  const providerRef = useRef(new WebsocketProvider(config.WEBSOCKET_URL, 'room', ydoc))
+
   useEffect(() => {
     // return () => {
     //   provider.destroy()
@@ -18,20 +18,25 @@ export const useYjs = () => {
     // }
   }, [])
 
-  return { ydoc, provider }
+  return { ydoc: ydocRef.current, provider: providerRef.current }
 }
 
 export const useYAnnotations = () => {
   const snapshotId = useGetSnapshotId()
-  const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
-  const sharedState = ydoc.getText(snapshotId) // shared Yjs state
+  console.log('test');
+
+  const ydocRef = useRef(new Y.Doc())
+  const providerRef = useRef(new WebsocketProvider(config.WEBSOCKET_URL, 'room', ydocRef.current))
+
+  const { data: remoteAnnotations = [], refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
+  const sharedState = ydocRef.current.getText(snapshotId) // shared Yjs state
 
   useEffect(() => {
     // Initial sync
-    if (provider.synced) {
+    if (providerRef.current.synced) {
       refetch()
     } else {
-      provider.once('synced', refetch)
+      providerRef.current.once('synced', refetch)
     }
 
     sharedState.observe(() => {
