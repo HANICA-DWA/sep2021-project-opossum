@@ -17,7 +17,7 @@
   - [Level 2: Container diagram](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.6uzloytfbr93)
   - [Level 3: Component diagram](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.udfn7894mhz1)
     - [Chrome Extension](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.83hhx4bxy7mu)
-    - [REST API](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.f8w61sjlwvlo)
+    - [Backend](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.f8w61sjlwvlo)
 - [Code](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.uyr4yuw1g0fe)
   - [Browser Extension Structure](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.ozrcjrm41a57)
   - [State management](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.98itx6d4ifct)
