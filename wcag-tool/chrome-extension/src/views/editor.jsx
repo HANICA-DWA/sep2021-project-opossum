@@ -8,7 +8,7 @@ import store from '../services/store'
 import { useRegisterEditorEffects } from '../hooks/editor.hooks'
 import '../utils/i18n'
 import { useTranslation } from 'react-i18next'
-import { useOptions } from '../hooks/options.hook'
+import { useOptions } from '../hooks/options.hooks'
 
 const Editor = () => {
   const options = useOptions()

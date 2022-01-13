@@ -10,7 +10,7 @@ import { useRegisterPopupEffects } from '../hooks/popup.hooks'
 import '../components/popup/animate.css'
 import '../utils/i18n'
 import { useTranslation } from 'react-i18next'
-import { useOptions } from '../hooks/options.hook'
+import { useOptions } from '../hooks/options.hooks'
 
 const Popup = () => {
   useRegisterPopupEffects()
