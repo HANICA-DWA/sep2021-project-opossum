@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Snapshot skapande pågår, vänligen vänta...",
   "OPEN_SNAPSHOT": "Öppna snapshot",
   "NO_SNAPSHOTS": "Inga snapshots tillgängliga",
-  "START_ANALYSES": "Skapa en snapshot och starta analys",
+  "START_ANALYSIS": "Skapa en snapshot och starta analys",
   "OPEN_MENU": "Öppna meny",
   "CLOSE_MENU": "Stäng meny",
   "CREATE_ANNOTATION": "Skapa annotering",

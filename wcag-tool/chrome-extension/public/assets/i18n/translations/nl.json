@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Snapshot wordt gemaakt, een ogenblik geduld...",
   "OPEN_SNAPSHOT": "Open snapshot",
   "NO_SNAPSHOTS": "Geen snapshots gevonden",
-  "START_ANALYSES": "Creëer een snapshot en start met analyseren",
+  "START_ANALYSIS": "Creëer een snapshot en start met analyseren",
   "OPEN_MENU": "Open annotatie menu",
   "CLOSE_MENU": "Sluit menu",
   "CREATE_ANNOTATION": "Creëer annotatie",

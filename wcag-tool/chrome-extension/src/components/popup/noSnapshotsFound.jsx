@@ -16,7 +16,7 @@ const NoSnapshotsFound = () => {
       <div className="flex p-4 flex-col items-center">
         <div className="folderIcon m-2" />
         <p className="text-xl m-2 font-poppins-semi">{t('NO_SNAPSHOTS')}</p>
-        <p className="m-2">{t('START_ANALYSES')}</p>
+        <p className="m-2">{t('START_ANALYSIS')}</p>
         <DefaultButton
           title={createSnapshotMessage}
           disabled={createSnapshotNotAllowed}

@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Capture d'écran en cours, veuillez patienter...",
   "OPEN_SNAPSHOT": "Ouvrir capture d'écran",
   "NO_SNAPSHOTS": "Aucune capture d'écran disponible",
-  "START_ANALYSES": "Capturer l'écran et démarrer l'analyse",
+  "START_ANALYSIS": "Capturer l'écran et démarrer l'analyse",
   "OPEN_MENU": "Ouvrir le menu des annotations",
   "CLOSE_MENU": "Fermer le menu",
   "CREATE_ANNOTATION": "Créer une annotation",

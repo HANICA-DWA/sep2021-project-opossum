@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Kuvan luonti käynnissä, odota...",
   "OPEN_SNAPSHOT": "Avaa kuva",
   "NO_SNAPSHOTS": "Ei kuvia saatavilla",
-  "START_ANALYSES": "Luo kuva ja aloita analyysi",
+  "START_ANALYSIS": "Luo kuva ja aloita analyysi",
   "OPEN_MENU": "Avaa merkintävalikko",
   "CLOSE_MENU": "Sulje valikko",
   "CREATE_ANNOTATION": "Luo merkintä",

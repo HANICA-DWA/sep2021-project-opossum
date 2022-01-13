@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Snapshot-Erstellung läuft, bitte warten...",
   "OPEN_SNAPSHOT": "Snapshot öffnen",
   "NO_SNAPSHOTS": "Keine Snapshots verfügbar",
-  "START_ANALYSES": "Snapshot erstellen und Analyse starten",
+  "START_ANALYSIS": "Snapshot erstellen und Analyse starten",
   "OPEN_MENU": "Annotation-Menü öffnen",
   "CLOSE_MENU": "Menü schließen",
   "CREATE_ANNOTATION": "Annotation erstellen",

@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Criação de captura em progresso, por favor aguarde...",
   "OPEN_SNAPSHOT": "Abrir captura",
   "NO_SNAPSHOTS": "Nenhuma captura disponível",
-  "START_ANALYSES": "Criar uma captura e iniciar análise",
+  "START_ANALYSIS": "Criar uma captura e iniciar análise",
   "OPEN_MENU": "Abrir menu de anotação",
   "CLOSE_MENU": "Fechar menu",
   "CREATE_ANNOTATION": "Criar anotação",

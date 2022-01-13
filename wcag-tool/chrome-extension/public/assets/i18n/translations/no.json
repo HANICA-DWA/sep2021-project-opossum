@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Snapshot oppretting pågår, vennligst vent...",
   "OPEN_SNAPSHOT": "Åpne snapshot",
   "NO_SNAPSHOTS": "Ingen snapshots tilgjengelig",
-  "START_ANALYSES": "Opprett snapshot og start analyser",
+  "START_ANALYSIS": "Opprett snapshot og start analyser",
   "OPEN_MENU": "Åpne merknadmeny",
   "CLOSE_MENU": "Lukk meny",
   "CREATE_ANNOTATION": "Opprett merknad",

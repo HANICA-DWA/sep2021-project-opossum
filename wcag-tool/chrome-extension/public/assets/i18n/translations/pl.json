@@ -25,7 +25,7 @@
   "SNAPSHOT_CREATE_IN_PROGRESS": "Tworzenie zrzutu w toku, proszę czekać...",
   "OPEN_SNAPSHOT": "Otwórz zrzut",
   "NO_SNAPSHOTS": "Brak zrzutów",
-  "START_ANALYSES": "Utwórz zrzut i rozpocznij analizę",
+  "START_ANALYSIS": "Utwórz zrzut i rozpocznij analizę",
   "OPEN_MENU": "Otwórz menu",
   "CLOSE_MENU": "Zamknij menu",
   "CREATE_ANNOTATION": "Utwórz adnotację",
