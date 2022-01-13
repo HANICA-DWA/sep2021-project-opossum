@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <>
-      {annotations ? <BadgeList annotations={annotations} /> : null}
+      {annotations && annotations.length > 0 && <BageList annotations={annotations} />}
       <OverlayButton />
       <AnnotationListSlider annotations={annotations} clients={clients} />
       <AnnotationDetailSlider />
