@@ -1,366 +1,278 @@
-#  SOFTWARE GUIDBOOK WCAG TOOL
+# Software Guidebook - WCAG Tool
 
-# Table of Contents
-1. [Context](#context)
-2. [Functional Overview](#functional-overview)
-3. [Quality Attributes](#quality-attributes)
-4. [Constraints](#constraints)
-5. [Principles](#principles)
-6. [Software Architecture](#software-architecture)
-7. [External Interfaces](#external-interfaces)
-8. [Code](#code)
-9. [Data](#data)
-10. [Infrastructure Architecture](#infrastructure-architecture)
-11. [Deployment](#deployment)
-12. [Operation and Support](#operation-and-support)
-13. [Desision Log](#desision-log)
+## Table of Contents
 
+- [Context](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.ornl68g4g5ck)
+- [Functional overview](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.pf1znqlsxaox)
+- [Constraints](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.2jgibnlozrzz)
+  - [Business constraints](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.w3ojv09z5oqd)
+  - [Team composition and make-up](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.s4rxvxpa5ukc)
+  - [Budget](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.cd2vryp8thc4)
+  - [Schedule](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.q3mdi2lta30h)
+  - [Technical constraints](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.5ouith30sidp)
+  - [Library/framework](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.b07b1i5khf2j)
+  - [Supported platforms](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.s3dbhx8xbqlv)
+- [Software Architecture](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.fshyosyrc2wu)
+  - [Level 1: System context diagram](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.pkmdtykiss24)
+  - [Level 2: Container diagram](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.6uzloytfbr93)
+  - [Level 3: Component diagram](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.udfn7894mhz1)
+    - [Chrome Extension](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.83hhx4bxy7mu)
+    - [REST API](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.f8w61sjlwvlo)
+- [Code](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.uyr4yuw1g0fe)
+  - [Browser Extension Structure](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.ozrcjrm41a57)
+  - [State management](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.98itx6d4ifct)
+  - [Single-file](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.z6kqt85f9uvu)
+  - [Collaboration met Yjs](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.wmm5rem1zla9)
+- [Data](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.vu2tn34yfe2u)
+  - [MongoDB Atlas](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.6z2b0dw0iceu)
+  - [Data models](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.dmtmls6t1cwb)
+  - [GridFS](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.rarjpyttr4vu)
+- [Decision Log](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.jdp4a3tot0pk)
+  - [Collaboration](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.6aiozqu0h2h8)
+  - [Extension VS Website](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.rox6wc6yzcxu)
+  - [How annotation and elements are linked.](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.t1bb183aolzi)
+  - [XPath vs CSS selectors](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.ria3a5ibtdaz)
+  - [Snapshotting](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.n0rhuyflops4)
+  - [Chrome or Firefox](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.lb0vtbohl472)
 
-## Context
+# Context
 
-Nowadays more and more information, utilities and services are offered online via websites and apps. 
-Companies, government instances and individuals start to utilize the digital world more and more due to the ease of use and broad audience they can reach. 
-For most people, like younger generations and people up to 40-60 years, this is a great trend and happily go along with it. 
-For some people however, like older generations, handicapped or people with disabilities, understanding or even using such an app or website might be a difficult thing to do. 
-Most websites today aren’t properly programmed/configured to be accessible for everyone. 
-A blind person for example, must rely on the text-to-speech functionality to know and understand what content a website contains. 
-If a website isn’t programmed correctly for the text-to-speech functionality to work (properly), a blind person simply wouldn’t be able to use the website. 
-If a person isn’t able to use mouse and keyboard due to circumstances, would the website be able to utilize voice control to help this person?
+Nowadays more and more information, utilities and services are offered online via websites and apps. Companies, government agencies and individuals start to utilise the digital world more and more due to the ease of use and broad audience they can reach. For most people, like younger generations and people up to 40-60 years, this is a great trend and happily go along with it.
 
-These are accessibility issues that occur on a lot of websites and leave users frustrated. 
-In the past, people with handicaps or disabilities had to adapt to the environment, but in today’s world the digital environment should adapt to these people.
+For some however, e.g. older generations or people with disabilities, using such an app or website might be a difficult thing to do. Most websites today aren’t properly programmed/configured to be accessible for everyone.
 
-Accessibility analysts evaluate and judge websites based on how accessible they are using the Web Content Accessibility Guidelines (WCAG). 
-Using their own knowledge and automated scripts they check the content of pages and create a rapport with issues that were found during the inspection. 
-The format of this rapport is rather clunky and obscure making it difficult to use both for the analyst and the receiver.
+A blind person, for example, must rely on the text-to-speech functionality to know and understand what content a website contains. If a website isn’t programmed correctly for the text-to-speech functionality to work (properly), a blind person simply wouldn’t be able to use the website. If a person isn’t able to use a mouse and keyboard due to circumstances, would the website be able to utilise voice control to help this person?
 
-For this reason, we were asked to create a tool that allows the user to create annotations on a given website/webpage. 
-These annotations should link/refer to elements on the website and contain information about any mistakes or improvements that could be made. 
-This creates a clear(er) image about the issues that are present on the website. 
-In the end the tool should generate a rapport that’s comprehensible and easy to read.
+These are accessibility issues that occur on a lot of websites and leave users frustrated.
 
+In the past, people with disabilities had to adapt to the environment, but in today’s world the digital environment should adapt to these people.
 
+Accessibility analysts evaluate and judge websites based on how accessible they are, using the Web Content Accessibility Guidelines (WCAG). Using their own knowledge and automated scripts they check the content on pages and create a rapport with issues that were found during the inspection. The format of this rapport is rather clunky and obscure making it difficult to use both for the analyst and the receiver.
 
-<!--
-Intent
+For this reason, we were asked to create a tool that would allow an analyst to create visual annotations on a given webpage and share the annotated webpage with the owner of a website. Giving the website owner an effective and easy to understand view of every accessibility issue that needs fixing.
 
-A context section should answer the following types of questions:
+# Functional overview
 
-- What is this software project/product/system all about?
-- What is it that's being built?
-- How does it fit into the existing environment? (e.g. systems, business processes, etc) 
-- Who is using it? (users, roles, actors, personas, etc)
--->
+The key functionality of this application is the ability to capture a webpage as you see it and convert it to a ‘snapshot’. A snapshot is essentially a representation of a webpage without its functionality. It is completely stripped of its javascript and only the HTML and CSS remain. This has led to some interesting technical decisions, for example, the decision to develop a browser extension instead of a website, which you can read more about in the decision log. It has also shaped almost all the other features of this application. From data storage to collaboration to selecting and creating annotations.
 
-## Functional Overview
+A feature less significant to the architecture, but nonetheless very crucial to this application, is the ability to create, update and delete an annotation. This is the main use case of this application, as it allows analysts to mark problems directly on the webpage instead of filling out a long and boring form. It also makes it easier for analysts and website owners to collaborate, identify and discuss the problems on a page.
 
-What does our system do???
-- Create snapshots
-- Create annotations linking to html elements on those snapshots
-- Contain WACG references in those annotations
-- Generate a raport with any issues about a website as a whole
-- Accessible as a chrome extension
-- Allows the tracking of versions of website pages (Version control?)
-- Allows multiple analysts to work on the same page/snapshot together (collaboration)
-- Account management
+This brings us to the next functionality; collaboration. The need for analysts to work together on the same webpage has had some influence on the way we handle communication between client and server which is explained in further detail in the decision log.
 
-What kind of features/functions are (very) significant?
-- Creating snapshots /w version control
-- Creating annotations on those snapshots
-- Collaboration between analysts
+# Constraints
 
-Stakeholders:
-- WCAG Analyst
-- Website owner
+This project has had some constraints. We’ll be separating them into two categories and explain how they’ve impacted the architectural design of the application.
 
-<!--
-Intent
+## Business constraints
 
-This section allows you to summarise what the key functions of the system are. 
-It also allows you to make an explicit link between the functional aspects of the system (use cases, user stories, etc) 
-and, if they are significant to the architecture, to explain why. 
-A functional overview should answer the following types of questions:
+The first category is business constraints. Everything that has had an influence on the architectural decisions during the development of this application, caused indirectly by a business decision, can be categorised as a business constraint.
 
-- Is it clear what the system actually does?
-- Is it clear which features, functions, use cases, user stories, etc are significant to the architecture and why?
-- Is it clear who the important users are (roles,actors,personas,etc)and how  the system caters for their needs?
-- It is clear that the above has been used to shape and define the architecture?
+### Team composition and make-up
 
-Alternatively, if your software automates a business process or workflow, a functional view should answer questions like the following:
+Due to the nature of this being a school project, the team is made up of 3 students. This might have a significant influence on the technical decisions being made since we often lack the knowledge that you would expect from a software developer.
 
-- Is it clear what the system does from a process perspective?
-- What are the major processes and flows of information through the system?
--->
+### Budget
 
+Another challenge we are facing is having a €0 budget. This has already influenced the decision to store files with GridFS in MongoDB since this is a free option. Had we not had this constraint we might have picked another solution, like Amazon S3.
 
-## Quality Attributes
+### Schedule
 
-[what is a quality attribute](https://en.wikipedia.org/wiki/List_of_system_quality_attributes)
+We’ve been given a 10 week period to develop this application the best we can. Given this constraint we are looking at solutions that are viable to develop within this timeframe.
 
-Usability / Extensibility / Maintainability / Effectiveness / Robustness / Responsiveness
+## Technical constraints
 
-Usability: "Usability can be described as the capacity of a system to provide a condition for its users to perform the tasks safely, effectively, and efficiently while enjoying the experience.[1] In software engineering, usability is the degree to which a software can be used by specified consumers to achieve quantified objectives with effectiveness, efficiency, and satisfaction in a quantified context of use."
+Technical constraints can be categorised as technical decisions that were imposed by either the team or stakeholders and can be considered unchangeable.
 
-Extensibility: "Extensibility is a software engineering and systems design principle that provides for future growth. Extensibility is a measure of the ability to extend a system and the level of effort required to implement the extension. Extensions can be through the addition of new functionality or through modification of existing functionality. The principle provides for enhancements without impairing existing system functions."
+### Library/framework
 
-Maintainability: "In engineering, maintainability is the ease with which a product can be maintained in order to:
+A few technical constraints that have to do with the library/frameworks that we’re currently using, came from the decision to use technologies that are familiar to DWA students. This project has a high probability of being passed on to another group of DWA Students next year, which would make it easier for them to continue development if the project has familiar technologies. To list a few constraints:
 
--  correct defects or their cause,
--  Repair or replace faulty or worn-out components without having to replace still working parts,
--  prevent unexpected working conditions,
--  maximize a product's useful life,
--  maximize efficiency, reliability, and safety,
--  meet new requirements,
--  make future maintenance easier, or
--  cope with a changing environment.
+- NodeJs backend
+- JavaScript
+- React frontend
+- Express framework
+- MongoDB data storage
 
-In some cases, maintainability involves a system of continuous improvement - learning from the past in order to improve the ability to maintain systems, or improve the reliability of systems based on maintenance experience."
+### Supported platforms
 
-Effectiveness: "Effectiveness is the capability of producing a desired result or the ability to produce desired output. When something is deemed effective, it means it has an intended or expected outcome, or produces a deep, vivid impression."
+Since we’re developing a browser extension the platforms to host our product are web browsers. There are a few obvious contenders like Chrome, Firefox or Edge. We initially decided to stick with Chrome for a variety of reasons further explained in the[decision log](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.lb0vtbohl472).
 
-Robustness: "In computer science, robustness is the ability of a computer system to cope with errors during execution[1][2] and cope with erroneous input.[2] Robustness can encompass many areas of computer science, such as robust programming, robust machine learning, and Robust Security Network. Formal techniques, such as fuzz testing, are essential to showing robustness since this type of testing involves invalid or unexpected inputs. Alternatively, fault injection can be used to test robustness. Various commercial products perform robustness testing of software analysis."
+# Software Architecture
 
-Responsiveness: "Responsiveness as a concept of computer science refers to the specific ability of a system or functional unit to complete assigned tasks within a given time.[1] For example, it would refer to the ability of an artificial intelligence system to understand and carry out its tasks in a timely fashion.[2] It is one of the criteria under the principle of robustness (from a v principle). The other three are observability, recoverability, and task conformance."
+Below we have used the[C4 model](https://en.wikipedia.org/wiki/C4_model) to visualise the software architecture. We’ve decided to skip ‘Level 4: Code’ because we felt that this level can be understood by simply reading the code itself. Next chapter ‘code’ also explains more about some of the concepts that appear in the diagrams.
 
-<!--
-Intent
+## Level 1: System context diagram
 
-This section is about summarising the key quality attributes and should answer the following types of questions:
+[![](https://lh5.googleusercontent.com/QHygJDQFTfGE1gNyrgdgBAc6tin9UwMjwiGJ0IDeKAzvw0uufu7y85lbFpiGHi2_jyRVSHr3KeMooJkZL3TwugIwnwT9Wx3nF1s8hnCkCETaK4gXGsUVu4e1hEOtu9Dv5ZijdiOW)](https://app.diagrams.net/?page-id=a9L3Wu0wHT0waWiI6rr7&scale=auto#G1SrJmyoGllhFI6CipRBo7uIl7XOVB50gQ)
 
-- Is there a clear understanding of the quality attributes that the architecture must satisfy?
-- Are the quality attributes SMART (specific, measurable, achievable, relevant and timely)?
-- Have quality attributes that are usually taken for granted been explicitly marked as out of scope if they are not needed? 
-(e.g. user interface elements will only be presented in English to indicate that multi-language support is not explicitly catered for)
-- Are any of the quality attributes unrealistic? (e.g. true 24x7 availability is typically very costly to implement inside many organisations)
+## Level 2: Container diagram
 
-In addition, if any of the quality attributes are deemed as architecturally significant and therefore influence the architecture, 
-why not make a note of them so that you can refer back to them later in the document.
--->
+[![](https://lh4.googleusercontent.com/pexNQ0j5bXLv_8FfT5uE5XcFYI65Z1s45MkdrCJAVzlvg6RR3-4CqZMjBVELKcu2grmVuGfKvmVfiUup40rBanfz-2rHonwLAbSBH2yytC7D224MiHnFkdBrR_tz_EfRBwelJe4O)](https://app.diagrams.net/?page-id=aY6XwwjnI5ZyGZXxaUdc&scale=auto#G1DIU1oquSKBRUMbycysl3VH_oIcdsw9pI)
 
+## Level 3: Component diagram
 
-## Constraints
+### Chrome Extension
 
-Available time: 8-9 weeks
-project methodology: Scrum
-Scrum sprint duration: 2 weeks (3 sprints total)
-Programming language: Javascript
-Libraries: React, Redux
+[![](https://lh4.googleusercontent.com/tYU2oGYKqaWC-UkTgJsKmIcJqfsiCaVPxvucP8XRk9sSIjKkdO5SXQF7e3YnV5lVcfOQS-iUZ3zHW079B3NGfR5xrgivbzv4orPsy9sVbtwhbnj85VYN4JVAAozpWpco2ZGD-1Gy)](https://app.diagrams.net/?page-id=S_0v7oDeGRVnYbVjdG3k&scale=auto#G1gH_1Sb-tiaS6Ebgl5opiNYEzXltupvxj)
 
-## Project Methodology
-In this project we'll be using Scrum as our framework to develop and deliver our application and products.
-We'll be doing daily stand-ups, holding sprint planning, sprint reviews and retrospectives.
-The daily stand-up will be used to give the team an moment of time to give each other progress reports, which will give the team an overview on how well the sprint is going.
-The Sprint planning and review will be used to start the sprint by determining what functionality/user stories we want to implement this sprint and review the results in the sprint review.
-Lastly in the retrospective we'll evalute our team as a whole and as individuals. This is the moment to give complements and constructive feedback. 
+### REST API
 
-## Time & Budget
-For this project we've got a 9 week time period to develop the application.
-Of these 9 weeks, 6 weeks (3 sprints) will be dedicated to programming and implementing features into the application.
+[![](https://lh3.googleusercontent.com/Xf0u89LUzSDrC-VPxXMPNlsdmwnXR3Xy4UXrcygUWGayx7zQCeymjl_7C0KkpsYpIisShK6R7oO531oxrO51oJ-daWiKmRbmejGsMoDwEcBTcm5lOHD_69c46lBjXv2D70fAwreA)](https://app.diagrams.net/?page-id=PCwTK1SPMSIFYd2I3N2e&scale=auto#G1P6JZMOoz9BgC7Y20vJL8CFHdJR6aDRlS)
 
-Our budget for this project will be 0, meaning that we'll only use free software & storage in this project.
+# Code
 
-## Technology
-For our application we're obligated to use react redux combined with a node back-end.
+There are some implementation details that might not be inherently obvious by reading the code. Below we will go further into detail about these implementations.
 
+## Browser Extension Structure
 
-<!--
-Intent
+A browser extension can have a few components that run at different parts in the browser. Examples of this are the background script that runs, as the name would suggest, in the background of the browser. There is also the popup that appears when clicking the extension icon called the popup menu.
 
-Constraints are typically imposed upon you but they aren't necessarily 'bad', 
-as reducing the number of available options often makes your job designing software easier. 
-This section allows you to explicitly summarise the constraints that you're working within and the decisions that have already been made for you.
--->
+![](https://lh3.googleusercontent.com/vD6NcBB3bhWztJyKYiQ2nOmyc-yk4sCOhgmbZxBjzramOLxM_dT7ski7u5RRqi1lxt98RGkhIdUaiJ8ArdgIGqZCI0ldape5D_-zeClE_QTVTR_VbvmUVHH3QUXIv9D9VXYgElK2 'Generic chrome extension architecture')
 
+I’d suggest[reading up](https://developer.chrome.com/docs/extensions/mv3/architecture-overview/) on what components a browser extension can have. Furthermore it is strongly recommended to read up on the [Chrome extension Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/chrome-extension) for a quick overview on how a chrome extension works.
 
-## Principles
+Our extension currently uses the following extension components:
 
-Our principles are all defined in our [Project startup & Definition of Done](../Project Organisatie/Project plan.md)
+- Background script
 
-<!--
-Intent
+  - Runs in the background is used by single-file to create snapshot
 
-The purpose of this section is to simply make it explicit which principles you are following. 
-These could have been explicitly asked for by a stakeholder or they could be principles that you (i.e. the software development team) want to adopt and follow.
--->
+- Content script
 
-## Software Architecture
+  - Runs in foreground on a webpage. Used by the annotation editor and single-file to get the content of the webpage a user wants to take a snapshot of.
 
+- Popup
 
+  - Used to manage extensions. Opens when clicking the extension icon.
 
-<!--
-Intent
+- Options
 
-The purpose of this section is to summarise the software architecture of your software system so that the following questions can be answered:
+  - Currently only used to change the name of a user. In the future could be used to change snapshot options. For example to disable or enable javascript on snapshots.
 
-- What does the 'big picture' look like?
-- Is there are clear structure?
-- Is it clear how the system works from the '30,000 foot view'?
-- Does it show the major containers and technology choices?
-- Does it show the major components and their interactions?
-- What are the key internal interfaces? (e.g. a web service between your web and business tiers)
--->
+- Context menu
 
+  - Opening the context menu on a webpages reveals an option to snapshot the current page.
 
-## External Interfaces
+## State management
 
-<!--
-The purpose of this section is to answer the following types of questions:
+For our state management we are using[Redux Toolkit](https://redux-toolkit.js.org/) (RTK). One thing that might be less obvious is the way we combine data fetching and caching with the help of [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) (RTKQ. RTKQ is essentially an add-on to RTK that allows you to define an API with all its endpoints. Data fetched from the server will be automatically stored without the need to write your own action creators and reducers. Multiple components can subscribe to data from a certain endpoint without the need to fetch it from the server every time. Another mechanism from RTKQ that we utilise is data caching and cache invalidation. When executing a mutation on a resource it will automatically trigger a fetch for that given resource to get the latest data from the server. This in turn will update the components that are subscribed to that specific resource. More about this can be read in the [RTKQ documentation about cache](https://redux-toolkit.js.org/rtk-query/usage/cache-behavior).
 
-- What are the key external interfaces?
-- Has each interface been thought about from a technical perspective?
-- Has each interface been thought about from a non-technical perspective?
-- Who has ownership of the interface?
--->
+## Single-file
 
-## Code
+For our snapshotting functionality we integrated the app with single-file. Single-file creates a perfect copy of most websites and bundles everything into a single html file. It comes with options to include or exclude: javascript, audio sources and video sources, but has a lot more configurable options.
 
-Significant aspects of our code:
+Take a look at the single-file github:<https://github.com/gildas-lormeau/SingleFile>
 
-- React redux
-- Redux-toolkit -> Createslice & RTK Query
-- Chrome storage?
-- Unit tests
-- Tailwind?
-- Collaboration
-- XPath
-- Snapshot
-- 
+It contains a lot of useful information about the extension and has great support.
 
-<!--
-The purpose of the code section is to describe the implementation details for parts of the software system that are important, complex, significant, etc.
-For example, I've written about the following for software projects that I've been involved in:
+We however use single-file-lite, their manifest v3 version of the extension.
 
-- Generating/rendering HTML: a short description of an in-house framework that was created for generating HTML, including the major classes and concepts.
-- Data binding: our approach to updating business objects as the result of HTTP POST requests.
-- Multi-page data collection: a short description of an in-house framework we used for building forms that spanned multiple web pages.
-- Web MVC: an example usage of the web MVC framework that was being used.
-- Security:our approach to using WindowsIdentityFoundation (WIF) for authentication and authorisation.
-- Domain model: an overview of the important parts of the domain model.
-- Component framework: a short description of the framework that we built to allow components to be reconfigured at runtime.
-- Configuration: a short description of the standard component configuration mechanism in use across the codebase.
-- Architectural layering: an overview of the layering strategy and the patterns in use to implement it.
-- Exceptions and logging: a summary of our approach to exception handling and logging across the various architectural layers.
-- Patterns and principles: an explanation of how patterns and principles are implemented.
-- etc
--->
+Github repository:<https://github.com/gildas-lormeau/SingleFile-Lite>
 
-## Data
+The single-file API is integrated with the Chrome extension. The following files in the chrome extension project folder are part of single-file:
 
-<!--
-Intent
+- src/extension
+- src/common
+- src/lib
+- Rollup.config.js
 
-The purpose of the data section is to record anything that is important from a data perspective, answering the following types of questions:
+Single file is written in plain Javascript without react or redux. Most of the internal communication and communication between single-file and our react components work with[message passing](https://developer.chrome.com/docs/extensions/mv3/messaging/).
 
-- What does the data model look like?
-- Where is data stored?
-- Who owns the data?
-- How much storage space is needed for the data? (e.g. especially if you're dealing with 'big data')
-- What are the archiving and back-up strategies?
-- Are there any regulatory requirements for the long term archival of business data?
-- Likewise for log files and audit trails?
-- Are flat files being used for storage? If so, what format is being used?
--->
+Single-file uses Rollup to bundle itself into neat files in the dist/single-file directory.
 
+Run \`npm run build:single-file\` to build once. Or run ‘npm run dev:single-file’ if you’re actively making changes to the single-file source.
 
-## Infrastructure Architecture
+The chrome extension uses RTK Query to communicate with the backend. This, however, is part of redux, but since single-file doesn’t have access to redux we’ve had to make the decision to use Axios once in the app to post a snapshot to the server when a new one gets created. This way we persist new snapshots on the server which can be retrieved later.
 
-Chrome extension -> Backend -> cloud storage
+More information about the usage of single-file can be gained by taking a look at our research on snapshotting.
 
-<!--
-Intent
+[//documentation/spikes/snapshots/](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots)
 
-This section is used to describe the physical/virtual hardware and networks on which the software will be deployed. 
-Although, as a software architect, you may not be involved in designing the infrastructure, 
-you do need to understand that it's sufficient to enable you to satisfy your goals. 
-The purpose of this section is to answer the following types of questions:
+Both the prototype and the readme.md contain useful information.
 
-- Is there a clear physical architecture?
-- What hardware (virtual or physical) does this include across all tiers?
-- Does it cater for redundancy, failover and disaster recovery if applicable?
-- Is it clear how the chosen hardware components have been sized and selected?
-- If multiple servers and sites are used, what are the network links between them?
-- Who is responsible for support and maintenance of the infrastructure?
-- Are there central teams to look after common infrastructure (e.g. databases, message buses, application servers, networks, routers, switches, load balancers, reverse proxies, internet connections, etc)?
-- Who owns the resources?
-- Are there sufficient environments for development, testing, acceptance, pre-production, production, etc?
--->
+The single-file wiki also has some useful information about how to integrate single-file with your own extension:<https://github.com/gildas-lormeau/SingleFile/wiki/How-to-integrate-the-API-of-SingleFile-into-an-extension>
 
+## Collaboration with Yjs
 
-## Deployment
+In order to make our product collaborative we used a javascript[CRDT](https://crdt.tech/) implementation, [Y,js](https://yjs.dev/). Our product needed quite a few features in order to have the full*“google docs”* experience.
 
+- Presence list: a list of online users, each user needs a unique username, profile picture and colour.
+- Collaborative input fields: all changes must be shared near real-time with all collaborators. These input fields are used for the annotation editor. This enables collaborators to see each other's changes immediately.
+- Cursors indicating each user, i.e. input fields that contain the cursors of all collaborators. Each cursor has the unique colour of each user and an on hover popup containing the username. This is useful to identify each other.
+- Collaborative lists: our product has a list of annotations, all crud operations a collaborator may perform must be visible near real-time.
 
+Fortunately. Y.js is shipped with a lot of features which makes it powerful enough to implement the previous listed featured:
 
-<!--
-Intent
+- A presence list is implemented using[Y.js’ awareness](https://docs.yjs.dev/api/about-awareness)
+- Collaborative input fields and cursors are implemented using[React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4), a rich text editor and[Yjs’ Quill Binding](https://github.com/yjs/y-quill/).
+- The collaborative annotation list is implemented using the[shared Array Data Type](https://github.com/yjs/y-quill/).
+- To share all data type changes and awareness information[y-websocket](https://github.com/yjs/y-websocket) is used.
 
-This section is used to describe the mapping between the software (e.g. containers) and the infrastructure. 
-Sometimes this will be a simple one-to-one mapping (e.g. deploy a web application to a single web server) 
-and at other times it will be more complex (e.g. deploy a web application across a number of servers in a server farm). 
-This section answers the following types of questions:
+Before working on these frameworks I recommended reading the documentation of[Yjs](https://github.com/yjs/yjs),[React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4) and this [Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration) about collaboration and the implementation of Yjs in React.
 
-- How and where is the software installed and configured?
-- Is it clear how the software will be deployed across the infrastructure elements described in the infrastructure architecture section? (e.g. one-to-one mapping, multiple containers per server, etc)
-- If this is still to be decided, what are the options and have they been documented?
-- Is it understood how memory and CPU will be partitioned between the processes running on a single piece of infrastructure?
-- Are any containers and/or components running in an active-active, active-passive, hot-standby, cold-standby, etc formation?
-- Has the deployment and rollback strategy been defined?
-- What happens in the event of a software or infrastructure failure?
-- Is it clear how data is replicated across sites?
--->
+# Data
 
+## MongoDB Atlas
 
-## Operation and Support
+For storing data we decided to go with MongoDB since that was one of the technical constraints. Specifically Atlas, which is a cloud version of MongoDB. The main reason for picking Atlas over a local database instance was the ease of development. We wanted one central place to store our data so that development of collaborative features would be easier. One limitation to keep in mind is that the free version of Atlas imposes a 512MB storage limit.
 
+## Data models
 
+The data models are defined with[Mongoose](https://mongoosejs.com/) and can be found in the backend under models. Currently we define three different resources.
 
-<!--
-Intent
+Web Content Accessibility Guidelines (WCAG) are the guidelines that analysts use when marking problems on a webpage. These guidelines are maintained and updated by the W3C and we import them from the[official source](https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json) into our own database with the use of seed script.
 
-Most systems will be subject to support and operational requirements, particularly around how they are monitored, managed and administered. 
-Including a dedicated section in the software guidebook lets you be explicit about how your software will or does support those requirements. 
-This section should address the following types of questions:
+Snapshots are mainly the metadata around the HTML file that represents a webpage, such as name, domain etc. The actual file itself is stored in another collection called \`snapshots.files\` with the help of GridFS as explained below. The HTML file and the snapshot are linked through a property called filename, which is a random 16 byte hex code.
 
-- Is it clear how the software provides the ability for operation/support teams to monitor and manage the system?
-- How is this achieved across all tiers of the architecture?
-- How can operational staff diagnose problems?
-- Where are errors and information logged? (e.g. log files, Windows Event Log, SMNP, JMX, WMI, custom diagnostics, etc)
-- Do configuration changes require a restart?
-- Are there any manual house keeping tasks that need to be performed on a regular basis?
-- Does old data need to be periodically archived?
--->
+The third resource we define are annotations. We chose to embed the annotations under their respective snapshots, since they never need to be read separately and there will only be a few hundred annotations per snapshot at the absolute max.
 
+## GridFS
 
-## Decision Log
+Due to the nature of this application and it’s functionality we needed some way to store html, and possibly other files such as images. Since[MongoDB has a 16MB limit](https://docs.mongodb.com/manual/reference/limits/) on documents, we needed an alternative to storing larger files.
 
-- React redux
-- Redux-toolkit -> Createslice & RTK Query
-- Chrome storage?
-- Unit tests
-- Tailwind?
-- Collaboration
-- XPath
-- Snapshot
+[GridFS is a specification on top of MongoDB](https://docs.mongodb.com/manual/core/gridfs/#use-gridfs) which allows us to store files larger than 16MB. We considered using an external file system like S3 Buckets from AWS, but decided GridFS could do the job for now. Since GridFS is integrated with MongoDB we could use the original 512MB free storage to store our files. Had we picked another third-party provider, we would have to set up an account with a credit-card, which was not an option at the time. Another option would be to use the local filesystem of the server. We decided against this since this would defeat the purpose of a cloud database where all our data was shared between developers.
 
+The actual implementation is done with the help of[multer-gridfs-storage](https://www.npmjs.com/package/multer-gridfs-storage). This uses Multer in combination with GridFS as a storage engine. .
 
-### XPath vs CSS selectors
+# Decision Log
 
-When you are programmatically trying to select an element on a web page there are two obvious choices to consider: XPath and CSS selectors. 
+## Collaboration
 
-To determine which one would be best for our use cases we built two basic prototypes and consulted a few sources. The full report of this research can be read [here](../Spikes/CSS vs XPath/XPath vs CSS selector.md)
+There are several ways to implement collaboration features into our product. To determine which technology and more specifically, which framework is the best to use we did a little research. The results of this research can be found[here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration). A part of conducting the research was building a fully working prototype, which can be found[here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration/prototype). All needed features are in this prototype.
 
-The main take-away is that we are going to use XPath since it has a wider range of options in the way it generates selectors. 
+## Extension VS Website
 
-<!--
-Intent
+- We want to make a visual annotation tool, where annotations can be placed on a web page itself. In live websites we need the use of iframes, which can cause, notoriously well-known, cors errors.
+- Extensions can draw over existing websites, have control over the browser and run on the user's computer. Avoiding cors problems.
 
-The purpose of this section is to simply record the major decisions that have been made,
-including both the technology choices (e.g. products, frameworks, etc) and the overall architecture 
-(e.g. the structure of the software, architectural style, decomposition, patterns, etc). For example:
+## How annotation and elements are linked.
 
-- Why did you choose technology or framework 'X' over 'Y' and 'Z'?
-- How did you do this? Product evaluation or proof of concept?
-- Were you forced into making a decision about 'X' based upon corporate policy or enterprise architecture strategies?
-- Why did you choose the selected software architecture? What other options did you consider?
-- How do you know that the solution satisfies the major non-functional requirements?
-- etc
--->
+The team has decided that the way annotation and html elements are linked are with css selectors. An alternative would be to insert the annotation into the element itself. We have chosen for selectors because it doesn’t alter the dom itself but it is a reference to it. This would be an advantage to altering the dom.
+
+For example with sharing to other users what happened you only have to send them the annotation information with the selector. When you have to alter the dom you’ll need another way to tell the user what the element is linked to.
+
+## XPath vs CSS selectors
+
+When you are programmatically trying to select an element on a web page there are two obvious choices to consider: XPath and CSS selectors.
+
+To determine which one would be best for our use cases we built two basic prototypes and consulted a few sources. The full report of this research can be read [here](https://github.com/HANICA-DWA/sep2021-project-opossum/blob/develop/documentatie/Spikes/CSS%20vs%20XPath/XPath%20vs%20CSS%20selector.md).
+
+## Snapshotting
+
+The team made the decision to create an annotation tool that creates annotation on snapshots of the website and not the live website itself.
+
+The reasons for this are:
+
+- Annotation and elements are linked by selectors (e.g. css / xpath)
+- Because dynamic websites like<https://nu.nl/> change when new articles are published. Annotation can get lost or annotations get linked to a different element than intended.
+- Some websites use random classes and ids. This would mean that we cannot use css selectors and makes using xpath difficult.
+
+There are some different ways to create a copy of a snapshot. Because of this the team did some research. The results are found in the project repository.[//documentation/spikes/snapshots/readme.md](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots)
+
+## Chrome or Firefox
+
+We’re currently only developing for Chrome. This is due to the fact that they are on the new manifest v3 for extensions while Firefox is still on manifest v2. Firefox has announced that they will also make the switch to manifest v3 so in the future it will be possible, with minor changes, to run this extension on Firefox as well as Chrome.
+
+Chrome’s manifest v3 does introduce some limitations to the webrequest API that manifest v2 did not have. Firefox did announce that they will be more lenient with their implementation of manifest v3 but what that means isn’t clear yet.
+
+Since developing on an old manifest version that will be deprecated in the future makes no sense and we do not currently need the webrequest API that Chrome's manifest v3 does restrict, we have decided to stay on Chrome. With the outlook that we can switch to firefox when manifest v3 is out on Firefox and if developing on Chrome turns out to be too restrictive. Taking into consideration that extensions on the same manifest versions work cross platform with minimal effort, a migration to Firefox would also be minimal effort. But migrating now to Firefox on manifest v2 would take a considerable amount of time.
