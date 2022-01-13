@@ -64,6 +64,10 @@ const OptionsForm = function () {
       language: t('LANGUAGE_PL'),
       value: 'pl',
     },
+    {
+      language: t('LANGUAGE_JP'),
+      value: 'jp',
+    },
   ]
 
   useEffect(() => {
