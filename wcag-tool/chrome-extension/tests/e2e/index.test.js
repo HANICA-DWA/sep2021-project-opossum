@@ -6,7 +6,7 @@ let firstTab
 let secondTab
 
 async function createAnnotation(page, title, description) {
-  await page.click('div.flex.justify-end button')
+  await page.click('.slide-pane__title button')
   await page.waitForTimeout(SLIDER_TRANSITION_DURATION)
   const [x, y] = await page.evaluate(() => [
     document.documentElement.clientWidth / 2,
@@ -23,13 +23,6 @@ async function createAnnotation(page, title, description) {
   await page.waitForTimeout(SLIDER_TRANSITION_DURATION)
 }
 
-async function newTabDefaultState(page) {
-  await page.bringToFront()
-  await page.waitForSelector('button')
-  await page.click('button')
-  await page.waitForTimeout(SLIDER_TRANSITION_DURATION)
-}
-
 async function openExistingSnapshot() {
   // used open the puppeteer chrome browser without running the rest of the tests. This is useful for getting the chrome extension id.
   // await page.waitForSelector('xxx')
@@ -39,10 +32,12 @@ async function openExistingSnapshot() {
   expect(createButtonIsDisabled).toBe(true)
 
   await page.waitForSelector("button[title='Open Snapshot']")
-  await page.click("button[title='Open Snapshot']")
+  const buttons = await page.$$("button[title='Open Snapshot']")
+  buttons.pop().click()
   const target = await new Promise((resolve) => browser.once('targetcreated', resolve))
   firstTab = await target.page()
-  await newTabDefaultState(firstTab)
+  await firstTab.waitForSelector('button')
+  await firstTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
 }
 
 async function deleteExistingAnnotations() {
@@ -129,7 +124,8 @@ describe('e2e Collaboration', () => {
     secondTab = await browser.newPage()
     const secondTabUrl = await firstTab.url()
     await secondTab.goto(secondTabUrl)
-    await newTabDefaultState(secondTab)
+    await secondTab.waitForSelector('button')
+    await secondTab.waitForTimeout(SLIDER_TRANSITION_DURATION)
 
     await firstTab.bringToFront()
 
@@ -147,7 +143,7 @@ describe('e2e Collaboration', () => {
       (el) => el.innerText
     )
     // expected title
-    expect(titleAnnotation).toBe('Collaboration Annotation')
+    expect(titleAnnotation).toBe('1Collaboration Annotation')
   })
 
   it('should count annotations in annotation list', async () => {
@@ -229,7 +225,7 @@ describe('e2e Collaboration', () => {
 
     await secondTab.bringToFront()
     const actualTitle = await secondTab.$eval('.slide-pane__title p', (el) => el.innerText)
-    expect(actualTitle).toBe('Collaboration Annotation Changed')
+    expect(actualTitle).toBe('1Collaboration Annotation Changed')
   })
 
   afterAll(async () => {

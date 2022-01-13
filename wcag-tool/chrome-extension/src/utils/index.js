@@ -73,3 +73,7 @@ export function timeSince(date) {
 
   return `${Math.floor(seconds)}s ago`
 }
+
+export const capitalizeFirstLetter = (string = '') => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}

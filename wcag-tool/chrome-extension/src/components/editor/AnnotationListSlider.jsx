@@ -2,7 +2,7 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
-import { formatCreatedAtString } from '../../utils'
+import { capitalizeFirstLetter, formatCreatedAtString } from "../../utils";
 import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
@@ -46,7 +46,7 @@ const AnnotationListSlider = ({ clients, annotations }) => {
         <div className="grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
             <span
-              className="text-base font-medium text-gray-900 self-end truncate capitalize"
+              className="text-base font-medium text-gray-900 self-end truncate"
               title={snapshotInfo?.name}
             >
               {snapshotInfo?.name}
