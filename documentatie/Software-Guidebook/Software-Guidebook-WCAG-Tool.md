@@ -95,11 +95,11 @@ A few technical constraints that have to do with the library/frameworks that we�
 
 ### Supported platforms
 
-Since we’re developing a browser extension the platforms to host our product are web browsers. There are a few obvious contenders like Chrome, Firefox or Edge. We initially decided to stick with Chrome for a variety of reasons further explained in the[decision log](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.lb0vtbohl472).
+Since we’re developing a browser extension the platforms to host our product are web browsers. There are a few obvious contenders like Chrome, Firefox or Edge. We initially decided to stick with Chrome for a variety of reasons further explained in the [decision log](https://docs.google.com/document/d/1WSlLouD7oEiel_JWBgEA_TEM517flMGCKi1keHVW27Y/edit?skip_itp2_check=true#heading=h.lb0vtbohl472).
 
 # Software Architecture
 
-Below we have used the[C4 model](https://en.wikipedia.org/wiki/C4_model) to visualise the software architecture. We’ve decided to skip ‘Level 4: Code’ because we felt that this level can be understood by simply reading the code itself. Next chapter ‘code’ also explains more about some of the concepts that appear in the diagrams.
+Below we have used the [C4 model](https://en.wikipedia.org/wiki/C4_model) to visualise the software architecture. We’ve decided to skip ‘Level 4: Code’ because we felt that this level can be understood by simply reading the code itself. Next chapter ‘code’ also explains more about some of the concepts that appear in the diagrams.
 
 ## Level 1: System context diagram
 
@@ -129,7 +129,7 @@ A browser extension can have a few components that run at different parts in the
 
 ![](https://lh3.googleusercontent.com/vD6NcBB3bhWztJyKYiQ2nOmyc-yk4sCOhgmbZxBjzramOLxM_dT7ski7u5RRqi1lxt98RGkhIdUaiJ8ArdgIGqZCI0ldape5D_-zeClE_QTVTR_VbvmUVHH3QUXIv9D9VXYgElK2 'Generic chrome extension architecture')
 
-I’d suggest[reading up](https://developer.chrome.com/docs/extensions/mv3/architecture-overview/) on what components a browser extension can have. Furthermore it is strongly recommended to read up on the [Chrome extension Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/chrome-extension) for a quick overview on how a chrome extension works.
+I’d suggest [reading up](https://developer.chrome.com/docs/extensions/mv3/architecture-overview/) on what components a browser extension can have. Furthermore it is strongly recommended to read up on the [Chrome extension Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/chrome-extension) for a quick overview on how a chrome extension works.
 
 Our extension currently uses the following extension components:
 
@@ -155,19 +155,19 @@ Our extension currently uses the following extension components:
 
 ## State management
 
-For our state management we are using[Redux Toolkit](https://redux-toolkit.js.org/) (RTK). One thing that might be less obvious is the way we combine data fetching and caching with the help of [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) (RTKQ. RTKQ is essentially an add-on to RTK that allows you to define an API with all its endpoints. Data fetched from the server will be automatically stored without the need to write your own action creators and reducers. Multiple components can subscribe to data from a certain endpoint without the need to fetch it from the server every time. Another mechanism from RTKQ that we utilise is data caching and cache invalidation. When executing a mutation on a resource it will automatically trigger a fetch for that given resource to get the latest data from the server. This in turn will update the components that are subscribed to that specific resource. More about this can be read in the [RTKQ documentation about cache](https://redux-toolkit.js.org/rtk-query/usage/cache-behavior).
+For our state management we are using [Redux Toolkit](https://redux-toolkit.js.org/) (RTK). One thing that might be less obvious is the way we combine data fetching and caching with the help of [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) (RTKQ. RTKQ is essentially an add-on to RTK that allows you to define an API with all its endpoints. Data fetched from the server will be automatically stored without the need to write your own action creators and reducers. Multiple components can subscribe to data from a certain endpoint without the need to fetch it from the server every time. Another mechanism from RTKQ that we utilise is data caching and cache invalidation. When executing a mutation on a resource it will automatically trigger a fetch for that given resource to get the latest data from the server. This in turn will update the components that are subscribed to that specific resource. More about this can be read in the [RTKQ documentation about cache](https://redux-toolkit.js.org/rtk-query/usage/cache-behavior).
 
 ## Single-file
 
 For our snapshotting functionality we integrated the app with single-file. Single-file creates a perfect copy of most websites and bundles everything into a single html file. It comes with options to include or exclude: javascript, audio sources and video sources, but has a lot more configurable options.
 
-Take a look at the single-file github:<https://github.com/gildas-lormeau/SingleFile>
+Take a look at the single-file github: <https://github.com/gildas-lormeau/SingleFile>
 
 It contains a lot of useful information about the extension and has great support.
 
 We however use single-file-lite, their manifest v3 version of the extension.
 
-Github repository:<https://github.com/gildas-lormeau/SingleFile-Lite>
+Github repository: <https://github.com/gildas-lormeau/SingleFile-Lite>
 
 The single-file API is integrated with the Chrome extension. The following files in the chrome extension project folder are part of single-file:
 
@@ -176,7 +176,7 @@ The single-file API is integrated with the Chrome extension. The following files
 - src/lib
 - Rollup.config.js
 
-Single file is written in plain Javascript without react or redux. Most of the internal communication and communication between single-file and our react components work with[message passing](https://developer.chrome.com/docs/extensions/mv3/messaging/).
+Single file is written in plain Javascript without react or redux. Most of the internal communication and communication between single-file and our react components work with [message passing](https://developer.chrome.com/docs/extensions/mv3/messaging/).
 
 Single-file uses Rollup to bundle itself into neat files in the dist/single-file directory.
 
@@ -184,17 +184,15 @@ Run \`npm run build:single-file\` to build once. Or run ‘npm run dev:single-fi
 
 The chrome extension uses RTK Query to communicate with the backend. This, however, is part of redux, but since single-file doesn’t have access to redux we’ve had to make the decision to use Axios once in the app to post a snapshot to the server when a new one gets created. This way we persist new snapshots on the server which can be retrieved later.
 
-More information about the usage of single-file can be gained by taking a look at our research on snapshotting.
-
-[//documentation/spikes/snapshots/](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots)
+More information about the usage of single-file can be gained by taking a look at our research on snapshotting, wich can be found [here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots).
 
 Both the prototype and the readme.md contain useful information.
 
-The single-file wiki also has some useful information about how to integrate single-file with your own extension:<https://github.com/gildas-lormeau/SingleFile/wiki/How-to-integrate-the-API-of-SingleFile-into-an-extension>
+The single-file wiki also has some useful information about how to integrate single-file with your own extension: <https://github.com/gildas-lormeau/SingleFile/wiki/How-to-integrate-the-API-of-SingleFile-into-an-extension>
 
 ## Collaboration with Yjs
 
-In order to make our product collaborative we used a javascript[CRDT](https://crdt.tech/) implementation, [Y,js](https://yjs.dev/). Our product needed quite a few features in order to have the full*“google docs”* experience.
+In order to make our product collaborative we used a javascript [CRDT](https://crdt.tech/) implementation, [Y,js](https://yjs.dev/). Our product needed quite a few features in order to have the full*“google docs”* experience.
 
 - Presence list: a list of online users, each user needs a unique username, profile picture and colour.
 - Collaborative input fields: all changes must be shared near real-time with all collaborators. These input fields are used for the annotation editor. This enables collaborators to see each other's changes immediately.
@@ -203,12 +201,12 @@ In order to make our product collaborative we used a javascript[CRDT](https://cr
 
 Fortunately. Y.js is shipped with a lot of features which makes it powerful enough to implement the previous listed featured:
 
-- A presence list is implemented using[Y.js’ awareness](https://docs.yjs.dev/api/about-awareness)
-- Collaborative input fields and cursors are implemented using[React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4), a rich text editor and[Yjs’ Quill Binding](https://github.com/yjs/y-quill/).
-- The collaborative annotation list is implemented using the[shared Array Data Type](https://github.com/yjs/y-quill/).
-- To share all data type changes and awareness information[y-websocket](https://github.com/yjs/y-websocket) is used.
+- A presence list is implemented using [Y.js’ awareness](https://docs.yjs.dev/api/about-awareness)
+- Collaborative input fields and cursors are implemented using [React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4), a rich text editor and [Yjs’ Quill Binding](https://github.com/yjs/y-quill/).
+- The collaborative annotation list is implemented using the [shared Array Data Type](https://github.com/yjs/y-quill/).
+- To share all data type changes and awareness information [y-websocket](https://github.com/yjs/y-websocket) is used.
 
-Before working on these frameworks I recommended reading the documentation of[Yjs](https://github.com/yjs/yjs),[React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4) and this [Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration) about collaboration and the implementation of Yjs in React.
+Before working on these frameworks I recommended reading the documentation of [Yjs](https://github.com/yjs/yjs), [React Quill](https://www.npmjs.com/package/react-quill/v/2.0.0-beta.4) and this [Spike](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration) about collaboration and the implementation of Yjs in React.
 
 # Data
 
@@ -218,9 +216,9 @@ For storing data we decided to go with MongoDB since that was one of the technic
 
 ## Data models
 
-The data models are defined with[Mongoose](https://mongoosejs.com/) and can be found in the backend under models. Currently we define three different resources.
+The data models are defined with [Mongoose](https://mongoosejs.com/) and can be found in the backend under models. Currently we define three different resources.
 
-Web Content Accessibility Guidelines (WCAG) are the guidelines that analysts use when marking problems on a webpage. These guidelines are maintained and updated by the W3C and we import them from the[official source](https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json) into our own database with the use of seed script.
+Web Content Accessibility Guidelines (WCAG) are the guidelines that analysts use when marking problems on a webpage. These guidelines are maintained and updated by the W3C and we import them from the [official source](https://raw.githubusercontent.com/w3c/wai-wcag-quickref/gh-pages/_data/wcag21.json) into our own database with the use of seed script.
 
 Snapshots are mainly the metadata around the HTML file that represents a webpage, such as name, domain etc. The actual file itself is stored in another collection called \`snapshots.files\` with the help of GridFS as explained below. The HTML file and the snapshot are linked through a property called filename, which is a random 16 byte hex code.
 
@@ -228,17 +226,17 @@ The third resource we define are annotations. We chose to embed the annotations 
 
 ## GridFS
 
-Due to the nature of this application and it’s functionality we needed some way to store html, and possibly other files such as images. Since[MongoDB has a 16MB limit](https://docs.mongodb.com/manual/reference/limits/) on documents, we needed an alternative to storing larger files.
+Due to the nature of this application and it’s functionality we needed some way to store html, and possibly other files such as images. Since [MongoDB has a 16MB limit](https://docs.mongodb.com/manual/reference/limits/) on documents, we needed an alternative to storing larger files.
 
 [GridFS is a specification on top of MongoDB](https://docs.mongodb.com/manual/core/gridfs/#use-gridfs) which allows us to store files larger than 16MB. We considered using an external file system like S3 Buckets from AWS, but decided GridFS could do the job for now. Since GridFS is integrated with MongoDB we could use the original 512MB free storage to store our files. Had we picked another third-party provider, we would have to set up an account with a credit-card, which was not an option at the time. Another option would be to use the local filesystem of the server. We decided against this since this would defeat the purpose of a cloud database where all our data was shared between developers.
 
-The actual implementation is done with the help of[multer-gridfs-storage](https://www.npmjs.com/package/multer-gridfs-storage). This uses Multer in combination with GridFS as a storage engine. .
+The actual implementation is done with the help of [multer-gridfs-storage](https://www.npmjs.com/package/multer-gridfs-storage). This uses Multer in combination with GridFS as a storage engine. .
 
 # Decision Log
 
 ## Collaboration
 
-There are several ways to implement collaboration features into our product. To determine which technology and more specifically, which framework is the best to use we did a little research. The results of this research can be found[here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration). A part of conducting the research was building a fully working prototype, which can be found[here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration/prototype). All needed features are in this prototype.
+There are several ways to implement collaboration features into our product. To determine which technology and more specifically, which framework is the best to use we did a little research. The results of this research can be found [here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration). A part of conducting the research was building a fully working prototype, which can be found [here](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/collaboration/prototype). All needed features are implemented in this prototype.
 
 ## Extension VS Website
 
@@ -264,10 +262,10 @@ The team made the decision to create an annotation tool that creates annotation 
 The reasons for this are:
 
 - Annotation and elements are linked by selectors (e.g. css / xpath)
-- Because dynamic websites like<https://nu.nl/> change when new articles are published. Annotation can get lost or annotations get linked to a different element than intended.
+- Because dynamic websites like <https://nu.nl/> change when new articles are published. Annotation can get lost or annotations get linked to a different element than intended.
 - Some websites use random classes and ids. This would mean that we cannot use css selectors and makes using xpath difficult.
 
-There are some different ways to create a copy of a snapshot. Because of this the team did some research. The results are found in the project repository.[//documentation/spikes/snapshots/readme.md](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots)
+There are some different ways to create a copy of a snapshot. Because of this the team did some research. The results are found in the [project repository](https://github.com/HANICA-DWA/sep2021-project-opossum/tree/develop/documentatie/Spikes/Snaphots).
 
 ## Chrome or Firefox
 
