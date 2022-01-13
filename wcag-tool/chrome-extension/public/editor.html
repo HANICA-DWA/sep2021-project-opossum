@@ -6,12 +6,11 @@
     <script src="js/vendor.js"></script>
   </head>
   <body>
-    <div>
-      <div id="root"></div>
-      <iframe
-        id="snapshot-iframe"
-        class="editor"
-        srcdoc="&lt;!DOCTYPE html&gt;
+    <div id="root" class="h-screen"></div>
+    <iframe
+      id="snapshot-iframe"
+      class="editor"
+      srcdoc="&lt;!DOCTYPE html&gt;
                     &lt;body&gt;
                       &lt;script src=/single-file/web/editor/editor-helper-web.js&gt;
                       &lt;/script&gt;
@@ -26,9 +25,8 @@
                       &lt;/script&gt;
                     &lt;/body&gt;
                     "
-        sandbox="allow-scripts allow-modals allow-same-origin"
-      ></iframe>
-    </div>
+      sandbox="allow-scripts allow-modals allow-same-origin"
+    ></iframe>
     <script src="/single-file/chrome-browser-polyfill.js"></script>
     <script src="/single-file/single-file.js"></script>
     <script src="/single-file/infobar.js"></script>

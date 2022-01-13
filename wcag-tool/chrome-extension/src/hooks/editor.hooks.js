@@ -5,7 +5,8 @@ import { useSliders } from './sliders.hooks'
 import { setSnapshotId } from '../services/snapshotSlice'
 import config from '../../config'
 import { axecoreAnnotationMapper } from '../utils'
-
+import { setIsIdle } from '../services/userSlice'
+import { useOptions } from './options.hooks'
 
 let tabData
 let tabDataContents = []
@@ -211,6 +212,43 @@ export const useRegisterEditorEffects = () => {
       browser.runtime.onMessage.removeListener(eventListener)
     }
   }, [])
+
+  const isIdle = useSelector((state) => state.user.isIdle)
+  const options = useOptions()
+  const dispatch = useDispatch()
+
+  const handleUserIsActive = () => {
+    if (isIdle) {
+      dispatch(setIsIdle(false))
+    }
+  }
+
+  const handleUserIsIdle = () => {
+    if (!isIdle) {
+      dispatch(setIsIdle(true))
+    }
+  }
+
+  useEffect(() => {
+    activateIdleDetection(handleUserIsIdle, handleUserIsActive)
+    return () => {
+      deactivateIdleDetection()
+    }
+  }, [isIdle])
+
+  const [{ openListSlider }, { anySliderOpen }] = useSliders()
+
+  useEffect(() => {
+    if (options.sideBySide && anySliderOpen) {
+      document.getElementById('root').style.width = '400px'
+    } else {
+      document.getElementById('root').style.width = '0'
+    }
+  }, [anySliderOpen, options])
+
+  useEffect(() => {
+    openListSlider()
+  }, [])
 }
 
 function loadTabData() {
@@ -264,4 +302,37 @@ function saveTabData() {
       reject
     )
   })
+}
+
+function resetTimer(timer, handleIdle, handleActive) {
+  clearTimeout(timer)
+  timer = setTimeout(handleIdle, 30000)
+  handleActive()
+  return timer
+}
+
+const activateIdleDetection = (handleIdle, handleActive) => {
+  let timer
+
+  const x = () => {
+    timer = resetTimer(timer, handleIdle, handleActive)
+  }
+
+  window.onload = x
+  window.onmousemove = x
+  window.onmousedown = x
+  window.ontouchstart = x
+  window.onclick = x
+  window.onkeydown = x
+  window.onscroll = x
+}
+
+const deactivateIdleDetection = () => {
+  window.onload = null
+  window.onmousemove = null
+  window.onmousedown = null
+  window.ontouchstart = null
+  window.onclick = null
+  window.onkeydown = null
+  window.onscroll = null
 }

@@ -4,12 +4,16 @@ import TextOption from './TextOption'
 import ToggleOption from './ToggleOption'
 
 const OptionsForm = function () {
-  const [options, setOptions] = useState({ username: '', sideBySide: false })
+  const [options, setOptions] = useState({ username: '', sideBySide: true })
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-      setOptions((prevState) => ({ ...prevState, ...result.options }))
+      if (result.options) {
+        setOptions((prevState) => ({ ...prevState, ...result.options }))
+      } else {
+        chrome.storage.sync.set(options)
+      }
     })
   }, [])
 
@@ -40,8 +44,8 @@ const OptionsForm = function () {
       />
       <ToggleOption
         labelName="Editor side-by-side"
-        infoTitle="When activated enables the sliding editor to be side-by-side with the snapshot.
-        By default the editor slides over the page."
+        infoTitle="When activated enables the menu to be side-by-side with the page snapshot. 
+        Deactivate to have the menu slide over the page snapshot."
         id="sideBySide"
         value={options.sideBySide}
         onChange={handleChange}

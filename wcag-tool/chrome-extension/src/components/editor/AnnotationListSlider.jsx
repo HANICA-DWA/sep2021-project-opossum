@@ -3,7 +3,7 @@ import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
 import { formatCreatedAtString } from '../../utils'
-import { useAxeCore, useYAnnotations, useSliders, useGetSnapshotId } from '../../hooks'
+import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
 import Alert from './Alert'
@@ -15,8 +15,7 @@ import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { Icon } from '../common/Icon'
 
-const AnnotationListSlider = ({ clients }) => {
-  const { annotations } = useYAnnotations()
+const AnnotationListSlider = ({ clients, annotations }) => {
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
   const snapshotId = useGetSnapshotId()
   const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
@@ -47,7 +46,7 @@ const AnnotationListSlider = ({ clients }) => {
         <div className="grid grid-flow-col justify-between">
           <div className="grid grid-flow-row">
             <span
-              className="text-base font-medium text-gray-900 self-end truncate capitalize"
+              className="text-base font-medium text-gray-900 self-end truncate"
               title={snapshotInfo?.name}
             >
               {snapshotInfo?.name}
