@@ -94,17 +94,19 @@ const AnnotationListSlider = ({ clients }) => {
         <div>
           <Alert
             color="red"
-            title="Error"
-            message="Error analysing snapshot! Please try again."
+            title={t('ERROR')}
+            message={t('ERROR_ANALYSING_SNAPSHOT')}
             hidden={!axeError}
           />
 
           <Alert
             color="green"
-            title="Snapshot analysed"
-            message={`Axe found ${axeData?.length || 0} problems!`}
+            title={t('SNAPSHOT_ANALYSED')}
+            message={t('AXE_PROBLEMS', {
+              count: axeData?.length || 0,
+            })}
             action={{
-              name: 'Publish',
+              name: t('PUBLISH'),
               method: () => createAnnotations({ snapshotId, annotations: axeData }),
               disabled: createAnnotationsLoading,
             }}
@@ -113,15 +115,17 @@ const AnnotationListSlider = ({ clients }) => {
 
           <Alert
             color="red"
-            title="Error"
-            message="Error posting axe annotatons! Please try again."
+            title={t('ERROR')}
+            message={t('ERROR_POSTING_AXE_ANNOTATIONS')}
             hidden={!createAnnotationsError}
           />
 
           <Alert
             color="green"
-            title="Axe Annotations added"
-            message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            title={t('AXE_ADDED')}
+            message={t('ANNOTATIONS_ADDED', {
+              count: createdAnnotationsData?.length || 0,
+            })}
             hidden={!createdAnnotationsData}
           />
         </div>

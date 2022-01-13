@@ -1,6 +1,8 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function LabelListItem({ label, small }) {
+  const { t } = useTranslation()
   const labelColors = {
     'auto analysis': 'bg-yellow-900',
     draft: 'bg-purple-500',
@@ -19,7 +21,7 @@ export default function LabelListItem({ label, small }) {
         labelColors[label]
       } rounded text-white align-middle ${small ? 'px-1.5 mb-1 mr-1.5' : 'mb-2 mr-2 px-2 py-0.5'}`}
     >
-      {label}
+      {t(label)}
     </span>
   )
 }

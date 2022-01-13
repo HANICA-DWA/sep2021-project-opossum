@@ -6,7 +6,6 @@ import { setSnapshotId } from '../services/snapshotSlice'
 import config from '../../config'
 import { axecoreAnnotationMapper } from '../utils'
 
-
 let tabData
 let tabDataContents = []
 const FS_SIZE = 100 * 1024 * 1024

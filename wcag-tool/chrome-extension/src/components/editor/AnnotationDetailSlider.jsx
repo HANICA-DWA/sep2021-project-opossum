@@ -116,7 +116,7 @@ const AnnotationDetailSlider = function () {
                   deleteAnnotation(selectedAnnotationId)
                   setTooltipIsVisible(false)
                 }}
-                className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-2 border border-red-500"
+                className="inline-flex items-center bg-white hover:bg-red-100 text-red-500 text-lg rounded-lg focus:border-4 p-1 ml-4 border border-red-500"
               >
                 <span className="trashIcon text-xs" />
               </button>
@@ -124,7 +124,7 @@ const AnnotationDetailSlider = function () {
                 onClick={() => {
                   setTooltipIsVisible(false)
                 }}
-                className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-1 text-gray-400 font-poppins hover:bg-gray-800 "
+                className="inline-flex items-center text-md rounded-lg focus:border-4 py-1 ml-2 px-2 text-gray-400 font-poppins hover:bg-gray-800 "
               >
                 {t('CANCEL')}
               </button>

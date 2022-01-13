@@ -49,5 +49,10 @@
   "EXIT_SELECTION": "Exit selection mode",
   "SAVED": "Saved",
   "SAVE": "Save",
-  "CANCEL": "Cancel"
+  "CANCEL": "Cancel",
+  "NO_ANNOTATIONS": "No annotations available",
+  "MARK_PROBLEMS": "Create an annotation and mark problems",
+  "PUBLISH": "Publish",
+  "SNAPSHOT_ANALYSED": "Snapshot analysed",
+  "AXE_PROBLEMS": "Axe found {{count}} problems!"
 }

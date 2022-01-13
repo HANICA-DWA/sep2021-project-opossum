@@ -3,6 +3,7 @@ import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
 import { useOptions } from '.'
+import config from '../../config'
 
 const ydoc = new Y.Doc()
 

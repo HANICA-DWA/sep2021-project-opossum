@@ -5,7 +5,7 @@ export const useOptions = () => {
 
   useEffect(() => {
     chrome.storage.sync.get(['options'], (result) => {
-      setOptions(result.options)
+      if (result.options) setOptions(result.options)
     })
 
     chrome.storage.onChanged.addListener((changes) => {
