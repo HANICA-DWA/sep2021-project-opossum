@@ -115,7 +115,7 @@ Below we have used the [C4 model](https://en.wikipedia.org/wiki/C4_model) to vis
 
 [![](https://lh4.googleusercontent.com/tYU2oGYKqaWC-UkTgJsKmIcJqfsiCaVPxvucP8XRk9sSIjKkdO5SXQF7e3YnV5lVcfOQS-iUZ3zHW079B3NGfR5xrgivbzv4orPsy9sVbtwhbnj85VYN4JVAAozpWpco2ZGD-1Gy)](https://app.diagrams.net/?page-id=S_0v7oDeGRVnYbVjdG3k&scale=auto#G1gH_1Sb-tiaS6Ebgl5opiNYEzXltupvxj)
 
-### REST API
+### Backend
 
 [![](https://lh3.googleusercontent.com/Xf0u89LUzSDrC-VPxXMPNlsdmwnXR3Xy4UXrcygUWGayx7zQCeymjl_7C0KkpsYpIisShK6R7oO531oxrO51oJ-daWiKmRbmejGsMoDwEcBTcm5lOHD_69c46lBjXv2D70fAwreA)](https://app.diagrams.net/?page-id=PCwTK1SPMSIFYd2I3N2e&scale=auto#G1P6JZMOoz9BgC7Y20vJL8CFHdJR6aDRlS)
 
