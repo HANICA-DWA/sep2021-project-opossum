@@ -32,7 +32,7 @@ const getRandomName = () => {
 
 const randomName = getRandomName()
 
-const setUserAwareness = async (provider, name, id, color, idle) => {
+const setUserAwareness = (provider, name, id, color, idle) => {
   name = name || randomName
 
   provider.awareness.setLocalStateField('user', {
