@@ -31,8 +31,8 @@ async function openExistingSnapshot() {
   const createButtonIsDisabled = await page.$eval('button.rounded-full', (el) => el.disabled)
   expect(createButtonIsDisabled).toBe(true)
 
-  await page.waitForSelector("button[title='Open Snapshot']")
-  const buttons = await page.$$("button[title='Open Snapshot']")
+  await page.waitForSelector("button[title='Open snapshot']")
+  const buttons = await page.$$("button[title='Open snapshot']")
   buttons.pop().click()
   const target = await new Promise((resolve) => browser.once('targetcreated', resolve))
   firstTab = await target.page()
