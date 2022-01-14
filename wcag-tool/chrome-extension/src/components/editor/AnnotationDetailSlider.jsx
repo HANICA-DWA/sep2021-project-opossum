@@ -15,6 +15,19 @@ const AnnotationDetailSlider = function () {
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
 
+  let labels = []
+  if (selectedAnnotation) {
+    labels = [
+      ...selectedAnnotation.labels,
+      selectedAnnotation.successCriterium && `level ${selectedAnnotation.successCriterium.level}`,
+    ]
+
+  }
+
+  // if (selectedAnnotation?.labels && selectedAnnotation?.successCriterium) {
+  //   selectedAnnotation.labels.push(`level ${selectedAnnotation.successCriterium.level}`)
+  // }
+
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       visible: tooltipIsVisible,
@@ -75,7 +88,7 @@ const AnnotationDetailSlider = function () {
       <div className="flex flex-col h-full justify-between">
         <div className="pl-5 pr-8 py-3 overflow-y-auto overflow-x-hidden annotation-details">
           <div className="text-md">
-            <LabelList labels={selectedAnnotation?.labels} />
+            <LabelList labels={labels} />
           </div>
           {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
