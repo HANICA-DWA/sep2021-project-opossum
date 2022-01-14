@@ -71,6 +71,6 @@
   "serious": "重要",
   "critical": "非常に重要",
   "FULL_DETAILS": "詳細",
-  "NO_TITLE": "",
-  "UNTITLED": ""
+  "NO_TITLE": "タイトルなし",
+  "UNTITLED": "タイトルなし"
 }

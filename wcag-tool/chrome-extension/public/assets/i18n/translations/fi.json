@@ -71,6 +71,6 @@
   "serious": "vaarallinen",
   "critical": "kriittinen",
   "FULL_DETAILS": "Täydet tiedot",
-  "NO_TITLE": "",
-  "UNTITLED": ""
+  "NO_TITLE": "Ei otsikkoa",
+  "UNTITLED": "Nimetön"
 }
