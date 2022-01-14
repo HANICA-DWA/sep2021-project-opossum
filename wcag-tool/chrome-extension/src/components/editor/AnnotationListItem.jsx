@@ -18,13 +18,36 @@ const AnnotationListItem = function ({ annotation, index }) {
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
 
+  const isElementInViewport = (el) => {
+    const rect = el.getBoundingClientRect()
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth
+
+    const vertInView = rect.top <= windowHeight && rect.bottom >= 0
+    const horInView = rect.left <= windowWidth && rect.right >= 0
+
+    return vertInView && horInView
+  }
+
   return (
     <div
       onMouseEnter={() => dispatch(setHighlightedElementSelector(selector))}
       onMouseLeave={() => {
         if (!detailsSliderIsOpen) dispatch(setHighlightedElementSelector(''))
       }}
-      onClick={() => openDetailsSlider(_id, index)}
+      onClick={() => {
+        const iframedoc = window.document.getElementById('snapshot-iframe').contentWindow
+        const element = iframedoc.document.querySelector(selector)
+        const rect = element.getBoundingClientRect()
+        if (!isElementInViewport(element)) {
+          iframedoc.scrollTo({
+            left: rect.x,
+            top: rect.y,
+            behavior: 'smooth',
+          })
+        }
+        openDetailsSlider(_id, index)
+      }}
       className="mx-0.5 my-0.5 bg-gray-50 border-2 border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer"
     >
       <div className="pl-5 pr-3 pt-3 pb-4">

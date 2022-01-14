@@ -90,7 +90,7 @@ export default function BadgeListItem({ annotation, index }) {
           dispatch(setHighlightedElementSelector(''))
         }}
         ref={setTriggerRef}
-        className="absolute cursor-pointer flex justify-center content-center bg-white rounded-bl-none rounded-full p-1.5 shadow shadow-lg border border-gray-300"
+        className="absolute cursor-pointer flex justify-center content-center hover:opacity-40 bg-white rounded-bl-none rounded-full p-1.5 shadow shadow-lg border border-gray-300"
         style={style}
       >
         <div className="bg-red-600 rounded-full">
