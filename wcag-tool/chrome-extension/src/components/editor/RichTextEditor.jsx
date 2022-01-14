@@ -31,7 +31,7 @@ const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
       name: options.username || 'Unknown user',
       color: cursorColor,
     })
-  }, [option.username])
+  }, [options.username])
 
   // Quill modules
   const modules = {
