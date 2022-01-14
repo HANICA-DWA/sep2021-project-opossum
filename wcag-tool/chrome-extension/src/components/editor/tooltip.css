@@ -17,6 +17,10 @@
   z-index: 9999;
 }
 
+.tooltip-container.fixed {
+  position: fixed !important;
+}
+
 .tooltip-container.annotation-popup {
   background-color: #fff;
   color: #575757;

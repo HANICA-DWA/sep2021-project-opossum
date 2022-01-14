@@ -10,6 +10,7 @@ const ydoc = new Y.Doc()
 
 const setUserAwareness = (provider, name, id, color, idle) => {
   name = name || 'unnamed user'
+
   provider.awareness.setLocalStateField('user', {
     id,
     name,

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Formik, Field, Form, useFormikContext } from 'formik'
+import { useTranslation } from 'react-i18next'
 import ActionButton from '../common/ActionButton'
 import RichTextEditor from './RichTextEditor'
 import {
@@ -30,6 +31,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
   const { data: principles } = useGetPrinciplesQuery()
   const { data: guidelines } = useGetGuidelinesQuery()
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
+  const { t } = useTranslation()
 
   const initialValues = {
     successCriteriumId: selectedAnnotation?.successCriterium?.successCriteriumId || '',
@@ -55,9 +57,11 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
     return errors
   }
 
-  const getSuccesCriteriumTitleFromId = (id) => {
+  const getSuccesCriteriumTitleFromId = (id, defaultPlaceholder) => {
     const successCriterium = successCriteria?.find((el) => el.successCriteriumId === id)
-    return successCriterium ? `${successCriterium?.num} ${successCriterium?.handle} ` : 'Title'
+    return successCriterium
+      ? `${successCriterium?.num} ${successCriterium?.handle} `
+      : defaultPlaceholder
   }
 
   const handleSubmit = async (successCriteriumId, title, description) => {
@@ -90,7 +94,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
               className="mt-1 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option key="default" hidden>
-                Choose WCAG success criterium
+                {t('CHOOSE_WCAG')}
               </option>
 
               {principles &&
@@ -129,21 +133,21 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
           )}
 
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Title
+            {t('TITLE')}
             <TitleField
               selectedAnnotationId={selectedAnnotation?._id}
               name="title"
-              placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId)}
+              placeholder={getSuccesCriteriumTitleFromId(values.successCriteriumId, t('TITLE'))}
             />
           </label>
           {errors.title && <div className="text-red-700 -mt-2 mx-1">{errors.title}</div>}
 
-          <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">{t('DESCRIPTION')}</label>
           <Field
             component={RichTextEditor}
             selectedAnnotationId={selectedAnnotation?._id}
             name="description"
-            placeholder="Description"
+            placeholder={t('DESCRIPTION')}
           />
           {errors.description && touched.description && (
             <div className="text-red-700 mx-1">{errors.description}</div>
@@ -151,17 +155,17 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 
           {!selectedAnnotation ? (
             <div className="grid justify-end mt-8">
-              <ActionButton disabled={!isValid || !errors} type="submit">
-                Create Annotation
+              <ActionButton disabled={!isValid} type="submit">
+                {t('CREATE_ANNOTATION')}
               </ActionButton>
             </div>
           ) : (
             <div className="grid grid-flow-col justify-end mt-8 gap-x-5">
               <ActionButton onClick={closeEditor} type="button">
-                Cancel
+                {t('CANCEL')}
               </ActionButton>
               <ActionButton disabled={!(errors && isValid)} type="submit">
-                Save
+                {t('SAVE')}
               </ActionButton>
             </div>
           )}
@@ -174,6 +178,7 @@ function AnnotationForm({ selectedAnnotation, handleCreate, handleUpdate, closeE
 // Depends on successCriterium field.
 // source: https://formik.org/docs/examples/dependent-fields
 const TitleField = ({ name, placeholder, selectedAnnotationId }) => {
+  const { t } = useTranslation()
   const { data: successCriteria } = useGetSuccessCriteriaQuery()
   const {
     values: { successCriteriumId },
@@ -208,7 +213,7 @@ const TitleField = ({ name, placeholder, selectedAnnotationId }) => {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <title>Copy WCAG to title</title>
+        <title>{t('COPY_WCAG')}</title>
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

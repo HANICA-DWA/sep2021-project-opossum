@@ -63,26 +63,6 @@ export const Icon = ({
         return (
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
         )
-      case 'three-dots-outline':
-        return (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-          />
-        )
-      case 'broken-circle-outline':
-        return (
-          <circle
-            cx="50"
-            cy="50"
-            strokeWidth="10"
-            r="35"
-            strokeDasharray="164.93361431346415 56.97787143782138"
-            transform="matrix(1,0,0,1,0,0)"
-          />
-        )
       case 'information-circle-solid':
         return (
           <path
@@ -104,6 +84,28 @@ export const Icon = ({
         return (
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
         )
+
+      case 'three-dots-outline':
+        return (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+          />
+        )
+      case 'broken-circle-outline':
+        return (
+          <circle
+            cx="50"
+            cy="50"
+            strokeWidth="10"
+            r="35"
+            strokeDasharray="164.93361431346415 56.97787143782138"
+            transform="matrix(1,0,0,1,0,0)"
+          />
+        )
+
       case 'location-outline':
         return (
           <>

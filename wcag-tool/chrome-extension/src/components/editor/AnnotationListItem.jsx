@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 import { useSliders } from '../../hooks'
 
@@ -13,6 +14,7 @@ const AnnotationListItem = function ({ annotation, index }) {
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
+  const { t } = useTranslation()
 
   const isElementInViewport = (el) => {
     const rect = el.getBoundingClientRect()
@@ -51,13 +53,13 @@ const AnnotationListItem = function ({ annotation, index }) {
           <div className="col-span-5">
             <div>
               <p
-                title={capitalizeFirstLetter(stripHtml(title)) || 'No title'}
+                title={capitalizeFirstLetter(stripHtml(title)) || t('NO_TITLE')}
                 className="text-base truncate font-poppins-semi mb-1"
               >
                 <span className="bg-red-600 rounded-full mr-1">
                   <span className="text-white text-xs font-poppins-semi p-2 pt-2">{index + 1}</span>
                 </span>
-                {capitalizeFirstLetter(stripHtml(title)) || 'Untitled'}
+                {capitalizeFirstLetter(stripHtml(title)) || t('UNTITLED')}
               </p>
             </div>
             <div className="truncate">
@@ -66,7 +68,7 @@ const AnnotationListItem = function ({ annotation, index }) {
           </div>
           <div className="flex justify-end pt-1">
             <p title={formatCreatedAtString(createdAt)[1]} className="text-gray-600 text-xs">
-              {timeSince(createdAt)}
+              {timeSince(createdAt, t)}
             </p>
           </div>
         </div>

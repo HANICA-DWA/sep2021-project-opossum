@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TextOption({ value, id, labelName, onChange }) {
+export default function TextOption({ value, id, labelName, onChange, placeholder }) {
   return (
     <>
       <label className="block font-poppins text-gray-700 text-sm font-bold mb-1" htmlFor={id}>
@@ -15,7 +15,7 @@ export default function TextOption({ value, id, labelName, onChange }) {
           onChange={(e) => {
             onChange(id, e.target.value)
           }}
-          placeholder="Username"
+          placeholder={placeholder}
         />
       </div>
     </>
