@@ -18,17 +18,19 @@ const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
   // Refs
   const quillRef = useRef(undefined)
   const reactQuillRef = useRef(undefined)
-  const cursorColor = useRef(getRandomColor())
 
   const attachRefs = () => {
     if (typeof reactQuillRef.current.getEditor !== 'function') return
     quillRef.current = reactQuillRef.current.getEditor()
   }
 
-  provider.awareness.setLocalStateField('user', {
-    name: options.username || 'Unknown user',
-    color: cursorColor.current,
-  })
+  useEffect(() => {
+    provider.awareness.setLocalStateField('user', {
+      name: options.username || 'Unknown user',
+      color: getRandomColor(),
+    })
+  
+  }, [])
 
   // Quill modules
   const modules = {
