@@ -42,7 +42,7 @@ const AnnotationListItem = function ({ annotation, index }) {
               </p>
             </div>
             <div className="truncate">
-              <LabelList small labels={annotation.labels} />
+              <LabelList small labels={annotation?.labels} />
             </div>
           </div>
           <div className="flex justify-end pt-1">
