@@ -9,8 +9,6 @@ import LabelList from './LabelList'
 const AnnotationListItem = function ({ annotation, index }) {
   const { _id, successCriterium, title, description, selector, createdAt } = annotation
 
-  // TODO: replace with label system in backend
-  const labels = ['auto analysis', 'draft', 'minor', 'moderate', 'serious', 'critical']
   if (successCriterium) {
     labels.push(`level ${successCriterium?.level}`)
   }
