@@ -7,7 +7,7 @@ import { stripHtml, timeSince, formatCreatedAtString, capitalizeFirstLetter } fr
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation, index }) {
-  const { _id, successCriterium, title, description, selector, createdAt } = annotation
+  const { _id, successCriterium, title, description, selector, createdAt, labels } = annotation
 
   if (successCriterium) {
     labels.push(`level ${successCriterium?.level}`)
