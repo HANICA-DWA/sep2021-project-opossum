@@ -7,11 +7,9 @@ import { stripHtml, timeSince, formatCreatedAtString, capitalizeFirstLetter } fr
 import LabelList from './LabelList'
 
 const AnnotationListItem = function ({ annotation, index }) {
-  const { _id, successCriterium, title, description, selector, createdAt, labels } = annotation
+  const { _id, successCriterium, title, description, selector, createdAt } = annotation
 
-  if (successCriterium) {
-    labels.push(`level ${successCriterium?.level}`)
-  }
+  const labels = [...annotation.labels, successCriterium && `level ${successCriterium.level}`]
 
   const dispatch = useDispatch()
   const [{ openDetailsSlider }, { detailsSliderIsOpen }] = useSliders()
@@ -40,7 +38,7 @@ const AnnotationListItem = function ({ annotation, index }) {
               </p>
             </div>
             <div className="truncate">
-              <LabelList small labels={annotation?.labels} />
+              <LabelList small labels={labels} />
             </div>
           </div>
           <div className="flex justify-end pt-1">
