@@ -27,10 +27,6 @@ async function openExistingSnapshot() {
   // used open the puppeteer chrome browser without running the rest of the tests. This is useful for getting the chrome extension id.
   // await page.waitForSelector('xxx')
   await page.goto(`${URL_PREFIX}${CHROME_EXTENSION_ID}/popup.html`)
-  await page.waitForSelector('button.rounded-full')
-  const createButtonIsDisabled = await page.$eval('button.rounded-full', (el) => el.disabled)
-  expect(createButtonIsDisabled).toBe(true)
-
   await page.waitForSelector("button[title='Open snapshot']")
   const buttons = await page.$$("button[title='Open snapshot']")
   buttons.pop().click()
