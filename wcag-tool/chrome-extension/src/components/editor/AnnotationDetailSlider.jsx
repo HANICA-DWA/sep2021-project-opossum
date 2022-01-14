@@ -21,9 +21,7 @@ const AnnotationDetailSlider = function () {
       ...selectedAnnotation.labels,
       selectedAnnotation.successCriterium && `level ${selectedAnnotation.successCriterium.level}`,
     ]
-
   }
-
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({

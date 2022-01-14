@@ -26,7 +26,10 @@ export default function BadgeListItem({ annotation, index }) {
       offset: [0, 10],
     })
 
-  const labels = [...annotation.labels, annotation.successCriterium && `level ${annotation.successCriterium.level}`]
+  const labels = [
+    ...annotation.labels,
+    annotation.successCriterium && `level ${annotation.successCriterium.level}`,
+  ]
 
   const handlePositionChange = () => {
     setTooltipIsVisible(false)
