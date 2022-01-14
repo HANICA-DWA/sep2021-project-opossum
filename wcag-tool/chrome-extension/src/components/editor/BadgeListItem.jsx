@@ -26,17 +26,9 @@ export default function BadgeListItem({ annotation, index }) {
       offset: [0, 10],
     })
 
-  // TODO: replace with real labels from annotation
   const labels = [
-    'auto analysis',
-    'draft',
-    'level A',
-    'level AA',
-    'level AAA',
-    'minor',
-    'moderate',
-    'serious',
-    'critical',
+    ...annotation.labels,
+    annotation.successCriterium && `level ${annotation.successCriterium.level}`,
   ]
 
   const handlePositionChange = () => {

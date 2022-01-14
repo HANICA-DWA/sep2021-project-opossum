@@ -15,17 +15,13 @@ const AnnotationDetailSlider = function () {
 
   const [tooltipIsVisible, setTooltipIsVisible] = useState(false)
 
-  const labels = [
-    'auto analysis',
-    'draft',
-    'level A',
-    'level AA',
-    'level AAA',
-    'minor',
-    'moderate',
-    'serious',
-    'critical',
-  ]
+  let labels = []
+  if (selectedAnnotation) {
+    labels = [
+      ...selectedAnnotation.labels,
+      selectedAnnotation.successCriterium && `level ${selectedAnnotation.successCriterium.level}`,
+    ]
+  }
 
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
