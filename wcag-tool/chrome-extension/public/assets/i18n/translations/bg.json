@@ -70,5 +70,7 @@
   "moderate": "модернизиране",
   "serious": "сериозен",
   "critical": "критичен",
-  "FULL_DETAILS": "Пълни детайли"
+  "FULL_DETAILS": "Пълни детайли",
+  "NO_TITLE": "",
+  "UNTITLED": ""
 }

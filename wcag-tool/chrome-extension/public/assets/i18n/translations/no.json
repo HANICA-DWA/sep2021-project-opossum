@@ -70,5 +70,7 @@
   "moderate": "moderat",
   "serious": "seriøst",
   "critical": "kritisk",
-  "FULL_DETAILS": "Detaljer"
+  "FULL_DETAILS": "Detaljer",
+  "NO_TITLE": "",
+  "UNTITLED": ""
 }

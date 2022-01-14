@@ -71,5 +71,7 @@
   "moderate": "moderate",
   "serious": "serious",
   "critical": "critical",
-  "FULL_DETAILS": "Full details"
+  "FULL_DETAILS": "Full details",
+  "NO_TITLE": "No title",
+  "UNTITLED": "Untitled"
 }

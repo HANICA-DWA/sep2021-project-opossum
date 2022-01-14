@@ -58,7 +58,7 @@ const AnnotationDetailSlider = function () {
         <div className="grid grid-cols-6 px-5 rounded-l items-center">
           <div className="col-span-5">
             <p
-              title={capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || 'No title'}
+              title={capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || t('NO_TITLE')}
               className="text-base font-poppins-semi truncate"
             >
               {annotationIndex !== -1 ? (
@@ -68,7 +68,7 @@ const AnnotationDetailSlider = function () {
                   </span>
                 </span>
               ) : null}
-              {capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || 'Untitled'}
+              {capitalizeFirstLetter(stripHtml(selectedAnnotation?.title)) || t('UNTITLED')}
             </p>
           </div>
           <div className="flex justify-end">

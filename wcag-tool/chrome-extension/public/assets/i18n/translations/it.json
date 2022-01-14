@@ -70,5 +70,7 @@
   "moderate": "moderato",
   "serious": "serio",
   "critical": "critico",
-  "FULL_DETAILS": "Dettagli completi"
+  "FULL_DETAILS": "Dettagli completi",
+  "NO_TITLE": "",
+  "UNTITLED": ""
 }

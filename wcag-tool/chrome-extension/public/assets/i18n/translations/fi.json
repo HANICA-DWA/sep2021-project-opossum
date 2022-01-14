@@ -70,5 +70,7 @@
   "moderate": "keskisuuri",
   "serious": "vaarallinen",
   "critical": "kriittinen",
-  "FULL_DETAILS": "Täydet tiedot"
+  "FULL_DETAILS": "Täydet tiedot",
+  "NO_TITLE": "",
+  "UNTITLED": ""
 }

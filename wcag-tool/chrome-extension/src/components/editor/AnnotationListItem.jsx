@@ -34,13 +34,13 @@ const AnnotationListItem = function ({ annotation, index }) {
           <div className="col-span-5">
             <div>
               <p
-                title={capitalizeFirstLetter(stripHtml(title)) || 'No title'}
+                title={capitalizeFirstLetter(stripHtml(title)) || t('NO_TITLE')}
                 className="text-base truncate font-poppins-semi mb-1"
               >
                 <span className="bg-red-600 rounded-full mr-1">
                   <span className="text-white text-xs font-poppins-semi p-2 pt-2">{index + 1}</span>
                 </span>
-                {capitalizeFirstLetter(stripHtml(title)) || 'Untitled'}
+                {capitalizeFirstLetter(stripHtml(title)) || t('UNTITLED')}
               </p>
             </div>
             <div className="truncate">

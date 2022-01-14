@@ -70,5 +70,7 @@
   "moderate": "gemiddeld",
   "serious": "ernstig",
   "critical": "kritisch",
-  "FULL_DETAILS": "Volledige details"
+  "FULL_DETAILS": "Volledige details",
+  "NO_TITLE": "Geen titel",
+  "UNTITLED": "Titel onbekend"
 }

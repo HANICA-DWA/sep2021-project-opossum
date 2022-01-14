@@ -70,5 +70,7 @@
   "moderate": "μεσαίο",
   "serious": "επίθετο",
   "critical": "κρίσιμο",
-  "FULL_DETAILS": "Πλήρες λεπτομέρειες"
+  "FULL_DETAILS": "Πλήρες λεπτομέρειες",
+  "NO_TITLE": "",
+  "UNTITLED": ""
 }

@@ -112,10 +112,10 @@ export default function BadgeListItem({ annotation, index }) {
           <div className="grid grid-flow-row gap-y-1">
             <div className="grid grid-flow-col justify-between items-center">
               <p
-                title={capitalizeFirstLetter(stripHtml(annotation?.title)) || 'No title'}
+                title={capitalizeFirstLetter(stripHtml(annotation?.title)) || t('NO_TITLE')}
                 className="text-base font-poppins-semi truncate"
               >
-                {capitalizeFirstLetter(stripHtml(annotation?.title)) || 'Untitled'}
+                {capitalizeFirstLetter(stripHtml(annotation?.title)) || t('UNTITLED')}
               </p>
               <div>
                 <button
