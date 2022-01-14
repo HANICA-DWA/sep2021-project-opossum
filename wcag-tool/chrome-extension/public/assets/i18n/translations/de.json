@@ -17,7 +17,7 @@
   "OPTIONS": "Optionen",
   "USERNAME": "Benutzername",
   "SIDE_BY_SIDE": "Editor nebeneinander",
-  "SIDE_BY_SIDE_INFO": "Wenn aktiviert wird der Editor nebeneinander mit dem Snapshot.\nStandardmäßig verschiebt sich der Editor über die Seite.",
+  "SIDE_BY_SIDE_INFO": "Wenn aktiviert, wird das Menü nebeneinander mit der Seitenaufnahme angezeigt.\nWenn deaktiviert, wird das Menü über die Seitenaufnahme verschoben.",
   "NAME": "Name",
   "SITE": "Seite",
   "CREATE": "Erstellen",

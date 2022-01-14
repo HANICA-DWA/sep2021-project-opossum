@@ -17,7 +17,7 @@
   "OPTIONS": "Opzioni",
   "USERNAME": "Nome utente",
   "SIDE_BY_SIDE": "Editor affiancato",
-  "SIDE_BY_SIDE_INFO": "Quando attivato consente di affiancare l'editor con la snapshot.\nDi default l'editor si sposta sul sito.",
+  "SIDE_BY_SIDE_INFO": "Quando abilitato, il menu verrà mostrato con lo screenshot della pagina.\nQuando disabilitato, il menu si sposterà sullo screenshot della pagina.",
   "NAME": "Nome",
   "SITE": "Sito",
   "CREATE": "Crea",

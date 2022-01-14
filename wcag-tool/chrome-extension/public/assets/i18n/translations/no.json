@@ -17,7 +17,7 @@
   "OPTIONS": "Alternativer",
   "USERNAME": "Brukernavn",
   "SIDE_BY_SIDE": "Editor side-by-side",
-  "SIDE_BY_SIDE_INFO": "Når aktivert kan editor være side-by-side med snapshot.\nSom standard flytter editor over siden.",
+  "SIDE_BY_SIDE_INFO": "Når aktivert, vises menyen side-ved-side med nettsiden.\nNår deaktivert, flyttes menyen over nettsiden.",
   "NAME": "Navn",
   "SITE": "Nettsted",
   "CREATE": "Opprett",

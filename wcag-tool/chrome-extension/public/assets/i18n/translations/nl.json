@@ -17,7 +17,7 @@
   "OPTIONS": "Opties",
   "USERNAME": "Gebruikersnaam",
   "SIDE_BY_SIDE": "Bewerkpaneel zij-aan-zij",
-  "SIDE_BY_SIDE_INFO": "Wanneer dit geactiveerd is, wordt het bewerkpaneel zij-aan-zij getoond met de webpagina.\nStandaard wordt deze over de webpagina heen getoond.",
+  "SIDE_BY_SIDE_INFO": "Wanneer geactiveerd wordt het menu zij-aan-zij weergeven met de webpagina.\nWanneer gedeactiveerd wordt het menu over de webpagina heen weergegeven.",
   "NAME": "Naam",
   "SITE": "Website",
   "CREATE": "Creëer",

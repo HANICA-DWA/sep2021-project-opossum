@@ -17,7 +17,7 @@
   "OPTIONS": "Options",
   "USERNAME": "Nom d'utilisateur",
   "SIDE_BY_SIDE": "Éditeur en mosaïque",
-  "SIDE_BY_SIDE_INFO": "Lorsque qu'activé, permet à l'éditeur d'être côte-à-côte avec la capture d'écran.\nPar défaut, l'éditeur se glisse sur la page.",
+  "SIDE_BY_SIDE_INFO": "Lorsque activé, le menu s'affiche avec la capture d'écran de la page.\nLorsque désactivé, le menu se déplace sur la capture d'écran de la page.",
   "NAME": "Nome",
   "SITE": "Site",
   "CREATE": "Créer",

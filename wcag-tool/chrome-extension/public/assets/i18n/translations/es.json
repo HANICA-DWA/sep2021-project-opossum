@@ -17,7 +17,7 @@
   "OPTIONS": "Opciones",
   "USERNAME": "Nombre de usuario",
   "SIDE_BY_SIDE": "Editor en paralelo",
-  "SIDE_BY_SIDE_INFO": "Cuando se activa, el editor se puede mover en paralelo con la captura.\nPor defecto, el editor se mueve sobre la página.",
+  "SIDE_BY_SIDE_INFO": "Cuando está activado, el menú se mostrará junto con la captura de pantalla de la página.\nCuando está desactivado, el menú se desplazará sobre la captura de pantalla de la página.",
   "NAME": "Nombre",
   "SITE": "Sitio",
   "CREATE": "Crear",

@@ -17,7 +17,7 @@
   "OPTIONS": "Alternativ",
   "USERNAME": "Användarnamn",
   "SIDE_BY_SIDE": "Editor side-by-side",
-  "SIDE_BY_SIDE_INFO": "När den är aktiverad kommer editorfönstret att vara side-by-side med snapshot.\nSom standard flyttas editorfönstret över sidan.",
+  "SIDE_BY_SIDE_INFO": "När aktiverad, kommer menyn att visas med skärmdumpen på sidan.\nNär inaktiverad, flyttas menyn över skärmdumpen på sidan.",
   "NAME": "Namn",
   "SITE": "Sajt",
   "CREATE": "Skapa",

@@ -14,11 +14,10 @@
   "LANGUAGE_FI": "Finnish",
   "LANGUAGE_PL": "Polish",
   "LANGUAGE_JP": "Japanese",
-
   "OPTIONS": "Options",
   "USERNAME": "Username",
   "SIDE_BY_SIDE": "Editor side-by-side",
-  "SIDE_BY_SIDE_INFO": "When activated enables the sliding editor to be side-by-side with the snapshot.\nBy default the editor slides over the page.",
+  "SIDE_BY_SIDE_INFO": "When enabled the menu will be side-by-side with the page snapshot.\nWhen disabled the menu will slide over the page snapshot.",
   "NAME": "Name",
   "SITE": "Site",
   "CREATE": "Create",

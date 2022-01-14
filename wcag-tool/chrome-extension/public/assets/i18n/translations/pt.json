@@ -17,7 +17,7 @@
   "OPTIONS": "Opções",
   "USERNAME": "Nome de usuário",
   "SIDE_BY_SIDE": "Editor lado a lado",
-  "SIDE_BY_SIDE_INFO": "Quando ativado, o editor desliza para lado com a captura.\nPor padrão, o editor desliza sobre a página.",
+  "SIDE_BY_SIDE_INFO": "Quando ativado, o menu será exibido com a captura de tela da página.\nQuando desativado, o menu será movido para a captura de tela da página.",
   "NAME": "Nome",
   "SITE": "Site",
   "CREATE": "Criar",

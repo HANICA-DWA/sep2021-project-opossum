@@ -17,7 +17,7 @@
   "OPTIONS": "Opcje",
   "USERNAME": "Nazwa użytkownika",
   "SIDE_BY_SIDE": "Edytor wyświetlany obok siebie",
-  "SIDE_BY_SIDE_INFO": "Po włączeniu edytor przesuwa się na bok strony.\nDomyślnie edytor przesuwa się na stronie.",
+  "SIDE_BY_SIDE_INFO": "Gdy włączone, menu będzie wyświetlane z obrazem strony.\nGdy wyłączone, menu będzie przesunięte z obrazu strony.",
   "NAME": "Nazwa",
   "SITE": "Strona",
   "CREATE": "Utwórz",
