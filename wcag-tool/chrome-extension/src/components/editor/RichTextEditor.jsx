@@ -10,6 +10,8 @@ import { getRandomColor } from '../../utils'
 
 Quill.register('modules/cursors', QuillCursors, false)
 
+const cursorColor = getRandomColor()
+
 const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
   const { ydoc, provider } = useYjs()
   const { setFieldValue, setFieldTouched } = useFormikContext()
@@ -24,10 +26,12 @@ const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
     quillRef.current = reactQuillRef.current.getEditor()
   }
 
-  provider.awareness.setLocalStateField('user', {
-    name: options.username || 'Unknown user',
-    color: getRandomColor(),
-  })
+  useEffect(() => {
+    provider.awareness.setLocalStateField('user', {
+      name: options.username || 'Unknown user',
+      color: cursorColor,
+    })
+  }, [options.username])
 
   // Quill modules
   const modules = {
