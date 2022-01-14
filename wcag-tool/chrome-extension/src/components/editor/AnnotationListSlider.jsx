@@ -2,8 +2,9 @@ import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import './react-sliding-pane.css'
 
+import { useTranslation } from 'react-i18next'
 import { formatCreatedAtString } from '../../utils'
-import { useAxeCore, useSliders, useGetSnapshotId } from '../../hooks'
+import { useAxeCore, useSliders, useGetSnapshotId, useYAnnotations } from '../../hooks'
 import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
 import Alert from './Alert'
@@ -15,7 +16,9 @@ import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
 import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
 import { Icon } from '../common/Icon'
 
-const AnnotationListSlider = ({ clients, annotations }) => {
+const AnnotationListSlider = ({ clients }) => {
+  const { t } = useTranslation()
+  const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
   const snapshotId = useGetSnapshotId()
   const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
@@ -40,7 +43,7 @@ const AnnotationListSlider = ({ clients, annotations }) => {
       shouldCloseOnEsc
       from="left"
       onRequestClose={closeAllSliders}
-      closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
+      closeIcon={<IconButton title={t('CLOSE_MENU')} className="arrowLeftIcon" />}
       isOpen={listSliderIsOpen}
       title={
         <div className="grid grid-flow-col justify-between">
@@ -58,7 +61,7 @@ const AnnotationListSlider = ({ clients, annotations }) => {
           <div className="self-center flex flex-nowrap">
             <ButtonWithTooltip
               onClick={openElementSelector}
-              toolTipText="Create Annotation"
+              toolTipText={t('CREATE_ANNOTATION')}
               className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
             >
               {axeLoading ? (
@@ -78,7 +81,7 @@ const AnnotationListSlider = ({ clients, annotations }) => {
               dropdownItems={[
                 {
                   onClick: analyse,
-                  name: 'Auto analysis',
+                  name: t('AUTO_ANALYSIS'),
                   icon: <Icon color="text-gray-700" size={4} name="chart-pie" />,
                 },
               ]}
@@ -91,17 +94,19 @@ const AnnotationListSlider = ({ clients, annotations }) => {
         <div>
           <Alert
             color="red"
-            title="Error"
-            message="Error analysing snapshot! Please try again."
+            title={t('ERROR')}
+            message={t('ERROR_ANALYSING_SNAPSHOT')}
             hidden={!axeError}
           />
 
           <Alert
             color="green"
-            title="Snapshot analysed"
-            message={`Axe found ${axeData?.length || 0} problems!`}
+            title={t('SNAPSHOT_ANALYSED')}
+            message={t('AXE_PROBLEMS', {
+              count: axeData?.length || 0,
+            })}
             action={{
-              name: 'Publish',
+              name: t('PUBLISH'),
               method: () => createAnnotations({ snapshotId, annotations: axeData }),
               disabled: createAnnotationsLoading,
             }}
@@ -110,15 +115,17 @@ const AnnotationListSlider = ({ clients, annotations }) => {
 
           <Alert
             color="red"
-            title="Error"
-            message="Error posting axe annotatons! Please try again."
+            title={t('ERROR')}
+            message={t('ERROR_POSTING_AXE_ANNOTATIONS')}
             hidden={!createAnnotationsError}
           />
 
           <Alert
             color="green"
-            title="Axe Annotations added"
-            message={`${createdAnnotationsData?.length || 0} annotations added!`}
+            title={t('AXE_ADDED')}
+            message={t('ANNOTATIONS_ADDED', {
+              count: createdAnnotationsData?.length || 0,
+            })}
             hidden={!createdAnnotationsData}
           />
         </div>

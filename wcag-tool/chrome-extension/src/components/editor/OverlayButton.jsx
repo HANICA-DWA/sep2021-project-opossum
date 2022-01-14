@@ -1,8 +1,10 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSliders } from '../../hooks'
 import FloatButton from '../common/FloatButton'
 
 const OverlayButton = function () {
+  const { t } = useTranslation()
   const [
     { openListSlider },
     { listSliderIsOpen, createAndEditSliderIsOpen, detailsSliderIsOpen, elementSelectorIsOpen },
@@ -14,7 +16,7 @@ const OverlayButton = function () {
   return (
     <div className="absolute top-4 left-4 flex align-middle justify-center">
       <FloatButton
-        tooltipText="Open Annotation Menu"
+        tooltipText={t('OPEN_MENU')}
         toolTipPosition="bottom-start"
         onClick={openListSlider}
         hidden={isSliderOpen}
@@ -36,7 +38,7 @@ const OverlayButton = function () {
         </svg>
       </FloatButton>
       <FloatButton
-        tooltipText="Exit Selection Mode"
+        tooltipText={t('EXIT_SELECTION')}
         toolTipPosition="bottom-start"
         onClick={openListSlider}
         hidden={!elementSelectorIsOpen}

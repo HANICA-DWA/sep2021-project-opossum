@@ -51,36 +51,48 @@ export function axecoreAnnotationMapper(violations) {
   return annotations
 }
 
-export function timeSince(date) {
+export function timeSince(date, t) {
   date = new Date(date)
   const seconds = Math.floor((new Date() - date) / 1000)
 
   let interval = seconds / 31536000
 
   if (interval > 1) {
-    return `${Math.floor(interval)}y ago`
+    return t('Y_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 604800
   if (interval > 1) {
-    return `${Math.floor(interval)}w ago`
+    return t('W_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 86400
   if (interval > 1) {
-    return `${Math.floor(interval)}d ago`
+    return t('D_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 3600
   if (interval > 1) {
-    return `${Math.floor(interval)}h ago`
+    return t('H_AGO', {
+      time: Math.floor(interval),
+    })
   }
   interval = seconds / 60
   if (interval > 1) {
-    return `${Math.floor(interval)}m ago`
+    return t('M_AGO', {
+      time: Math.floor(interval),
+    })
   }
   if (seconds < 30) {
-    return 'just now'
+    return t('NOW')
   }
 
-  return `${Math.floor(seconds)}s ago`
+  return t('S_AGO', {
+    time: Math.floor(interval),
+  })
 }
 
 export const capitalizeFirstLetter = (string = '') => {

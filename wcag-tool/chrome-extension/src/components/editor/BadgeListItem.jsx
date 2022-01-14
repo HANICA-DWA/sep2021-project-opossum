@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import ReactHtmlParser from 'react-html-parser'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { capitalizeFirstLetter, stripHtml } from '../../utils'
 import LabelList from './LabelList'
 import { useSliders } from '../../hooks'
 import { setHighlightedElementSelector } from '../../services/annotationSlice'
 
 export default function BadgeListItem({ annotation, index }) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const elementRef = useRef()
   const [{ openDetailsSlider }] = useSliders()
@@ -26,17 +28,9 @@ export default function BadgeListItem({ annotation, index }) {
       offset: [0, 10],
     })
 
-  // TODO: replace with real labels from annotation
   const labels = [
-    'auto analysis',
-    'draft',
-    'level A',
-    'level AA',
-    'level AAA',
-    'minor',
-    'moderate',
-    'serious',
-    'critical',
+    ...annotation.labels,
+    annotation.successCriterium && `level ${annotation.successCriterium.level}`,
   ]
 
   const handlePositionChange = () => {
@@ -93,8 +87,8 @@ export default function BadgeListItem({ annotation, index }) {
         className="absolute cursor-pointer flex justify-center content-center hover:opacity-40 bg-white rounded-bl-none rounded-full p-1.5 shadow shadow-lg border border-gray-300"
         style={style}
       >
-        <div className="bg-red-600 rounded-full">
-          <span className="text-white font-poppins-semi p-2 pt-2">{index + 1}</span>
+        <div className="bg-red-600  rounded-full">
+          <span className="text-white font-poppins-semi  p-2 pt-2">{index + 1}</span>
         </div>
       </span>
 
@@ -110,10 +104,10 @@ export default function BadgeListItem({ annotation, index }) {
           <div className="grid grid-flow-row gap-y-1">
             <div className="grid grid-flow-col justify-between items-center">
               <p
-                title={capitalizeFirstLetter(stripHtml(annotation?.title)) || 'No title'}
+                title={capitalizeFirstLetter(stripHtml(annotation?.title)) || t('NO_TITLE')}
                 className="text-base font-poppins-semi truncate"
               >
-                {capitalizeFirstLetter(stripHtml(annotation?.title)) || 'Untitled'}
+                {capitalizeFirstLetter(stripHtml(annotation?.title)) || t('UNTITLED')}
               </p>
               <div>
                 <button
@@ -143,7 +137,7 @@ export default function BadgeListItem({ annotation, index }) {
                 }}
                 className="text-md rounded-lg focus:border-4 py-1 px-2 text-gray-400 font-poppins hover:bg-gray-100"
               >
-                Full details
+                {t('FULL_DETAILS')}
               </button>
             </div>
           </div>

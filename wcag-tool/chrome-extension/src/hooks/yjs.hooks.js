@@ -23,7 +23,7 @@ export const useYjs = () => {
 
 export const useYAnnotations = () => {
   const snapshotId = useGetSnapshotId()
-  const { data: remoteAnnotations, refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
+  const { data: remoteAnnotations = [], refetch } = useGetAnnotationsQuery(snapshotId) // remote MongoDB state
   const sharedState = ydoc.getText(snapshotId) // shared Yjs state
 
   useEffect(() => {

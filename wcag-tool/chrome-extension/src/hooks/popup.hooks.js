@@ -1,9 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { setCreateSnapshotNotAllowed } from '../services/popupSlice'
-
-const snapshotCreationInProgressPleaseWait = 'Snapshot creation in progress, please wait...'
-const createSnapshotMessage = 'Create snapshot'
 
 const getIsSnapshotCreationInProgress = async () => {
   const taskList = await browser.runtime.sendMessage({
@@ -13,7 +11,11 @@ const getIsSnapshotCreationInProgress = async () => {
 }
 
 export const useRegisterPopupEffects = () => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
+
+  const snapshotCreationInProgressPleaseWait = t('SNAPSHOT_CREATE_IN_PROGRESS')
+  const createSnapshotMessage = t('CREATE_SNAPSHOT')
 
   const getCurrentActiveTab = async () => {
     const [activeTab] = await browser.tabs.query({ currentWindow: true, active: true })
@@ -70,7 +72,7 @@ export const useRegisterPopupEffects = () => {
         dispatch(
           setCreateSnapshotNotAllowed({
             status: isOpenOnEditorPage || isOpenOnChromePage,
-            message: 'Creating a snapshot is not allowed on this page',
+            message: t('CREATE_NOT_ALLOWED'),
           })
         )
       }
@@ -78,12 +80,12 @@ export const useRegisterPopupEffects = () => {
   }, [])
 }
 
-export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
+export const onClickCreateSnapshot = (setLoading, dispatch, t) => async () => {
   setLoading(true)
   dispatch(
     setCreateSnapshotNotAllowed({
       status: true,
-      message: snapshotCreationInProgressPleaseWait,
+      message: t('SNAPSHOT_CREATE_IN_PROGRESS'),
     })
   )
   const [tab] = await browser.tabs.query({ active: true, currentWindow: true })
@@ -94,7 +96,7 @@ export const onClickCreateSnapshot = (setLoading, dispatch) => async () => {
       dispatch(
         setCreateSnapshotNotAllowed({
           status: false,
-          message: createSnapshotMessage,
+          message: t('CREATE_SNAPSHOT'),
         })
       )
       setLoading(false)
