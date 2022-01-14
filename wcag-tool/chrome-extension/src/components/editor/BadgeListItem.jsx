@@ -127,7 +127,7 @@ export default function BadgeListItem({ annotation, index }) {
               </div>
             </div>
             <div className="truncate">
-              <LabelList small labels={labels} />
+              <LabelList small labels={annotation?.labels} />
             </div>
             <div className="whitespace-normal truncate-2 font-poppins">
               {annotation?.description === undefined ||

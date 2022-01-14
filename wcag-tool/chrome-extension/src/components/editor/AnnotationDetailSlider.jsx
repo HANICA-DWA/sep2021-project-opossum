@@ -87,7 +87,7 @@ const AnnotationDetailSlider = function () {
       <div className="flex flex-col h-full justify-between">
         <div className="pl-5 pr-8 py-3 overflow-y-auto overflow-x-hidden annotation-details">
           <div className="text-md">
-            <LabelList labels={labels} />
+            <LabelList labels={selectedAnnotation?.labels} />
           </div>
           {ReactHtmlParser(selectedAnnotation?.description)}
         </div>
