@@ -39,8 +39,7 @@ const AnnotationListItem = function ({ annotation, index }) {
         const rect = element.getBoundingClientRect()
         if (!isElementInViewport(element)) {
           iframedoc.scrollTo({
-            left: rect.x,
-            top: rect.y,
+            top: rect.y + iframedoc.scrollY,
             behavior: 'smooth',
           })
         }
