@@ -33,6 +33,7 @@ describe('Annotation Model', function () {
     expect(savedAnnotation.successCriterium.successCriteriumId).equals(
       savedAnnotation.successCriterium.successCriteriumId
     )
+    expect(savedAnnotation.labels).equals(annotation.labels)
   })
 
   it('Create annotation with extra field, field should be undefined', async function () {
@@ -72,9 +73,27 @@ describe('Annotation Model', function () {
 
     // Assert
     expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
-    expect(error.errors.title).to.exist
-    expect(error.errors.description).to.exist
+    expect(error.errors.title).to.not.exist
+    expect(error.errors.description).to.not.exist
     expect(error.errors.selector).to.exist
     expect(error.errors.successCriterium).to.not.exist
+  })
+
+  it('Create annotation with wrong label should fail', async function () {
+    // Arrange
+    const annotation = dummyFactory.annotation()
+    annotation.labels.push('wrong label')
+
+    // Act
+    let error
+    try {
+      await new Annotation(annotation).save()
+    } catch (_error) {
+      error = _error
+    }
+
+    // Assert
+    expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
+    expect(Object.keys(error.errors)).includes('labels.1')
   })
 })

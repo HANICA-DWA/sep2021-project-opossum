@@ -1,21 +1,38 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
-import { usePopperTooltip } from 'react-popper-tooltip'
 import './react-sliding-pane.css'
 
-import IconButton from '../common/IconButton'
-import { useYAnnotations, useSliders } from '../../hooks'
+import { useTranslation } from 'react-i18next'
+import { formatCreatedAtString } from '../../utils'
+import { useAxeCore, useSliders, useGetSnapshotId, useYAnnotations } from '../../hooks'
+import { useGetSnapshotQuery, useCreateAnnotationsMutation } from '../../services'
 
+import Alert from './Alert'
 import AnnotationList from './AnnotationList'
-import NoAnnotation from './NoAnnotation'
 import Awareness from './Awareness'
+import IconButton from '../common/IconButton'
+import NoAnnotation from './NoAnnotation'
+import { ButtonWithDropdown } from '../common/ButtonWithDropdown'
+import { ButtonWithTooltip } from '../common/ButtonWithTooltip'
+import { Icon } from '../common/Icon'
 
 const AnnotationListSlider = ({ clients }) => {
+  const { t } = useTranslation()
   const { annotations } = useYAnnotations()
   const [{ openElementSelector, closeAllSliders }, { listSliderIsOpen }] = useSliders()
+  const snapshotId = useGetSnapshotId()
+  const { data: snapshotInfo } = useGetSnapshotQuery(snapshotId)
+  const [shortDate, longDate] = formatCreatedAtString(snapshotInfo?.createdAt)
 
-  const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
-    usePopperTooltip({ placement: 'bottom' })
+  const [analyse, { data: axeData, error: axeError, loading: axeLoading }] = useAxeCore()
+  const [
+    createAnnotations,
+    {
+      data: createdAnnotationsData,
+      error: createAnnotationsError,
+      isLoading: createAnnotationsLoading,
+    },
+  ] = useCreateAnnotationsMutation(snapshotId)
 
   return (
     <SlidingPane
@@ -26,54 +43,94 @@ const AnnotationListSlider = ({ clients }) => {
       shouldCloseOnEsc
       from="left"
       onRequestClose={closeAllSliders}
-      closeIcon={<IconButton title="Close Menu" className="arrowLeftIcon" />}
+      closeIcon={<IconButton title={t('CLOSE_MENU')} className="arrowLeftIcon" />}
       isOpen={listSliderIsOpen}
       title={
-        <div className="grid grid-cols-6 items-center pr-3">
-          <div className="col-span-5">
-            <div className="text-base">
-              <p className="truncate" title="Nu.nl Homepage text is way too long for the pane">
-                Nu.nl Homepage text is way too long for the pane
-                {/* TODO: dynamic title */}
-              </p>
-            </div>
-            <div>
-              <p className="mt-1 text-sm text-gray-500">1 Jan 2021</p>
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <button
-              onClick={openElementSelector}
-              ref={setTriggerRef}
-              className="text-gray-700 border border-gray-500 rounded-full p-2 hover:bg-gray-200"
+        <div className="grid grid-flow-col justify-between">
+          <div className="grid grid-flow-row">
+            <span
+              className="text-base font-medium text-gray-900 self-end truncate"
+              title={snapshotInfo?.name}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+              {snapshotInfo?.name}
+            </span>
+            <span className="mt-1 text-sm text-gray-500 self-start" title={longDate}>
+              {shortDate}
+            </span>
           </div>
-          <div className="self-center">
-            {visible && (
-              <div ref={setTooltipRef} {...getTooltipProps({ className: 'tooltip-container' })}>
-                <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-                Create Annotation
-              </div>
-            )}
+          <div className="self-center flex flex-nowrap">
+            <ButtonWithTooltip
+              onClick={openElementSelector}
+              toolTipText={t('CREATE_ANNOTATION')}
+              className="text-gray-700 border border-gray-300 p-2 hover:bg-gray-200 rounded-l-lg"
+            >
+              {axeLoading ? (
+                <Icon
+                  name="broken-circle"
+                  type="outline"
+                  className="animate-spin"
+                  viewBox="0 0 100 100"
+                  color="blue"
+                />
+              ) : (
+                <Icon className="text-gray-600" name="plus" />
+              )}
+            </ButtonWithTooltip>
+            <ButtonWithDropdown
+              className="text-gray-600 border border-gray-300 border-l-0 py-2 px-0.5 hover:bg-gray-200 rounded-r-lg"
+              dropdownItems={[
+                {
+                  onClick: analyse,
+                  name: t('AUTO_ANALYSIS'),
+                  icon: <Icon color="text-gray-700" size={4} name="chart-pie" />,
+                },
+              ]}
+            />
           </div>
         </div>
       }
     >
       <div className="flex flex-col h-full justify-between">
-        <div className="overflow-y-auto">
+        <div>
+          <Alert
+            color="red"
+            title={t('ERROR')}
+            message={t('ERROR_ANALYSING_SNAPSHOT')}
+            hidden={!axeError}
+          />
+
+          <Alert
+            color="green"
+            title={t('SNAPSHOT_ANALYSED')}
+            message={t('AXE_PROBLEMS', {
+              count: axeData?.length || 0,
+            })}
+            action={{
+              name: t('PUBLISH'),
+              method: () => createAnnotations({ snapshotId, annotations: axeData }),
+              disabled: createAnnotationsLoading,
+            }}
+            hidden={!axeData}
+          />
+
+          <Alert
+            color="red"
+            title={t('ERROR')}
+            message={t('ERROR_POSTING_AXE_ANNOTATIONS')}
+            hidden={!createAnnotationsError}
+          />
+
+          <Alert
+            color="green"
+            title={t('AXE_ADDED')}
+            message={t('ANNOTATIONS_ADDED', {
+              count: createdAnnotationsData?.length || 0,
+            })}
+            hidden={!createdAnnotationsData}
+          />
+        </div>
+
+        <div className="overflow-y-auto mb-auto">
           {!annotations || annotations.length === 0 ? (
             <NoAnnotation openElementSelector={openElementSelector} />
           ) : (

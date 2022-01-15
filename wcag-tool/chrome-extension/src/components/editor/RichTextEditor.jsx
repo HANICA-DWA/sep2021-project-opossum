@@ -5,13 +5,17 @@ import { useFormikContext } from 'formik'
 import QuillCursors from 'quill-cursors'
 import { QuillBinding } from 'y-quill'
 import { v4 as uuid } from 'uuid'
-import { useYjs } from '../../hooks'
+import { useYjs, useOptions } from '../../hooks'
+import { getRandomColor } from '../../utils'
 
 Quill.register('modules/cursors', QuillCursors, false)
+
+const cursorColor = getRandomColor()
 
 const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
   const { ydoc, provider } = useYjs()
   const { setFieldValue, setFieldTouched } = useFormikContext()
+  const options = useOptions()
 
   // Refs
   const quillRef = useRef(undefined)
@@ -21,6 +25,13 @@ const RichTextEditor = function ({ field, placeholder, selectedAnnotationId }) {
     if (typeof reactQuillRef.current.getEditor !== 'function') return
     quillRef.current = reactQuillRef.current.getEditor()
   }
+
+  useEffect(() => {
+    provider.awareness.setLocalStateField('user', {
+      name: options.username || 'Unknown user',
+      color: cursorColor,
+    })
+  }, [options.username])
 
   // Quill modules
   const modules = {

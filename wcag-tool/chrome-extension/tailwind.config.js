@@ -2,6 +2,9 @@ module.exports = {
   purge: ['./src/**/*.html', './src/**/*.js'],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    stroke: {
+      current: 'currentColor',
+    },
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
@@ -12,31 +15,15 @@ module.exports = {
         'orange-400': '#fb923c',
       },
     },
-    borderWidth: {
-      DEFAULT: '1px',
-      '0': '0',
-      '2': '2px',
-      '3': '3px',
-      '4': '4px',
-      '6': '6px',
-      '8': '8px',    
-    },
-    zIndex: {
-      '1': '1',
-      '2': '2',
-      '3': '3',
-      '4': '4',
-      '5': '5',
-      '6': '6',
-      '7': '7',
-      '8': '8',
-      '9': '9',
-      '10': '10',
-    }
   },
   variants: {
     extend: {
-      backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      borderColor: ['checked'],
+      inset: ['checked'],
+      backgroundColor: ['responsive', 'checked', 'hover', 'focus', 'active', 'disabled'],
+      opacity: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      cursor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+      color: ['responsive', 'hover', 'focus', 'active', 'disabled'],
     },
   },
   plugins: [],

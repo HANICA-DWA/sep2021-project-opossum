@@ -84,7 +84,8 @@ describe('Snapshot Model', function () {
         annotation.title,
         annotation.description,
         annotation.selector,
-        annotation.successCriterium
+        annotation.successCriterium,
+        annotation.labels
       )
 
       // Assert
@@ -95,6 +96,7 @@ describe('Snapshot Model', function () {
       expect(savedAnnotation.successCriterium.successCriteriumId).equals(
         annotation.successCriterium.successCriteriumId
       )
+      expect(savedAnnotation.labels[0]).equals('draft')
     })
 
     it('Add annotation to snapshot without required fields should fail', async function () {
@@ -110,8 +112,8 @@ describe('Snapshot Model', function () {
 
       // Assert
       expect(error).to.be.instanceOf(mongoose.Error.ValidationError)
-      expect(Object.keys(error.errors)).includes('annotations.0.title')
-      expect(Object.keys(error.errors)).includes('annotations.0.description')
+      expect(Object.keys(error.errors)).not.includes('annotations.0.title')
+      expect(Object.keys(error.errors)).not.includes('annotations.0.description')
       expect(Object.keys(error.errors)).includes('annotations.0.selector')
       expect(Object.keys(error.errors)).not.includes('annotations.0.successCriterium')
     })
@@ -160,6 +162,7 @@ describe('Snapshot Model', function () {
         title: 'updated title',
         description: 'updated description',
         selector: 'updated selector',
+        labels: ['draft', 'auto analysis'],
       })
 
       // Assert
@@ -167,6 +170,8 @@ describe('Snapshot Model', function () {
       expect(updatedAnnotation.title).equals('updated title')
       expect(updatedAnnotation.description).equals('updated description')
       expect(updatedAnnotation.selector).equals('updated selector')
+      expect(updatedAnnotation.labels[0]).equals('draft')
+      expect(updatedAnnotation.labels[1]).equals('auto analysis')
     })
 
     it('Update annotation in snapshot with no fields should fail', async function () {

@@ -1,6 +1,7 @@
 import React from 'react'
 import SlidingPane from 'react-sliding-pane'
 import 'react-sliding-pane/dist/react-sliding-pane.css'
+import { useTranslation } from 'react-i18next'
 import { AnnotationForm } from './AnnotationForm'
 
 import { useCreateAnnotation, useUpdateAnnotation, useSliders, useAnnotation } from '../../hooks'
@@ -10,6 +11,7 @@ const CreateAndEditAnnotationSlider = () => {
   const [updateAnnotation, { error: updateError }] = useUpdateAnnotation()
   const { selectedAnnotation, selectedAnnotationId } = useAnnotation()
   const [{ openListSlider, openDetailsSlider }, { createAndEditSliderIsOpen }] = useSliders()
+  const { t } = useTranslation()
 
   const closeEditor = selectedAnnotationId
     ? () => openDetailsSlider(selectedAnnotationId)
@@ -24,9 +26,9 @@ const CreateAndEditAnnotationSlider = () => {
       title={
         <div className="grid grid-flow-col justify-between">
           <span className="text-gray-900 text-base font-poppins">
-            {`${selectedAnnotationId ? 'Edit' : 'Create'} Annotation`}
+            {`${selectedAnnotationId ? t('EDIT_ANNOTATION') : t('CREATE_ANNOTATION')}`}
           </span>
-          <button title="Close" className="text-gray-600 px-4 py-1" onClick={closeEditor}>
+          <button title={t('CLOSE')} className="text-gray-600 px-4 py-1" onClick={closeEditor}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

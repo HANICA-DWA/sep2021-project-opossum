@@ -31,12 +31,12 @@ export const useSliders = () => {
 
     if (selector) {
       dispatch(setNewAnnotationSelector(selector))
-      dispatch(setHighlightedElementSelector(selector))
     }
   }
 
-  const openDetailsSlider = (selectedAnnotationId) => {
-    dispatch(setSelectedAnnotationId(selectedAnnotationId))
+  const openDetailsSlider = (selectedAnnotationId, index) => {
+    dispatch(setSelectedAnnotationId({ id: selectedAnnotationId, index }))
+    dispatch(setHighlightedElementSelector(''))
 
     dispatch(setDetailSliderIsOpen(true))
     dispatch(setListSliderIsOpen(false))
@@ -45,7 +45,7 @@ export const useSliders = () => {
   }
 
   const openListSlider = () => {
-    dispatch(setSelectedAnnotationId(''))
+    dispatch(setSelectedAnnotationId({ id: '' }))
     dispatch(setHighlightedElementSelector(''))
 
     dispatch(setListSliderIsOpen(true))
@@ -62,7 +62,7 @@ export const useSliders = () => {
   }
 
   const openElementSelector = () => {
-    dispatch(setSelectedAnnotationId(''))
+    dispatch(setSelectedAnnotationId({ id: '', index: 0 }))
 
     dispatch(setElementSelectorIsOpen(true))
     dispatch(setCreateAndEditSliderIsOpen(false))

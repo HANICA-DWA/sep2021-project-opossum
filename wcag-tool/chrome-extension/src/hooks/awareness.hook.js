@@ -2,10 +2,15 @@ import { useEffect, useState, useRef } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { useSelector } from 'react-redux'
+import { useOptions } from '.'
+import { getRandomColor } from '../utils'
+import config from '../../config'
 
 const ydoc = new Y.Doc()
 
 const setUserAwareness = (provider, name, id, color, idle) => {
+  name = name || 'unnamed user'
+
   provider.awareness.setLocalStateField('user', {
     id,
     name,
@@ -15,46 +20,14 @@ const setUserAwareness = (provider, name, id, color, idle) => {
 }
 
 const joinRoom = (room) => {
-  return new WebsocketProvider('ws://localhost:5000', room, ydoc)
+  return new WebsocketProvider(config.WEBSOCKET_URL, room, ydoc)
 }
 
-const getRandomColor = () => {
-  const letters = '0123456789ABCDEF'
-  let color = '#'
-  for (let i = 0; i < 6; i += 1) {
-    color += letters[Math.floor(Math.random() * 16)]
-  }
-  return color
-}
-
-const getRandomName = () => {
-  const names = [
-    'Bob',
-    'James',
-    'Jessie',
-    'Rob',
-    'Harry',
-    'Henk',
-    'Jan',
-    'Alfred',
-    'Xenos',
-    'Siegmeyer',
-    'Ifrit',
-    'Peter',
-    'May',
-    'Yvonne',
-    'Frank',
-    'Gerda',
-    'Jolanda',
-  ]
-  return names[Math.floor(Math.random() * names.length)]
-}
-
-const name = getRandomName()
 const color = getRandomColor()
 
 export const useAwareness = (room) => {
   const [clients, setClients] = useState([])
+  const options = useOptions()
   const isIdle = useSelector((state) => state.user.isIdle)
   const providerRef = useRef()
 
@@ -70,7 +43,7 @@ export const useAwareness = (room) => {
         setClients(_clients)
       })
 
-      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, options.username, ydoc.clientID, color, isIdle)
     }
 
     return () => {
@@ -83,9 +56,9 @@ export const useAwareness = (room) => {
 
   useEffect(() => {
     if (providerRef.current) {
-      setUserAwareness(providerRef.current, name, ydoc.clientID, color, isIdle)
+      setUserAwareness(providerRef.current, options.username, ydoc.clientID, color, isIdle)
     }
-  }, [isIdle])
+  }, [isIdle, options])
 
   return { provider: providerRef.current, clients }
 }

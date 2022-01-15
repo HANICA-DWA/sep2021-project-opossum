@@ -5,11 +5,11 @@ const annotationSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     selector: {
       type: String,
@@ -18,6 +18,12 @@ const annotationSchema = new Schema(
     successCriterium: {
       type: successCriteriumSchema,
       required: false,
+    },
+    labels: {
+      type: [String],
+      required: false,
+      enum: ['draft', 'auto analysis', 'minor', 'moderate', 'serious', 'critical'],
+      default: [],
     },
   },
   { timestamps: true }

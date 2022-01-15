@@ -17,6 +17,26 @@
   z-index: 9999;
 }
 
+.tooltip-container.fixed {
+  position: fixed !important;
+}
+
+.tooltip-container.annotation-popup {
+  background-color: #fff;
+  color: #575757;
+  max-width: 500px;
+
+}
+
+.truncate-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .tooltip-container.scrollableContainer {
   --tooltipBackground: rgba(255, 255, 255, 1);
   --tooltipTextColor: rgb(0, 0, 0);

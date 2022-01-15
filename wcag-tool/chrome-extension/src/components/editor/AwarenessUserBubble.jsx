@@ -14,7 +14,7 @@ const AwarenessUserBubble = ({ client, index }) => {
       >
         <img src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`} alt="userIcon" />
         <div
-          className={`h-4 w-4 -mb-2 absolute bottom-0 rounded-full border-3 border-white ${
+          className={`h-4 w-4 -mb-2 absolute bottom-0 rounded-full border-2 border-white ${
             client.idle ? `bg-orange-400` : `bg-lime-400`
           }`}
         />

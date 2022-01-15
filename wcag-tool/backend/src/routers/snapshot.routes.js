@@ -32,7 +32,7 @@ router.get('/snapshots', async (req, res, next) => {
     const limit = _limit ? parseInt(_limit) : undefined
     const skip = page && limit ? (page - 1) * limit : 0
 
-    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).exec() // TODO: Add projection, only meta data is necessary!
+    const snapshots = await Snapshot.find({}).skip(skip).limit(limit).sort({ createdAt: -1 }).exec() // TODO: Add projection, only meta data is necessary!
 
     return res.json(snapshots)
   } catch (err) {
@@ -43,11 +43,11 @@ router.get('/snapshots', async (req, res, next) => {
 // Already done by middleware: loadSnapshot!
 router.get('/snapshots/:snapshotId', (req, res) => res.json(req.snapshot))
 
-router.get('/snapshots/:snapshotId/:filename', (req, res, next) => {
+router.get('/snapshots/:snapshotId/file', (req, res, next) => {
   try {
     const gfs = getBucket('snapshot')
 
-    const readstream = gfs.openDownloadStreamByName(req.params.filename).on('error', (err) => {
+    const readstream = gfs.openDownloadStreamByName(req.snapshot.filename).on('error', (err) => {
       if (err.code === 'ENOENT') return next({ code: 404, message: 'File not found!' })
       return next(err)
     })
