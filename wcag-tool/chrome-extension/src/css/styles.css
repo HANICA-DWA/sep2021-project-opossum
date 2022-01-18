@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Poppins';
+  src: url(./font/Poppins/Poppins-Regular.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(./font/Poppins/Poppins-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Poppins-Semi;
+  src: url(./font/Poppins/Poppins-SemiBold.ttf);
+}
+
+@layer utilities {
+  .searchIcon {
+    background-image: url(../img/icon/search.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
+
+  .folderIcon {
+    background-image: url(../img/icon/folder.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 200px;
+  }
+
+  .arrowLeftIcon {
+    background-image: url(../img/icon/arrow-left.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
+
+  .crossIcon {
+    background-image: url(../img/icon/cross.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+  }
+
+  .pencilIcon {
+    background-image: url(../img/icon/pencil.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+  }
+
+  .plusIcon {
+    background-image: url(../img/icon/plus.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
+
+  .trashIcon {
+    background-image: url(../img/icon/trash-can.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 25px;
+  }
+
+  .noBorder {
+    border: 0px;
+  }
+
+  .customSize {
+    height: 37rem;
+    width: 30rem;
+  }
+
+  .overflowWrap {
+    overflow-wrap: anywhere;
+  }
+
+  .annotation-details h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .annotation-details h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .annotation-details h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  [badge]:after {
+    background: red;
+    border-radius: 30px;
+    color: #fff;
+    content: attr(badge);
+    font-size: 11px;
+    margin-top: -10px;
+    min-width: 20px;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+  }
+
+  [badge^='-']:after,
+  [badge='0']:after,
+  [badge='']:after {
+    display: none;
+  }
+}

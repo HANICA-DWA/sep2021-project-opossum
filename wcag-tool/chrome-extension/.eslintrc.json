@@ -4,7 +4,13 @@
     "es2021": true,
     "webextensions": true
   },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -13,9 +19,28 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
+  "ignorePatterns": ["src/common", "src/extension", "src/lib"],
   "rules": {
-    "no-param-reassign": "warn",
-    "import/prefer-default-export": "warn",
+    "import/prefer-default-export": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "func-names": "off",
+    "import/named": "off",
+    "import/export": "off",
+    "no-underscore-dangle": "off",
+    "react/function-component-definition": "off",
+    "react/prop-types": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-param-reassign": "off",
+    "arrow-body-style": "off",
+    "react/button-has-type": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "no-use-before-define": "off",
+    "no-restricted-globals": "off",
     "prettier/prettier": [
       "error",
       {
@@ -23,5 +48,5 @@
       }
     ]
   },
-  "parser": "babel-eslint"
+  "parser": "@babel/eslint-parser"
 }
