@@ -138,3 +138,41 @@ Documentation can be found [here](./documentatie/Software-Guidebook/Software-Gui
    `admin` is the username you added to the project. `myFirstDatabase` is the database name you're going to be using.
 
 **Bonus:** to allow other users to connect to your database go to network access and click on 'add IP address'. You can choose to allow everything or add a specific IP.
+
+## Known issues
+
+1. **Issues:** When adding 100+ annotations to a website, the badges will start to make the website lag.
+   **Fix:** Optimize rendering badges i.e. don't render them when they're not in the viewport, use intersectionObserver for this. Use an optimized way to listen for position changes of the element the badge is attached to and update accordingly (possibly with mutationObserver API). 
+2. **Issue:** When performing auto analyses with Axe Core the browser/UI will freeze until it's done.
+   **Fix:** To be determined.
+
+3. **Issue: **The alerts after generating annotations with Axe Core will show up after opening and closing the slider even when dismissed earlier.
+   **Fix:** Properly keep track if the alert should be hidden or not with react state.
+
+4. **Issue: **When two or more people are collaborating on an annotation and one of them is on the detail or edit slider of an annotation and another person deletes the annotation, the person viewing the annotating will be in an unwanted state. 
+   **Fix:** Add resource blocking by creating a websocket room for each annotation. If there's more than one user (yourself) in the room, don't allow for deleting an annotation. 
+
+5. **Issue:**Lag when scrolling through the list of annotations due to highlighting the element on hover.
+   **Fix:** Make it so that the element only gets highlighted after hovering for over 100-300ms.
+
+6. **Issue:** The WCAG dropdown shows 4 sets of the same rules as they are mapped wrong.
+   **Fix:** Map the WCAG data correctly.
+
+7. **Issue:** When selecting a WCAG, you can't unselect it.
+   **Fix:** Add an option that doesn't represent a WCAG.
+
+8. **Issue:** When return from the detail page of an annotation to the list overview, the scrollbar of list will be at the top instead of the annotation where you scrolled to.
+   **Fix:** Don't close the annotation list slider when going back and forth between the detail slider or have it scroll to the element you just came from when returning.
+
+9. **Issue:** When clicking on the 'Delete annotation' button and the tooltip shows up to confirm and you press esc to close the slider and then reopen a detail slider the tooltip will be opened and out of position.
+   **Fix**: Make sure the tooltip is closed when exiting the detail slider
+
+10. **Issue:** No error is displayed to the user when something goes wrong during the following events:
+
+    - Fetching snapshots
+    - Creating and updating an annotation
+    - Fetching annotations
+
+    **Fix:** Use the alerts mentioned in issue 3 to show error state.
+
+    
